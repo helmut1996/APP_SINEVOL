@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">My Application</string>
+
+    <string-array name="Clientes">
+        <item>Helmut Colindres</item>
+        <item>Josue Brenes</item>
+        <item>Maria Calero</item>
+        <item>Maribel Brenes</item>
+        <item>Katherine Robleto</item>
+        <item>Federico Castillo</item>
+    </string-array>
+</resources>
