@@ -11,10 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-
-        <activity android:name=".MainProductosCliente"
-
-            android:parentActivityName=".MainFactura"/>
+        <activity android:name=".MainFacruraList"
+            android:parentActivityName=".MainProductosCliente"/>
+        <activity
+            android:name=".MainProductosCliente"
+            android:parentActivityName=".MainFactura" />
         <activity
             android:name=".MainRecibo"
             android:parentActivityName=".MainFactura" />

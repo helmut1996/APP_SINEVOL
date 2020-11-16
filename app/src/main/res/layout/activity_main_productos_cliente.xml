@@ -16,28 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Cliente"
-                android:textAllCaps="true"
-                android:textColor="#0E0D0D" />
-
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="Nora Castillo"
-                android:textAllCaps="true"
-                android:textColor="#0C0C0C" />
-
-        </LinearLayout>
+            android:orientation="horizontal"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,29 +24,23 @@
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Producto"
-                android:textAllCaps="true"
-                android:textColor="@color/black" />
-
             <ImageView
                 android:id="@+id/imageProducto"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/logo" />
+                android:src="@drawable/prueba1" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_buscar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_weight="1"
                 android:text="Buscar"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:src="@drawable/ic_baseline_youtube_searched_for_24"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="80dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -85,15 +58,14 @@
                 android:textAllCaps="true"
                 android:textColor="#040303" />
 
-            <EditText
-                android:id="@+id/editTextPrecio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Precio"
-                android:inputType="numberDecimal" />
+           <TextView
+               android:id="@+id/text_precio"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="100 C$"
+               android:textAllCaps="true"
+               android:layout_weight="1"
+               android:textColor="@color/black" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,7 +84,7 @@
                 android:textColor="#0B0A0A" />
 
             <EditText
-                android:id="@+id/editTextNumber"
+                android:id="@+id/editTextCantidad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -176,25 +148,27 @@
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_agregar"
+            <ImageButton
+                android:id="@+id/btn_Inicio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:text="Agregar"
-                android:textSize="12dp" />
+                android:textSize="12dp"
+                android:src="@drawable/ic_baseline_home"/>
 
-            <Button
-                android:id="@+id/btn_cancelar"
+            <ImageButton
+                android:id="@+id/btn_Agregar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Cancelar"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+              android:src="@drawable/ic_baseline_add_circle"  />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_siguente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -202,7 +176,8 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="Siguiente"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:src="@drawable/ic_baseline_subdirectory_arrow_right_24"/>
 
         </LinearLayout>
     </LinearLayout>

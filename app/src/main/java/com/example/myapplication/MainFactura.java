@@ -27,7 +27,7 @@ public class MainFactura extends AppCompatActivity {
         setContentView(R.layout.activity_main_factura);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Factura");
+        getSupportActionBar().setTitle("Clientes");
 
         textBuscar= (EditText) findViewById(R.id.editTextBuscar);
         listClientes = (ListView)findViewById(R.id.listaClientes);
