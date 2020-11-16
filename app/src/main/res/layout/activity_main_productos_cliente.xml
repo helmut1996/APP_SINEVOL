@@ -18,22 +18,22 @@
             android:layout_marginTop="15dp"
             android:orientation="horizontal"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tinte"
+            android:layout_gravity="center_horizontal"
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/text_N_producto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nombre_producto"
-                android:layout_weight="1"
-                android:textColor="@color/black"
-                android:layout_gravity="center_vertical"
-                android:textAllCaps="true"/>
-
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="180dp"
+    android:src="@drawable/prueba4"
+    android:layout_weight="1"/>
             <ImageButton
                 android:id="@+id/btn_buscar"
                 android:layout_width="150dp"
@@ -47,42 +47,6 @@
                 android:layout_marginRight="80dp"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="@string/text_precio"
-                android:textAllCaps="true"
-                android:textColor="#040303" />
-
-           <RadioButton
-                android:id="@+id/radioprecio1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/valor" />
-
-            <RadioButton
-                android:id="@+id/radioprecio2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/valor2" />
-            <RadioButton
-                android:id="@+id/radioprecio3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/valor3" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -107,6 +71,44 @@
                 android:hint="@string/text_cantidad"
                 android:inputType="number" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/text_precio"
+                android:textAllCaps="true"
+                android:textColor="#040303" />
+
+            <RadioButton
+                android:id="@+id/radioprecio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/valor" />
+
+            <RadioButton
+                android:id="@+id/radioprecio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/valor2" />
+            <RadioButton
+                android:id="@+id/radioprecio3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/valor3" />
+
+        </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -138,7 +140,6 @@
                 android:text="@string/radioDolar" />
 
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
