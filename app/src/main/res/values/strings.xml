@@ -26,6 +26,11 @@
     <string name="add_producto">"Productos Agregados "</string>
     <string name="listaProducto">LISTA DE PRODUCTOS</string>
     <string name="text_buscar">Buscar</string>
+    <string name="valor2">300 C$</string>
+    <string name="valor3">500 C$</string>
+    <string name="info_3">Informacion 3</string>
+    <string name="info_4">Informacion 4</string>
+    <string name="info_5">Informacion 5</string>
 
     <string-array name="Clientes">
         <item>Helmut Colindres</item>
