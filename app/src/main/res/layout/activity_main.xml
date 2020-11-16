@@ -13,11 +13,32 @@
         tools:layout_editor_absoluteX="39dp"
         tools:layout_editor_absoluteY="15dp">
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:text="@string/text_bienvenida"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nombre_vendedor"
+            android:layout_marginTop="15dp"
+            android:textAllCaps="true"
+            android:textSize="25dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/black"/>
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Iniciar sesion"
+            android:text="@string/login"
             android:layout_margin="15dp"
             android:gravity="center_horizontal"
             android:textAllCaps="true"
@@ -38,34 +59,15 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="numberPassword"
-            android:hint="PIN"
+            android:hint="@string/pin"
             android:layout_marginTop="30dp"/>
 
         <Button
             android:id="@+id/btn_entrar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="entrar"
+            android:text="@string/sbtn_entrar"
             android:layout_marginTop="10dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BIENVENIDO VENDEDOR"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center_horizontal"
-            android:textSize="30dp"
-            android:textColor="@color/black"
-            android:textAllCaps="true"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Helmut colindres brenes "
-            android:layout_marginTop="15dp"
-            android:textAllCaps="true"
-            android:textSize="25dp"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/black"/>
 
 
     </LinearLayout>

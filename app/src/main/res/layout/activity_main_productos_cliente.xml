@@ -24,11 +24,15 @@
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/imageProducto"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:src="@drawable/prueba1" />
+            <TextView
+                android:id="@+id/text_N_producto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nombre_producto"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:layout_gravity="center_vertical"
+                android:textAllCaps="true"/>
 
             <ImageButton
                 android:id="@+id/btn_buscar"
@@ -54,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="Precio"
+                android:text="@string/text_precio"
                 android:textAllCaps="true"
                 android:textColor="#040303" />
 
@@ -62,10 +66,34 @@
                android:id="@+id/text_precio"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="100 C$"
+               android:text="@string/valor"
                android:textAllCaps="true"
                android:layout_weight="1"
                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_cantidad"
+                android:textAllCaps="true"
+                android:textColor="#0B0A0A" />
+
+            <EditText
+                android:id="@+id/editTextCantidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/text_cantidad"
+                android:inputType="number" />
         </LinearLayout>
 
         <LinearLayout
@@ -79,19 +107,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Cantidad"
+                android:text="@string/precio"
                 android:textAllCaps="true"
                 android:textColor="#0B0A0A" />
 
-            <EditText
-                android:id="@+id/editTextCantidad"
+            <RadioButton
+                android:id="@+id/radioCordobas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
-                android:hint="Cantidad"
-                android:inputType="number" />
+                android:text="@string/radioCodobas" />
+
+            <RadioButton
+                android:id="@+id/radioDolares"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/radioDolar" />
+
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -104,21 +139,60 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@string/unidad_medida"
+                android:textAllCaps="true"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@string/info_1"
+                android:textColor="@color/black"
+                android:textAllCaps="true"/>
 
             <TextView
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@string/info_2"
+                android:textAllCaps="true"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_unidadM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/unidad_medida2"
+                android:textAllCaps="true"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/text_info1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/info_dato1"
+                android:textColor="@color/black"
+                android:textAllCaps="true"/>
+
+            <TextView
+                android:id="@+id/text_info2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/unidad_medida2"
+                android:textAllCaps="true"
+                android:textColor="@color/black"/>
         </LinearLayout>
 
         <TextView
@@ -128,7 +202,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
             android:gravity="center_horizontal"
-            android:text="Productos Agregados "
+            android:text="@string/add_producto"
             android:textAllCaps="true"
             android:textColor="#090808" />
 

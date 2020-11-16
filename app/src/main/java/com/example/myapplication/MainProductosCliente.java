@@ -44,6 +44,8 @@ TextView textcontar,textprecio;
 
             case R.id.btn_buscar:
                 //implementar buscador
+                Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
+                startActivity(intent2);
                 break;
             case R.id.btn_Agregar:
                 // implementar agregar

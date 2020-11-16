@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="15dp"
-            android:text="Lista de clientes"
+            android:text="@string/list_clientes"
             android:textAllCaps="true"
             android:textColor="#040303" />
 
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Nombre Cliente "
+            android:hint="@string/listaCliente"
             android:inputType="textPersonName" />
 
         <LinearLayout

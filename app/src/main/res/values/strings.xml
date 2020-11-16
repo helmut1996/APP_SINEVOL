@@ -1,5 +1,31 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Sinevol</string>
+    <string name="unidad_medida">Unidad de medida</string>
+    <string name="info_1">informacion 1</string>
+    <string name="info_2">informacion 2</string>
+    <string name="unidad_medida2">1*/2*30*24</string>
+    <string name="info_dato1">1/400</string>
+    <string name="precio">tipo de precio</string>
+    <string name="radioCodobas">Cordobas</string>
+    <string name="radioDolar">Dolares</string>
+    <string name="listaCliente">Nombre Cliente</string>
+    <string name="text_bienvenida">Bienvenido vendedor</string>
+    <string name="nombre_vendedor">Manuel lopez</string>
+    <string name="login">inicio sesion</string>
+    <string name="pin">PIN</string>
+    <string name="sbtn_entrar">Entrar</string>
+    <string name="list_clientes">"Lista de clientes "</string>
+    <string name="Sinevol">Sistema Sinevol</string>
+    <string name="sbtn_factura">factura</string>
+    <string name="recibo">recibo</string>
+    <string name="cuentas">cuentas</string>
+    <string name="nombre_producto">lapiz</string>
+    <string name="text_precio">precio</string>
+    <string name="valor">100 C$</string>
+    <string name="text_cantidad">cantidad</string>
+    <string name="add_producto">"Productos Agregados "</string>
+    <string name="listaProducto">LISTA DE PRODUCTOS</string>
+    <string name="text_buscar">Buscar</string>
 
     <string-array name="Clientes">
         <item>Helmut Colindres</item>
@@ -8,5 +34,14 @@
         <item>Maribel Brenes</item>
         <item>Katherine Robleto</item>
         <item>Federico Castillo</item>
+    </string-array>
+
+    <string-array name="Productos">
+        <item>Lapices de ceja</item>
+        <item>tintes de color azul</item>
+        <item>Labial de color rojo </item>
+        <item>tinte de color cafe</item>
+        <item>tinte de color blanco</item>
+        <item>lapiz labial morado</item>
     </string-array>
 </resources>
