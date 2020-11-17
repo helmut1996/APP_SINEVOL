@@ -34,7 +34,7 @@
             android:id="@+id/text_zona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Managua"
+            android:text="@string/L_zona"
             android:layout_margin="15dp"
             android:textColor="@color/black"
             android:textAllCaps="true"
@@ -50,7 +50,7 @@
             android:id="@+id/text_direccion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Waspan Sur"
+            android:text="@string/Direccion"
             android:layout_margin="15dp"
             android:textColor="@color/black"
             android:textAllCaps="true"
@@ -58,7 +58,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Credito"
+            android:text="@string/credito"
             android:layout_margin="15dp"
             android:textColor="@color/black"
             android:textAllCaps="true"/>
@@ -74,7 +74,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Credito Disponible"
+            android:text="@string/credito_D"
             android:layout_margin="15dp"
             android:textColor="@color/black"
             android:textAllCaps="true"/>

@@ -6,32 +6,40 @@
     <string name="unidad_medida2">1*/2*30*24</string>
     <string name="info_dato1">1/400</string>
     <string name="precio">tipo de precio</string>
-    <string name="radioCodobas">Cordobas</string>
-    <string name="radioDolar">Dolares</string>
     <string name="listaCliente">Nombre Cliente</string>
     <string name="text_bienvenida">Bienvenido vendedor</string>
     <string name="nombre_vendedor">Manuel lopez</string>
     <string name="login">inicio sesion</string>
     <string name="pin">PIN</string>
     <string name="sbtn_entrar">Entrar</string>
-    <string name="list_clientes">"Lista de clientes "</string>
+    <string name="list_clientes">Lista de clientes</string>
     <string name="Sinevol">Sistema Sinevol</string>
     <string name="sbtn_factura">factura</string>
     <string name="recibo">recibo</string>
     <string name="cuentas">cuentas</string>
     <string name="nombre_producto">lapiz</string>
     <string name="text_precio">precio</string>
-    <string name="valor">100 C$</string>
     <string name="text_cantidad">cantidad</string>
     <string name="add_producto">"Productos Agregados "</string>
     <string name="listaProducto">LISTA DE PRODUCTOS</string>
     <string name="text_buscar">Buscar</string>
-    <string name="valor2">300 C$</string>
-    <string name="valor3">500 C$</string>
     <string name="info_3">Informacion 3</string>
     <string name="info_4">Informacion 4</string>
     <string name="info_5">Informacion 5</string>
     <string name="tinte">tinte azul cabello</string>
+    <string name="factura">Factura</string>
+    <string name="codigo">Codigo</string>
+    <string name="cliente">Cliente</string>
+    <string name="tipo_fact">Tipo Fact</string>
+    <string name="tipo_venta">tipo de ventas</string>
+    <string name="zona">Zona</string>
+    <string name="L_zona">Managua</string>
+    <string name="Direccion">Waspan Sur</string>
+    <string name="credito_D">Credito Disponible</string>
+    <string name="credito">credito</string>
+    <string name="opciones">Opciones</string>
+    <string name="producto">Producto</string>
+    <string name="total">Total</string>
 
     <string-array name="Clientes">
         <item>Helmut Colindres</item>
@@ -50,4 +58,17 @@
         <item>tinte de color blanco</item>
         <item>lapiz labial morado</item>
     </string-array>
+
+    <string-array name="precios">
+    <item>precio1:200 C$</item>
+        <item>Precio2:500 C$</item>
+        <item>Precio3: 0 C$</item>
+        <item>Precio4: 0 C$</item>
+        <item>Precio5: 0 C$</item>
+    </string-array>
+
+<string-array name="tipo_moneda">
+    <item>Codobas</item>
+    <item>Dolares</item>
+</string-array>
 </resources>

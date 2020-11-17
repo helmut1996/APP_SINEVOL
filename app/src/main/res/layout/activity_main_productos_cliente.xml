@@ -23,6 +23,8 @@
             android:layout_height="wrap_content"
             android:text="@string/tinte"
             android:layout_gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:textAllCaps="true"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,25 +88,10 @@
                 android:textAllCaps="true"
                 android:textColor="#040303" />
 
-            <RadioButton
-                android:id="@+id/radioprecio1"
+            <Spinner
+                android:id="@+id/spinerPrecios"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/valor" />
-
-            <RadioButton
-                android:id="@+id/radioprecio2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/valor2" />
-            <RadioButton
-                android:id="@+id/radioprecio3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/valor3" />
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
@@ -125,20 +112,10 @@
                 android:textAllCaps="true"
                 android:textColor="#0B0A0A" />
 
-            <RadioButton
-                android:id="@+id/radioCordobas"
+            <Spinner
+                android:id="@+id/spinner_tipo_moneda"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/radioCodobas" />
-
-            <RadioButton
-                android:id="@+id/radioDolares"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/radioDolar" />
-
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <LinearLayout
@@ -265,7 +242,7 @@
                 android:textColor="@color/black"
                 android:textAllCaps="true"/>
 
-            <TextView
+             <TextView
                 android:id="@+id/text_info5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
