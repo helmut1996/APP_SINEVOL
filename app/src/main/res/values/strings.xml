@@ -71,4 +71,10 @@
     <item>Codobas</item>
     <item>Dolares</item>
 </string-array>
+
+
+    <string-array name="tipo_ventas">
+        <item>Contado</item>
+        <item>Credito</item>
+    </string-array>
 </resources>

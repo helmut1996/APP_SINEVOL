@@ -88,7 +88,7 @@
 
             <Spinner
                 android:id="@+id/spinner_facura"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content "
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -109,6 +109,7 @@
                 android:textColor="#040303" />
 
             <TextView
+                android:id="@+id/textView_Zona"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -132,7 +133,7 @@
                 android:textColor="#0E0D0D" />
 
             <TextView
-                android:id="@+id/textView27"
+                android:id="@+id/textView_C_Disponible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -157,149 +158,53 @@
 
             <Spinner
                 android:id="@+id/spinner_tventas"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
 
-        <TableLayout
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lista Facturas"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"/>
+
+            <ListView
+                android:id="@+id/lista_Factura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginVertical="30dp"
-            android:layout_marginHorizontal="10dp"
-            android:background="#f1f1f1"
-            >
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/opciones"
-                    android:textAllCaps="true"
-                    android:textSize="12sp"
-                    android:textStyle="normal" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/producto"
-                    android:textAllCaps="true"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/text_cantidad"
-                    android:textAllCaps="true"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Precio $"
-                    android:textAllCaps="true"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="precio C$"
-                    android:textAllCaps="true"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/total"
-                    android:textAllCaps="true"
-                    android:textSize="12sp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-
-                <ImageView
-                    android:id="@+id/btn_eliminar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_delete_forever"
-                    android:layout_weight="1"
-                    android:background="#fff"
-                    android:layout_marginHorizontal="1dp"
-                    android:layout_marginBottom="1dp
-"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:layout_weight="1"
-                    android:background="#fff"
-                    android:padding="2dp"
-                    android:text="Lapiz Azul"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="30"
-                    android:layout_weight="1"
-                    android:background="#fff"
-                    android:layout_marginRight="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:padding="2dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:layout_weight="1"
-                    android:background="#fff"
-                    android:layout_marginRight="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:padding="2dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="150.50"
-                    android:layout_weight="1"
-                    android:background="#fff"
-                    android:layout_marginRight="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:padding="2dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="150.50"
-                    android:layout_weight="1"
-                    android:background="#fff"
-                    android:layout_marginRight="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:padding="2dp"/>
-            </TableRow>
-
-
-
-        </TableLayout>
+            android:orientation="vertical"
+            android:layout_margin="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total de Factura: "
+                android:textColor="@color/black"
+                android:textAllCaps="true"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/textV_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
