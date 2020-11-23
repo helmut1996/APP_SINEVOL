@@ -22,6 +22,14 @@
             android:gravity="center_horizontal"
             android:text="Producto:" />
 
+        <ImageView
+            android:id="@+id/imageProducto"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/prueba4" />
+
         <TextView
             android:id="@+id/id_producto"
             android:layout_width="wrap_content"
@@ -44,14 +52,14 @@
                 android:gravity="center_horizontal"
                 android:text="@string/text_cantidad" />
 
-            <TextView
-                android:id="@+id/id_cantidad"
+            <EditText
+                android:id="@+id/editTextCantidad2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="10dp"
-                android:gravity="center_horizontal"
-                android:text="5" />
+                android:ems="10"
+                android:hint="@string/text_cantidad"
+                android:inputType="number" />
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -107,8 +115,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#D82E2E"
                 app:srcCompat="@drawable/ic_baseline_delete_forever" />
+
+            <ImageButton
+                android:id="@+id/imageButtonAgregar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_baseline_add_circle" />
         </LinearLayout>
 
     </LinearLayout>

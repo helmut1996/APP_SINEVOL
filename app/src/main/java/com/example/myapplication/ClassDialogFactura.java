@@ -26,14 +26,8 @@ public class ClassDialogFactura extends DialogFragment {
         View view = inflater.inflate(R.layout.detalle_factura,null);
 
         builder.setView(view)
-                .setTitle("Cliente")
+                .setTitle("Detalle Factura")
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .setPositiveButton("Seleccionar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -41,7 +35,7 @@ public class ClassDialogFactura extends DialogFragment {
                 });
 
         producto=view.findViewById(R.id.id_producto);
-        cantidad=view.findViewById(R.id.id_cantidad);
+        cantidad=view.findViewById(R.id.editTextCantidad2);
         precio_C=view.findViewById(R.id.id_precio_cordobas);
         precio_D=view.findViewById(R.id.id_precio_dolares);
         btn_delete=view.findViewById(R.id.imageButton_Eliminar);
