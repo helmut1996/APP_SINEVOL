@@ -97,7 +97,7 @@
         android:id="@+id/btncuenta"
         android:layout_width="229dp"
         android:layout_height="94dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="132dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,12 +112,21 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
         android:text="@string/cuentas"
-        android:textColor="@color/black"
         android:textAllCaps="true"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btncuenta"
-        app:layout_constraintVertical_bias="0.933" />
+        app:layout_constraintVertical_bias="0.275" />
+
+    <ImageButton
+        android:id="@+id/CerrarSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:srcCompat="@drawable/ic_baseline_exit_to_app" />
 </androidx.constraintlayout.widget.ConstraintLayout>

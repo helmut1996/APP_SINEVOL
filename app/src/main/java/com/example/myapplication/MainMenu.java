@@ -11,8 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.example.myapplication.ConexionBD.DBConnection;
+
 public class MainMenu extends AppCompatActivity implements View.OnClickListener{
-    ImageButton btn_factura,btn_recibo,btn_cuentas;
+    ImageButton btn_factura,btn_recibo,btn_cuentas,btn_cerrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +25,13 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         btn_factura = (ImageButton)findViewById(R.id.btnfactura);
         btn_cuentas = (ImageButton) findViewById(R.id.btnrecibo);
         btn_recibo = (ImageButton) findViewById(R.id.btncuenta);
-
+        btn_cerrar= findViewById(R.id.CerrarSesion);
         btn_factura.setOnClickListener(this);
         btn_recibo.setOnClickListener(this);
         btn_cuentas.setOnClickListener(this);
+        btn_cerrar.setOnClickListener(this);
+
+        //DBConnection connection = getIntent().getExtras("conexion");
     }
 
 
@@ -41,6 +46,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
                 break;
             case R.id.btncuenta:
                 startActivity(new Intent(getApplicationContext(),Maincuentas.class));
+                break;
+            case R.id.CerrarSesion:
+
                 break;
         }
     }
