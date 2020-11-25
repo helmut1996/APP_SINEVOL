@@ -1,25 +1,39 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.myapplication.Adapter.RecycleviewAdapter;
+import com.example.myapplication.ConexionBD.DBConnection;
+import com.example.myapplication.modelos.ClasslistItemC;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainFactura extends AppCompatActivity {
 
     EditText textBuscar;
     ListView listClientes;
     ArrayAdapter<String> adadter;
+// String vendedores [] ={"Helmut Colindres","Josue Brenes","Maria Calero","Maribel Brenes","Hellen Gutierrez","Katherine Robleto1"};
 
-   // String vendedores [] ={"Helmut Colindres","Josue Brenes","Maria Calero","Maribel Brenes","Hellen Gutierrez","Katherine Robleto1"};
+   /* VARIABLE PARA RECYCLEVIEW
+    RecyclerView recyclerViewCliente;
+    RecycleviewAdapter adapterCliente;
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +42,16 @@ public class MainFactura extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Clientes");
+
+
+   /* INTEGRACION DE RECICLEVIW PERO NO MUESTRA
+   recyclerViewCliente= findViewById(R.id.listaClientes);
+    recyclerViewCliente.setLayoutManager(new LinearLayoutManager(this));
+
+    adapterCliente= new RecycleviewAdapter(obtenerClientes());
+    recyclerViewCliente.setAdapter(adapterCliente);*/
+
+
 
         textBuscar= (EditText) findViewById(R.id.editTextBuscar);
         listClientes = (ListView)findViewById(R.id.listaClientes);
@@ -79,8 +103,8 @@ public class MainFactura extends AppCompatActivity {
 
             }
         });
-    }
 
+    }
 
     public void OpenDialog(){
 
@@ -89,4 +113,21 @@ public class MainFactura extends AppCompatActivity {
     }
 
 
+
+
+    /*public List<ClasslistItemC>obtenerClientesBD(){
+
+    }*/
+
+
+/*    public List<ClasslistItemC> obtenerClientes(){
+            List<ClasslistItemC> clientes=new ArrayList<>();
+            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000));
+            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000));
+            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000));
+            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000));
+            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000));
+
+        return clientes;
+    }*/
 }
