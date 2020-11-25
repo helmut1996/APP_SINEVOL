@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity{
                     usuario.setText(rs.getString(3));
                     Intent i = new Intent(this,MainMenu.class);
                     startActivity(i);
-               //     startActivity(new Intent(getApplicationContext(), MainMenu.class));
                     finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Pin incorrecto", Toast.LENGTH_LONG).show();

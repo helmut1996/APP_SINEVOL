@@ -17,6 +17,7 @@ public class DBConnection
     private static String password = "Helmut123";
     private Connection connection = null;
     private static String url = "jdbc:jtds:sqlserver://" + ip + ":" + port + "/" + database;
+    private static DBConnection dbConnection;
 
     public DBConnection(){}
 
@@ -33,9 +34,18 @@ public class DBConnection
         }
     }
 
-    public Connection getConnection() {
-        return connection;
+    public static synchronized DBConnection getDbConnection()
+    {
+        if(dbConnection == null)
+        {
+            dbConnection = new DBConnection();
+            dbConnection.conectar();
+        }
+        return dbConnection;
     }
+
+    public Connection getConnection() { return connection; }
+
     public void setConnection(Connection connection) {
         connection = this.connection;
     }

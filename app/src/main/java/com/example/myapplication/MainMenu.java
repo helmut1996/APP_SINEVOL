@@ -13,14 +13,18 @@ import android.widget.ImageButton;
 
 import com.example.myapplication.ConexionBD.DBConnection;
 
+import java.sql.SQLException;
+
 public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     ImageButton btn_factura,btn_recibo,btn_cuentas,btn_cerrar;
+    DBConnection sesion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         getSupportActionBar().setTitle("Menu Principal");
+
 
         btn_factura = (ImageButton)findViewById(R.id.btnfactura);
         btn_cuentas = (ImageButton) findViewById(R.id.btnrecibo);
@@ -30,8 +34,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         btn_recibo.setOnClickListener(this);
         btn_cuentas.setOnClickListener(this);
         btn_cerrar.setOnClickListener(this);
-
-        //DBConnection connection = getIntent().getExtras("conexion");
     }
 
 
@@ -48,7 +50,16 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
                 startActivity(new Intent(getApplicationContext(),Maincuentas.class));
                 break;
             case R.id.CerrarSesion:
-
+                try {
+                    Intent i = new Intent(this,MainActivity.class);
+                    startActivity(i);
+                    finish();
+                    sesion = DBConnection.getDbConnection();
+                    sesion.getConnection().close();
+                }catch (SQLException e)
+                {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
