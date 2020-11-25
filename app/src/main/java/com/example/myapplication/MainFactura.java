@@ -25,15 +25,15 @@ import java.util.List;
 
 public class MainFactura extends AppCompatActivity {
 
-    EditText textBuscar;
+    /*EditText textBuscar;
     ListView listClientes;
     ArrayAdapter<String> adadter;
 // String vendedores [] ={"Helmut Colindres","Josue Brenes","Maria Calero","Maribel Brenes","Hellen Gutierrez","Katherine Robleto1"};
-
-   /* VARIABLE PARA RECYCLEVIEW
+*/
+   // VARIABLE PARA RECYCLEVIEW
     RecyclerView recyclerViewCliente;
     RecycleviewAdapter adapterCliente;
-    */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +44,16 @@ public class MainFactura extends AppCompatActivity {
         getSupportActionBar().setTitle("Clientes");
 
 
-   /* INTEGRACION DE RECICLEVIW PERO NO MUESTRA
+   // INTEGRACION DE RECICLEVIW PERO NO MUESTRA
    recyclerViewCliente= findViewById(R.id.listaClientes);
     recyclerViewCliente.setLayoutManager(new LinearLayoutManager(this));
 
     adapterCliente= new RecycleviewAdapter(obtenerClientes());
-    recyclerViewCliente.setAdapter(adapterCliente);*/
+    recyclerViewCliente.setAdapter(adapterCliente);
 
 
 
-        textBuscar= (EditText) findViewById(R.id.editTextBuscar);
+     /*-  textBuscar= (EditText) findViewById(R.id.editTextBuscar);
         listClientes = (ListView)findViewById(R.id.listaClientes);
 
         adadter =new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.Clientes));
@@ -102,32 +102,30 @@ public class MainFactura extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
 
     }
 
-    public void OpenDialog(){
+    /*public void OpenDialog(){
 
         ClassDialog dialog = new ClassDialog();
         dialog.show(getSupportFragmentManager(),"Ventana Emergente");
     }
 
+*/
 
 
 
-    /*public List<ClasslistItemC>obtenerClientesBD(){
-
-    }*/
 
 
-/*    public List<ClasslistItemC> obtenerClientes(){
+    public List<ClasslistItemC> obtenerClientes(){
             List<ClasslistItemC> clientes=new ArrayList<>();
-            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000));
-            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000));
-            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000));
-            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000));
-            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000));
+            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000,102503));
+            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000,251586));
+            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000,247812));
+            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000,12335));
+            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000,12355));
 
         return clientes;
-    }*/
+    }
 }

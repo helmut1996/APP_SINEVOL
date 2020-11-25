@@ -17,14 +17,16 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView nombrecliente,zona,direccion,credito;
+        TextView codigocliente,nombrecliente,zona,direccion,credito;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            codigocliente=itemView.findViewById(R.id.CodigoCliente);
             nombrecliente=itemView.findViewById(R.id.nombreCliente);
             zona=itemView.findViewById(R.id.cliente_zona);
             direccion=itemView.findViewById(R.id.cliente_direccion);
             credito=itemView.findViewById(R.id.cliente_credito);
+
         }
     }
 
@@ -44,10 +46,11 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.codigocliente.setText(String.valueOf(clientelists.get(position).getCodigo()));
         holder.nombrecliente.setText(clientelists.get(position).getNombre());
         holder.zona.setText(clientelists.get(position).getZona());
         holder.direccion.setText(clientelists.get(position).getDireccion());
-        holder.credito.setText((int) clientelists.get(position).getCredito());
+        holder.credito.setText(String.valueOf( clientelists.get(position).getCredito()));
     }
 
     @Override

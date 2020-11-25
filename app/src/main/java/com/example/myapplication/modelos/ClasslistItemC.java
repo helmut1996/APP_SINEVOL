@@ -3,16 +3,19 @@ package com.example.myapplication.modelos;
 public class ClasslistItemC {
 
     String nombre,zona,direccion;
-    double credito;
+    int credito;
+     int codigo;
     public ClasslistItemC() {
     }
 
-    public ClasslistItemC(String nombre, String zona, String direccion, double credito) {
+    public ClasslistItemC(String nombre, String zona, String direccion, int credito, int codigo) {
         this.nombre = nombre;
         this.zona = zona;
         this.direccion = direccion;
         this.credito = credito;
+        this.codigo = codigo;
     }
+
 
     public String getNombre() {
         return nombre;
@@ -38,11 +41,19 @@ public class ClasslistItemC {
         this.direccion = direccion;
     }
 
-    public double getCredito() {
+    public int getCredito() {
         return credito;
     }
 
-    public void setCredito(double credito) {
+    public void setCredito(int credito) {
         this.credito = credito;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 }
