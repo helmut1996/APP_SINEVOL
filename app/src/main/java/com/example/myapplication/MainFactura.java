@@ -14,7 +14,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.example.myapplication.Adapter.RecycleviewAdapter;
 import com.example.myapplication.ConexionBD.DBConnection;
@@ -23,17 +25,15 @@ import com.example.myapplication.modelos.ClasslistItemC;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFactura extends AppCompatActivity {
+public class MainFactura extends AppCompatActivity  {
 
-    /*EditText textBuscar;
-    ListView listClientes;
-    ArrayAdapter<String> adadter;
-// String vendedores [] ={"Helmut Colindres","Josue Brenes","Maria Calero","Maribel Brenes","Hellen Gutierrez","Katherine Robleto1"};
-*/
+
    // VARIABLE PARA RECYCLEVIEW
     RecyclerView recyclerViewCliente;
     RecycleviewAdapter adapterCliente;
+    //SearchView textBuscar;
 
+    List<ClasslistItemC> itemCList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,69 +43,41 @@ public class MainFactura extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Clientes");
 
-
-   // INTEGRACION DE RECICLEVIW PERO NO MUESTRA
-   recyclerViewCliente= findViewById(R.id.listaClientes);
-    recyclerViewCliente.setLayoutManager(new LinearLayoutManager(this));
-
-    adapterCliente= new RecycleviewAdapter(obtenerClientes());
-    recyclerViewCliente.setAdapter(adapterCliente);
-
-
-
-     /*-  textBuscar= (EditText) findViewById(R.id.editTextBuscar);
-        listClientes = (ListView)findViewById(R.id.listaClientes);
-
-        adadter =new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.Clientes));
-        listClientes.setAdapter(adadter);
-        textBuscar.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adadter.getFilter().filter(s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-
-            }
-        });
-
-
-        listClientes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
-                    case 0:
-                        OpenDialog();
-                        break;
-                    case 1:
-                        OpenDialog();
-                        break;
-                    case 2:
-                        OpenDialog();
-                        break;
-                    case 3:
-                        OpenDialog();
-                        break;
-                    case 4:
-                        OpenDialog();
-                        break;
-                    case 5:
-                        OpenDialog();
-                        break;
-                }
-
-            }
-        });*/
-
+        initview();
+        initValues();
     }
 
+
+    public void initview(){
+        recyclerViewCliente=findViewById(R.id.listaClientes);
+       // textBuscar=findViewById(R.id.textbuscar);
+    }
+
+    public void initValues(){
+        LinearLayoutManager manager= new LinearLayoutManager(this);
+        recyclerViewCliente.setLayoutManager(manager);
+
+        itemCList=getItemCList();
+        adapterCliente= new RecycleviewAdapter(itemCList);
+        recyclerViewCliente.setAdapter(adapterCliente);
+    }
+
+    private List<ClasslistItemC>getItemCList(){
+        List<ClasslistItemC> itemslistcliente= new ArrayList<>();
+        itemslistcliente.add(new ClasslistItemC("Maria Calero","Managua","multicentros las brisas 2C al sur ",40000,010101));
+
+        itemslistcliente.add(new ClasslistItemC("Maria Calero","Managua","multicentros las brisas 2C al sur ",40000,010101));
+
+        itemslistcliente.add(new ClasslistItemC("Maria Calero","Managua","multicentros las brisas 2C al sur ",40000,010101));
+
+        itemslistcliente.add(new ClasslistItemC("Maria Calero","Managua","multicentros las brisas 2C al sur ",40000,010101));
+
+        itemslistcliente.add(new ClasslistItemC("Maria Calero","Managua","multicentros las brisas 2C al sur ",40000,010101));
+
+        itemslistcliente.add(new ClasslistItemC("Maria Calero","Managua","multicentros las brisas 2C al sur ",40000,010101));
+
+        return itemslistcliente;
+    }
     /*public void OpenDialog(){
 
         ClassDialog dialog = new ClassDialog();
@@ -118,14 +90,6 @@ public class MainFactura extends AppCompatActivity {
 
 
 
-    public List<ClasslistItemC> obtenerClientes(){
-            List<ClasslistItemC> clientes=new ArrayList<>();
-            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000,102503));
-            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000,251586));
-            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000,247812));
-            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000,12335));
-            clientes.add(new ClasslistItemC("Maria Jose Grarcia","Managua","Waspan sur 2C al sur",40000,12355));
+    ///////// metodo de busqueda
 
-        return clientes;
-    }
 }
