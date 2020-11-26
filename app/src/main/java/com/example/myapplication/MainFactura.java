@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.myapplication.Adapter.RecycleviewAdapter;
 import com.example.myapplication.ConexionBD.DBConnection;
 import com.example.myapplication.modelos.ClasslistItemC;
+import com.google.android.material.button.MaterialButton;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,13 +34,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFactura extends AppCompatActivity  {
+public class MainFactura extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
 
    // VARIABLE PARA RECYCLEVIEW
     RecyclerView recyclerViewCliente;
     RecycleviewAdapter adapterCliente;
-    //SearchView textBuscar;
+
+  //  SearchView textBuscar;
 
     List<ClasslistItemC> itemCList;
 
@@ -58,12 +60,13 @@ public class MainFactura extends AppCompatActivity  {
 
         initview();
         initValues();
+
     }
 
 
     public void initview(){
         recyclerViewCliente=findViewById(R.id.listaClientes);
-       // textBuscar=findViewById(R.id.textbuscar);
+    //    textBuscar=findViewById(R.id.textbuscar);
     }
 
     public void initValues(){
@@ -82,7 +85,7 @@ private List<ClasslistItemC>obtenerclientesBD(){
             dbConnection.conectar();
 
             Statement st=dbConnection.getConnection().createStatement();
-            ResultSet rs=st.executeQuery("select Codigo,Nombre,Direccion,DireccionHabitacion,LimiteCredito from Clientes");
+            ResultSet rs=st.executeQuery("select Nombre,Codigo,Direccion,DireccionHabitacion,LimiteCredito from Clientes");
             while(rs.next()){
 
                 listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),rs.getString("Direccion"),rs.getString("DireccionHabitacion"),rs.getInt("Codigo"),rs.getInt("LimiteCredito")));
@@ -96,34 +99,18 @@ private List<ClasslistItemC>obtenerclientesBD(){
         return listCliiente;
 }
 
-    private List<ClasslistItemC>getItemCList(){
-        List<ClasslistItemC> itemslistcliente= new ArrayList<>();
-        itemslistcliente.add(new ClasslistItemC("Maria Calero","Managua","multicentros las brisas 2C al sur ",40000,010101));
-
-        itemslistcliente.add(new ClasslistItemC("Maria Calero","Managua","multicentros las brisas 2C al sur ",40000,010101));
-
-        itemslistcliente.add(new ClasslistItemC("Maria Calero","Managua","multicentros las brisas 2C al sur ",40000,010101));
-
-        itemslistcliente.add(new ClasslistItemC("Maria Calero","Managua","multicentros las brisas 2C al sur ",40000,010101));
-
-        itemslistcliente.add(new ClasslistItemC("Maria Calero","Managua","multicentros las brisas 2C al sur ",40000,010101));
-
-        itemslistcliente.add(new ClasslistItemC("Maria Calero","Managua","multicentros las brisas 2C al sur ",40000,010101));
-
-        return itemslistcliente;
-    }
-    /*public void OpenDialog(){
-
-        ClassDialog dialog = new ClassDialog();
-        dialog.show(getSupportFragmentManager(),"Ventana Emergente");
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
     }
 
-*/
+    @Override
+    public boolean onQueryTextChange(String newText) {
+      //  adapterCliente.filter(newText);
+        return false;
+    }
 
 
 
-
-
-    ///////// metodo de busqueda
 
 }

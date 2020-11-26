@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-public class MainListaproducto extends AppCompatActivity implements View.OnClickListener {
+public class MainListaproducto extends AppCompatActivity {
 
     EditText editBuscar;
     ImageButton btn_atras;
@@ -27,14 +27,15 @@ public class MainListaproducto extends AppCompatActivity implements View.OnClick
         getSupportActionBar().setTitle("Lista de Productos");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        editBuscar= findViewById(R.id.edit_Buscar);
+      /*  editBuscar= findViewById(R.id.edit_Buscar);
         btn_atras = findViewById(R.id.btn_Atras);
         listproducto= findViewById(R.id.list_producto);
 
-        btn_atras.setOnClickListener(this);
+
+       */
 
 
-
+/*
         adadter =new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.Productos));
         listproducto.setAdapter(adadter);
         editBuscar.addTextChangedListener(new TextWatcher() {
@@ -77,12 +78,14 @@ public class MainListaproducto extends AppCompatActivity implements View.OnClick
                 }
             }
         });
+
+
+
+
+ */
+
+
     }
 
 
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(getApplicationContext(),MainProductosCliente.class);
-        startActivity(intent);
-    }
 }

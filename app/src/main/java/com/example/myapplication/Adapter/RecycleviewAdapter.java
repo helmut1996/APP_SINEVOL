@@ -1,5 +1,7 @@
 package com.example.myapplication.Adapter;
 
+import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.MainListaproducto;
+import com.example.myapplication.MainMenu;
 import com.example.myapplication.R;
 import com.example.myapplication.modelos.ClasslistItemC;
+import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.RecyclerHolder> {
 
@@ -19,7 +27,11 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
 
     public RecycleviewAdapter(List<ClasslistItemC> items) {
         this.items = items;
-    }
+
+
+
+      }
+
 
     @NonNull
     @Override
@@ -38,6 +50,13 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
         holder.zona.setText(itemC.getZona());
         holder.direccion.setText(itemC.getDireccion());
         holder.credito.setText(String.valueOf(itemC.getCredito()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(new Intent(holder.itemView.getContext(), MainListaproducto.class));
+                holder.itemView.getContext().startActivity(intent );
+            }
+        });
     }
 
     @Override
@@ -45,8 +64,10 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
         return items.size();
     }
 
+
     public class RecyclerHolder extends RecyclerView.ViewHolder{
         TextView codigo,nombre,zona,direccion,credito;
+
 
         public RecyclerHolder(@NonNull View itemView ){
 

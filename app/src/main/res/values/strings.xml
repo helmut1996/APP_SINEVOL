@@ -40,6 +40,7 @@
     <string name="opciones">Opciones</string>
     <string name="producto">Producto</string>
     <string name="total">Total</string>
+    <string name="select">Seleccionar</string>
 
     <string-array name="Clientes">
         <item>Helmut Colindres</item>
