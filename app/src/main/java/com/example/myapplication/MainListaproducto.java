@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,13 +15,19 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.example.myapplication.Adapter.RecycleviewAdapter;
+import com.example.myapplication.Adapter.RecycleviewProductoAdapter;
+import com.example.myapplication.modelos.ModelItemsProducto;
+
+import java.util.ArrayList;
+
 public class MainListaproducto extends AppCompatActivity {
 
     EditText editBuscar;
-    ImageButton btn_atras;
-    ListView listproducto;
+    RecyclerView recyclerlistproducto;
 
-    ArrayAdapter<String> adadter;
+ArrayList<ModelItemsProducto> listaProducto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,14 +35,16 @@ public class MainListaproducto extends AppCompatActivity {
         getSupportActionBar().setTitle("Lista de Productos");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-      /*  editBuscar= findViewById(R.id.edit_Buscar);
-        btn_atras = findViewById(R.id.btn_Atras);
-        listproducto= findViewById(R.id.list_producto);
 
+        listaProducto=new ArrayList<>();
+        editBuscar= findViewById(R.id.edit_Buscar);
+        recyclerlistproducto= findViewById(R.id.list_producto);
+        recyclerlistproducto.setLayoutManager(new LinearLayoutManager(this));
 
-       */
+        llenarProductos();
 
-
+        RecycleviewProductoAdapter adapter=new RecycleviewProductoAdapter(listaProducto);
+        recyclerlistproducto.setAdapter(adapter);
 /*
         adadter =new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.Productos));
         listproducto.setAdapter(adadter);
@@ -85,6 +95,15 @@ public class MainListaproducto extends AppCompatActivity {
  */
 
 
+    }
+
+    private void llenarProductos() {
+            listaProducto.add(new ModelItemsProducto("Lapiz Azul","1/10",152.50));
+            listaProducto.add(new ModelItemsProducto("Lapiz Azul","1/10",152.50));
+            listaProducto.add(new ModelItemsProducto("Lapiz Azul","1/10",152.50));
+            listaProducto.add(new ModelItemsProducto("Lapiz Azul","1/10",152.50));
+            listaProducto.add(new ModelItemsProducto("Lapiz Azul","1/10",152.50));
+            listaProducto.add(new ModelItemsProducto("Lapiz Azul","1/10",152.50));
     }
 
 

@@ -2,6 +2,7 @@ package com.example.myapplication.Adapter;
 
 import android.content.Intent;
 import android.os.Build;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +25,12 @@ import java.util.stream.Collectors;
 public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.RecyclerHolder> {
 
     List<ClasslistItemC>items;
+    List<ClasslistItemC>originalItems;
 
     public RecycleviewAdapter(List<ClasslistItemC> items) {
         this.items = items;
-
+        this.originalItems= new ArrayList<>();
+        originalItems.addAll(items);
 
 
       }
@@ -48,8 +51,8 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
         holder.codigo.setText(String.valueOf(itemC.getCodigo()));
         holder.nombre.setText(itemC.getNombre());
         holder.zona.setText(itemC.getZona());
-        holder.direccion.setText(itemC.getDireccion());
-        holder.credito.setText(String.valueOf(itemC.getCredito()));
+        //holder.direccion.setText(itemC.getDireccion());
+        //holder.credito.setText(String.valueOf(itemC.getCredito()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,9 +68,9 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
     }
 
 
-    public class RecyclerHolder extends RecyclerView.ViewHolder{
-        TextView codigo,nombre,zona,direccion,credito;
 
+    public class RecyclerHolder extends RecyclerView.ViewHolder{
+        TextView codigo,nombre,zona;
 
         public RecyclerHolder(@NonNull View itemView ){
 
@@ -75,8 +78,13 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
             codigo=itemView.findViewById(R.id.CodigoCliente);
             nombre=itemView.findViewById(R.id.nombreCliente);
             zona=itemView.findViewById(R.id.cliente_zona);
-            direccion=itemView.findViewById(R.id.cliente_direccion);
-            credito=itemView.findViewById(R.id.cliente_credito);
+           // direccion=itemView.findViewById(R.id.cliente_direccion);
+            //credito=itemView.findViewById(R.id.cliente_credito);
         }
+
+
+    }
+
+    public class RecyclerHolderProducto {
     }
 }

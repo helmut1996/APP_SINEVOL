@@ -34,14 +34,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFactura extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class MainFactura extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
 
    // VARIABLE PARA RECYCLEVIEW
     RecyclerView recyclerViewCliente;
     RecycleviewAdapter adapterCliente;
 
-  //  SearchView textBuscar;
+    SearchView textBuscar;
 
     List<ClasslistItemC> itemCList;
 
@@ -61,12 +61,14 @@ public class MainFactura extends AppCompatActivity implements SearchView.OnQuery
         initview();
         initValues();
 
+        /// metodo de busqueda y filtrado
+
     }
 
 
     public void initview(){
         recyclerViewCliente=findViewById(R.id.listaClientes);
-    //    textBuscar=findViewById(R.id.textbuscar);
+        // textBuscar=findViewById(R.id.textbuscar);
     }
 
     public void initValues(){
@@ -78,6 +80,8 @@ public class MainFactura extends AppCompatActivity implements SearchView.OnQuery
         recyclerViewCliente.setAdapter(adapterCliente);
     }
 
+
+
 private List<ClasslistItemC>obtenerclientesBD(){
         List<ClasslistItemC>listCliiente= new ArrayList<>();
         try {
@@ -85,10 +89,9 @@ private List<ClasslistItemC>obtenerclientesBD(){
             dbConnection.conectar();
 
             Statement st=dbConnection.getConnection().createStatement();
-            ResultSet rs=st.executeQuery("select Nombre,Codigo,Direccion,DireccionHabitacion,LimiteCredito from Clientes");
+            ResultSet rs=st.executeQuery("select Nombre,Codigo,Direccion from Clientes where Nombre like '%Maria%'");
             while(rs.next()){
-
-                listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),rs.getString("Direccion"),rs.getString("DireccionHabitacion"),rs.getInt("Codigo"),rs.getInt("LimiteCredito")));
+                listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),rs.getString("Direccion"),rs.getInt("Codigo")));
 
             }
         } catch (SQLException e) {
@@ -99,6 +102,7 @@ private List<ClasslistItemC>obtenerclientesBD(){
         return listCliiente;
 }
 
+
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
@@ -106,11 +110,6 @@ private List<ClasslistItemC>obtenerclientesBD(){
 
     @Override
     public boolean onQueryTextChange(String newText) {
-      //  adapterCliente.filter(newText);
         return false;
     }
-
-
-
-
 }

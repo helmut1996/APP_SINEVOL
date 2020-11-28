@@ -33,7 +33,9 @@
             android:id="@+id/list_producto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            />
     </LinearLayout>
 </LinearLayout>
 </ScrollView>

@@ -11,7 +11,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="171dp"
-        tools:layout_editor_absoluteY="67dp">
+        tools:layout_editor_absoluteY="67dp"
+        android:layout_gravity="center_horizontal">
 
         <TextView
             android:id="@+id/textView7"
@@ -31,16 +32,11 @@
     app:iconifiedByDefault="false"
     android:layout_margin="20dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/listaClientes"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listaClientes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </ScrollView>
