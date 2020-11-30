@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -40,10 +42,9 @@ public class MainFactura extends AppCompatActivity implements SearchView.OnQuery
    // VARIABLE PARA RECYCLEVIEW
     RecyclerView recyclerViewCliente;
     RecycleviewAdapter adapterCliente;
-
-    SearchView textBuscar;
-
+    //EditText search;
     List<ClasslistItemC> itemCList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +62,28 @@ public class MainFactura extends AppCompatActivity implements SearchView.OnQuery
         initview();
         initValues();
 
-        /// metodo de busqueda y filtrado
+
 
     }
-
 
     public void initview(){
         recyclerViewCliente=findViewById(R.id.listaClientes);
-        // textBuscar=findViewById(R.id.textbuscar);
+     //   search=findViewById(R.id.edit_search);
     }
+/////////////////////////////////////////////////////////////
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+
+        MenuItem menuItem=menu.findItem(R.id.action_search);
+
+        SearchView searchView= (SearchView)menuItem.getActionView();
+        searchView.setOnQueryTextListener(this);
+        return true;
+
+    }
+///////////////////////////////////////////////////////////////////////////////
     public void initValues(){
         LinearLayoutManager manager= new LinearLayoutManager(this);
         recyclerViewCliente.setLayoutManager(manager);
@@ -79,7 +92,6 @@ public class MainFactura extends AppCompatActivity implements SearchView.OnQuery
         adapterCliente= new RecycleviewAdapter(itemCList);
         recyclerViewCliente.setAdapter(adapterCliente);
     }
-
 
 
 private List<ClasslistItemC>obtenerclientesBD(){
@@ -110,6 +122,17 @@ private List<ClasslistItemC>obtenerclientesBD(){
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        return false;
+    /////////////////////////////////////////////////////////
+        String clientInput = newText.toLowerCase();
+        List<ClasslistItemC> newList = new ArrayList<>();
+        for(ClasslistItemC name:itemCList){
+
+            if (name.getNombre().toLowerCase().contains(clientInput)){
+                newList.add(name);
+            }
+            adapterCliente.updatelist(newList);
+        }
+        return true;
+        ///////////////////////////////////////////////////////////////
     }
 }

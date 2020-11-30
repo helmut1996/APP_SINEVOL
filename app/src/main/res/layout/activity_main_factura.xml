@@ -23,16 +23,6 @@
             android:text="@string/list_clientes"
             android:textAllCaps="true"
             android:textColor="#040303" />
-
-<androidx.appcompat.widget.SearchView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textbuscar"
-    app:queryHint="buscar cliente"
-    app:iconifiedByDefault="false"
-    android:layout_margin="20dp"/>
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listaClientes"
             android:layout_width="match_parent"

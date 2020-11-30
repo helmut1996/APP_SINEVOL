@@ -85,6 +85,10 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
 
     }
 
-    public class RecyclerHolderProducto {
+    public void updatelist(List<ClasslistItemC> newlist){
+
+        items = new ArrayList<ClasslistItemC>();
+        items.addAll(newlist);
+        notifyDataSetChanged();
     }
 }

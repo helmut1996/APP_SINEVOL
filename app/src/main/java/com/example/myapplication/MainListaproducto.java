@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,7 +34,7 @@ import java.util.List;
 
     public class MainListaproducto extends AppCompatActivity {
 
-    EditText editBuscar;
+
     RecyclerView recyclerlistproducto;
 
 ArrayList<ModelItemsProducto> listaProducto;
@@ -53,64 +54,21 @@ ArrayList<ModelItemsProducto> listaProducto;
 
 
         listaProducto=new ArrayList<>();
-        editBuscar= findViewById(R.id.edit_Buscar);
         recyclerlistproducto= findViewById(R.id.list_producto);
 
         initVlaues();
-/*
-        adadter =new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.Productos));
-        listproducto.setAdapter(adadter);
-        editBuscar.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adadter.getFilter().filter(s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-
-            }
-        });
-
-
-        listproducto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
-                    case 0:
-                      Intent intent = new Intent(getApplicationContext(),MainProductosCliente.class);
-                      startActivity(intent);
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                }
-            }
-        });
-
-
-
-
- */
-
 
     }
 
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
 
-    private List<ModelItemsProducto> llenarProductosBD(){
+        getMenuInflater().inflate(R.menu.toolbar_menu_producto,menu);
+
+        return true;
+        }
+
+        private List<ModelItemsProducto> llenarProductosBD(){
         List<ModelItemsProducto> listProducto = new ArrayList<>();
         try {
 
@@ -119,12 +77,9 @@ ArrayList<ModelItemsProducto> listaProducto;
 
             Statement st = dbConnection.getConnection().createStatement();
             ResultSet rs = st.executeQuery("\n" +
-                    "\n" +
                     "select concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,um.Nombre as UM, i.Precio1 from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida");
 
             while (rs.next()){
-
-
 
                 listProducto.add(new ModelItemsProducto(rs.getString("Nombre"),rs.getString("UM"),rs.getDouble("Precio1") ));
             }
@@ -143,15 +98,5 @@ ArrayList<ModelItemsProducto> listaProducto;
         recyclerlistproducto.setAdapter(adapter);
 
     }
-
-    private void llenarProductos() {
-            listaProducto.add(new ModelItemsProducto("Lapiz Azul Helmut Colindres","1/10",152.50));
-            listaProducto.add(new ModelItemsProducto("Lapiz Azul helmut Colindres","1/10",152.50));
-            listaProducto.add(new ModelItemsProducto("Lapiz Azul helkmut","1/10",152.50));
-            listaProducto.add(new ModelItemsProducto("Lapiz Azul helmut","1/10",152.50));
-            listaProducto.add(new ModelItemsProducto("Lapiz Azul helmut","1/10",152.50));
-            listaProducto.add(new ModelItemsProducto("Lapiz Azul helmut colindres","1/10",152.50));
-    }
-
 
 }

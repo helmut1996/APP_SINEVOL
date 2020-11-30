@@ -24,11 +24,6 @@
             android:textAllCaps="true"
             android:textColor="#040303" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_Buscar"
-            android:layout_margin="20dp"/>
 
 
         <androidx.recyclerview.widget.RecyclerView
