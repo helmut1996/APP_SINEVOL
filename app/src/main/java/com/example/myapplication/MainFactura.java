@@ -36,7 +36,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFactura extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class MainFactura extends AppCompatActivity {
 
 
    // VARIABLE PARA RECYCLEVIEW
@@ -44,6 +44,7 @@ public class MainFactura extends AppCompatActivity implements SearchView.OnQuery
     RecycleviewAdapter adapterCliente;
     //EditText search;
     List<ClasslistItemC> itemCList;
+    int id;
 
 
     @Override
@@ -59,6 +60,7 @@ public class MainFactura extends AppCompatActivity implements SearchView.OnQuery
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Clientes");
 
+        id=getIntent().getIntExtra("Id",0);
         initview();
         initValues();
 
@@ -78,8 +80,8 @@ public class MainFactura extends AppCompatActivity implements SearchView.OnQuery
 
         MenuItem menuItem=menu.findItem(R.id.action_search);
 
-        SearchView searchView= (SearchView)menuItem.getActionView();
-        searchView.setOnQueryTextListener(this);
+  //      SearchView searchView= (SearchView)menuItem.getActionView();
+    //    searchView.setOnQueryTextListener(this);
         return true;
 
     }
@@ -101,7 +103,7 @@ private List<ClasslistItemC>obtenerclientesBD(){
             dbConnection.conectar();
 
             Statement st=dbConnection.getConnection().createStatement();
-            ResultSet rs=st.executeQuery("select Nombre,Codigo,Direccion from Clientes where Nombre like '%Maria%'");
+            ResultSet rs=st.executeQuery("select Nombre,Codigo,Direccion from Clientes where IdVendedor='" + id + "'");
             while(rs.next()){
                 listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),rs.getString("Direccion"),rs.getInt("Codigo")));
 
@@ -114,13 +116,15 @@ private List<ClasslistItemC>obtenerclientesBD(){
         return listCliiente;
 }
 
-
+/*
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
     }
 
+
     @Override
+
     public boolean onQueryTextChange(String newText) {
     /////////////////////////////////////////////////////////
         String clientInput = newText.toLowerCase();
@@ -134,5 +138,5 @@ private List<ClasslistItemC>obtenerclientesBD(){
         }
         return true;
         ///////////////////////////////////////////////////////////////
-    }
+    }*/
 }
