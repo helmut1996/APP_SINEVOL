@@ -72,7 +72,7 @@ public class MainFactura extends AppCompatActivity {
         recyclerViewCliente=findViewById(R.id.listaClientes);
      //   search=findViewById(R.id.edit_search);
     }
-/////////////////////////////////////////////////////////////
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -85,7 +85,7 @@ public class MainFactura extends AppCompatActivity {
         return true;
 
     }
-///////////////////////////////////////////////////////////////////////////////
+
     public void initValues(){
         LinearLayoutManager manager= new LinearLayoutManager(this);
         recyclerViewCliente.setLayoutManager(manager);
@@ -103,7 +103,8 @@ private List<ClasslistItemC>obtenerclientesBD(){
             dbConnection.conectar();
 
             Statement st=dbConnection.getConnection().createStatement();
-            ResultSet rs=st.executeQuery("select Nombre,Codigo,Direccion from Clientes where IdVendedor='" + id + "'");
+
+            ResultSet rs=st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc");
             while(rs.next()){
                 listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),rs.getString("Direccion"),rs.getInt("Codigo")));
 
@@ -126,7 +127,7 @@ private List<ClasslistItemC>obtenerclientesBD(){
     @Override
 
     public boolean onQueryTextChange(String newText) {
-    /////////////////////////////////////////////////////////
+
         String clientInput = newText.toLowerCase();
         List<ClasslistItemC> newList = new ArrayList<>();
         for(ClasslistItemC name:itemCList){
@@ -137,6 +138,6 @@ private List<ClasslistItemC>obtenerclientesBD(){
             adapterCliente.updatelist(newList);
         }
         return true;
-        ///////////////////////////////////////////////////////////////
+
     }*/
 }
