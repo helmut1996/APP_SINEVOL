@@ -65,6 +65,10 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
         return items.size();
     }
 
+    public void filterList(ArrayList<ClasslistItemC> filteredlist) {
+    items=filteredlist;
+    notifyDataSetChanged();
+    }
 
 
     public class RecyclerHolder extends RecyclerView.ViewHolder{
@@ -81,10 +85,5 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
 
     }
 
-    public void updatelist(List<ClasslistItemC> newlist){
 
-        items = new ArrayList<ClasslistItemC>();
-        items.addAll(newlist);
-        notifyDataSetChanged();
-    }
 }

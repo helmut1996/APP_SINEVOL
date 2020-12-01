@@ -23,6 +23,14 @@
             android:text="@string/list_clientes"
             android:textAllCaps="true"
             android:textColor="#040303" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/text_buscar"
+            android:id="@+id/search"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listaClientes"
             android:layout_width="match_parent"

@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,8 +37,10 @@ import java.util.List;
 
 
     RecyclerView recyclerlistproducto;
+    EditText search2;
 
-ArrayList<ModelItemsProducto> listaProducto;
+    RecycleviewProductoAdapter adaptadorProducto;
+    List<ModelItemsProducto> listaProducto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +57,38 @@ ArrayList<ModelItemsProducto> listaProducto;
 
 
         listaProducto=new ArrayList<>();
-        recyclerlistproducto= findViewById(R.id.list_producto);
-
+        init();
         initVlaues();
+        search2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                filter2(s.toString());
+            }
+        });
 
     }
 
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.toolbar_menu_producto,menu);
-
-        return true;
+        private void filter2(String text) {
+        ArrayList<ModelItemsProducto> filterlistP = new ArrayList<>();
+        for (ModelItemsProducto item:listaProducto){
+            if (item.getNombreP().toUpperCase().contains(search2.getText().toString().toUpperCase())){
+                filterlistP.add(item);
+            }
         }
+            adaptadorProducto.filterListProducto(filterlistP);
+        }
+
 
         private List<ModelItemsProducto> llenarProductosBD(){
         List<ModelItemsProducto> listProducto = new ArrayList<>();
@@ -77,7 +99,7 @@ ArrayList<ModelItemsProducto> listaProducto;
 
             Statement st = dbConnection.getConnection().createStatement();
             ResultSet rs = st.executeQuery("\n" +
-                    "select concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,um.Nombre as UM, i.Precio1 from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida");
+                    "select concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,um.Nombre as UM, i.Precio1 from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida and Estado='Activo'");
 
             while (rs.next()){
 
@@ -90,13 +112,17 @@ ArrayList<ModelItemsProducto> listaProducto;
         return listProducto;
     }
 
-    private void initVlaues(){
-        recyclerlistproducto.setLayoutManager(new LinearLayoutManager(this));
-        RecycleviewProductoAdapter adapter=new RecycleviewProductoAdapter(listaProducto);
-      listaProducto= (ArrayList<ModelItemsProducto>) llenarProductosBD();
-      adapter= new RecycleviewProductoAdapter(listaProducto);
-        recyclerlistproducto.setAdapter(adapter);
+    private void init(){
 
+        recyclerlistproducto= findViewById(R.id.list_producto);
+        search2 = findViewById(R.id.search2);
+    }
+    private void initVlaues(){
+       LinearLayoutManager manager= new LinearLayoutManager(this);
+       recyclerlistproducto.setLayoutManager(manager);
+       listaProducto=llenarProductosBD();
+       adaptadorProducto= new RecycleviewProductoAdapter((ArrayList<ModelItemsProducto>) listaProducto);
+       recyclerlistproducto.setAdapter(adaptadorProducto);
     }
 
 }

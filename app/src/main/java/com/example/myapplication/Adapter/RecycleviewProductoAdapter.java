@@ -1,5 +1,6 @@
 package com.example.myapplication.Adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.MainFacruraList;
+import com.example.myapplication.MainProductosCliente;
 import com.example.myapplication.R;
 import com.example.myapplication.modelos.ModelItemsProducto;
 
@@ -34,6 +37,13 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
         holder.tvnombreP.setText(listaProducto.get(position).getNombreP());
         holder.tvunidadM.setText(listaProducto.get(position).getUnidadmedidaP());
         holder.tvprecio.setText(String.valueOf(listaProducto.get(position).getPrecioP()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.itemView.getContext(), MainProductosCliente.class);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -41,6 +51,11 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
         return listaProducto.size();
     }
 
+
+    public void filterListProducto(ArrayList<ModelItemsProducto> filterlistp) {
+      listaProducto=filterlistp;
+      notifyDataSetChanged();
+    }
     public class ViewHolderProducto extends RecyclerView.ViewHolder {
         TextView tvnombreP,tvunidadM,tvprecio;
 
