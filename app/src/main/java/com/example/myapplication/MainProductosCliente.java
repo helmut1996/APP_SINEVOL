@@ -5,10 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.myapplication.ConexionBD.DBConnection;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
 ImageButton IbuttomBuscar,IbuttonInicio,IbuttonAgregar,IbuttonSiguiente;
@@ -52,9 +60,27 @@ Spinner precios,monedas;
         monedas.setAdapter(adapter);
 
         ////////////spinner de los precios
-        ArrayAdapter<CharSequence> adapter1 =ArrayAdapter.createFromResource(this, R.array.precios, android.R.layout.simple_spinner_item);
+        DBConnection sesion;
+        sesion = DBConnection.getDbConnection();
+        String query = "select Precio1 from Inventario";
+        try {
+            Statement stm = sesion.getConnection().createStatement();
+            ResultSet rs = stm.executeQuery(query);
+
+            ArrayList<String> data = new ArrayList<>();
+            while (rs.next()) {
+                String id = rs.getString(1);// value of database
+                data.add(id);
+            }
+            ArrayAdapter NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
+            precios.setAdapter(NoCoreAdapter);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        /*ArrayAdapter<CharSequence> adapter1 =ArrayAdapter.createFromResource(this, R.array.precios, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        precios.setAdapter(adapter1);
+        precios.setAdapter(adapter1);*/
     }
 
     @Override
