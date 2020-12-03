@@ -41,6 +41,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), MainProductosCliente.class);
+
                 holder.itemView.getContext().startActivity(intent);
             }
         });

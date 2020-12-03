@@ -62,20 +62,23 @@ Spinner precios,monedas;
         ////////////spinner de los precios
         DBConnection sesion;
         sesion = DBConnection.getDbConnection();
-        String query = "select Precio1 from Inventario";
+        String query = "select Precio1, Precio2,Precio3,Precio4,Precio5 from Inventario where idInventario = 5";
         try {
             Statement stm = sesion.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
 
             ArrayList<String> data = new ArrayList<>();
             while (rs.next()) {
-                String id = rs.getString(1);// value of database
-                data.add(id);
+                data.add(rs.getString("Precio1"));
+                data.add(rs.getString("Precio2"));
+                data.add(rs.getString("Precio3"));
+                data.add(rs.getString("Precio4"));
+                data.add(rs.getString("Precio5"));
             }
             ArrayAdapter NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
             precios.setAdapter(NoCoreAdapter);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         /*ArrayAdapter<CharSequence> adapter1 =ArrayAdapter.createFromResource(this, R.array.precios, android.R.layout.simple_spinner_item);
