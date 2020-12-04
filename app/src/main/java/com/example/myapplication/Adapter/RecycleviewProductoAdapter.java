@@ -1,5 +1,6 @@
 package com.example.myapplication.Adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
     public ViewHolderProducto onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.itemproductos,null,false);
         return new ViewHolderProducto(view);
+
     }
 
     @Override
@@ -37,14 +39,8 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
         holder.tvnombreP.setText(listaProducto.get(position).getNombreP());
         holder.tvunidadM.setText(listaProducto.get(position).getUnidadmedidaP());
         holder.tvprecio.setText(String.valueOf(listaProducto.get(position).getPrecioP()));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(), MainProductosCliente.class);
+        holder.tvproducto.setText(listaProducto.get(position).getProducto());
 
-                holder.itemView.getContext().startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -58,14 +54,27 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
       notifyDataSetChanged();
     }
     public class ViewHolderProducto extends RecyclerView.ViewHolder {
-        TextView tvnombreP,tvunidadM,tvprecio;
+        TextView tvnombreP,tvunidadM,tvprecio,tvproducto;
 
         public ViewHolderProducto(@NonNull View itemView) {
             super(itemView);
 
+            Context context = itemView.getContext();
             tvnombreP= itemView.findViewById(R.id.Nombreproducto);
             tvunidadM= itemView.findViewById(R.id.unidadmedidaP);
             tvprecio= itemView.findViewById(R.id.Preciopeucto);
+            tvproducto = itemView.findViewById(R.id.txtProducto);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   Intent intent=new Intent(context,MainProductosCliente.class);
+                    intent.putExtra("NombreP",tvproducto.getText());
+                    intent.putExtra("UnidadMed",tvunidadM.getText());
+                    context.startActivity(intent);
+                }
+            });
+
         }
     }
 }

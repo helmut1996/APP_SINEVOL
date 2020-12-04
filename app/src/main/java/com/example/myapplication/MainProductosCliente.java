@@ -19,9 +19,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
-ImageButton IbuttomBuscar,IbuttonInicio,IbuttonAgregar,IbuttonSiguiente;
-TextView textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5;
+ImageButton IbuttonInicio,IbuttonAgregar,IbuttonSiguiente;
+TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5;
 Spinner precios,monedas;
+/////////
+String producto;
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
@@ -31,12 +33,12 @@ Spinner precios,monedas;
         getSupportActionBar().setTitle("Productos");
 
         ///////// Botones
-        IbuttomBuscar = findViewById(R.id.btn_buscar);
         IbuttonInicio = findViewById(R.id.btn_Inicio);
         IbuttonAgregar = findViewById(R.id.btn_Agregar);
         IbuttonSiguiente = findViewById(R.id.btn_siguente);
 
         /////////// campos de texto
+        tvnombreproducto=findViewById(R.id.tvnombreP);
         textcontar=findViewById(R.id.text_contar);
         textinfo1=findViewById(R.id.text_info1);
         textinfo2=findViewById(R.id.text_info2);
@@ -48,10 +50,21 @@ Spinner precios,monedas;
         precios = findViewById(R.id.spinerPrecios);
         monedas = findViewById(R.id.spinner_tipo_moneda);
 
-        IbuttomBuscar.setOnClickListener(this);
         IbuttonInicio.setOnClickListener(this);
         IbuttonAgregar.setOnClickListener(this);
         IbuttonSiguiente.setOnClickListener(this);
+
+////////////////////////////////////////////////////////////////////
+        String NombrePreducto;
+        Bundle extra=getIntent().getExtras();
+
+        if (extra !=null){
+            NombrePreducto= extra.getString("NombreP");
+            producto = extra.getString("NombreP");
+            tvnombreproducto.setText(NombrePreducto);
+            textinfo1.setText(extra.getString("UnidadMed"));
+        }
+
 
 
         /////////Spinner del tipo de moneda
@@ -62,7 +75,8 @@ Spinner precios,monedas;
         ////////////spinner de los precios
         DBConnection sesion;
         sesion = DBConnection.getDbConnection();
-        String query = "select Precio1, Precio2,Precio3,Precio4,Precio5 from Inventario where idInventario = 5";
+
+        String query = "select Precio1, Precio2,Precio3,Precio4,Precio5 from Inventario where Nombre like '%"+producto+"%'";
         try {
             Statement stm = sesion.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
@@ -81,9 +95,6 @@ Spinner precios,monedas;
             e.printStackTrace();
         }
 
-        /*ArrayAdapter<CharSequence> adapter1 =ArrayAdapter.createFromResource(this, R.array.precios, android.R.layout.simple_spinner_item);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        precios.setAdapter(adapter1);*/
     }
 
     @Override
@@ -97,14 +108,10 @@ Spinner precios,monedas;
                 Intent intent1 = new Intent(getApplicationContext(),MainFacruraList.class);
                 startActivity(intent1);
                 break;
-
-            case R.id.btn_buscar:
-                //implementar buscador
-                Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
-                startActivity(intent2);
-                break;
             case R.id.btn_Agregar:
                 // implementar agregar
+                Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
+                startActivity(intent2);
                 break;
         }
     }

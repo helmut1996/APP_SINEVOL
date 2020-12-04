@@ -2,15 +2,18 @@ package com.example.myapplication.modelos;
 public class ModelItemsProducto {
     private String nombreP;
     private String unidadmedidaP;
+
+    private String producto;
     private double precioP;
 
     public ModelItemsProducto() {
     }
 
-    public ModelItemsProducto(String nombreP, String unidadmedidaP, double precioP) {
+    public ModelItemsProducto(String nombreP, String unidadmedidaP, double precioP, String producto) {
         this.nombreP = nombreP;
         this.unidadmedidaP = unidadmedidaP;
         this.precioP = precioP;
+        this.producto = producto;
     }
 
     public String getNombreP() {
@@ -36,4 +39,10 @@ public class ModelItemsProducto {
     public void setPrecioP(double precioP) {
         this.precioP = precioP;
     }
+
+    public String getProducto() {return producto; }
+
+    public void setProducto(String producto) { this.producto = producto; }
+
+
 }
