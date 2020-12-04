@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
 ImageButton IbuttonInicio,IbuttonAgregar,IbuttonSiguiente;
-TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5;
+TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida;
 Spinner precios,monedas;
 /////////
 String producto;
@@ -45,7 +45,7 @@ String producto;
         textinfo3=findViewById(R.id.text_info3);
         textinfo4=findViewById(R.id.text_info4);
         textinfo5=findViewById(R.id.text_info5);
-
+        tvunidadmedida=findViewById(R.id.text_unidadM);
         ////////// Spinmer
         precios = findViewById(R.id.spinerPrecios);
         monedas = findViewById(R.id.spinner_tipo_moneda);
@@ -62,7 +62,13 @@ String producto;
             NombrePreducto= extra.getString("NombreP");
             producto = extra.getString("NombreP");
             tvnombreproducto.setText(NombrePreducto);
-            textinfo1.setText(extra.getString("UnidadMed"));
+            tvunidadmedida.setText(extra.getString("UnidadMed"));
+            textinfo1.setText(extra.getString("info1"));
+            textinfo2.setText(extra.getString("info2"));
+            textinfo3.setText(extra.getString("info3"));
+            textinfo4.setText(extra.getString("info4"));
+            textinfo5.setText(extra.getString("info5"));
+            textcontar.setText(extra.getString("stock"));
         }
 
 

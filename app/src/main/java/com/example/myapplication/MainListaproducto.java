@@ -99,11 +99,11 @@ import java.util.List;
 
             Statement st = dbConnection.getConnection().createStatement();
             ResultSet rs = st.executeQuery("\n" +
-                    "select concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,i.Nombre as Producto,um.Nombre as UM, i.Precio1 from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida and Estado='Activo'");
+                    "select concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,i.Nombre as Producto,um.Nombre as UM, i.Precio1,ad.info1,ad.info2,ad.info3,ad.info4,ad.info5,i.Stock from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida inner join InventarioInfoAdic ad on i.idInventario= ad.idInventario where i.Estado = 'Activo'");
 
             while (rs.next()){
 
-                listProducto.add(new ModelItemsProducto(rs.getString("Nombre"),rs.getString("UM"),rs.getDouble("Precio1"), rs.getString("Producto") ));
+                listProducto.add(new ModelItemsProducto(rs.getString("Nombre"),rs.getString("UM"),rs.getDouble("Precio1"), rs.getString("Producto"),rs.getString("info1"),rs.getString("info2"),rs.getString("info3"),rs.getString("info4"),rs.getString("info5"),rs.getInt("Stock") ));
             }
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();

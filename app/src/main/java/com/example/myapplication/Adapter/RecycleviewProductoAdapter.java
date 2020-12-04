@@ -40,6 +40,12 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
         holder.tvunidadM.setText(listaProducto.get(position).getUnidadmedidaP());
         holder.tvprecio.setText(String.valueOf(listaProducto.get(position).getPrecioP()));
         holder.tvproducto.setText(listaProducto.get(position).getProducto());
+        holder.tvinfo1.setText(listaProducto.get(position).getInfo1());
+        holder.tvinfo2.setText(listaProducto.get(position).getInfo2());
+        holder.tvinfo3.setText(listaProducto.get(position).getInfo3());
+        holder.tvinfo4.setText(listaProducto.get(position).getInfo4());
+        holder.tvinfo5.setText(listaProducto.get(position).getInfo5());
+        holder.tvcantidad.setText(String.valueOf(listaProducto.get(position).getStock()));
 
     }
 
@@ -54,7 +60,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
       notifyDataSetChanged();
     }
     public class ViewHolderProducto extends RecyclerView.ViewHolder {
-        TextView tvnombreP,tvunidadM,tvprecio,tvproducto;
+        TextView tvnombreP,tvunidadM,tvprecio,tvproducto,tvinfo1,tvinfo2,tvinfo3,tvinfo4,tvinfo5,tvcantidad;
 
         public ViewHolderProducto(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +70,12 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
             tvunidadM= itemView.findViewById(R.id.unidadmedidaP);
             tvprecio= itemView.findViewById(R.id.Preciopeucto);
             tvproducto = itemView.findViewById(R.id.txtProducto);
+            tvinfo1=itemView.findViewById(R.id.info1);
+            tvinfo2=itemView.findViewById(R.id.info2);
+            tvinfo3=itemView.findViewById(R.id.info3);
+            tvinfo4=itemView.findViewById(R.id.info4);
+            tvinfo5=itemView.findViewById(R.id.info5);
+            tvcantidad=itemView.findViewById(R.id.StockCantidad);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,6 +83,12 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
                    Intent intent=new Intent(context,MainProductosCliente.class);
                     intent.putExtra("NombreP",tvproducto.getText());
                     intent.putExtra("UnidadMed",tvunidadM.getText());
+                    intent.putExtra("info1",tvinfo1.getText());
+                    intent.putExtra("info2",tvinfo2.getText());
+                    intent.putExtra("info3",tvinfo3.getText());
+                    intent.putExtra("info4",tvinfo4.getText());
+                    intent.putExtra("info5",tvinfo5.getText());
+                    intent.putExtra("stock",tvcantidad.getText());
                     context.startActivity(intent);
                 }
             });

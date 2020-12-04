@@ -42,7 +42,42 @@
                 android:layout_height="wrap_content"
                 android:text="precio"
                 android:visibility="gone" />
-
+            <TextView
+                android:id="@+id/info1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="precio"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/info2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="precio"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/info3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="precio"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/info4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="precio"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/info5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="precio"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/StockCantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="precio"
+                android:visibility="gone" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
