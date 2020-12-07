@@ -10,11 +10,14 @@ public class ModelItemsProducto {
     private int stock;
     private String producto;
     private double precioP;
+    private String img;
 
     public ModelItemsProducto() {
     }
 
-    public ModelItemsProducto(String nombreP, String unidadmedidaP, double precioP, String producto, String info1, String info2, String info3, String info4, String info5, int stock) {
+
+
+    public ModelItemsProducto(String nombreP, String unidadmedidaP, double precioP, String producto, String info1, String info2, String info3, String info4, String info5, String img, int stock) {
         this.nombreP = nombreP;
         this.unidadmedidaP = unidadmedidaP;
         this.precioP = precioP;
@@ -24,6 +27,7 @@ public class ModelItemsProducto {
         this.info3= info3;
         this.info4= info4;
         this.info5= info5;
+        this.img= img;
         this.stock= stock;
     }
 
@@ -74,6 +78,10 @@ public class ModelItemsProducto {
     public String getInfo5() { return info5; }
 
     public void setInfo5(String info5) { this.info5 = info5; }
+
+    public String getImg() { return img; }
+
+    public void setImg(String img) { this.img = img; }
 
     public int getStock() { return stock; }
 

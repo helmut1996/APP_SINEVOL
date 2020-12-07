@@ -45,6 +45,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
         holder.tvinfo3.setText(listaProducto.get(position).getInfo3());
         holder.tvinfo4.setText(listaProducto.get(position).getInfo4());
         holder.tvinfo5.setText(listaProducto.get(position).getInfo5());
+        holder.tvimagen.setText(listaProducto.get(position).getImg());
         holder.tvcantidad.setText(String.valueOf(listaProducto.get(position).getStock()));
 
     }
@@ -60,7 +61,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
       notifyDataSetChanged();
     }
     public class ViewHolderProducto extends RecyclerView.ViewHolder {
-        TextView tvnombreP,tvunidadM,tvprecio,tvproducto,tvinfo1,tvinfo2,tvinfo3,tvinfo4,tvinfo5,tvcantidad;
+        TextView tvnombreP,tvunidadM,tvprecio,tvproducto,tvinfo1,tvinfo2,tvinfo3,tvinfo4,tvinfo5,tvcantidad,tvimagen;
 
         public ViewHolderProducto(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +76,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
             tvinfo3=itemView.findViewById(R.id.info3);
             tvinfo4=itemView.findViewById(R.id.info4);
             tvinfo5=itemView.findViewById(R.id.info5);
+            tvimagen=itemView.findViewById(R.id.imagenProducto);
             tvcantidad=itemView.findViewById(R.id.StockCantidad);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +90,9 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
                     intent.putExtra("info3",tvinfo3.getText());
                     intent.putExtra("info4",tvinfo4.getText());
                     intent.putExtra("info5",tvinfo5.getText());
+                    intent.putExtra("imagenproducto",tvimagen.getText());
                     intent.putExtra("stock",tvcantidad.getText());
+
                     context.startActivity(intent);
                 }
             });

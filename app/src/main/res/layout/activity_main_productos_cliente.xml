@@ -26,17 +26,26 @@
             android:text="@string/tinte"
             android:textAllCaps="true"
             android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/imagenBD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="imagen" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="180dp"
-    android:src="@drawable/prueba4"
-    android:layout_weight="1"/>
+            <ImageView
+                android:id="@+id/imgProducto"
+                android:layout_width="wrap_content"
+                android:layout_height="180dp"
+                android:layout_weight="1"
+                android:src="@drawable/c19_02_492"/>
         </LinearLayout>
 
 
@@ -254,6 +263,17 @@
 
         <TextView
             android:id="@+id/text_contar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="0"
+            android:textAllCaps="true"
+            android:textColor="#0E0E0E"
+            android:textSize="20dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/contadorproducto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"

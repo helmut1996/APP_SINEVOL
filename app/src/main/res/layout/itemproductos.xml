@@ -79,6 +79,12 @@
                 android:text="precio"
                 android:visibility="gone" />
             <TextView
+                android:id="@+id/imagenProducto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="precio"
+                android:visibility="gone" />
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/black" />
