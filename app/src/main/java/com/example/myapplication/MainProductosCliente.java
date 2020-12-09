@@ -27,7 +27,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
 ImageButton IbuttonInicio,IbuttonAgregar,IbuttonSiguiente;
 TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvcontadorproducto,tvimagenBD;
 Spinner precios,monedas;
@@ -45,8 +45,7 @@ String producto;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Productos");
 /////////////////////////////////Implementando shared preferences////////////////////////////
-        SharedPreferences  preferences = getSharedPreferences("agregandoproducto",Context.MODE_PRIVATE);
-        tvcontadorproducto.setText(preferences.getString("nombre",""));
+
 
 //////////////////////////////Implementando shared preferences////////////////////////////
 
@@ -78,7 +77,7 @@ String producto;
         IbuttonSiguiente.setOnClickListener(this);
 ///////////////////////////////mandando a llamar las imagenes libreria ////////////////////////////////////////////////////
    //     Glide.with(this).load("Este equipo\\T1\\Almacenamiento interno\\DCIM\\Camera\\IMG_20201207_111450").into(img);
-//////////////////////////////pasando datos por parametros entre anctivitys//////////////////////////////////////
+//////////////////////////////pasando datos por parametros entre anctivitys////////////////////////////////////////////////
         String NombrePreducto;
         Bundle extra=getIntent().getExtras();
 
@@ -107,6 +106,63 @@ String producto;
         monedas.setAdapter(adapter);
 
         ////////////spinner de los precios
+
+        monedas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(monedas.getSelectedItem().toString().equals("Cordobas"))
+                {
+                    precios.setAdapter(precioCordoba());
+                }
+                else
+                {
+                    precios.setAdapter(precioDolar());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+       // cargarImageFile();
+    }
+
+
+    public void requestStoragePermission(){
+
+    }
+
+    public ArrayAdapter precioDolar()
+    {
+        ArrayAdapter NoCoreAdapter=null;
+        DBConnection sesion;
+        sesion = DBConnection.getDbConnection();
+
+        String query = "select PrecioDolar1, PrecioDolar2,PrecioDolar3,PrecioDolar4,PrecioDolar5 from Inventario where Nombre like '%"+producto+"%'";
+        try {
+            Statement stm = sesion.getConnection().createStatement();
+            ResultSet rs = stm.executeQuery(query);
+
+            ArrayList<String> data = new ArrayList<>();
+            while (rs.next()) {
+                data.add(rs.getString("PrecioDolar1"));
+                data.add(rs.getString("PrecioDolar2"));
+                data.add(rs.getString("PrecioDolar3"));
+                data.add(rs.getString("PrecioDolar4"));
+                data.add(rs.getString("PrecioDolar5"));
+            }
+            NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return NoCoreAdapter;
+    }
+
+    public ArrayAdapter precioCordoba()
+    {
+        ArrayAdapter NoCoreAdapter=null;
         DBConnection sesion;
         sesion = DBConnection.getDbConnection();
 
@@ -123,19 +179,11 @@ String producto;
                 data.add(rs.getString("Precio4"));
                 data.add(rs.getString("Precio5"));
             }
-            ArrayAdapter NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
-            precios.setAdapter(NoCoreAdapter);
+            NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-       // cargarImageFile();
-    }
-
-
-    public void requestStoragePermission(){
-
+        return NoCoreAdapter;
     }
 /*    public void cargarImageFile(){
         File file= new File("/Storage/Download/foto.jpg");
@@ -158,16 +206,13 @@ String producto;
                 break;
             case R.id.btn_Agregar:
                 // implementar agregar
-                SharedPreferences preferences = getSharedPreferences("agregandoproducto",Context.MODE_PRIVATE);
-                SharedPreferences.Editor Objeditor = preferences.edit();
-                Objeditor.putString("nombre",tvnombreproducto.getText().toString());
 
                     Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
                     startActivity(intent2);
                 break;
         }
     }
-
+    /*
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -176,5 +221,5 @@ String producto;
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
+    }*/
 }

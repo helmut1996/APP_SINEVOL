@@ -1,4 +1,7 @@
 package com.example.myapplication.modelos;
+
+import java.util.ArrayList;
+
 public class ModelItemsProducto {
     private String nombreP;
     private String unidadmedidaP;
