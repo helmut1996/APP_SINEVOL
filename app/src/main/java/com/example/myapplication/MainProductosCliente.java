@@ -1,12 +1,15 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.ConexionBD.DBConnection;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.sql.ResultSet;
@@ -44,11 +48,6 @@ String producto;
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Productos");
-/////////////////////////////////Implementando shared preferences////////////////////////////
-
-
-//////////////////////////////Implementando shared preferences////////////////////////////
-
 
         ///////// Botones
         IbuttonInicio = findViewById(R.id.btn_Inicio);
@@ -56,7 +55,7 @@ String producto;
         IbuttonSiguiente = findViewById(R.id.btn_siguente);
 
         ////////////imagen producto
-        img=findViewById(R.id.imageProducto);
+        img=findViewById(R.id.imgProducto);
         /////////// campos de texto
         tvnombreproducto=findViewById(R.id.tvnombreP);
         textcontar=findViewById(R.id.text_contar);
@@ -75,9 +74,7 @@ String producto;
         IbuttonInicio.setOnClickListener(this);
         IbuttonAgregar.setOnClickListener(this);
         IbuttonSiguiente.setOnClickListener(this);
-///////////////////////////////mandando a llamar las imagenes libreria ////////////////////////////////////////////////////
-   //     Glide.with(this).load("Este equipo\\T1\\Almacenamiento interno\\DCIM\\Camera\\IMG_20201207_111450").into(img);
-//////////////////////////////pasando datos por parametros entre anctivitys////////////////////////////////////////////////
+
         String NombrePreducto;
         Bundle extra=getIntent().getExtras();
 
@@ -95,10 +92,7 @@ String producto;
             tvimagenBD.setText(extra.getString("imagenproducto"));
 
         }
-
-
 //////////////////////////////pasando datos por parametros entre activitys/////////////////////////////////
-
 
         /////////Spinner del tipo de moneda
         ArrayAdapter<CharSequence> adapter  = ArrayAdapter.createFromResource(this, R.array.tipo_moneda, android.R.layout.simple_spinner_item);
@@ -125,13 +119,36 @@ String producto;
 
             }
         });
+/////////////////////////////////Metodo para permisos de las imagenes/////////////////////////////////////////////
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            //Verifica permisos para Android 6.0+
+            checkExternalStoragePermission();
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-       // cargarImageFile();
+///////////////////////////////mandando a llamar las imagenes libreria ////////////////////////////////////////////////////
+                                        cargarImagen();
+//////////////////////////////pasando datos por parametros entre anctivitys////////////////////////////////////////////////
     }
 
 
-    public void requestStoragePermission(){
+    private void checkExternalStoragePermission() {
+        int permissionCheck = ContextCompat.checkSelfPermission(
+                this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            Log.i("Mensaje", "No se tiene permiso para leer.");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 225);
+        } else {
+            Log.i("Mensaje", "Se tiene permiso para leer!");
+        }
+    }
 
+    public void cargarImagen(){
+        File file= new File("///storage/emulated/0/imgprueba/19-02-196.jpg");
+        Picasso.get().load(file)
+                .placeholder(R.drawable.bucandoimg)
+                .error(R.drawable.error)
+                .into(img);
     }
 
     public ArrayAdapter precioDolar()
@@ -185,13 +202,6 @@ String producto;
         }
         return NoCoreAdapter;
     }
-/*    public void cargarImageFile(){
-        File file= new File("/Storage/Download/foto.jpg");
-        Glide
-                .with(this)
-                .load(file)
-                .into(img);
-    }*/
 
     @Override
     public void onClick(View v) {
@@ -212,14 +222,5 @@ String producto;
                 break;
         }
     }
-    /*
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }*/
 }
