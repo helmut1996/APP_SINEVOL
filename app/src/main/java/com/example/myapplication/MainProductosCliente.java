@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -21,8 +20,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.ConexionBD.DBConnection;
-import com.example.myapplication.modelos.ModelItemsProducto;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.sql.ResultSet;
@@ -35,12 +32,10 @@ ImageButton IbuttonInicio,IbuttonAgregar,IbuttonSiguiente;
 TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvcontadorproducto,tvimagenBD;
 Spinner precios,monedas;
 ImageView img;
-EditText cantidadproductos;
+
 /////////
 String producto;
-///arreglo para guardar los productos
-//ArrayList<ModelItemsProducto> listaCompra=new ArrayList<>();
-ArrayList<String>listaCompra=new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -49,16 +44,19 @@ ArrayList<String>listaCompra=new ArrayList<>();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Productos");
+/////////////////////////////////Implementando shared preferences////////////////////////////
+
+
+//////////////////////////////Implementando shared preferences////////////////////////////
+
 
         ///////// Botones
         IbuttonInicio = findViewById(R.id.btn_Inicio);
         IbuttonAgregar = findViewById(R.id.btn_Agregar);
         IbuttonSiguiente = findViewById(R.id.btn_siguente);
 
-        cantidadproductos=findViewById(R.id.editTextCantidad);
-
         ////////////imagen producto
-        img=findViewById(R.id.imgProducto);
+        img=findViewById(R.id.imageProducto);
         /////////// campos de texto
         tvnombreproducto=findViewById(R.id.tvnombreP);
         textcontar=findViewById(R.id.text_contar);
@@ -78,9 +76,7 @@ ArrayList<String>listaCompra=new ArrayList<>();
         IbuttonAgregar.setOnClickListener(this);
         IbuttonSiguiente.setOnClickListener(this);
 ///////////////////////////////mandando a llamar las imagenes libreria ////////////////////////////////////////////////////
-        File imgFile = new  File("./imgprueba/prueba3.jpg");
-        Picasso.get().load("file:///storage/imgprueba/prueba3.jpg").into(img);
-        // Picasso.get().load("https://lh3.googleusercontent.com/proxy/hBnGsN8Zuhck-telRROdCArnJckWAUl2Ts6e88ryMUozNh5hE-QNjIoVH63aCrUj0T5tdVRNsqt6q7E8LhNg67TUHE7Gy22wIekth2lwAnHnP8DwIIs6t2AcKPGKcxbXrbp96tiCbqtiXZAaTFE3ePPLxOxsczCjSQ986d03pjsDeZzyDWOK5pqu3PZcvbK9UX4IQhETWwwRrwYm3RsdRC1zJRfQFZJYNKvr").into(img);
+   //     Glide.with(this).load("Este equipo\\T1\\Almacenamiento interno\\DCIM\\Camera\\IMG_20201207_111450").into(img);
 //////////////////////////////pasando datos por parametros entre anctivitys////////////////////////////////////////////////
         String NombrePreducto;
         Bundle extra=getIntent().getExtras();
@@ -209,27 +205,21 @@ ArrayList<String>listaCompra=new ArrayList<>();
                 startActivity(intent1);
                 break;
             case R.id.btn_Agregar:
-                if(cantidadproductos.getText().toString().isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(),"No ha ingresado una cantidad",Toast.LENGTH_SHORT).show();
-                }
-                else{
-                 //   guardarProducto();
                 // implementar agregar
+
                     Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
                     startActivity(intent2);
-                }
                 break;
-
         }
     }
+    /*
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-  /*  public void guardarProducto()
-    {
-        ModelItemsProducto productoCompra=new ModelItemsProducto();
-        productoCompra.setNombreP(tvnombreproducto.toString());
-        productoCompra.setPrecioP(Double.parseDouble(precios.getSelectedItem().toString()));
-        listaCompra.add(productoCompra);
-        tvcontadorproducto.setText(String.valueOf(listaCompra.size()));
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }*/
 }
