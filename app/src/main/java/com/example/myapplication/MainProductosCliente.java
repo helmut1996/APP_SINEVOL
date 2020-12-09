@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.ConexionBD.DBConnection;
 import com.example.myapplication.modelos.ModelItemsProducto;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.sql.ResultSet;
@@ -48,11 +49,6 @@ ArrayList<String>listaCompra=new ArrayList<>();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Productos");
-/////////////////////////////////Implementando shared preferences////////////////////////////
-
-
-//////////////////////////////Implementando shared preferences////////////////////////////
-
 
         ///////// Botones
         IbuttonInicio = findViewById(R.id.btn_Inicio);
@@ -62,7 +58,7 @@ ArrayList<String>listaCompra=new ArrayList<>();
         cantidadproductos=findViewById(R.id.editTextCantidad);
 
         ////////////imagen producto
-        img=findViewById(R.id.imageProducto);
+        img=findViewById(R.id.imgProducto);
         /////////// campos de texto
         tvnombreproducto=findViewById(R.id.tvnombreP);
         textcontar=findViewById(R.id.text_contar);
@@ -82,7 +78,9 @@ ArrayList<String>listaCompra=new ArrayList<>();
         IbuttonAgregar.setOnClickListener(this);
         IbuttonSiguiente.setOnClickListener(this);
 ///////////////////////////////mandando a llamar las imagenes libreria ////////////////////////////////////////////////////
-   //     Glide.with(this).load("Este equipo\\T1\\Almacenamiento interno\\DCIM\\Camera\\IMG_20201207_111450").into(img);
+        File imgFile = new  File("./imgprueba/prueba3.jpg");
+        Picasso.get().load("file:///storage/imgprueba/prueba3.jpg").into(img);
+        // Picasso.get().load("https://lh3.googleusercontent.com/proxy/hBnGsN8Zuhck-telRROdCArnJckWAUl2Ts6e88ryMUozNh5hE-QNjIoVH63aCrUj0T5tdVRNsqt6q7E8LhNg67TUHE7Gy22wIekth2lwAnHnP8DwIIs6t2AcKPGKcxbXrbp96tiCbqtiXZAaTFE3ePPLxOxsczCjSQ986d03pjsDeZzyDWOK5pqu3PZcvbK9UX4IQhETWwwRrwYm3RsdRC1zJRfQFZJYNKvr").into(img);
 //////////////////////////////pasando datos por parametros entre anctivitys////////////////////////////////////////////////
         String NombrePreducto;
         Bundle extra=getIntent().getExtras();
