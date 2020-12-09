@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.ConexionBD.DBConnection;
+import com.example.myapplication.modelos.ModelItemsProducto;
 
 import java.io.File;
 import java.sql.ResultSet;
@@ -32,9 +34,10 @@ ImageButton IbuttonInicio,IbuttonAgregar,IbuttonSiguiente;
 TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvcontadorproducto,tvimagenBD;
 Spinner precios,monedas;
 ImageView img;
-
+EditText cantidadproductos;
 /////////
 String producto;
+ArrayList<ModelItemsProducto> listaCompra=new ArrayList<>();
 
 
     @Override
@@ -54,6 +57,8 @@ String producto;
         IbuttonInicio = findViewById(R.id.btn_Inicio);
         IbuttonAgregar = findViewById(R.id.btn_Agregar);
         IbuttonSiguiente = findViewById(R.id.btn_siguente);
+
+        cantidadproductos=findViewById(R.id.editTextCantidad);
 
         ////////////imagen producto
         img=findViewById(R.id.imageProducto);
@@ -205,21 +210,27 @@ String producto;
                 startActivity(intent1);
                 break;
             case R.id.btn_Agregar:
+                if(cantidadproductos.getText().toString().isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(),"No ha ingresado una cantidad",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    guardarProducto();
                 // implementar agregar
-
                     Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
                     startActivity(intent2);
+                }
                 break;
+
         }
     }
-    /*
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+    public void guardarProducto()
+    {
+        ModelItemsProducto productoCompra=new ModelItemsProducto();
+        productoCompra.setNombreP(tvnombreproducto.toString());
+        productoCompra.setPrecioP(Double.parseDouble(precios.getSelectedItem().toString()));
+        listaCompra.add(productoCompra);
+        tvcontadorproducto.setText(String.valueOf(listaCompra.size()));
     }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }*/
 }
