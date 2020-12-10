@@ -5,9 +5,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,17 +14,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.myapplication.ConexionBD.DBConnection;
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,7 +40,7 @@ ImageButton IbuttonInicio,IbuttonAgregar,IbuttonSiguiente;
 TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvcontadorproducto,tvimagenBD;
 Spinner precios,monedas;
 ImageView img;
-
+EditText editcantidad;
 /////////
 String producto;
 
@@ -54,6 +58,7 @@ String producto;
         IbuttonAgregar = findViewById(R.id.btn_Agregar);
         IbuttonSiguiente = findViewById(R.id.btn_siguente);
 
+        editcantidad=findViewById(R.id.editTextCantidad);
         ////////////imagen producto
         img=findViewById(R.id.imgProducto);
         /////////// campos de texto
@@ -124,13 +129,44 @@ String producto;
             //Verifica permisos para Android 6.0+
             checkExternalStoragePermission();
         }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////mandando a llamar las imagenes libreria ////////////////////////////////////////////////////
                                         cargarImagen();
 //////////////////////////////pasando datos por parametros entre anctivitys////////////////////////////////////////////////
+
+/////////////////////////////Metodo de guardado usando ficheros////////////////////////////////////////////////////////////
+
+///variable para usar ficheros
+        String archivosproductos []= fileList();
+                    if (ArchivoExista(archivosproductos,"listaAddProducto.txt")){
+
+                        try {
+                            InputStreamReader archivo = new InputStreamReader(openFileInput("listaAddProducto.txt"));
+                            BufferedReader br= new BufferedReader(archivo);
+                            String Datos=br.readLine();
+                            String listProductos="";
+
+                            while (Datos!=null){
+                                listProductos=listProductos + Datos + "/n";
+                                Datos=br.readLine();
+                            }
+                            archivo.close();
+                            tvcontadorproducto.setText(listProductos);
+                        }catch (IOException e){
+
+                        }
+                    }
+
     }
 
+    private boolean ArchivoExista(String[] archivosproductos, String Nombrearchivo){
+
+        for (int i=0; i< archivosproductos.length; i++)
+
+            if (Nombrearchivo.equals(archivosproductos[i]))
+                return true;
+        return false;
+    }
 
     private void checkExternalStoragePermission() {
         int permissionCheck = ContextCompat.checkSelfPermission(
@@ -144,11 +180,14 @@ String producto;
     }
 
     public void cargarImagen(){
-        File file= new File("///storage/emulated/0/imgprueba/19-02-196.jpg");
+
+        File file= new File("///storage/emulated/0/imgprueba/01-01-002.jpg");
         Picasso.get().load(file)
                 .placeholder(R.drawable.bucandoimg)
                 .error(R.drawable.error)
                 .into(img);
+
+
     }
 
     public ArrayAdapter precioDolar()
@@ -217,8 +256,25 @@ String producto;
             case R.id.btn_Agregar:
                 // implementar agregar
 
+                if (editcantidad.getText().toString().isEmpty()){
+
+                    Toast.makeText(this,"debes de agregar una cantidad",Toast.LENGTH_SHORT).show();
+                }else {
+                    try {
+
+                        OutputStreamWriter archivo= new OutputStreamWriter(openFileOutput("listaAddProducto.txt", Activity.MODE_PRIVATE));
+                        archivo.write(tvnombreproducto.getText().toString());
+                        archivo.write(editcantidad.getText().toString());
+                        archivo.write(precios.getWidth());
+                        archivo.flush();
+                        archivo.close();
+                    }catch (IOException e){
+
+                    }
+                    Toast.makeText(this,"Producto Guardado",Toast.LENGTH_SHORT).show();
                     Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
                     startActivity(intent2);
+                }
                 break;
         }
     }
