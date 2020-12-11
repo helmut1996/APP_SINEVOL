@@ -179,6 +179,7 @@ String producto;
         }
     }
 
+
     public void cargarImagen(){
 
         File file= new File("///storage/emulated/0/imgprueba/01-01-002.jpg");
@@ -196,7 +197,7 @@ String producto;
         DBConnection sesion;
         sesion = DBConnection.getDbConnection();
 
-        String query = "select PrecioDolar1, PrecioDolar2,PrecioDolar3,PrecioDolar4,PrecioDolar5 from Inventario where Nombre like '%"+producto+"%'";
+        String query = "select PrecioDolar1, PrecioDolar2,PrecioDolar3,PrecioDolar4,PrecioDolar5 from Inventario where Nombre='" + producto + "'";
         try {
             Statement stm = sesion.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
@@ -222,7 +223,7 @@ String producto;
         DBConnection sesion;
         sesion = DBConnection.getDbConnection();
 
-        String query = "select Precio1, Precio2,Precio3,Precio4,Precio5 from Inventario where Nombre like '%"+producto+"%'";
+        String query = "select Precio1, Precio2,Precio3,Precio4,Precio5 from Inventario where Nombre='" + producto + "'";
         try {
             Statement stm = sesion.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
