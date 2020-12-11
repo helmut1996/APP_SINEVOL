@@ -70,7 +70,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/text_cantidad"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="30" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

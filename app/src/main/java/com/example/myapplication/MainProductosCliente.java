@@ -34,17 +34,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
+    /*variables de los componentes de la vista*/
 ImageButton IbuttonInicio,IbuttonAgregar,IbuttonSiguiente;
 TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvcontadorproducto,tvimagenBD;
 Spinner precios,monedas;
 ImageView img;
 EditText editcantidad;
-/////////
- private String producto;
-private String imagen;
 
+/* variables globales */
+ private String producto;
+ private String compraProductos [] []=new String[3][3];
+ private String llenarArregloProducto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -53,6 +56,12 @@ private String imagen;
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Productos");
+
+
+/////////////////////////////////Metodo para permisos de las imagenes/////////////////////////////////////////////
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            //Verifica permisos para Android 6.0+
+            checkExternalStoragePermission(); }
 
         ///////// Botones
         IbuttonInicio = findViewById(R.id.btn_Inicio);
@@ -125,53 +134,13 @@ private String imagen;
 
             }
         });
-/////////////////////////////////Metodo para permisos de las imagenes/////////////////////////////////////////////
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            //Verifica permisos para Android 6.0+
-            checkExternalStoragePermission();
-        }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ///////////////////////////////mandando a llamar las imagenes libreria ////////////////////////////////////////////////////
                                         cargarImagen();
 //////////////////////////////pasando datos por parametros entre anctivitys////////////////////////////////////////////////
 
-
-
-
-
 /////////////////////////////Metodo de guardado usando ficheros////////////////////////////////////////////////////////////
 
-///variable para usar ficheros
-        String archivosproductos []= fileList();
-                    if (ArchivoExista(archivosproductos,"listaAddProducto.txt")){
-
-                        try {
-                            InputStreamReader archivo = new InputStreamReader(openFileInput("listaAddProducto.txt"));
-                            BufferedReader br= new BufferedReader(archivo);
-                            String Datos=br.readLine();
-                            String listProductos="";
-
-                            while (Datos!=null){
-                                listProductos=listProductos + Datos + "/n";
-                                Datos=br.readLine();
-                            }
-                            archivo.close();
-                            tvcontadorproducto.setText(listProductos);
-                        }catch (IOException e){
-
-                        }
-                    }
-
-/////////////////////////////Metodo de guardado usando ficheros////////////////////////////////////////////////////////////
-    }
-
-    private boolean ArchivoExista(String[] archivosproductos, String Nombrearchivo){
-
-        for (int i=0; i< archivosproductos.length; i++)
-
-            if (Nombrearchivo.equals(archivosproductos[i]))
-                return true;
-        return false;
     }
 
     private void checkExternalStoragePermission() {
@@ -188,12 +157,11 @@ private String imagen;
 
     public void cargarImagen(){
 
-        File file= new File("///storage/emulated/0/imgprueba/"+tvimagenBD.getText()+".jpg");
+        File file= new File("///storage/emulated/0/MARNOR/"+tvimagenBD.getText()+".jpg");
         Picasso.get().load(file)
                 .placeholder(R.drawable.bucandoimg)
                 .error(R.drawable.error)
                 .into(img);
-
     }
 
     public ArrayAdapter precioDolar()
@@ -264,23 +232,33 @@ private String imagen;
 
                 if (editcantidad.getText().toString().isEmpty()){
 
-                    Toast.makeText(this,"debes de agregar una cantidad",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
                 }else {
-                    try {
+                    /*for (int indice1=0;indice1<3;indice1++){
+                        for (int indice2=0;indice2<3;indice2++){
+                            /*llenarArregloProducto= editcantidad.getText().toString()+(compraProductos [indice1] [indice2]+ " ");
+                            llenarArregloProducto= precios.getSelectedView().toString()+(compraProductos [indice1] [indice2]+ " ");
+                            llenarArregloProducto= tvnombreproducto.getText().toString()+(compraProductos [indice1] [indice2]+ " ");
+                            System.out.println(llenarArregloProducto);
 
-                        OutputStreamWriter archivo= new OutputStreamWriter(openFileOutput("listaAddProducto.txt", Activity.MODE_PRIVATE));
-                        archivo.write(tvnombreproducto.getText().toString());
-                        archivo.write(editcantidad.getText().toString());
-                        archivo.write(precios.getWidth());
-                        archivo.flush();
-                        archivo.close();
-                    }catch (IOException e){
+                            tvcontadorproducto.setText(llenarArregloProducto);
+                        }
+                    }*/
 
-                    }
+                    String [] arrayone = {editcantidad.getText().toString(),tvnombreproducto.getText().toString()};
+                    //tvcontadorproducto.setText(arrayone.length);
+                    System.out.println("Cantidad Guardada: ----- >"+arrayone[0]);
+                    System.out.println("Cantidad Guardada: ----- >"+arrayone[1]);
+                    String [] arraytwo = arrayone;
+                    System.out.println("arreglo Guardada: ----- >"+arraytwo[0]);
+
+
                     Toast.makeText(this,"Producto Guardado",Toast.LENGTH_SHORT).show();
                     Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
                     startActivity(intent2);
                 }
+
+
                 break;
         }
     }
