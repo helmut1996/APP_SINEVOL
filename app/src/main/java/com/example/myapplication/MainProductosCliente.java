@@ -42,7 +42,8 @@ Spinner precios,monedas;
 ImageView img;
 EditText editcantidad;
 /////////
-String producto;
+ private String producto;
+private String imagen;
 
 
     @Override
@@ -129,10 +130,14 @@ String producto;
             //Verifica permisos para Android 6.0+
             checkExternalStoragePermission();
         }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////mandando a llamar las imagenes libreria ////////////////////////////////////////////////////
                                         cargarImagen();
 //////////////////////////////pasando datos por parametros entre anctivitys////////////////////////////////////////////////
+
+
+
+
 
 /////////////////////////////Metodo de guardado usando ficheros////////////////////////////////////////////////////////////
 
@@ -157,6 +162,7 @@ String producto;
                         }
                     }
 
+/////////////////////////////Metodo de guardado usando ficheros////////////////////////////////////////////////////////////
     }
 
     private boolean ArchivoExista(String[] archivosproductos, String Nombrearchivo){
@@ -182,12 +188,11 @@ String producto;
 
     public void cargarImagen(){
 
-        File file= new File("///storage/emulated/0/imgprueba/01-01-002.jpg");
+        File file= new File("///storage/emulated/0/imgprueba/"+tvimagenBD.getText()+".jpg");
         Picasso.get().load(file)
                 .placeholder(R.drawable.bucandoimg)
                 .error(R.drawable.error)
                 .into(img);
-
 
     }
 

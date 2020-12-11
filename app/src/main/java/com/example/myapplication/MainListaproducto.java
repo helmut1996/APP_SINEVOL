@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.myapplication.Adapter.RecycleviewAdapter;
@@ -38,7 +39,6 @@ import java.util.List;
 
     RecyclerView recyclerlistproducto;
     EditText search2;
-
     RecycleviewProductoAdapter adaptadorProducto;
     List<ModelItemsProducto> listaProducto;
 
@@ -116,6 +116,7 @@ import java.util.List;
 
         recyclerlistproducto= findViewById(R.id.list_producto);
         search2 = findViewById(R.id.search2);
+
     }
     private void initVlaues(){
        LinearLayoutManager manager= new LinearLayoutManager(this);
