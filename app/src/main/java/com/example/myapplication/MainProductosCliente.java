@@ -6,7 +6,9 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.ConexionBD.DBConnection;
+import com.example.myapplication.modelos.ModelItemsProducto;
+import com.example.myapplication.modelos.modelGuardarDatos;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
@@ -43,8 +47,11 @@ TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,tex
 Spinner precios,monedas;
 ImageView img;
 EditText editcantidad;
+private ArrayList<modelGuardarDatos> datos;
+
 
 /* variables globales */
+
  private String producto;
  private String compraProductos [] []=new String[3][3];
  private String llenarArregloProducto;
@@ -139,8 +146,9 @@ EditText editcantidad;
                                         cargarImagen();
 //////////////////////////////pasando datos por parametros entre anctivitys////////////////////////////////////////////////
 
-/////////////////////////////Metodo de guardado usando ficheros////////////////////////////////////////////////////////////
-
+/////////////////////////////Metodo de guardado usando sharedpreferences////////////////////////////////////////////////////////////
+SharedPreferences preferences= getSharedPreferences("datos",Context.MODE_PRIVATE);
+editcantidad.setText(preferences.getString("NombreProducto",""));
     }
 
     private void checkExternalStoragePermission() {
@@ -234,30 +242,50 @@ EditText editcantidad;
 
                     Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
                 }else {
-                    /*for (int indice1=0;indice1<3;indice1++){
+
+
+                   /*
+                   metodo 1 utilizando Matrizes Bidimencional para guardar
+                   for (int indice1=0;indice1<3;indice1++){
                         for (int indice2=0;indice2<3;indice2++){
-                            /*llenarArregloProducto= editcantidad.getText().toString()+(compraProductos [indice1] [indice2]+ " ");
-                            llenarArregloProducto= precios.getSelectedView().toString()+(compraProductos [indice1] [indice2]+ " ");
-                            llenarArregloProducto= tvnombreproducto.getText().toString()+(compraProductos [indice1] [indice2]+ " ");
+                           // llenarArregloProducto=tvnombreproducto.getText().toString()+(compraProductos [indice1] [indice2]+ " " + editcantidad.getText().toString()+(compraProductos [indice1] [indice2]+ " "));
+                            //llenarArregloProducto= precios.getSelectedView().toString()+(compraProductos [indice1] [indice2]+ " ");
+                            //llenarArregloProducto= tvnombreproducto.getText().toString()+(compraProductos [indice1] [indice2]+ " ");
                             System.out.println(llenarArregloProducto);
 
                             tvcontadorproducto.setText(llenarArregloProducto);
                         }
                     }*/
 
-                    String [] arrayone = {editcantidad.getText().toString(),tvnombreproducto.getText().toString()};
-                    //tvcontadorproducto.setText(arrayone.length);
+                  /*
+                  metodo 2 utilizando un arreglo para guardar
+                  String [] arrayone = {editcantidad.getText().toString(),tvnombreproducto.getText().toString()};
+                  tvcontadorproducto.setText(arrayone.length);
                     System.out.println("Cantidad Guardada: ----- >"+arrayone[0]);
                     System.out.println("Cantidad Guardada: ----- >"+arrayone[1]);
                     String [] arraytwo = arrayone;
                     System.out.println("arreglo Guardada: ----- >"+arraytwo[0]);
+                    */
+
+                  /*
+                    metodo 3 utilizando arraylist para guardar
+                    datos = new ArrayList<modelGuardarDatos>();
+                    datos.add(new modelGuardarDatos(tvnombreproducto.getText().toString(),Integer.parseInt(editcantidad.getText().toString())));
+                    System.out.println("--*-*-*-***-*-*-*-*-*-"+datos.size());*/
+                    //tvcontadorproducto.setText(datos.size());
 
 
+                /*
+                 Metodo 4 utilizando SharedPreferences para guardar datos
+                 SharedPreferences preferencias = getSharedPreferences("datos",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor obj_editor=preferencias.edit();
+                    obj_editor.putString("NombreProducto",tvcontadorproducto.getText().toString());
+                    obj_editor.commit();
+                    System.out.println("-------> capturando "+ tvcontadorproducto);
                     Toast.makeText(this,"Producto Guardado",Toast.LENGTH_SHORT).show();
                     Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
-                    startActivity(intent2);
+                    startActivity(intent2);*/
                 }
-
 
                 break;
         }
