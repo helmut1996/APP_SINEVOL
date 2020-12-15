@@ -27,6 +27,14 @@
             android:textAllCaps="true"
             android:textColor="@color/black" />
 
+
+        <TextView
+            android:id="@+id/IDProduto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="id"
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/imagenBD"
             android:layout_width="match_parent"

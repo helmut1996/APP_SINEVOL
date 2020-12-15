@@ -1,17 +1,27 @@
-package com.example.myapplication.modelos;
+package com.example.myapplication.SQLite.entidades;
 
-public class modelGuardarDatos {
-   private String nombreproduc;
-   private int cantidad;
-   private int precios;
+public class ProductosAdd {
+    private int id_producto;
+    private String nombreproduc;
+    private int cantidad;
+    private int precios;
 
-    public modelGuardarDatos() {
+    public ProductosAdd() {
     }
 
-    public modelGuardarDatos(String nombreproduc, int cantidad, int precios) {
+    public ProductosAdd(int id_producto, String nombreproduc, int cantidad, int precios) {
+        this.id_producto = id_producto;
         this.nombreproduc = nombreproduc;
         this.cantidad = cantidad;
         this.precios = precios;
+    }
+
+    public int getId_producto() {
+        return id_producto;
+    }
+
+    public void setId_producto(int id_producto) {
+        this.id_producto = id_producto;
     }
 
     public String getNombreproduc() {

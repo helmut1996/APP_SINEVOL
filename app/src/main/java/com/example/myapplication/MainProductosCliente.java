@@ -6,10 +6,13 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,8 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.ConexionBD.DBConnection;
+import com.example.myapplication.SQLite.conexionSQLiteHelper;
+import com.example.myapplication.SQLite.ulilidades.utilidades;
 import com.example.myapplication.modelos.ModelItemsProducto;
-import com.example.myapplication.modelos.modelGuardarDatos;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
@@ -42,12 +46,11 @@ import java.util.List;
 
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
     /*variables de los componentes de la vista*/
-ImageButton IbuttonInicio,IbuttonAgregar,IbuttonSiguiente;
-TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvcontadorproducto,tvimagenBD;
-Spinner precios,monedas;
-ImageView img;
-EditText editcantidad;
-private ArrayList<modelGuardarDatos> datos;
+private ImageButton IbuttonInicio,IbuttonAgregar,IbuttonSiguiente;
+private TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvcontadorproducto,tvimagenBD,tvIDproducto;
+private Spinner precios,monedas;
+private ImageView img;
+private EditText editcantidad;
 
 
 /* variables globales */
@@ -89,6 +92,7 @@ private ArrayList<modelGuardarDatos> datos;
         tvimagenBD=findViewById(R.id.imagenBD);
         tvunidadmedida=findViewById(R.id.text_unidadM);
         tvcontadorproducto=findViewById(R.id.contadorproducto);
+        tvIDproducto=findViewById(R.id.IDProduto);
         ////////// Spinmer
         precios = findViewById(R.id.spinerPrecios);
         monedas = findViewById(R.id.spinner_tipo_moneda);
@@ -96,6 +100,8 @@ private ArrayList<modelGuardarDatos> datos;
         IbuttonInicio.setOnClickListener(this);
         IbuttonAgregar.setOnClickListener(this);
         IbuttonSiguiente.setOnClickListener(this);
+
+//////////////////////////////pasando datos por parametros entre activitys/////////////////////////////////
 
         String NombrePreducto;
         Bundle extra=getIntent().getExtras();
@@ -112,16 +118,17 @@ private ArrayList<modelGuardarDatos> datos;
             textinfo5.setText(extra.getString("info5"));
             textcontar.setText(extra.getString("stock"));
             tvimagenBD.setText(extra.getString("imagenproducto"));
-
-        }
+            tvIDproducto.setText(extra.getString("idproducto"));
 //////////////////////////////pasando datos por parametros entre activitys/////////////////////////////////
 
-        /////////Spinner del tipo de moneda
+        }
+
+        /*Spinner del tipo de moneda*/
         ArrayAdapter<CharSequence> adapter  = ArrayAdapter.createFromResource(this, R.array.tipo_moneda, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         monedas.setAdapter(adapter);
 
-        ////////////spinner de los precios
+        /*spinner de los precios*/
 
         monedas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -142,14 +149,9 @@ private ArrayList<modelGuardarDatos> datos;
             }
         });
 
-///////////////////////////////mandando a llamar las imagenes libreria ////////////////////////////////////////////////////
+                        /*mandando a llamar las imagenes libreria */
                                         cargarImagen();
-//////////////////////////////pasando datos por parametros entre anctivitys////////////////////////////////////////////////
-
-/////////////////////////////Metodo de guardado usando sharedpreferences////////////////////////////////////////////////////////////
-SharedPreferences preferences= getSharedPreferences("datos",Context.MODE_PRIVATE);
-editcantidad.setText(preferences.getString("NombreProducto",""));
-    }
+     }
 
     private void checkExternalStoragePermission() {
         int permissionCheck = ContextCompat.checkSelfPermission(
@@ -243,7 +245,9 @@ editcantidad.setText(preferences.getString("NombreProducto",""));
                     Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
                 }else {
 
-
+                    GuardarProductos();
+                    Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
+                    startActivity(intent2);
                    /*
                    metodo 1 utilizando Matrizes Bidimencional para guardar
                    for (int indice1=0;indice1<3;indice1++){
@@ -267,14 +271,6 @@ editcantidad.setText(preferences.getString("NombreProducto",""));
                     System.out.println("arreglo Guardada: ----- >"+arraytwo[0]);
                     */
 
-                  /*
-                    metodo 3 utilizando arraylist para guardar
-                    datos = new ArrayList<modelGuardarDatos>();
-                    datos.add(new modelGuardarDatos(tvnombreproducto.getText().toString(),Integer.parseInt(editcantidad.getText().toString())));
-                    System.out.println("--*-*-*-***-*-*-*-*-*-"+datos.size());*/
-                    //tvcontadorproducto.setText(datos.size());
-
-
                 /*
                  Metodo 4 utilizando SharedPreferences para guardar datos
                  SharedPreferences preferencias = getSharedPreferences("datos",Context.MODE_PRIVATE);
@@ -289,6 +285,30 @@ editcantidad.setText(preferences.getString("NombreProducto",""));
 
                 break;
         }
+    }
+
+    private void GuardarProductos() {
+
+        /*mandando a llamar conexion a SQLite */
+        conexionSQLiteHelper conn= new conexionSQLiteHelper(this,"bd_productos",null,1);
+        /*abrir la conexion a SQLite*/
+        SQLiteDatabase db= conn.getWritableDatabase();
+
+        ContentValues values= new ContentValues();
+        values.put(utilidades.CAMPO_ID,tvIDproducto.getText().toString());
+        values.put(utilidades.CAMPO_NOMBRE,tvnombreproducto.getText().toString());
+        values.put(utilidades.CAMPO_CANTIDAD,editcantidad.getText().toString());
+        values.put(utilidades.CAMPO_PRECIO,precios.getSelectedItem().toString());
+        long idResultante= db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
+
+        if (idResultante<=20){
+            Toast.makeText(this,"ID PRODUCTO: " + idResultante,Toast.LENGTH_SHORT).show();
+        }else {
+            IbuttonAgregar.setEnabled(false);
+            Toast.makeText(this,"solo puedes agregar 30 productos!!!",Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
 }

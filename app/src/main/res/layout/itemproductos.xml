@@ -28,6 +28,14 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tvidproducto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="left"
+                android:text="idproducto"
+                android:visibility="gone"/>
+            <TextView
                 android:id="@+id/unidadmedidaP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
