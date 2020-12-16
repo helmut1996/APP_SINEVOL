@@ -279,8 +279,7 @@ private EditText editcantidad;
                     obj_editor.commit();
                     System.out.println("-------> capturando "+ tvcontadorproducto);
                     Toast.makeText(this,"Producto Guardado",Toast.LENGTH_SHORT).show();
-                    Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
-                    startActivity(intent2);*/
+                    */
                 }
 
                 break;
@@ -301,8 +300,10 @@ private EditText editcantidad;
         values.put(utilidades.CAMPO_PRECIO,precios.getSelectedItem().toString());
         long idResultante= db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
 
-        if (idResultante<=20){
+        if (idResultante<=30){
             Toast.makeText(this,"ID PRODUCTO: " + idResultante,Toast.LENGTH_SHORT).show();
+            Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
+            startActivity(intent2);
         }else {
             IbuttonAgregar.setEnabled(false);
             Toast.makeText(this,"solo puedes agregar 30 productos!!!",Toast.LENGTH_SHORT).show();

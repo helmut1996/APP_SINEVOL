@@ -2,6 +2,8 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +14,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import com.example.myapplication.SQLite.conexionSQLiteHelper;
+import com.example.myapplication.SQLite.entidades.ProductosAdd;
+import com.example.myapplication.SQLite.ulilidades.utilidades;
+
 import java.util.ArrayList;
 
 public class MainFacruraList extends AppCompatActivity {
@@ -19,7 +25,10 @@ public class MainFacruraList extends AppCompatActivity {
     TextView textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible,textV_total;
     Spinner T_factura,T_ventas;
     ListView lista_factura;
+    ArrayList<String>listainformacion;
+    ArrayList<ProductosAdd>listaproducto;
 
+    conexionSQLiteHelper conn;
     private static final String TAG ="MainFacturaList";
 
     @Override
@@ -51,7 +60,14 @@ public class MainFacruraList extends AppCompatActivity {
         T_factura.setAdapter(adapter1);
 
         ////////////////////////////// ListView///////////////////////////////
-        adapter =new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.Clientes));
+                //conexion de SQLite
+        conn=new conexionSQLiteHelper(getApplicationContext(),"bd_productos",null,1);
+
+              ConsultarlistaProducto();
+
+              ArrayAdapter adaptador= new ArrayAdapter(this, android.R.layout.simple_list_item_1,listainformacion);
+              lista_factura.setAdapter(adaptador);
+        /*adapter =new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.Clientes));
         lista_factura.setAdapter(adapter);
 
 
@@ -77,15 +93,40 @@ public class MainFacruraList extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
             }
 
+    private void ConsultarlistaProducto() {
+        SQLiteDatabase db=conn.getReadableDatabase();
+        ProductosAdd productosAdd = null;
+        listaproducto=new ArrayList<ProductosAdd>();
+        //query SQLite
+        Cursor cursor=db.rawQuery("select * from "+ utilidades.TABLA_PRODUCTO,null);
+        while (cursor.moveToNext()){
+            productosAdd=new ProductosAdd();
+            productosAdd.setId_producto(cursor.getInt(0));
+            productosAdd.setNombreproduc(cursor.getString(1));
+            productosAdd.setCantidad(cursor.getInt(2));
+            productosAdd.setPrecios(cursor.getInt(3));
+
+            listaproducto.add(productosAdd);
+        }
+        obtenerLista();
+    }
+
+    private void obtenerLista() {
+        listainformacion=new ArrayList<String>();
+        for (int i=0; i<listaproducto.size();i++){
+            listainformacion.add(listaproducto.get(i).getNombreproduc()+" - "+listaproducto.get(i).getCantidad()+" -   "+listaproducto.get(i).getPrecios());
+        }
+    }
 
 
-            public void Dialog_detalle_factura(){
+
+           /* public void Dialog_detalle_factura(){
 
 
                 ClassDialogFactura dialogFactura = new ClassDialogFactura();
                 dialogFactura.show(getSupportFragmentManager(),"ventana emergente");
-            }
+            }*/
     }
