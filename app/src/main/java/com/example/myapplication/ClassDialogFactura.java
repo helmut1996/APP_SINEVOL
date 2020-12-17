@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import androidx.fragment.app.DialogFragment;
 public class ClassDialogFactura extends DialogFragment {
     TextView producto,cantidad,precio_C,precio_D;
     ImageButton btn_delete;
+    ImageView imgProductoDetalle;
 
     @NonNull
     @Override
@@ -33,12 +35,17 @@ public class ClassDialogFactura extends DialogFragment {
 
                     }
                 });
-
+        MainFacruraList variable = new MainFacruraList();
         producto=view.findViewById(R.id.id_producto);
+        producto.setText(variable.nombre);
         cantidad=view.findViewById(R.id.editTextCantidad2);
+        cantidad.setText(String.valueOf(variable.cantidadProducto));
         precio_C=view.findViewById(R.id.id_precio_cordobas);
+        precio_C.setText(String.valueOf(variable.precioProducto));
         precio_D=view.findViewById(R.id.id_precio_dolares);
+        precio_D.setText(String.valueOf(variable.idProd));
         btn_delete=view.findViewById(R.id.imageButton_Eliminar);
+        imgProductoDetalle=view.findViewById(R.id.imageProducto);
 
         return builder.create();
 

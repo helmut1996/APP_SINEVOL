@@ -5,15 +5,19 @@ public class ProductosAdd {
     private String nombreproduc;
     private int cantidad;
     private int precios;
+    private String imagenProducto;
 
     public ProductosAdd() {
     }
 
-    public ProductosAdd(int id_producto, String nombreproduc, int cantidad, int precios) {
+
+
+    public ProductosAdd(int id_producto, String nombreproduc, int cantidad, int precios, String imagenProducto) {
         this.id_producto = id_producto;
         this.nombreproduc = nombreproduc;
         this.cantidad = cantidad;
         this.precios = precios;
+        this.imagenProducto= imagenProducto;
     }
 
     public int getId_producto() {
@@ -46,5 +50,13 @@ public class ProductosAdd {
 
     public void setPrecios(int precios) {
         this.precios = precios;
+    }
+
+    public String getImagenProducto() {
+        return imagenProducto;
+    }
+
+    public void setImagenProducto(String imagenProducto) {
+        this.imagenProducto = imagenProducto;
     }
 }

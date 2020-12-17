@@ -1,17 +1,20 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.myapplication.SQLite.conexionSQLiteHelper;
@@ -27,6 +30,9 @@ public class MainFacruraList extends AppCompatActivity {
     ListView lista_factura;
     ArrayList<String>listainformacion;
     ArrayList<ProductosAdd>listaproducto;
+   public static String nombre ="HOLA MUNDO";
+   public static int cantidadProducto, idProd ;
+   public static double precioProducto;
 
     conexionSQLiteHelper conn;
     private static final String TAG ="MainFacturaList";
@@ -67,36 +73,39 @@ public class MainFacruraList extends AppCompatActivity {
 
               ArrayAdapter adaptador= new ArrayAdapter(this, android.R.layout.simple_list_item_1,listainformacion);
               lista_factura.setAdapter(adaptador);
-        /*adapter =new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.Clientes));
-        lista_factura.setAdapter(adapter);
+              lista_factura.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                  @Override
+                  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                      System.out.println("Tratando de descubrir la informacion: ------> " +lista_factura.getAdapter().getItem(position));
+                      Dialog_detalle_factura(position);
+                      nombre = listaproducto.get(position).getNombreproduc();
+                      cantidadProducto=listaproducto.get(position).getCantidad();
+                      precioProducto=listaproducto.get(position).getPrecios();
+                      idProd=listaproducto.get(position).getId_producto();
+                  }
+              });
 
 
-        lista_factura.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
 
-                switch (position){
-                    case 0:
-                        Dialog_detalle_factura();
-                        break;
-                    case 1:
+    }
 
-                        Dialog_detalle_factura();
-                        break;
-                    case 2:
-                       Dialog_detalle_factura();
-                        break;
-                    case 3:
-                      Dialog_detalle_factura();
-                        break;
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.Mbtn_guardar:
+                        Toast.makeText(this,"Guardar",Toast.LENGTH_SHORT).show();
                 }
 
-            }
-        });*/
-            }
+        return super.onOptionsItemSelected(item);
+      }
 
-    private void ConsultarlistaProducto() {
+    public void ConsultarlistaProducto() {
         SQLiteDatabase db=conn.getReadableDatabase();
         ProductosAdd productosAdd = null;
         listaproducto=new ArrayList<ProductosAdd>();
@@ -108,25 +117,22 @@ public class MainFacruraList extends AppCompatActivity {
             productosAdd.setNombreproduc(cursor.getString(1));
             productosAdd.setCantidad(cursor.getInt(2));
             productosAdd.setPrecios(cursor.getInt(3));
+            productosAdd.setImagenProducto(cursor.getString(4));
 
             listaproducto.add(productosAdd);
         }
         obtenerLista();
     }
 
-    private void obtenerLista() {
+    public void obtenerLista() {
         listainformacion=new ArrayList<String>();
         for (int i=0; i<listaproducto.size();i++){
-            listainformacion.add(listaproducto.get(i).getNombreproduc()+" - "+listaproducto.get(i).getCantidad()+" -   "+listaproducto.get(i).getPrecios());
+            listainformacion.add(listaproducto.get(i).getNombreproduc()+" -"+listaproducto.get(i).getCantidad()+" - C$"+listaproducto.get(i).getPrecios());
         }
     }
 
-
-
-           /* public void Dialog_detalle_factura(){
-
-
-                ClassDialogFactura dialogFactura = new ClassDialogFactura();
-                dialogFactura.show(getSupportFragmentManager(),"ventana emergente");
-            }*/
+   public void Dialog_detalle_factura(int position){
+        ClassDialogFactura dialogFactura = new ClassDialogFactura();
+        dialogFactura.show(getSupportFragmentManager(),"ventana emergente");
     }
+}

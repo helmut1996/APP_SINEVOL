@@ -235,6 +235,8 @@ private EditText editcantidad;
                 break;
             case R.id.btn_siguente:
                 Intent intent1 = new Intent(getApplicationContext(),MainFacruraList.class);
+                intent1.putExtra("nombreproducto",tvnombreproducto.getText());
+                intent1.putExtra("cantidad",editcantidad.getText());
                 startActivity(intent1);
                 break;
             case R.id.btn_Agregar:

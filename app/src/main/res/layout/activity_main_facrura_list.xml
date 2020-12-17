@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainFacruraList"
+    android:fillViewport="true"
     android:orientation="vertical">
 
 
@@ -16,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -41,7 +42,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -66,7 +67,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -88,7 +89,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -136,7 +137,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -155,52 +156,23 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lista Productos"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"/>
-        </LinearLayout>
 
 
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ListView
-                    android:id="@+id/lista_Factura"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:smoothScrollbar="true"/>
-
-            </LinearLayout>
-        </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="10dp">
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total de Factura: "
                 android:textColor="@color/black"
                 android:textAllCaps="true"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"/>
             <TextView
                 android:id="@+id/textV_total"
                 android:layout_width="wrap_content"
@@ -208,15 +180,40 @@
                 android:text="0"
                 android:textColor="@color/black"
                 android:textAllCaps="true"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"/>
 
-            <Button
-                android:id="@+id/btn_Guardar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Guardar" />
+
         </LinearLayout>
 
     </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lista Productos"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:layout_gravity="center_horizontal"
+                />
+
+
+            <ListView
+                android:id="@+id/lista_Factura"
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:smoothScrollbar="true"
+                tools:listitem="@android:layout/simple_list_item_1" />
+
+
+        </LinearLayout>
+
+
 </LinearLayout>
