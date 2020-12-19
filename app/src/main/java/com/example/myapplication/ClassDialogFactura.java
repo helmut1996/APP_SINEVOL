@@ -2,23 +2,35 @@ package com.example.myapplication;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.myapplication.SQLite.conexionSQLiteHelper;
+import com.example.myapplication.SQLite.ulilidades.utilidades;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+
 public class ClassDialogFactura extends DialogFragment {
-    TextView producto,cantidad,precio_C,precio_D;
-    ImageButton btn_delete;
+    TextView producto,cantidad,precio_C,precio_D,tvimagenSQLite;
+    ImageButton btn_delete, btn_Actualizar;
     ImageView imgProductoDetalle;
+    EditText editcantidad2;
 
     @NonNull
     @Override
@@ -38,16 +50,62 @@ public class ClassDialogFactura extends DialogFragment {
         MainFacruraList variable = new MainFacruraList();
         producto=view.findViewById(R.id.id_producto);
         producto.setText(variable.nombre);
+
         cantidad=view.findViewById(R.id.editTextCantidad2);
         cantidad.setText(String.valueOf(variable.cantidadProducto));
+
         precio_C=view.findViewById(R.id.id_precio_cordobas);
         precio_C.setText(String.valueOf(variable.precioProducto));
+
         precio_D=view.findViewById(R.id.id_precio_dolares);
         precio_D.setText(String.valueOf(variable.idProd));
-        btn_delete=view.findViewById(R.id.imageButton_Eliminar);
-        imgProductoDetalle=view.findViewById(R.id.imageProducto);
 
+        btn_delete=view.findViewById(R.id.imageButton_Eliminar);
+
+        imgProductoDetalle=view.findViewById(R.id.imageProducto);
+        String imagen= variable.nombreImagen;
+        File file= new File("///storage/emulated/0/MARNOR/"+imagen+".jpg");
+        Picasso.get().load(file)
+                .placeholder(R.drawable.bucandoimg)
+                .error(R.drawable.error)
+                .into(imgProductoDetalle);
+
+        tvimagenSQLite=view.findViewById(R.id.tvimagenBD_SQLlite);
+        tvimagenSQLite.setText(variable.nombreImagen);
+
+        btn_Actualizar=view.findViewById(R.id.imageButtonAgregar);
+
+        btn_Actualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActualizarDatosSQLite();
+            }
+        });
+
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EliminarDatosSQLite();
+            }
+        });
+        editcantidad2=view.findViewById(R.id.editTextCantidad2);
         return builder.create();
+
+    }
+
+
+    public void ActualizarDatosSQLite() {
+        /*mandando a llamar conexion a SQLite */
+       conexionSQLiteHelper conn= new conexionSQLiteHelper(getContext(),"bd_productos",null,1);
+        SQLiteDatabase db=conn.getReadableDatabase();
+        db.execSQL("update producto set cantidad ="+cantidad.getText().toString()+" where id = "+precio_D.getText().toString()+" ");
+        db.close();
+
+        Toast.makeText(getContext(),"Actualizado!!!",Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void EliminarDatosSQLite() {
 
     }
 }

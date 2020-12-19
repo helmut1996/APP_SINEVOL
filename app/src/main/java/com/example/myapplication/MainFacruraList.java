@@ -33,6 +33,7 @@ public class MainFacruraList extends AppCompatActivity {
    public static String nombre ="HOLA MUNDO";
    public static int cantidadProducto, idProd ;
    public static double precioProducto;
+   public static String nombreImagen;
 
     conexionSQLiteHelper conn;
     private static final String TAG ="MainFacturaList";
@@ -82,6 +83,7 @@ public class MainFacruraList extends AppCompatActivity {
                       cantidadProducto=listaproducto.get(position).getCantidad();
                       precioProducto=listaproducto.get(position).getPrecios();
                       idProd=listaproducto.get(position).getId_producto();
+                      nombreImagen=listaproducto.get(position).getImagenProducto();
                   }
               });
 

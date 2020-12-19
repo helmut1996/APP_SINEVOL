@@ -300,6 +300,7 @@ private EditText editcantidad;
         values.put(utilidades.CAMPO_NOMBRE,tvnombreproducto.getText().toString());
         values.put(utilidades.CAMPO_CANTIDAD,editcantidad.getText().toString());
         values.put(utilidades.CAMPO_PRECIO,precios.getSelectedItem().toString());
+        values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
         long idResultante= db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
 
         if (idResultante<=30){
