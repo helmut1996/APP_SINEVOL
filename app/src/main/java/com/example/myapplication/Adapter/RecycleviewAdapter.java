@@ -1,5 +1,6 @@
 package com.example.myapplication.Adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.text.Editable;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.MainListaproducto;
 import com.example.myapplication.MainMenu;
+import com.example.myapplication.MainProductosCliente;
 import com.example.myapplication.R;
 import com.example.myapplication.modelos.ClasslistItemC;
 import com.google.android.material.button.MaterialButton;
@@ -51,13 +53,7 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
         holder.codigo.setText(String.valueOf(itemC.getCodigo()));
         holder.nombre.setText(itemC.getNombre());
         holder.zona.setText(itemC.getZona());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(new Intent(holder.itemView.getContext(), MainListaproducto.class));
-                holder.itemView.getContext().startActivity(intent );
-            }
-        });
+
     }
 
     @Override
@@ -77,9 +73,21 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
         public RecyclerHolder(@NonNull View itemView ){
 
             super(itemView);
+            Context context = itemView.getContext();
             codigo=itemView.findViewById(R.id.CodigoCliente);
             nombre=itemView.findViewById(R.id.nombreCliente);
             zona=itemView.findViewById(R.id.cliente_zona);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(context, MainListaproducto.class);
+                    intent.putExtra("CodigoCliente",codigo.getText());
+                    intent.putExtra("NombreCliente",nombre.getText());
+                    intent.putExtra("ZonaCliente",zona.getText());
+                    context.startActivity(intent);
+                }
+            });
+
         }
 
 

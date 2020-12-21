@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class MainFacturaList extends AppCompatActivity {
 
-    TextView textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible,textV_total;
+    TextView textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible, textV_total;
     Spinner T_factura,T_ventas;
     ListView lista_factura;
     ArrayList<String>listainformacion;
@@ -33,9 +33,10 @@ public class MainFacturaList extends AppCompatActivity {
    public static String nombre ="HOLA MUNDO";
    public static int cantidadProducto, idProd ;
    public static double precioProducto;
-   public static String nombreImagen;
+   public static String nombreImagen, TotalFact;
 
     conexionSQLiteHelper conn;
+
     private static final String TAG ="MainFacturaList";
 
     @Override
@@ -51,7 +52,6 @@ public class MainFacturaList extends AppCompatActivity {
         textV_zona = findViewById(R.id.textView_Zona);
         textV_credito_disponible = findViewById(R.id.textView_C_Disponible);
         textV_total = findViewById(R.id.textV_total);
-
         T_ventas = findViewById(R.id.spinner_tventas);
         T_factura = findViewById(R.id.spinner_facura);
         lista_factura=findViewById(R.id.lista_Factura);
@@ -71,7 +71,7 @@ public class MainFacturaList extends AppCompatActivity {
         conn=new conexionSQLiteHelper(getApplicationContext(),"bd_productos",null,1);
 
               ConsultarlistaProducto();
-
+                CalcularTotalFactura();
               ArrayAdapter adaptador= new ArrayAdapter(this, android.R.layout.simple_list_item_1,listainformacion);
               lista_factura.setAdapter(adaptador);
               lista_factura.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -88,6 +88,19 @@ public class MainFacturaList extends AppCompatActivity {
               });
 
 
+/////////////////////////////////////////////////////////////////////////////////////////
+     /*   String CodigoCliente;
+        Bundle extra=getIntent().getExtras();
+
+        if (extra !=null){
+            CodigoCliente= extra.getString("CodigoCliente");
+            System.out.println("-------------> "+ CodigoCliente);
+            textV_Codigo.setText(CodigoCliente);
+            textV_Cliente.setText(extra.getString("NombreCliente"));
+            textV_zona.setText(extra.getString("ZonaCliente"));
+        }*/
+//////////////////////////////////////////////////////////////////////////////////////////
+    CalcularTotalFactura();
     }
 
     @Override
@@ -132,6 +145,22 @@ getMenuInflater().inflate(R.menu.menu,menu);
             listainformacion.add(listaproducto.get(i).getNombreproduc()+" -"+listaproducto.get(i).getCantidad()+" - C$"+listaproducto.get(i).getPrecios());
         }
     }
+
+    public void CalcularTotalFactura(){
+        SQLiteDatabase db= conn.getReadableDatabase();
+        String total="select sum(precio * cantidad ) as Total from producto";
+        Cursor query =  db.rawQuery(total,null);
+        if (query.moveToFirst()){
+            TotalFact= query.getString(query.getColumnIndex("Total"));
+            System.out.println("TOTAL DE LA FACTURA ACTUALMENTE ES : ----> "+TotalFact);
+
+            textV_total.setText("C$"+TotalFact);
+        }
+        //String total="1400";
+        db.close();
+
+    }
+
 
    public void Dialog_detalle_factura(int position){
         ClassDialogFactura dialogFactura = new ClassDialogFactura();

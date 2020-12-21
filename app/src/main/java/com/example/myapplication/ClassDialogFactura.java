@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -98,6 +99,8 @@ public class ClassDialogFactura extends DialogFragment {
         db.close();
 
         Toast.makeText(getContext(),"Actualizado!!!",Toast.LENGTH_SHORT).show();
+        Intent intent2 = new Intent(getContext(),MainFacturaList.class);
+        startActivity(intent2);
 
     }
 
@@ -106,6 +109,12 @@ public class ClassDialogFactura extends DialogFragment {
         SQLiteDatabase db=conn.getReadableDatabase();
         db.execSQL("DELETE FROM producto WHERE id = "+precio_D.getText().toString()+" ");
         db.close();
+        Intent intent2 = new Intent(getContext(),MainFacturaList.class);
+        startActivity(intent2);
+
         Toast.makeText(getContext(),"Registro Eliminado!!!",Toast.LENGTH_SHORT).show();
     }
+
+
+
 }
