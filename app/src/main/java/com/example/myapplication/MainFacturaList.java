@@ -23,7 +23,7 @@ import com.example.myapplication.SQLite.ulilidades.utilidades;
 
 import java.util.ArrayList;
 
-public class MainFacruraList extends AppCompatActivity {
+public class MainFacturaList extends AppCompatActivity {
 
     TextView textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible,textV_total;
     Spinner T_factura,T_ventas;

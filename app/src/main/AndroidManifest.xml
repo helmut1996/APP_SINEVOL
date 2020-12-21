@@ -14,7 +14,7 @@
         <activity android:name=".MainListaproducto"
             android:parentActivityName=".MainProductosCliente"/>
         <activity
-            android:name=".MainFacruraList"
+            android:name=".MainFacturaList"
             android:parentActivityName=".MainProductosCliente" />
         <activity
             android:name=".MainProductosCliente"

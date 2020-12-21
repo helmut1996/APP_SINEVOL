@@ -5,14 +5,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,20 +25,13 @@ import android.widget.Toast;
 import com.example.myapplication.ConexionBD.DBConnection;
 import com.example.myapplication.SQLite.conexionSQLiteHelper;
 import com.example.myapplication.SQLite.ulilidades.utilidades;
-import com.example.myapplication.modelos.ModelItemsProducto;
 import com.squareup.picasso.Picasso;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
     /*variables de los componentes de la vista*/
@@ -56,8 +45,8 @@ private EditText editcantidad;
 /* variables globales */
 
  private String producto;
- private String compraProductos [] []=new String[3][3];
- private String llenarArregloProducto;
+
+ private String contador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -234,7 +223,7 @@ private EditText editcantidad;
                 startActivity(intent);
                 break;
             case R.id.btn_siguente:
-                Intent intent1 = new Intent(getApplicationContext(),MainFacruraList.class);
+                Intent intent1 = new Intent(getApplicationContext(), MainFacturaList.class);
                 intent1.putExtra("nombreproducto",tvnombreproducto.getText());
                 intent1.putExtra("cantidad",editcantidad.getText());
                 startActivity(intent1);
@@ -250,38 +239,7 @@ private EditText editcantidad;
                     GuardarProductos();
                     Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
                     startActivity(intent2);
-                   /*
-                   metodo 1 utilizando Matrizes Bidimencional para guardar
-                   for (int indice1=0;indice1<3;indice1++){
-                        for (int indice2=0;indice2<3;indice2++){
-                           // llenarArregloProducto=tvnombreproducto.getText().toString()+(compraProductos [indice1] [indice2]+ " " + editcantidad.getText().toString()+(compraProductos [indice1] [indice2]+ " "));
-                            //llenarArregloProducto= precios.getSelectedView().toString()+(compraProductos [indice1] [indice2]+ " ");
-                            //llenarArregloProducto= tvnombreproducto.getText().toString()+(compraProductos [indice1] [indice2]+ " ");
-                            System.out.println(llenarArregloProducto);
 
-                            tvcontadorproducto.setText(llenarArregloProducto);
-                        }
-                    }*/
-
-                  /*
-                  metodo 2 utilizando un arreglo para guardar
-                  String [] arrayone = {editcantidad.getText().toString(),tvnombreproducto.getText().toString()};
-                  tvcontadorproducto.setText(arrayone.length);
-                    System.out.println("Cantidad Guardada: ----- >"+arrayone[0]);
-                    System.out.println("Cantidad Guardada: ----- >"+arrayone[1]);
-                    String [] arraytwo = arrayone;
-                    System.out.println("arreglo Guardada: ----- >"+arraytwo[0]);
-                    */
-
-                /*
-                 Metodo 4 utilizando SharedPreferences para guardar datos
-                 SharedPreferences preferencias = getSharedPreferences("datos",Context.MODE_PRIVATE);
-                    SharedPreferences.Editor obj_editor=preferencias.edit();
-                    obj_editor.putString("NombreProducto",tvcontadorproducto.getText().toString());
-                    obj_editor.commit();
-                    System.out.println("-------> capturando "+ tvcontadorproducto);
-                    Toast.makeText(this,"Producto Guardado",Toast.LENGTH_SHORT).show();
-                    */
                 }
 
                 break;
@@ -303,13 +261,15 @@ private EditText editcantidad;
         values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
         long idResultante= db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
 
+
         if (idResultante<=30){
             Toast.makeText(this,"ID PRODUCTO: " + idResultante,Toast.LENGTH_SHORT).show();
             Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
             startActivity(intent2);
+
         }else {
-            IbuttonAgregar.setEnabled(false);
             Toast.makeText(this,"solo puedes agregar 30 productos!!!",Toast.LENGTH_SHORT).show();
+            IbuttonAgregar.setEnabled(false);
         }
 
 

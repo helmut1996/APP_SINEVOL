@@ -2,10 +2,7 @@ package com.example.myapplication;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,7 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.myapplication.SQLite.conexionSQLiteHelper;
-import com.example.myapplication.SQLite.ulilidades.utilidades;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -47,7 +43,7 @@ public class ClassDialogFactura extends DialogFragment {
 
                     }
                 });
-        MainFacruraList variable = new MainFacruraList();
+        MainFacturaList variable = new MainFacturaList();
         producto=view.findViewById(R.id.id_producto);
         producto.setText(variable.nombre);
 
@@ -94,7 +90,7 @@ public class ClassDialogFactura extends DialogFragment {
     }
 
 
-    public void ActualizarDatosSQLite() {
+    private void ActualizarDatosSQLite() {
         /*mandando a llamar conexion a SQLite */
        conexionSQLiteHelper conn= new conexionSQLiteHelper(getContext(),"bd_productos",null,1);
         SQLiteDatabase db=conn.getReadableDatabase();
@@ -106,6 +102,10 @@ public class ClassDialogFactura extends DialogFragment {
     }
 
     private void EliminarDatosSQLite() {
-
+        conexionSQLiteHelper conn = new conexionSQLiteHelper(getContext(),"bd_productos",null,1);
+        SQLiteDatabase db=conn.getReadableDatabase();
+        db.execSQL("DELETE FROM producto WHERE id = "+precio_D.getText().toString()+" ");
+        db.close();
+        Toast.makeText(getContext(),"Registro Eliminado!!!",Toast.LENGTH_SHORT).show();
     }
 }
