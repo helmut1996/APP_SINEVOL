@@ -41,6 +41,9 @@ import java.util.List;
     EditText search2;
     RecycleviewProductoAdapter adaptadorProducto;
     List<ModelItemsProducto> listaProducto;
+    public static String nombrecliente;
+    public static String codigocliente;
+    public static String zonacliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,19 @@ import java.util.List;
         getSupportActionBar().setTitle("Lista de Productos");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        Bundle extra=getIntent().getExtras();
+        if (extra != null){
+            nombrecliente= extra.getString("Nombrecliente");
+            System.out.println("----> NombreCliente: "+nombrecliente);
+
+            codigocliente= extra.getString("Codigocliente");
+            System.out.println("----> CodigoCliente: "+codigocliente);
+
+            zonacliente= extra.getString("Zonacliente");
+            System.out.println("----> Nombre Zona Cliente: "+zonacliente);
+
+        }
 
         listaProducto=new ArrayList<>();
         init();

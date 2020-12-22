@@ -99,8 +99,9 @@ public class ClassDialogFactura extends DialogFragment {
         db.close();
 
         Toast.makeText(getContext(),"Actualizado!!!",Toast.LENGTH_SHORT).show();
-        Intent intent2 = new Intent(getContext(),MainFacturaList.class);
-        startActivity(intent2);
+        Intent refresh = new Intent(getContext(), MainFacturaList.class);
+        startActivity(refresh);
+
 
     }
 
@@ -109,9 +110,8 @@ public class ClassDialogFactura extends DialogFragment {
         SQLiteDatabase db=conn.getReadableDatabase();
         db.execSQL("DELETE FROM producto WHERE id = "+precio_D.getText().toString()+" ");
         db.close();
-        Intent intent2 = new Intent(getContext(),MainFacturaList.class);
-        startActivity(intent2);
-
+        Intent refresh = new Intent(getContext(), MainFacturaList.class);
+        startActivity(refresh);
         Toast.makeText(getContext(),"Registro Eliminado!!!",Toast.LENGTH_SHORT).show();
     }
 

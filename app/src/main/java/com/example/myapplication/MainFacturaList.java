@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
@@ -17,9 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.myapplication.Adapter.RecycleviewAdapter;
 import com.example.myapplication.SQLite.conexionSQLiteHelper;
 import com.example.myapplication.SQLite.entidades.ProductosAdd;
 import com.example.myapplication.SQLite.ulilidades.utilidades;
+import com.example.myapplication.modelos.ClasslistItemC;
 
 import java.util.ArrayList;
 
@@ -30,6 +33,7 @@ public class MainFacturaList extends AppCompatActivity {
     ListView lista_factura;
     ArrayList<String>listainformacion;
     ArrayList<ProductosAdd>listaproducto;
+    String CodigoCliente;
    public static String nombre ="HOLA MUNDO";
    public static int cantidadProducto, idProd ;
    public static double precioProducto;
@@ -61,11 +65,18 @@ public class MainFacturaList extends AppCompatActivity {
         T_ventas.setAdapter(adapter);
 
 
+
         ////////////spinner tipo factura
         ArrayAdapter<CharSequence> adapter1 =ArrayAdapter.createFromResource(this, R.array.tipo_moneda, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         T_factura.setAdapter(adapter1);
 
+        textV_Cliente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         ////////////////////////////// ListView///////////////////////////////
                 //conexion de SQLite
         conn=new conexionSQLiteHelper(getApplicationContext(),"bd_productos",null,1);
@@ -74,6 +85,7 @@ public class MainFacturaList extends AppCompatActivity {
                 CalcularTotalFactura();
               ArrayAdapter adaptador= new ArrayAdapter(this, android.R.layout.simple_list_item_1,listainformacion);
               lista_factura.setAdapter(adaptador);
+              adaptador.notifyDataSetChanged();
               lista_factura.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                   @Override
                   public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -86,20 +98,16 @@ public class MainFacturaList extends AppCompatActivity {
                       nombreImagen=listaproducto.get(position).getImagenProducto();
                   }
               });
-
-
-/////////////////////////////////////////////////////////////////////////////////////////
-     /*   String CodigoCliente;
+              /////pasando los datos del cliente
         Bundle extra=getIntent().getExtras();
-
-        if (extra !=null){
-            CodigoCliente= extra.getString("CodigoCliente");
-            System.out.println("-------------> "+ CodigoCliente);
-            textV_Codigo.setText(CodigoCliente);
+        if (extra != null){
             textV_Cliente.setText(extra.getString("NombreCliente"));
+            textV_Codigo.setText(extra.getString("CodigoCliente"));
             textV_zona.setText(extra.getString("ZonaCliente"));
-        }*/
-//////////////////////////////////////////////////////////////////////////////////////////
+            System.out.println("----> NombreCliente activity preFactura: "+textV_Cliente);
+        }
+        /////pasando los datos del cliente
+
     CalcularTotalFactura();
     }
 
@@ -156,14 +164,13 @@ getMenuInflater().inflate(R.menu.menu,menu);
 
             textV_total.setText("C$"+TotalFact);
         }
-        //String total="1400";
         db.close();
 
     }
-
 
    public void Dialog_detalle_factura(int position){
         ClassDialogFactura dialogFactura = new ClassDialogFactura();
         dialogFactura.show(getSupportFragmentManager(),"ventana emergente");
     }
+
 }

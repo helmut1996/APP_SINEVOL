@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.MainFacturaList;
 import com.example.myapplication.MainListaproducto;
 import com.example.myapplication.MainMenu;
 import com.example.myapplication.MainProductosCliente;
@@ -37,6 +38,9 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
 
       }
 
+    public RecycleviewAdapter() {
+
+    }
 
     @NonNull
     @Override
@@ -67,9 +71,9 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
     }
 
 
+
     public class RecyclerHolder extends RecyclerView.ViewHolder{
         TextView codigo,nombre,zona;
-
         public RecyclerHolder(@NonNull View itemView ){
 
             super(itemView);
@@ -77,13 +81,14 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
             codigo=itemView.findViewById(R.id.CodigoCliente);
             nombre=itemView.findViewById(R.id.nombreCliente);
             zona=itemView.findViewById(R.id.cliente_zona);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(context, MainListaproducto.class);
-                    intent.putExtra("CodigoCliente",codigo.getText());
-                    intent.putExtra("NombreCliente",nombre.getText());
-                    intent.putExtra("ZonaCliente",zona.getText());
+                    intent.putExtra("Nombrecliente",nombre.getText());
+                    intent.putExtra("Codigocliente",codigo.getText());
+                    intent.putExtra("Zonacliente",zona.getText());
                     context.startActivity(intent);
                 }
             });

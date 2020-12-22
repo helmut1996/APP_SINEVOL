@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/textView16"
@@ -114,7 +115,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/textView26"
@@ -208,7 +210,7 @@
             <ListView
                 android:id="@+id/lista_Factura"
                 android:layout_width="wrap_content"
-                android:layout_height="250dp"
+                android:layout_height="match_parent"
                 android:smoothScrollbar="true"
                 tools:listitem="@android:layout/simple_list_item_1" />
 

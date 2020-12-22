@@ -124,6 +124,7 @@ private List<ClasslistItemC>obtenerclientesBD(){
                 listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),rs.getString("Direccion"),rs.getInt("Codigo")));
 
             }
+
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             e.printStackTrace();

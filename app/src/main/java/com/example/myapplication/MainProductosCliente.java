@@ -43,6 +43,9 @@ private EditText editcantidad;
 
 
 /* variables globales */
+String NombreCliente;
+String CodigoCliente;
+String ZonaCliente;
 
  private String producto;
 
@@ -96,6 +99,14 @@ private EditText editcantidad;
         Bundle extra=getIntent().getExtras();
 
         if (extra !=null){
+            NombreCliente = extra.getString("NombreCliente");
+            System.out.println("Nombre Cliente Activity ProductosClientea----->"+NombreCliente);
+
+            CodigoCliente = extra.getString("CodigoCliente");
+            System.out.println("Codigo Cliente Activity ProductosClientea----->"+CodigoCliente);
+
+            ZonaCliente = extra.getString("ZonaCliente");
+            System.out.println("Zona Cliente Activity ProductosClientea----->"+ZonaCliente);
             NombrePreducto= extra.getString("NombreP");
             producto = extra.getString("NombreP");
             tvnombreproducto.setText(NombrePreducto);
@@ -223,7 +234,12 @@ private EditText editcantidad;
                 startActivity(intent);
                 break;
             case R.id.btn_siguente:
+                MainListaproducto datos= new MainListaproducto();
                 Intent intent1 = new Intent(getApplicationContext(), MainFacturaList.class);
+                intent1.putExtra("NombreCliente",datos.nombrecliente);
+                intent1.putExtra("CodigoCliente",datos.codigocliente);
+                intent1.putExtra("ZonaCliente",datos.zonacliente);
+
                 intent1.putExtra("nombreproducto",tvnombreproducto.getText());
                 intent1.putExtra("cantidad",editcantidad.getText());
                 startActivity(intent1);
@@ -261,15 +277,16 @@ private EditText editcantidad;
         values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
         long idResultante= db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
 
-
-        if (idResultante<=30){
+        Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
+        startActivity(intent2);
+        if (idResultante<=8){
             Toast.makeText(this,"ID PRODUCTO: " + idResultante,Toast.LENGTH_SHORT).show();
-            Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
-            startActivity(intent2);
+
 
         }else {
             Toast.makeText(this,"solo puedes agregar 30 productos!!!",Toast.LENGTH_SHORT).show();
             IbuttonAgregar.setEnabled(false);
+
         }
 
 
