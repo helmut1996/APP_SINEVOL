@@ -234,16 +234,24 @@ String ZonaCliente;
         switch (v.getId()){
 
             case R.id.btn_siguente:
-                MainListaproducto datos= new MainListaproducto();
-                Intent intent1 = new Intent(getApplicationContext(), MainFacturaList.class);
-                intent1.putExtra("NombreCliente",datos.nombrecliente);
-                intent1.putExtra("CodigoCliente",datos.codigocliente);
-                intent1.putExtra("ZonaCliente",datos.zonacliente);
 
-                intent1.putExtra("nombreproducto",tvnombreproducto.getText());
-                intent1.putExtra("cantidad",editcantidad.getText());
-                startActivity(intent1);
-                GuardarProductos();
+                if (editcantidad.getText().toString().isEmpty()){
+                    Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
+                }else{
+                    editcantidad.setText("");
+                    GuardarProductos();
+
+                    MainListaproducto datos= new MainListaproducto();
+                    Intent intent1 = new Intent(getApplicationContext(), MainFacturaList.class);
+                    intent1.putExtra("NombreCliente",datos.nombrecliente);
+                    intent1.putExtra("CodigoCliente",datos.codigocliente);
+                    intent1.putExtra("ZonaCliente",datos.zonacliente);
+
+                    intent1.putExtra("nombreproducto",tvnombreproducto.getText());
+                    intent1.putExtra("cantidad",editcantidad.getText());
+                    startActivity(intent1);
+                }
+
                 break;
             case R.id.btn_Agregar:
                 // implementar agregar
@@ -251,8 +259,13 @@ String ZonaCliente;
                 if (editcantidad.getText().toString().isEmpty()){
 
                     Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
-                }else {
+                }
+                else if (precios.getSelectedItemPosition()==0) {
+                    Toast.makeText(this,"el precio no puede ser cero ",Toast.LENGTH_SHORT).show();
+                }
+                else {
 
+                    editcantidad.setText("");
                     GuardarProductos();
 
                     Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
@@ -274,7 +287,8 @@ String ZonaCliente;
         Cursor c=db.rawQuery("SELECT * FROM producto WHERE id='"+tvIDproducto.getText()+"'", null);
         if(c.moveToFirst()) {
             Toast.makeText(this,"Error ya existe este registro",Toast.LENGTH_LONG).show();
-        } else { // Inserting record }
+        }
+        else { // Inserting record
             ContentValues values= new ContentValues();
             values.put(utilidades.CAMPO_ID,tvIDproducto.getText().toString());
             values.put(utilidades.CAMPO_NOMBRE,tvnombreproducto.getText().toString());
@@ -282,7 +296,6 @@ String ZonaCliente;
             values.put(utilidades.CAMPO_PRECIO,precios.getSelectedItem().toString());
             values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
             long idResultante= db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
-
             Toast.makeText(this,"ID PRODUCTO: " + idResultante,Toast.LENGTH_SHORT).show();
 
         }

@@ -25,7 +25,7 @@ import java.io.File;
 
 public class ClassDialogFactura extends DialogFragment {
     TextView producto,cantidad,precio_C,precio_D,tvimagenSQLite;
-    ImageButton btn_delete, btn_Actualizar;
+  //  ImageButton btn_delete, btn_Actualizar;
     ImageView imgProductoDetalle;
     EditText editcantidad2;
     MainFacturaList variable = new MainFacturaList();
@@ -38,14 +38,23 @@ public class ClassDialogFactura extends DialogFragment {
 
         builder.setView(view)
                 .setTitle("Detalle Factura")
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Actualizar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ActualizarDatosSQLite();
+
+                    }
+                })
+                .setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         EliminarDatosSQLite();
 
-                        variable.lista_factura.getAdapter().notify();
+
                     }
-                });
+                }
+
+                );
 
         producto=view.findViewById(R.id.id_producto);
         producto.setText(variable.nombre);
@@ -59,7 +68,7 @@ public class ClassDialogFactura extends DialogFragment {
         precio_D=view.findViewById(R.id.id_precio_dolares);
         precio_D.setText(String.valueOf(variable.idProd));
 
-        btn_delete=view.findViewById(R.id.imageButton_Eliminar);
+       // btn_delete=view.findViewById(R.id.imageButton_Eliminar);
 
         imgProductoDetalle=view.findViewById(R.id.imageProducto);
         String imagen= variable.nombreImagen;
@@ -72,14 +81,14 @@ public class ClassDialogFactura extends DialogFragment {
         tvimagenSQLite=view.findViewById(R.id.tvimagenBD_SQLlite);
         tvimagenSQLite.setText(variable.nombreImagen);
 
-        btn_Actualizar=view.findViewById(R.id.imageButtonAgregar);
+        //btn_Actualizar=view.findViewById(R.id.imageButtonAgregar);
 
-        btn_Actualizar.setOnClickListener(new View.OnClickListener() {
+      /*  btn_Actualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActualizarDatosSQLite();
             }
-        });
+        });*/
 
        /* btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,11 +121,10 @@ public class ClassDialogFactura extends DialogFragment {
         SQLiteDatabase db=conn.getReadableDatabase();
         db.execSQL("DELETE FROM producto WHERE id = "+precio_D.getText().toString()+" ");
         db.close();
-      //  Intent refresh = new Intent(getContext(), MainFacturaList.class);
-        //startActivity(refresh);
+       Intent refresh = new Intent(getContext(), MainFacturaList.class);
+       startActivity(refresh);
         Toast.makeText(getContext(),"Registro Eliminado!!!",Toast.LENGTH_SHORT).show();
     }
-
 
 
 }

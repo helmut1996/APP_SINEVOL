@@ -131,7 +131,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
                         break;
                     case R.id.Mbtn_Home:
                         borrardatosTabla();
-                        Intent intent3 = new Intent(getApplicationContext(),MainMenu.class);
+                        Intent intent3 = new Intent(getApplicationContext(),MainFactura.class);
                         startActivity(intent3);
                 }
 

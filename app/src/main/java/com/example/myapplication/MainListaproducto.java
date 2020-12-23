@@ -1,5 +1,6 @@
     package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -97,6 +99,26 @@ import java.util.List;
 
     }
 
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            getMenuInflater().inflate(R.menu.menu2,menu);
+            return true;
+
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()){
+                case R.id.Mbtn_prefactura:
+
+                    Intent intent2 = new Intent(getApplicationContext(),MainFacturaList.class);
+                    startActivity(intent2);
+                    break;
+
+            }
+
+            return super.onOptionsItemSelected(item);
+        }
         private void filter2(String text) {
         text = search2.getText().toString().toUpperCase();
       initVlaues(text);
