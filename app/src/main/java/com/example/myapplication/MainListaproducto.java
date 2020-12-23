@@ -74,7 +74,9 @@ import java.util.List;
 
         listaProducto=new ArrayList<>();
         init();
-        initVlaues();
+        initVlaues(search2.getText().toString().toUpperCase());
+
+
         search2.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -96,9 +98,11 @@ import java.util.List;
     }
 
         private void filter2(String text) {
+        text = search2.getText().toString().toUpperCase();
+      initVlaues(text);
         ArrayList<ModelItemsProducto> filterlistP = new ArrayList<>();
         for (ModelItemsProducto item:listaProducto){
-            if (item.getNombreP().toUpperCase().contains(search2.getText().toString().toUpperCase())){
+            if (item.getNombreP().toUpperCase().contains(text)){
                 filterlistP.add(item);
             }
         }
@@ -106,7 +110,9 @@ import java.util.List;
         }
 
 
-        private List<ModelItemsProducto> llenarProductosBD(){
+
+
+        private List<ModelItemsProducto> llenarProductosBD(String Buscar){
         List<ModelItemsProducto> listProducto = new ArrayList<>();
         try {
 
@@ -115,7 +121,7 @@ import java.util.List;
 
             Statement st = dbConnection.getConnection().createStatement();
             ResultSet rs = st.executeQuery("\n" +
-                    "select concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,i.Nombre as Producto,um.Nombre as UM,i.idInventario, i.ImagenApk, i.Precio1,ad.info1,ad.info2,ad.info3,ad.info4,ad.info5,i.Stock from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida inner join InventarioInfoAdic ad on i.idInventario= ad.idInventario where i.Estado = 'Activo'");
+                    "select top 50 concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,i.Nombre as Producto,um.Nombre as UM,i.idInventario, i.ImagenApk, i.Precio1,ad.info1,ad.info2,ad.info3,ad.info4,ad.info5,i.Stock from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida inner join InventarioInfoAdic ad on i.idInventario= ad.idInventario where i.Estado = 'Activo' and i.Nombre like '%"+Buscar+"%'");
 
             while (rs.next()){
 
@@ -134,10 +140,10 @@ import java.util.List;
         search2 = findViewById(R.id.search2);
 
     }
-    private void initVlaues(){
+    private void initVlaues(String Buscar){
        LinearLayoutManager manager= new LinearLayoutManager(this);
        recyclerlistproducto.setLayoutManager(manager);
-       listaProducto=llenarProductosBD();
+       listaProducto=llenarProductosBD(Buscar);
        adaptadorProducto= new RecycleviewProductoAdapter((ArrayList<ModelItemsProducto>) listaProducto);
        recyclerlistproducto.setAdapter(adaptadorProducto);
     }

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -123,6 +124,15 @@ getMenuInflater().inflate(R.menu.menu,menu);
                 switch (item.getItemId()){
                     case R.id.Mbtn_guardar:
                         Toast.makeText(this,"Guardar",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.Mbtn_addProducto:
+                        Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.Mbtn_Home:
+                        borrardatosTabla();
+                        Intent intent3 = new Intent(getApplicationContext(),MainMenu.class);
+                        startActivity(intent3);
                 }
 
         return super.onOptionsItemSelected(item);
@@ -165,7 +175,12 @@ getMenuInflater().inflate(R.menu.menu,menu);
             textV_total.setText("C$"+TotalFact);
         }
         db.close();
+    }
 
+    public void borrardatosTabla(){
+        SQLiteDatabase db= conn.getReadableDatabase();
+        db.execSQL("delete from producto");
+        db.close();
     }
 
    public void Dialog_detalle_factura(int position){

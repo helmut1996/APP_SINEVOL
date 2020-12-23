@@ -28,7 +28,7 @@ public class ClassDialogFactura extends DialogFragment {
     ImageButton btn_delete, btn_Actualizar;
     ImageView imgProductoDetalle;
     EditText editcantidad2;
-
+    MainFacturaList variable = new MainFacturaList();
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -41,10 +41,12 @@ public class ClassDialogFactura extends DialogFragment {
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        EliminarDatosSQLite();
 
+                        variable.lista_factura.getAdapter().notify();
                     }
                 });
-        MainFacturaList variable = new MainFacturaList();
+
         producto=view.findViewById(R.id.id_producto);
         producto.setText(variable.nombre);
 
@@ -79,12 +81,12 @@ public class ClassDialogFactura extends DialogFragment {
             }
         });
 
-        btn_delete.setOnClickListener(new View.OnClickListener() {
+       /* btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EliminarDatosSQLite();
             }
-        });
+        });*/
         editcantidad2=view.findViewById(R.id.editTextCantidad2);
         return builder.create();
 
@@ -110,8 +112,8 @@ public class ClassDialogFactura extends DialogFragment {
         SQLiteDatabase db=conn.getReadableDatabase();
         db.execSQL("DELETE FROM producto WHERE id = "+precio_D.getText().toString()+" ");
         db.close();
-        Intent refresh = new Intent(getContext(), MainFacturaList.class);
-        startActivity(refresh);
+      //  Intent refresh = new Intent(getContext(), MainFacturaList.class);
+        //startActivity(refresh);
         Toast.makeText(getContext(),"Registro Eliminado!!!",Toast.LENGTH_SHORT).show();
     }
 

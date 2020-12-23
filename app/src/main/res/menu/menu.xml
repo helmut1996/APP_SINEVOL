@@ -6,4 +6,14 @@
     android:icon="@drawable/ic_baseline_save"
     app:showAsAction="always"
     android:title="Guardar"></item>
+    <item
+        android:id="@+id/Mbtn_addProducto"
+        android:icon="@drawable/ic_baseline_add_shopping_cart"
+        app:showAsAction="always"
+        android:title="Agregar Productos"></item>
+    <item
+        android:id="@+id/Mbtn_Home"
+        android:icon="@drawable/ic_baseline_home"
+        app:showAsAction="always"
+        android:title="Agregar Productos"></item>
 </menu>

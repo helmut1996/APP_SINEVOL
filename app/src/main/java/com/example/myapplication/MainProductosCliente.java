@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -8,10 +9,13 @@ import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,7 +39,7 @@ import java.util.ArrayList;
 
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
     /*variables de los componentes de la vista*/
-private ImageButton IbuttonInicio,IbuttonAgregar,IbuttonSiguiente;
+private ImageButton IbuttonAgregar,IbuttonSiguiente;
 private TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvcontadorproducto,tvimagenBD,tvIDproducto;
 private Spinner precios,monedas;
 private ImageView img;
@@ -66,7 +70,6 @@ String ZonaCliente;
             checkExternalStoragePermission(); }
 
         ///////// Botones
-        IbuttonInicio = findViewById(R.id.btn_Inicio);
         IbuttonAgregar = findViewById(R.id.btn_Agregar);
         IbuttonSiguiente = findViewById(R.id.btn_siguente);
 
@@ -89,7 +92,6 @@ String ZonaCliente;
         precios = findViewById(R.id.spinerPrecios);
         monedas = findViewById(R.id.spinner_tipo_moneda);
 
-        IbuttonInicio.setOnClickListener(this);
         IbuttonAgregar.setOnClickListener(this);
         IbuttonSiguiente.setOnClickListener(this);
 
@@ -149,7 +151,8 @@ String ZonaCliente;
             }
         });
 
-                        /*mandando a llamar las imagenes libreria */
+
+        /*mandando a llamar las imagenes libreria */
                                         cargarImagen();
      }
 
@@ -229,10 +232,7 @@ String ZonaCliente;
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_Inicio:
-                Intent intent = new Intent(getApplicationContext(),MainMenu.class);
-                startActivity(intent);
-                break;
+
             case R.id.btn_siguente:
                 MainListaproducto datos= new MainListaproducto();
                 Intent intent1 = new Intent(getApplicationContext(), MainFacturaList.class);
@@ -243,6 +243,7 @@ String ZonaCliente;
                 intent1.putExtra("nombreproducto",tvnombreproducto.getText());
                 intent1.putExtra("cantidad",editcantidad.getText());
                 startActivity(intent1);
+                GuardarProductos();
                 break;
             case R.id.btn_Agregar:
                 // implementar agregar
@@ -253,9 +254,9 @@ String ZonaCliente;
                 }else {
 
                     GuardarProductos();
+
                     Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
                     startActivity(intent2);
-
                 }
 
                 break;
@@ -269,27 +270,22 @@ String ZonaCliente;
         /*abrir la conexion a SQLite*/
         SQLiteDatabase db= conn.getWritableDatabase();
 
-        ContentValues values= new ContentValues();
-        values.put(utilidades.CAMPO_ID,tvIDproducto.getText().toString());
-        values.put(utilidades.CAMPO_NOMBRE,tvnombreproducto.getText().toString());
-        values.put(utilidades.CAMPO_CANTIDAD,editcantidad.getText().toString());
-        values.put(utilidades.CAMPO_PRECIO,precios.getSelectedItem().toString());
-        values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
-        long idResultante= db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
 
-        Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
-        startActivity(intent2);
-        if (idResultante<=8){
+        Cursor c=db.rawQuery("SELECT * FROM producto WHERE id='"+tvIDproducto.getText()+"'", null);
+        if(c.moveToFirst()) {
+            Toast.makeText(this,"Error ya existe este registro",Toast.LENGTH_LONG).show();
+        } else { // Inserting record }
+            ContentValues values= new ContentValues();
+            values.put(utilidades.CAMPO_ID,tvIDproducto.getText().toString());
+            values.put(utilidades.CAMPO_NOMBRE,tvnombreproducto.getText().toString());
+            values.put(utilidades.CAMPO_CANTIDAD,editcantidad.getText().toString());
+            values.put(utilidades.CAMPO_PRECIO,precios.getSelectedItem().toString());
+            values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
+            long idResultante= db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
+
             Toast.makeText(this,"ID PRODUCTO: " + idResultante,Toast.LENGTH_SHORT).show();
-
-
-        }else {
-            Toast.makeText(this,"solo puedes agregar 30 productos!!!",Toast.LENGTH_SHORT).show();
-            IbuttonAgregar.setEnabled(false);
 
         }
 
-
     }
-
 }

@@ -38,9 +38,6 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
 
       }
 
-    public RecycleviewAdapter() {
-
-    }
 
     @NonNull
     @Override
