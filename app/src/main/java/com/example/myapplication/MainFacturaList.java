@@ -20,12 +20,16 @@ import android.widget.Toast;
 
 
 import com.example.myapplication.Adapter.RecycleviewAdapter;
+import com.example.myapplication.ConexionBD.DBConnection;
 import com.example.myapplication.SQLite.conexionSQLiteHelper;
 import com.example.myapplication.SQLite.entidades.ProductosAdd;
 import com.example.myapplication.SQLite.ulilidades.utilidades;
 import com.example.myapplication.modelos.ClasslistItemC;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainFacturaList extends AppCompatActivity {
 
@@ -43,6 +47,12 @@ public class MainFacturaList extends AppCompatActivity {
     conexionSQLiteHelper conn;
 
     private static final String TAG ="MainFacturaList";
+
+
+    ////////////
+    String Estado= "Habilitado";
+    String FechaExp="25/12/2020";
+    double TotalComision= 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +133,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.Mbtn_guardar:
+                        AgregarDatosSQLSEVER();
                         Toast.makeText(this,"Guardar",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.Mbtn_addProducto:
@@ -161,7 +172,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
         listainformacion=new ArrayList<String>();
         for (int i=0; i<listaproducto.size();i++){
 
-            listainformacion.add(listaproducto.get(i).getNombreproduc()+" -"+listaproducto.get(i).getCantidad()+" - C$"+listaproducto.get(i).getPrecios());
+            listainformacion.add(listaproducto.get(i).getNombreproduc()+" -"+listaproducto.get(i).getCantidad()+listaproducto.get(i).getPrecios());
             System.out.println("MOSTRANDO LA CANTIDAD GUARDADA "+listaproducto.get(i).getCantidad());
         }
 
@@ -175,7 +186,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
             TotalFact= query.getString(query.getColumnIndex("Total"));
             System.out.println("TOTAL DE LA FACTURA ACTUALMENTE ES : ----> "+TotalFact);
 
-            textV_total.setText("C$"+TotalFact);
+            textV_total.setText(TotalFact);
         }
         db.close();
     }
@@ -191,4 +202,27 @@ getMenuInflater().inflate(R.menu.menu,menu);
         dialogFactura.show(getSupportFragmentManager(),"ventana emergente");
     }
 
+    public  void AgregarDatosSQLSEVER(){
+        String numeroFactura = "0";
+        Date hoy= new Date();
+        java.sql.Date dataStartSql = new java.sql.Date(hoy.getTime());
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.conectar();
+        try {
+            PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertPrefact ?,?,?,?,?,?,?");
+            pst.setInt(1, 4);
+            pst.setInt(2,1);
+            pst.setString(3,T_ventas.getSelectedItem().toString());
+            pst.setString(4,T_factura.getSelectedItem().toString());
+            pst.setFloat(5, Float.parseFloat(textV_total.getText().toString()));
+            pst.setDouble(6,TotalComision);
+            pst.setString(7,textV_Cliente.getText().toString());
+            pst.executeUpdate();
+          Toast.makeText(this,"Registrado SQLServer",Toast.LENGTH_LONG).show();
+
+        }catch (SQLException e){
+            System.out.println("ERROR: ======> "+e);
+            Toast.makeText(this," No Registrado SQLServer",Toast.LENGTH_LONG).show();
+        }
+    }
 }
