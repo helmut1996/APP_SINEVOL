@@ -149,7 +149,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
             productosAdd.setId_producto(cursor.getInt(0));
             productosAdd.setNombreproduc(cursor.getString(1));
             productosAdd.setCantidad(cursor.getInt(2));
-            productosAdd.setPrecios(cursor.getInt(3));
+            productosAdd.setPrecios(cursor.getDouble(3));
             productosAdd.setImagenProducto(cursor.getString(4));
 
             listaproducto.add(productosAdd);
@@ -160,8 +160,11 @@ getMenuInflater().inflate(R.menu.menu,menu);
     public void obtenerLista() {
         listainformacion=new ArrayList<String>();
         for (int i=0; i<listaproducto.size();i++){
+
             listainformacion.add(listaproducto.get(i).getNombreproduc()+" -"+listaproducto.get(i).getCantidad()+" - C$"+listaproducto.get(i).getPrecios());
+            System.out.println("MOSTRANDO LA CANTIDAD GUARDADA "+listaproducto.get(i).getCantidad());
         }
+
     }
 
     public void CalcularTotalFactura(){

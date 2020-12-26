@@ -4,7 +4,7 @@ public class ProductosAdd {
     private int id_producto;
     private String nombreproduc;
     private int cantidad;
-    private int precios;
+    private double precios;
     private String imagenProducto;
 
     public ProductosAdd() {
@@ -12,7 +12,7 @@ public class ProductosAdd {
 
 
 
-    public ProductosAdd(int id_producto, String nombreproduc, int cantidad, int precios, String imagenProducto) {
+    public ProductosAdd(int id_producto, String nombreproduc, int cantidad, double precios, String imagenProducto) {
         this.id_producto = id_producto;
         this.nombreproduc = nombreproduc;
         this.cantidad = cantidad;
@@ -44,11 +44,11 @@ public class ProductosAdd {
         this.cantidad = cantidad;
     }
 
-    public int getPrecios() {
+    public double getPrecios() {
         return precios;
     }
 
-    public void setPrecios(int precios) {
+    public void setPrecios(double precios) {
         this.precios = precios;
     }
 

@@ -81,21 +81,6 @@ public class ClassDialogFactura extends DialogFragment {
         tvimagenSQLite=view.findViewById(R.id.tvimagenBD_SQLlite);
         tvimagenSQLite.setText(variable.nombreImagen);
 
-        //btn_Actualizar=view.findViewById(R.id.imageButtonAgregar);
-
-      /*  btn_Actualizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActualizarDatosSQLite();
-            }
-        });*/
-
-       /* btn_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EliminarDatosSQLite();
-            }
-        });*/
         editcantidad2=view.findViewById(R.id.editTextCantidad2);
         return builder.create();
 

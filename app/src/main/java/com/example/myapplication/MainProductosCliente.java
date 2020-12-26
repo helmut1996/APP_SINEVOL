@@ -238,7 +238,6 @@ String ZonaCliente;
                 if (editcantidad.getText().toString().isEmpty()){
                     Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
                 }else{
-                    editcantidad.setText("");
                     GuardarProductos();
 
                     MainListaproducto datos= new MainListaproducto();
@@ -259,13 +258,8 @@ String ZonaCliente;
                 if (editcantidad.getText().toString().isEmpty()){
 
                     Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
-                }
-                else if (precios.getSelectedItemPosition()==0) {
-                    Toast.makeText(this,"el precio no puede ser cero ",Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
 
-                    editcantidad.setText("");
                     GuardarProductos();
 
                     Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
