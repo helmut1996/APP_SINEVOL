@@ -27,13 +27,15 @@ import com.example.myapplication.SQLite.ulilidades.utilidades;
 import com.example.myapplication.modelos.ClasslistItemC;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class MainFacturaList extends AppCompatActivity {
 
-    TextView textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible, textV_total;
+    TextView textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible, textV_total,textIdcliente,textIdvendedor;
     Spinner T_factura,T_ventas;
     ListView lista_factura;
     ArrayList<String>listainformacion;
@@ -42,7 +44,7 @@ public class MainFacturaList extends AppCompatActivity {
    public static String nombre ="HOLA MUNDO";
    public static int cantidadProducto, idProd ;
    public static double precioProducto;
-   public static String nombreImagen, TotalFact;
+   public static String nombreImagen, TotalFact, valor;
 
     conexionSQLiteHelper conn;
 
@@ -53,6 +55,8 @@ public class MainFacturaList extends AppCompatActivity {
     String Estado= "Habilitado";
     String FechaExp="25/12/2020";
     double TotalComision= 3000;
+
+    MainProductosCliente datos = new MainProductosCliente();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,9 @@ public class MainFacturaList extends AppCompatActivity {
         textV_zona = findViewById(R.id.textView_Zona);
         textV_credito_disponible = findViewById(R.id.textView_C_Disponible);
         textV_total = findViewById(R.id.textV_total);
+        textIdcliente= findViewById(R.id.textV_idcliente);
+        textIdvendedor= findViewById(R.id.textV_idvendedor);
+
         T_ventas = findViewById(R.id.spinner_tventas);
         T_factura = findViewById(R.id.spinner_facura);
         lista_factura=findViewById(R.id.lista_Factura);
@@ -115,6 +122,9 @@ public class MainFacturaList extends AppCompatActivity {
             textV_Cliente.setText(extra.getString("NombreCliente"));
             textV_Codigo.setText(extra.getString("CodigoCliente"));
             textV_zona.setText(extra.getString("ZonaCliente"));
+          textIdcliente.setText(extra.getString("IdCliente"));
+            textIdvendedor.setText(extra.getString("IdVendedor"));
+
             System.out.println("----> NombreCliente activity preFactura: "+textV_Cliente);
         }
         /////pasando los datos del cliente
@@ -133,7 +143,11 @@ getMenuInflater().inflate(R.menu.menu,menu);
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.Mbtn_guardar:
-                        AgregarDatosSQLSEVER();
+                        try {
+                            AgregarDatosSQLSEVER();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                         Toast.makeText(this,"Guardar",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.Mbtn_addProducto:
@@ -162,7 +176,6 @@ getMenuInflater().inflate(R.menu.menu,menu);
             productosAdd.setCantidad(cursor.getInt(2));
             productosAdd.setPrecios(cursor.getDouble(3));
             productosAdd.setImagenProducto(cursor.getString(4));
-
             listaproducto.add(productosAdd);
         }
         obtenerLista();
@@ -172,8 +185,9 @@ getMenuInflater().inflate(R.menu.menu,menu);
         listainformacion=new ArrayList<String>();
         for (int i=0; i<listaproducto.size();i++){
 
-            listainformacion.add(listaproducto.get(i).getNombreproduc()+" -"+listaproducto.get(i).getCantidad()+listaproducto.get(i).getPrecios());
+            listainformacion.add(listaproducto.get(i).getNombreproduc()+" -Cant:"+ "C$"+listaproducto.get(i).getCantidad()+listaproducto.get(i).getPrecios());
             System.out.println("MOSTRANDO LA CANTIDAD GUARDADA "+listaproducto.get(i).getCantidad());
+
         }
 
     }
@@ -202,27 +216,57 @@ getMenuInflater().inflate(R.menu.menu,menu);
         dialogFactura.show(getSupportFragmentManager(),"ventana emergente");
     }
 
-    public  void AgregarDatosSQLSEVER(){
+    public  void AgregarDatosSQLSEVER() throws SQLException {
         String numeroFactura = "0";
         Date hoy= new Date();
+
+
         java.sql.Date dataStartSql = new java.sql.Date(hoy.getTime());
         DBConnection dbConnection = new DBConnection();
         dbConnection.conectar();
+
         try {
+            dbConnection.getConnection().setAutoCommit(false);
             PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertPrefact ?,?,?,?,?,?,?");
-            pst.setInt(1, 4);
-            pst.setInt(2,1);
+            pst.setInt(1, 9);
+            pst.setInt(2,6);
             pst.setString(3,T_ventas.getSelectedItem().toString());
             pst.setString(4,T_factura.getSelectedItem().toString());
             pst.setFloat(5, Float.parseFloat(textV_total.getText().toString()));
             pst.setDouble(6,TotalComision);
             pst.setString(7,textV_Cliente.getText().toString());
             pst.executeUpdate();
-          Toast.makeText(this,"Registrado SQLServer",Toast.LENGTH_LONG).show();
+
+            Statement st= dbConnection.getConnection().createStatement();
+             ResultSet rs = st.executeQuery("select top 1 idPrefactura from Prefactura order by idPrefactura desc");
+             while (rs.next()){
+                 valor  = rs.getString("idPrefactura");
+                 System.out.println("==============> Ultimo Registro:"+valor);
+
+             }
+
+            for (int i=0; i<listaproducto.size();i++){
+                PreparedStatement pst2 = dbConnection.getConnection().prepareStatement( "exec sp_insertDetallePrefact ?,?,?,?,?,?");
+                pst2.setInt(1, Integer.parseInt(valor));
+                pst2.setInt(2, listaproducto.get(i).getId_producto());//idInventario
+                pst2.setDouble(3, listaproducto.get(i).getPrecios());//precio cordobas
+                pst2.setDouble(4,0.0);//precio Dolar
+                pst2.setFloat(5,listaproducto.get(i).getCantidad());// cantidad
+                pst2.setDouble(6,3.00);//PorcComision
+                pst2.executeUpdate();
+            }
+
+
+            Toast.makeText(this,"Registrado SQLServer",Toast.LENGTH_LONG).show();
 
         }catch (SQLException e){
+            dbConnection.getConnection().rollback();
             System.out.println("ERROR: ======> "+e);
             Toast.makeText(this," No Registrado SQLServer",Toast.LENGTH_LONG).show();
+        }finally {
+
+            dbConnection.getConnection().setAutoCommit(true);
         }
+
     }
 }

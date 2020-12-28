@@ -6,18 +6,22 @@ public class ProductosAdd {
     private int cantidad;
     private double precios;
     private String imagenProducto;
+    private int idcliente;
+    private int idvendedor;
 
     public ProductosAdd() {
     }
 
 
 
-    public ProductosAdd(int id_producto, String nombreproduc, int cantidad, double precios, String imagenProducto) {
+    public ProductosAdd(int idcliente, int idvendedor, int id_producto, String nombreproduc, int cantidad, double precios, String imagenProducto) {
         this.id_producto = id_producto;
         this.nombreproduc = nombreproduc;
         this.cantidad = cantidad;
         this.precios = precios;
         this.imagenProducto= imagenProducto;
+        this.idcliente = idcliente;
+        this.idvendedor = idcliente;
     }
 
     public int getId_producto() {
@@ -59,4 +63,21 @@ public class ProductosAdd {
     public void setImagenProducto(String imagenProducto) {
         this.imagenProducto = imagenProducto;
     }
+
+    public int getIdcliente() {
+        return idcliente;
+    }
+
+    public void setIdcliente(int idcliente) {
+        this.idcliente = idcliente;
+    }
+
+    public int getIdvendedor() {
+        return idvendedor;
+    }
+
+    public void setIdvendedor(int idvendedor) {
+        this.idvendedor = idvendedor;
+    }
+
 }

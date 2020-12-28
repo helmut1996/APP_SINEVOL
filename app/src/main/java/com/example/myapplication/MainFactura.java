@@ -44,7 +44,7 @@ public class MainFactura extends AppCompatActivity {
     RecycleviewAdapter adapterCliente;
     EditText search;
     List<ClasslistItemC> itemCList;
-    int id;
+   public static int id;
 
 
     @Override
@@ -61,6 +61,8 @@ public class MainFactura extends AppCompatActivity {
         getSupportActionBar().setTitle("Clientes");
 
         id=getIntent().getIntExtra("Id",0);
+        System.out.println("ID vendedor activity lista cliente===========>"+ id);
+
         initview();
         initValues();
 
@@ -119,9 +121,9 @@ private List<ClasslistItemC>obtenerclientesBD(){
 
             Statement st=dbConnection.getConnection().createStatement();
 
-            ResultSet rs=st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc");
+            ResultSet rs=st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo,idCliente from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc");
             while(rs.next()){
-                listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),rs.getString("Direccion"),rs.getInt("Codigo")));
+                listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),rs.getString("Direccion"),rs.getInt("Codigo"),rs.getInt("idCliente")));
 
             }
 

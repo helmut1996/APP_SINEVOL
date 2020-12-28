@@ -50,10 +50,10 @@ private EditText editcantidad;
 String NombreCliente;
 String CodigoCliente;
 String ZonaCliente;
+String IdCliente;
+int IdVendedor;
 
  private String producto;
-
- private String contador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -106,6 +106,12 @@ String ZonaCliente;
 
             CodigoCliente = extra.getString("CodigoCliente");
             System.out.println("Codigo Cliente Activity ProductosClientea----->"+CodigoCliente);
+
+            IdCliente = extra.getString("IdCliente");
+            System.out.println("ID Cliente Activity ProductosClientea----->"+IdCliente);
+
+            IdVendedor = extra.getInt("Idvendedor");
+            System.out.println("ID Vendedor Activity ProductosClientea----->"+IdCliente);
 
             ZonaCliente = extra.getString("ZonaCliente");
             System.out.println("Zona Cliente Activity ProductosClientea----->"+ZonaCliente);
@@ -245,6 +251,8 @@ String ZonaCliente;
                     intent1.putExtra("NombreCliente",datos.nombrecliente);
                     intent1.putExtra("CodigoCliente",datos.codigocliente);
                     intent1.putExtra("ZonaCliente",datos.zonacliente);
+                    intent1.putExtra("IdCliente",datos.idcliente);
+                    intent1.putExtra("IdVendedor",datos.idvendedor);
 
                     intent1.putExtra("nombreproducto",tvnombreproducto.getText());
                     intent1.putExtra("cantidad",editcantidad.getText());
@@ -254,10 +262,15 @@ String ZonaCliente;
                 break;
             case R.id.btn_Agregar:
                 // implementar agregar
-
+                double precioEscogido = (Double.parseDouble(precios.getSelectedItem().toString()));
+                System.out.println("Valor del precio===========>"+precioEscogido);
                 if (editcantidad.getText().toString().isEmpty()){
 
                     Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
+                }else if(Integer.parseInt(editcantidad.getText().toString())==0){
+                    Toast.makeText(this,"La cantidad no puede ser 0" ,Toast.LENGTH_SHORT).show();
+                }else if (precioEscogido == 0){
+                        Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
                 } else {
 
                     GuardarProductos();

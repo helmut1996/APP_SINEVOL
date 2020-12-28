@@ -46,8 +46,12 @@ import java.util.List;
     public static String nombrecliente;
     public static String codigocliente;
     public static String zonacliente;
+    public static String idcliente;
+    public static int idvendedor;
 
-    @Override
+
+
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         /// permisoos de conexion para uso de sql server ////
@@ -71,6 +75,12 @@ import java.util.List;
 
             zonacliente= extra.getString("Zonacliente");
             System.out.println("----> Nombre Zona Cliente: "+zonacliente);
+
+            idcliente= extra.getString("Idcliente");
+            System.out.println("----> ID Cliente: "+idcliente);
+
+            idvendedor= extra.getInt("Idvendedor");
+            System.out.println("----> ID Vendedor: "+idvendedor);
 
         }
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.MainFactura;
 import com.example.myapplication.MainFacturaList;
 import com.example.myapplication.MainListaproducto;
 import com.example.myapplication.MainMenu;
@@ -54,6 +55,7 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
         holder.codigo.setText(String.valueOf(itemC.getCodigo()));
         holder.nombre.setText(itemC.getNombre());
         holder.zona.setText(itemC.getZona());
+        holder.idcliente.setText(String.valueOf(itemC.getIdCliente()));
 
     }
 
@@ -70,7 +72,7 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
 
 
     public class RecyclerHolder extends RecyclerView.ViewHolder{
-        TextView codigo,nombre,zona;
+        TextView codigo,nombre,zona,idcliente;
         public RecyclerHolder(@NonNull View itemView ){
 
             super(itemView);
@@ -78,14 +80,18 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
             codigo=itemView.findViewById(R.id.CodigoCliente);
             nombre=itemView.findViewById(R.id.nombreCliente);
             zona=itemView.findViewById(R.id.cliente_zona);
-
+            idcliente=itemView.findViewById(R.id.id_cliente);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MainFactura datos = new MainFactura();
+
                     Intent intent=new Intent(context, MainListaproducto.class);
+                    intent.putExtra("Idvendedor",datos.id);
                     intent.putExtra("Nombrecliente",nombre.getText());
                     intent.putExtra("Codigocliente",codigo.getText());
                     intent.putExtra("Zonacliente",zona.getText());
+                    intent.putExtra("Idcliente",idcliente.getText());
                     context.startActivity(intent);
                 }
             });

@@ -88,6 +88,8 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
                    intent.putExtra("NombreCliente",datos.nombrecliente);
                     intent.putExtra("CodigoCliente",datos.codigocliente);
                     intent.putExtra("ZonaCliente",datos.zonacliente);
+                    intent.putExtra("IdCliente",datos.idcliente);
+                    intent.putExtra("IdVendedor",datos.idvendedor);
 
                     intent.putExtra("NombreP",tvproducto.getText());
                     intent.putExtra("UnidadMed",tvunidadM.getText());

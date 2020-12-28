@@ -188,6 +188,61 @@
 
         </LinearLayout>
 
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IdCliente"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/textV_idcliente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"/>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IdVendedor"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/textV_idvendedor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"/>
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
         <LinearLayout
