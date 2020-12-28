@@ -255,15 +255,20 @@ String ZonaCliente;
             case R.id.btn_Agregar:
                 // implementar agregar
 
-                if (editcantidad.getText().toString().isEmpty()){
-
+                if (editcantidad.getText().toString().isEmpty())
+                    {
                     Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
-                } else {
-
-                    GuardarProductos();
-
-                    Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
-                    startActivity(intent2);
+                } if(Integer.parseInt(editcantidad.getText().toString())==0){
+                Toast.makeText(this,"La cantidad no puede ser 0" ,Toast.LENGTH_SHORT).show();
+            } else {
+                    double precioEscogido = (Double.parseDouble(precios.getSelectedItem().toString()));
+                    if(precioEscogido == 0)
+                        Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
+                    else {
+                        GuardarProductos();
+                        Intent intent2 = new Intent(getApplicationContext(), MainListaproducto.class);
+                        startActivity(intent2);
+                    }
                 }
 
                 break;
