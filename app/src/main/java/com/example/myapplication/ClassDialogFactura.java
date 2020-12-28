@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -106,7 +107,7 @@ public class ClassDialogFactura extends DialogFragment {
         SQLiteDatabase db=conn.getReadableDatabase();
         db.execSQL("DELETE FROM producto WHERE id = "+precio_D.getText().toString()+" ");
         db.close();
-       Intent refresh = new Intent(getContext(), MainFacturaList.class);
+      Intent refresh = new Intent(getContext(), MainFacturaList.class);
        startActivity(refresh);
         Toast.makeText(getContext(),"Registro Eliminado!!!",Toast.LENGTH_SHORT).show();
     }
