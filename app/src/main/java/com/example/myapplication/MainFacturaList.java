@@ -170,9 +170,9 @@ getMenuInflater().inflate(R.menu.menu,menu);
                     case R.id.Mbtn_Home:
                         Intent intent3 = new Intent(getApplicationContext(),MainFactura.class);
                         startActivity(intent3);
-                        RecargarDatos.llenarProductosBD("");
-                        borrardatosTabla();
-                        finish();
+                      //  RecargarDatos.llenarProductosBD("");
+                        //borrardatosTabla();
+                        //finish();
 
 
                 }
