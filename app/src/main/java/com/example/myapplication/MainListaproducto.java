@@ -149,7 +149,7 @@ import java.util.List;
 
 
 
-        private List<ModelItemsProducto> llenarProductosBD(String Buscar){
+        public List<ModelItemsProducto> llenarProductosBD(String Buscar){
         List<ModelItemsProducto> listProducto = new ArrayList<>();
         try {
 
@@ -177,7 +177,7 @@ import java.util.List;
         search2 = findViewById(R.id.search2);
 
     }
-    private void initVlaues(String Buscar){
+    public void initVlaues(String Buscar){
        LinearLayoutManager manager= new LinearLayoutManager(this);
        recyclerlistproducto.setLayoutManager(manager);
        listaProducto=llenarProductosBD(Buscar);

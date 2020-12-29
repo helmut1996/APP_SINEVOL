@@ -57,6 +57,8 @@ public static String IDCliente;
 public static String IDVendedor;
     
     MainFactura id = new MainFactura();
+
+    MainListaproducto RecargarDatos = new MainListaproducto();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,18 +158,20 @@ getMenuInflater().inflate(R.menu.menu,menu);
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
+                        borrardatosTabla();
                         Toast.makeText(this,"Guardar",Toast.LENGTH_SHORT).show();
-
-
+                        Intent refresh = new Intent(this, MainMenu.class);
+                        startActivity(refresh);
                         break;
                     case R.id.Mbtn_addProducto:
                         Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
                         startActivity(intent2);
                         break;
                     case R.id.Mbtn_Home:
-                        borrardatosTabla();
-                        Intent intent3 = new Intent(getApplicationContext(),MainMenu.class);
+                        Intent intent3 = new Intent(getApplicationContext(),MainFactura.class);
                         startActivity(intent3);
+                        RecargarDatos.llenarProductosBD("");
+                        borrardatosTabla();
                         finish();
 
 
@@ -268,9 +272,6 @@ getMenuInflater().inflate(R.menu.menu,menu);
                 pst2.setDouble(6,3.00);//PorcComision
                 pst2.executeUpdate();
             }
-
-
-            Toast.makeText(this,"Registrado SQLServer",Toast.LENGTH_LONG).show();
 
         }catch (SQLException e){
             dbConnection.getConnection().rollback();
