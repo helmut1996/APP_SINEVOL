@@ -97,6 +97,11 @@ public class ClassDialogFactura extends DialogFragment {
 
         Toast.makeText(getContext(),"Actualizado!!!",Toast.LENGTH_SHORT).show();
         Intent refresh = new Intent(getContext(), MainFacturaList.class);
+        refresh.putExtra("NombreCliente",variable.NombreCliente);
+        refresh.putExtra("CodigoCliente",variable.CodigoCliente);
+        refresh.putExtra("ZonaCliente",variable.ZonaCliente);
+        refresh.putExtra("IdCliente",variable.IDCliente);
+        refresh.putExtra("IdVendedor",variable.IDVendedor);
         startActivity(refresh);
 
 
@@ -108,7 +113,12 @@ public class ClassDialogFactura extends DialogFragment {
         db.execSQL("DELETE FROM producto WHERE id = "+precio_D.getText().toString()+" ");
         db.close();
       Intent refresh = new Intent(getContext(), MainFacturaList.class);
-       startActivity(refresh);
+        refresh.putExtra("NombreCliente",variable.NombreCliente);
+        refresh.putExtra("CodigoCliente",variable.CodigoCliente);
+        refresh.putExtra("ZonaCliente",variable.ZonaCliente);
+        refresh.putExtra("IdCliente",variable.IDCliente);
+        refresh.putExtra("IdVendedor",variable.IDVendedor);
+        startActivity(refresh);
         Toast.makeText(getContext(),"Registro Eliminado!!!",Toast.LENGTH_SHORT).show();
     }
 

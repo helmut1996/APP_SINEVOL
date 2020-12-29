@@ -55,6 +55,7 @@ int IdVendedor;
 
  private String producto;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
@@ -86,7 +87,6 @@ int IdVendedor;
         textinfo5=findViewById(R.id.text_info5);
         tvimagenBD=findViewById(R.id.imagenBD);
         tvunidadmedida=findViewById(R.id.text_unidadM);
-        tvcontadorproducto=findViewById(R.id.contadorproducto);
         tvIDproducto=findViewById(R.id.IDProduto);
         ////////// Spinmer
         precios = findViewById(R.id.spinerPrecios);
@@ -111,7 +111,7 @@ int IdVendedor;
             System.out.println("ID Cliente Activity ProductosClientea----->"+IdCliente);
 
             IdVendedor = extra.getInt("Idvendedor");
-            System.out.println("ID Vendedor Activity ProductosClientea----->"+IdCliente);
+            System.out.println("ID Vendedor Activity ProductosClientea----->"+IdVendedor);
 
             ZonaCliente = extra.getString("ZonaCliente");
             System.out.println("Zona Cliente Activity ProductosClientea----->"+ZonaCliente);
@@ -141,8 +141,9 @@ int IdVendedor;
         monedas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(monedas.getSelectedItem().toString().equals("Cordobas"))
+                if(monedas.getSelectedItem().toString().equals("Cordoba"))
                 {
+
                     precios.setAdapter(precioCordoba());
                 }
                 else
@@ -233,17 +234,24 @@ int IdVendedor;
             e.printStackTrace();
         }
         return NoCoreAdapter;
+
     }
 
     @Override
     public void onClick(View v) {
+        double precioEscogido = (Double.parseDouble(precios.getSelectedItem().toString()));
         switch (v.getId()){
 
             case R.id.btn_siguente:
 
                 if (editcantidad.getText().toString().isEmpty()){
                     Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
-                }else{
+                } else if(Integer.parseInt(editcantidad.getText().toString())==0){
+                    Toast.makeText(this,"La cantidad no puede ser 0" ,Toast.LENGTH_SHORT).show();
+                }else if (precioEscogido == 0){
+                    Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
+                }
+                else{
                     GuardarProductos();
 
                     MainListaproducto datos= new MainListaproducto();
@@ -262,7 +270,7 @@ int IdVendedor;
                 break;
             case R.id.btn_Agregar:
                 // implementar agregar
-                double precioEscogido = (Double.parseDouble(precios.getSelectedItem().toString()));
+
                 System.out.println("Valor del precio===========>"+precioEscogido);
                 if (editcantidad.getText().toString().isEmpty()){
 

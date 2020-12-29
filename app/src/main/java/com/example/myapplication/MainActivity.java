@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity{
                 Statement stm = dbConnection.getConnection().createStatement();
                 ResultSet rs = stm.executeQuery("Select IdVendedor, Nombre From Vendedores where Pin='" + editPint.getText().toString() + "'");
                 if (rs.next()) {
-                    usuario.setText(rs.getString(2));
+                    //usuario.setText(rs.getString(2));
                     int id=rs.getInt(1);
                     Intent i = new Intent(this,MainMenu.class);
                     i.putExtra("IdVendedor",id);

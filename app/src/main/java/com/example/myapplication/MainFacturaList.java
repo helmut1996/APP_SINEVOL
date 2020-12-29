@@ -40,24 +40,23 @@ public class MainFacturaList extends AppCompatActivity {
     ListView lista_factura;
     ArrayList<String>listainformacion;
     ArrayList<ProductosAdd>listaproducto;
-    String CodigoCliente;
-   public static String nombre ="HOLA MUNDO";
+    ///////////////////////////////////////
+    public static String nombre ="HOLA MUNDO";
    public static int cantidadProducto, idProd ;
    public static double precioProducto;
    public static String nombreImagen, TotalFact, valor;
-
+///////////////////variables Dialog detalle producto/////////////////////////////////////
     conexionSQLiteHelper conn;
-
     private static final String TAG ="MainFacturaList";
-
-
-    ////////////
-    String Estado= "Habilitado";
-    String FechaExp="25/12/2020";
     double TotalComision= 3000;
-
-    MainProductosCliente datos = new MainProductosCliente();
-
+/////////////////////////////Variables por parametros////////////////////////////////////////
+public static String NombreCliente;
+public static String CodigoCliente;
+public static String ZonaCliente;
+public static String IDCliente;
+public static String IDVendedor;
+    
+    MainFactura id = new MainFactura();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,13 +118,22 @@ public class MainFacturaList extends AppCompatActivity {
               /////pasando los datos del cliente
         Bundle extra=getIntent().getExtras();
         if (extra != null){
-            textV_Cliente.setText(extra.getString("NombreCliente"));
-            textV_Codigo.setText(extra.getString("CodigoCliente"));
-            textV_zona.setText(extra.getString("ZonaCliente"));
-          textIdcliente.setText(extra.getString("IdCliente"));
-            textIdvendedor.setText(extra.getString("IdVendedor"));
+            NombreCliente=(extra.getString("NombreCliente"));
+            CodigoCliente=(extra.getString("CodigoCliente"));
+            ZonaCliente=(extra.getString("ZonaCliente"));
+          IDCliente=(extra.getString("IdCliente"));
+            IDVendedor=(extra.getString("IdVendedor"));
 
-            System.out.println("----> NombreCliente activity preFactura: "+textV_Cliente);
+
+            textV_Cliente.setText(NombreCliente);
+            textV_Codigo.setText(CodigoCliente);
+            textV_zona.setText(ZonaCliente);
+            textIdcliente.setText(IDCliente);
+            textIdvendedor.setText(String.valueOf(id.id));
+
+            System.out.println("----> NombreCliente activity preFactura: "+NombreCliente);
+            System.out.println("----> IDCliente activity preFactura: "+IDCliente);
+            System.out.println("----> IDVemdedor activity preFactura: "+IDVendedor);
         }
         /////pasando los datos del cliente
 
@@ -149,6 +157,8 @@ getMenuInflater().inflate(R.menu.menu,menu);
                             e.printStackTrace();
                         }
                         Toast.makeText(this,"Guardar",Toast.LENGTH_SHORT).show();
+
+
                         break;
                     case R.id.Mbtn_addProducto:
                         Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
@@ -156,8 +166,11 @@ getMenuInflater().inflate(R.menu.menu,menu);
                         break;
                     case R.id.Mbtn_Home:
                         borrardatosTabla();
-                        Intent intent3 = new Intent(getApplicationContext(),MainFactura.class);
+                        Intent intent3 = new Intent(getApplicationContext(),MainMenu.class);
                         startActivity(intent3);
+                        finish();
+
+
                 }
 
         return super.onOptionsItemSelected(item);
@@ -185,7 +198,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
         listainformacion=new ArrayList<String>();
         for (int i=0; i<listaproducto.size();i++){
 
-            listainformacion.add(listaproducto.get(i).getNombreproduc()+" -Cant:"+ "C$"+listaproducto.get(i).getCantidad()+listaproducto.get(i).getPrecios());
+            listainformacion.add(listaproducto.get(i).getNombreproduc()+" - Cant:"+listaproducto.get(i).getCantidad()+"- C$"+listaproducto.get(i).getPrecios());
             System.out.println("MOSTRANDO LA CANTIDAD GUARDADA "+listaproducto.get(i).getCantidad());
 
         }
@@ -228,8 +241,8 @@ getMenuInflater().inflate(R.menu.menu,menu);
         try {
             dbConnection.getConnection().setAutoCommit(false);
             PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertPrefact ?,?,?,?,?,?,?");
-            pst.setInt(1, 9);
-            pst.setInt(2,6);
+            pst.setInt(1, Integer.parseInt(textIdcliente.getText().toString()));
+            pst.setInt(2, Integer.parseInt(textIdvendedor.getText().toString()));
             pst.setString(3,T_ventas.getSelectedItem().toString());
             pst.setString(4,T_factura.getSelectedItem().toString());
             pst.setFloat(5, Float.parseFloat(textV_total.getText().toString()));

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.MainFactura;
 import com.example.myapplication.MainListaproducto;
 import com.example.myapplication.MainProductosCliente;
 import com.example.myapplication.R;
@@ -84,12 +85,14 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
                 @Override
                 public void onClick(View v) {
                     MainListaproducto datos = new MainListaproducto();
+                    MainFactura datos2= new MainFactura();
                    Intent intent=new Intent(context,MainProductosCliente.class);
                    intent.putExtra("NombreCliente",datos.nombrecliente);
                     intent.putExtra("CodigoCliente",datos.codigocliente);
                     intent.putExtra("ZonaCliente",datos.zonacliente);
                     intent.putExtra("IdCliente",datos.idcliente);
-                    intent.putExtra("IdVendedor",datos.idvendedor);
+                    intent.putExtra("IdVendedor",datos2.id);
+
 
                     intent.putExtra("NombreP",tvproducto.getText());
                     intent.putExtra("UnidadMed",tvunidadM.getText());

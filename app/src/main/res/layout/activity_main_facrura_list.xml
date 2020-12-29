@@ -202,7 +202,8 @@
                 android:textColor="@color/black"
                 android:textAllCaps="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/textV_idcliente"
                 android:layout_width="wrap_content"
@@ -211,7 +212,8 @@
                 android:textColor="@color/black"
                 android:textAllCaps="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:visibility="gone"/>
 
 
         </LinearLayout>
@@ -229,7 +231,8 @@
                 android:textColor="@color/black"
                 android:textAllCaps="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/textV_idvendedor"
                 android:layout_width="wrap_content"
@@ -238,7 +241,8 @@
                 android:textColor="@color/black"
                 android:textAllCaps="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:visibility="gone"/>
 
 
         </LinearLayout>

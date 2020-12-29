@@ -80,7 +80,7 @@ import java.util.List;
             System.out.println("----> ID Cliente: "+idcliente);
 
             idvendedor= extra.getInt("Idvendedor");
-            System.out.println("----> ID Vendedor: "+idvendedor);
+            System.out.println("----> ID Vendedor lista Producto: "+idvendedor);
 
         }
 
@@ -122,6 +122,11 @@ import java.util.List;
                 case R.id.Mbtn_prefactura:
 
                     Intent intent2 = new Intent(getApplicationContext(),MainFacturaList.class);
+                    intent2.putExtra("NombreCliente",nombrecliente);
+                    intent2.putExtra("CodigoCliente",codigocliente);
+                    intent2.putExtra("ZonaCliente",zonacliente);
+                    intent2.putExtra("IdCliente",idcliente);
+                    intent2.putExtra("IdVendedor",idvendedor);
                     startActivity(intent2);
                     break;
 
