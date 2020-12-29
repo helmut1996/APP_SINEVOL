@@ -153,6 +153,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.Mbtn_guardar:
+
                         try {
                             AgregarDatosSQLSEVER();
                         } catch (SQLException e) {
