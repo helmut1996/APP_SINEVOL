@@ -8,4 +8,62 @@
     app:cardUseCompatPadding="true">
 
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="1,2,3,4,5,6"
+        android:layout_margin="8dp">
+        <TableRow>
+            <TextView
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:id="@+id/tv_fecha"
+                android:padding="8dp"
+                />
+
+            <TextView
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:id="@+id/tv_descripcion"
+                android:padding="8dp"
+                />
+
+            <TextView
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:id="@+id/tv_salida"
+                android:padding="8dp"
+                />
+
+            <TextView
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:id="@+id/tv_entrada"
+                android:padding="8dp"
+                />
+
+            <TextView
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:id="@+id/tv_total"
+                android:padding="8dp"
+                />
+
+            <TextView
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:id="@+id/tv_compra"
+                android:padding="8dp" />
+
+        </TableRow>
+
+
+    </TableLayout>
+
 </androidx.cardview.widget.CardView>

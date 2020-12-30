@@ -5,27 +5,131 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Maincuentas"
-    android:orientation="vertical"
-    android:padding="8dp">
-
+    android:orientation="vertical">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Buscar "
-        android:id="@+id/editBuscar"
+        android:hint="Buscar"
+        android:id="@+id/editbuscarcuentas"
         android:layout_margin="10dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cliente"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telefono"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Direccion"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <EditText
+            android:id="@+id/editCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:enabled="true"
+            android:hint="Cliente"
+            android:text="0004-Teodoro Vilchez" />
+
+        <EditText
+            android:id="@+id/edittelefono"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:enabled="true"
+            android:hint="Telefono"
+            android:text="8884-4565" />
+
+        <EditText
+            android:id="@+id/editdireccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:enabled="true"
+            android:hint="Direccion"
+            tools:text="Mercado Horiental" />
+    </LinearLayout>
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:stretchColumns="1,2,3,4,5,6"
+        android:layout_margin="8dp"
+        android:id="@+id/tablacuentas">
+
         <TableRow>
+            <TextView
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:text="Fecha"
+                android:padding="8dp"
+                />
+
+            <TextView
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:text="Descripcion"
+                android:padding="8dp"
+                />
+
+            <TextView
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:text="salidaC$"
+                android:padding="8dp"
+                />
+
+            <TextView
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:text="EntradaC$"
+                android:padding="8dp"
+                />
+
+            <TextView
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:text="TotalC$"
+                android:padding="8dp"
+                />
+
+            <TextView
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:text="TC"
+                android:padding="8dp"
+                />
 
         </TableRow>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/RecyclerCuentas"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     </TableLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/RecyclerCuentas"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 </LinearLayout>

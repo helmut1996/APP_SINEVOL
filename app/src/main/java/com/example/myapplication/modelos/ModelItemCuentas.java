@@ -9,17 +9,21 @@ public class ModelItemCuentas {
     private int entradaCliente;
     private int salidaCliente;
     private int totalCliente;
-    private int TcompraCliente;
+
+    public String getCredito(String credito) {
+        return this.credito;
+    }
+
     private String credito;
 
-    private boolean expandle;
+
 
     public ModelItemCuentas() {
     }
 
 
 
-    public ModelItemCuentas(String nombreCliente, String credito, int telefonoCliente, String direccionCliente, String fechaCliente, String descripcionCliente, int entradaCliente, int salidaCliente, int totalCliente, int tcompraCliente) {
+    public ModelItemCuentas(String nombreCliente, String credito, int telefonoCliente, String direccionCliente, String fechaCliente, String descripcionCliente, int entradaCliente, int salidaCliente, int totalCliente) {
         this.nombreCliente = nombreCliente;
         this.credito=credito;
         this.telefonoCliente = telefonoCliente;
@@ -29,8 +33,8 @@ public class ModelItemCuentas {
         this.entradaCliente = entradaCliente;
         this.salidaCliente = salidaCliente;
         this.totalCliente = totalCliente;
-        TcompraCliente = tcompraCliente;
-        this.expandle=false;
+
+
     }
 
     public String getNombreCliente() {
@@ -45,7 +49,7 @@ public class ModelItemCuentas {
         return telefonoCliente;
     }
 
-    public void setTelefonoCliente(int telefonoCliente) {
+    public void setTelefonoCliente(int i) {
         this.telefonoCliente = telefonoCliente;
     }
 
@@ -53,7 +57,7 @@ public class ModelItemCuentas {
         return direccionCliente;
     }
 
-    public void setDireccionCliente(String direccionCliente) {
+    public void setDireccionCliente(String waspan_sur) {
         this.direccionCliente = direccionCliente;
     }
 
@@ -61,7 +65,7 @@ public class ModelItemCuentas {
         return fechaCliente;
     }
 
-    public void setFechaCliente(String fechaCliente) {
+    public void setFechaCliente(String s) {
         this.fechaCliente = fechaCliente;
     }
 
@@ -96,14 +100,6 @@ public class ModelItemCuentas {
     public void setTotalCliente(int totalCliente) {
         this.totalCliente = totalCliente;
     }
-
-    public int getTcompraCliente() {
-        return TcompraCliente;
-    }
-
-    public void setTcompraCliente(int tcompraCliente) {
-        TcompraCliente = tcompraCliente;
-    }
     public String getCredito() {
         return credito;
     }
@@ -111,27 +107,7 @@ public class ModelItemCuentas {
     public void setCredito(String credito) {
         this.credito = credito;
     }
-    public boolean isExpandle() {
-        return expandle;
-    }
 
-    public void setExpandle(boolean expandle) {
-        this.expandle = expandle;
-    }
-    @Override
-    public String toString() {
-        return "ModelItemCuentas{" +
-                "nombreCliente='" + nombreCliente + '\'' +
-                ", telefonoCliente=" + telefonoCliente +
-                ", direccionCliente='" + direccionCliente + '\'' +
-                ", fechaCliente='" + fechaCliente + '\'' +
-                ", descripcionCliente='" + descripcionCliente + '\'' +
-                ", entradaCliente=" + entradaCliente +
-                ", salidaCliente=" + salidaCliente +
-                ", totalCliente=" + totalCliente +
-                ", TcompraCliente=" + TcompraCliente +
-                ", credito='" + credito + '\'' +
-                '}';
-    }
+
 }
 
