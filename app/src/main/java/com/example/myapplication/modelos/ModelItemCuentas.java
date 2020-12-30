@@ -18,7 +18,7 @@ public class ModelItemCuentas {
 
 
 
-    public ModelItemCuentas() {
+    public ModelItemCuentas(String helmut, String credito, int i, String direccion, String s, String descipcion_prueba, int i1, double v) {
     }
 
 

@@ -16,27 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cliente"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Telefono"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Direccion"
-            android:layout_weight="1"/>
-    </LinearLayout>
+        android:layout_gravity="center"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/editCliente"
@@ -46,7 +30,8 @@
             android:layout_weight="1"
             android:enabled="true"
             android:hint="Cliente"
-            android:text="0004-Teodoro Vilchez" />
+            android:text="0004-Teodoro Vilchez"
+            android:textSize="13sp"/>
 
         <EditText
             android:id="@+id/edittelefono"
@@ -56,7 +41,8 @@
             android:layout_weight="1"
             android:enabled="true"
             android:hint="Telefono"
-            android:text="8884-4565" />
+            android:text="8884-4565"
+            android:textSize="13sp"/>
 
         <EditText
             android:id="@+id/editdireccion"
@@ -66,7 +52,8 @@
             android:layout_weight="1"
             android:enabled="true"
             android:hint="Direccion"
-            tools:text="Mercado Horiental" />
+            tools:text="Mercado Horiental"
+            android:textSize="13sp"/>
     </LinearLayout>
     <TableLayout
         android:layout_width="match_parent"
