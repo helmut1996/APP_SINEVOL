@@ -49,7 +49,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
                 startActivity(i);
                 break;
             case R.id.btnrecibo:
-                startActivity(new Intent(getApplicationContext(),MainRecibo.class));
+                Intent intent1 = new Intent(getApplicationContext(), MainRecibo.class);
+                intent1.putExtra("Id",id);
+                startActivity(intent1);
                 break;
             case R.id.btncuenta:
                 startActivity(new Intent(getApplicationContext(),Maincuentas.class));

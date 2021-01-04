@@ -33,7 +33,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MainFacturaList extends AppCompatActivity {
+public class
+MainFacturaList extends AppCompatActivity {
 
     TextView textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible, textV_total,textIdcliente,textIdvendedor;
     Spinner T_factura,T_ventas;
