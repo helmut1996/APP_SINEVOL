@@ -60,10 +60,10 @@ String []clientes= new String[]{
         buscadorCliente.setAdapter(Clientes());
 
         ArrayAdapter<String>adapterfactura=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,factura);
-        BuscadorFactura.setAdapter(Clientes());
+        BuscadorFactura.setAdapter(Facturas());
 
         Clientes();
-
+        Facturas();
 
 
     }
@@ -92,4 +92,27 @@ String []clientes= new String[]{
         return NoCoreAdapter;
     }
 
+    public ArrayAdapter Facturas()
+    {
+        ArrayAdapter NoCoreAdapter=null;
+        DBConnection sesion;
+        sesion = DBConnection.getDbConnection();
+
+        String query = "select NombreFactura,TipoFactura from Facturas where idVendedor='"+id+"'";
+        try {
+            Statement stm = sesion.getConnection().createStatement();
+            ResultSet rs = stm.executeQuery(query);
+
+            ArrayList<String> data = new ArrayList<>();
+            while (rs.next()) {
+                data.add(rs.getString("NombreFactura"));
+                data.add(rs.getString("TipoFactura"));
+
+            }
+            NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return NoCoreAdapter;
+    }
 }

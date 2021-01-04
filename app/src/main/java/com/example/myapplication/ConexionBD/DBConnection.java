@@ -9,12 +9,12 @@ import java.sql.SQLException;
 
 public class DBConnection
 {
-    private static String ip = "192.168.0.211";
-    private static String port = "1433";
+    private static String ip = "165.98.69.170";
+    private static String port = "1440";
     private static String Classes = "net.sourceforge.jtds.jdbc.Driver";
     private static String database = "BDARTICULOSMIRIAM";
     private static String username = "sa";
-    private static String password = "Helmut123";
+    private static String password = "System32";
     private Connection connection = null;
     private static String url = "jdbc:jtds:sqlserver://" + ip + ":" + port + "/" + database;
     private static DBConnection dbConnection;
