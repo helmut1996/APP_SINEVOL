@@ -25,7 +25,8 @@ import java.sql.Statement;
 public class MainActivity extends AppCompatActivity{
     EditText editPint;
     Button btn_entar;
-    TextView aviso,usuario;
+    TextView usuario;
+    String NombreVendedor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,11 @@ public class MainActivity extends AppCompatActivity{
                 ResultSet rs = stm.executeQuery("Select IdVendedor, Nombre From Vendedores where Pin='" + editPint.getText().toString() + "'");
                 if (rs.next()) {
                     //usuario.setText(rs.getString(2));
+                    NombreVendedor= rs.getString(2);
                     int id=rs.getInt(1);
                     Intent i = new Intent(this,MainMenu.class);
                     i.putExtra("IdVendedor",id);
+                    i.putExtra("NombreVendedor",NombreVendedor);
                     startActivity(i);
                     finish();
                 } else {

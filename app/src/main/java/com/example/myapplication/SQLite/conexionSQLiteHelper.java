@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 
 import com.example.myapplication.SQLite.ulilidades.utilidades;
 
+import com.example.myapplication.SQLite.ulilidades.utilidadesFact;
+
 public class conexionSQLiteHelper extends SQLiteOpenHelper {
 
     /*variable para crear tabla en sqlite*/
@@ -19,11 +21,13 @@ public class conexionSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
             db.execSQL(utilidades.CREAR_TABLA_PRODUCTO);
+            db.execSQL( utilidadesFact.CREAR_TABLA_RECIBO);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS producto");
+        db.execSQL("DROP TABLE IF EXISTS recibo");
         onCreate(db);
 
     }

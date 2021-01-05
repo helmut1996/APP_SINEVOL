@@ -19,6 +19,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     ImageButton btn_factura,btn_recibo,btn_cuentas,btn_cerrar;
     DBConnection sesion;
     int id;
+    String nombreVendedor;
     Intent i;
 
     @Override
@@ -27,7 +28,11 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_main_menu);
         getSupportActionBar().setTitle("Menu Principal");
         id=getIntent().getIntExtra("IdVendedor",0);
-
+        Bundle extra=getIntent().getExtras();
+        if (extra != null) {
+            nombreVendedor = extra.getString("NombreVendedor");
+            System.out.println("----> NombreVendedor: " + nombreVendedor);
+        }
 
         btn_factura = (ImageButton)findViewById(R.id.btnfactura);
         btn_cuentas = (ImageButton) findViewById(R.id.btnrecibo);
@@ -51,6 +56,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
             case R.id.btnrecibo:
                 Intent intent1 = new Intent(getApplicationContext(), MainRecibo.class);
                 intent1.putExtra("Id",id);
+                intent1.putExtra("NombreVendedor",nombreVendedor);
                 startActivity(intent1);
                 break;
             case R.id.btncuenta:
