@@ -1,4 +1,4 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView2"
@@ -7,141 +7,199 @@
     tools:context=".MainMenu">
 
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/Sinevol"
-        android:textAllCaps="true"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+   <ScrollView
+       android:layout_width="fill_parent"
+       android:layout_height="fill_parent"
+       android:layout_alignParentTop="true"
+       android:layout_alignParentLeft="true">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="137dp"
-        android:layout_height="102dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/btncuenta"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/logo2" />
+       <LinearLayout
+           android:layout_width="fill_parent"
+           android:layout_height="fill_parent"
+           android:orientation="vertical">
+           <RelativeLayout
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+               android:background="#EEEEEE">
 
-    <ImageButton
-        android:id="@+id/btnfactura"
-        android:layout_width="128dp"
-        android:layout_height="93dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/btnrecibo"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:srcCompat="@drawable/factura" />
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="230dp"
+                   android:orientation="vertical"
+                   android:gravity="center"
+                   android:background="@drawable/logo2">
 
-    <ImageButton
-        android:id="@+id/btnrecibo"
-        android:layout_width="140dp"
-        android:layout_height="90dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.76"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:srcCompat="@drawable/recibo" />
+               </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="@string/sbtn_factura"
-        android:textAllCaps="true"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
-        app:layout_constraintHorizontal_bias="0.391"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnfactura" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="@string/recibo"
-        android:textAllCaps="true"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.713"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnrecibo" />
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_marginTop="215dp"
+                  android:layout_marginLeft="10dp"
+                  android:layout_marginRight="10dp">
 
-    <ImageButton
-        android:id="@+id/btncuenta"
-        android:layout_width="229dp"
-        android:layout_height="94dp"
-        android:layout_marginBottom="92dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/cuenta" />
+                  <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="135dp"
+                      android:orientation="horizontal"
+                      android:layout_marginBottom="10dp">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="30dp"
-        android:text="@string/cuentas"
-        android:textAllCaps="true"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btncuenta"
-        app:layout_constraintVertical_bias="0.275" />
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="5dp">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/CerrarSesion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_exit_to_app" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="left"
-        app:constraint_referenced_ids="scrollView2" />
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/factura"
+                                android:layout_centerInParent="true"
+                                android:id="@+id/imagenfactura"/>
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="8dp"
-        android:text="cerrar sesion"
-        app:layout_constraintStart_toEndOf="@+id/CerrarSesion"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Factura"
+                                android:textSize="16sp"
+                                android:layout_below="@+id/imagenfactura"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="10dp"/>
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@android:color/transparent"
+                                android:id="@+id/btnfactura"/>
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+
+                      <androidx.cardview.widget.CardView
+                          android:layout_width="0dp"
+                          android:layout_height="match_parent"
+                          android:layout_weight="1"
+                          android:layout_gravity="center"
+                          android:layout_marginLeft="5dp">
+                          <RelativeLayout
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent">
+
+
+                              <ImageView
+                                  android:layout_width="50dp"
+                                  android:layout_height="50dp"
+                                  android:src="@drawable/recibo"
+                                  android:layout_centerInParent="true"
+                                  android:id="@+id/imagenrecibo"/>
+
+                              <TextView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:text="Recibo"
+                                  android:textSize="16sp"
+                                  android:layout_below="@+id/imagenrecibo"
+                                  android:layout_centerHorizontal="true"
+                                  android:layout_marginTop="10dp"/>
+                              <Button
+                                  android:layout_width="match_parent"
+                                  android:layout_height="match_parent"
+                                  android:background="@android:color/transparent"
+                                  android:id="@+id/btnrecibo"/>
+                          </RelativeLayout>
+                      </androidx.cardview.widget.CardView>
+
+                  </LinearLayout>
+
+                  <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="135dp"
+                      android:orientation="horizontal"
+                      android:layout_marginBottom="10dp">
+
+                      <androidx.cardview.widget.CardView
+                          android:layout_width="0dp"
+                          android:layout_height="match_parent"
+                          android:layout_weight="1"
+                          android:layout_gravity="center"
+                          android:layout_marginRight="5dp">
+                          <RelativeLayout
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent">
+
+
+                              <ImageView
+                                  android:layout_width="50dp"
+                                  android:layout_height="50dp"
+                                  android:src="@drawable/cuenta"
+                                  android:layout_centerInParent="true"
+                                  android:id="@+id/imagencuentas"/>
+
+                              <TextView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:text="@string/cuentas"
+                                  android:textSize="16sp"
+                                  android:layout_below="@+id/imagencuentas"
+                                  android:layout_centerHorizontal="true"
+                                  android:layout_marginTop="10dp"/>
+                              <Button
+                                  android:layout_width="match_parent"
+                                  android:layout_height="match_parent"
+                                  android:background="@android:color/transparent"
+                                  android:id="@+id/btncuenta"/>
+                          </RelativeLayout>
+                      </androidx.cardview.widget.CardView>
+
+
+
+                      <androidx.cardview.widget.CardView
+                          android:layout_width="0dp"
+                          android:layout_height="match_parent"
+                          android:layout_weight="1"
+                          android:layout_gravity="center"
+                          android:layout_marginLeft="5dp">
+                          <RelativeLayout
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent">
+
+
+                              <ImageView
+                                  android:layout_width="70dp"
+                                  android:layout_height="70dp"
+                                  android:src="@drawable/log_out"
+                                  android:layout_centerInParent="true"
+                                  android:id="@+id/imagensesion"/>
+
+                              <TextView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:text="Cerrar sesion"
+                                  android:textSize="16sp"
+                                  android:layout_below="@+id/imagensesion"
+                                  android:layout_centerHorizontal="true"
+                                  android:layout_marginTop="10dp"/>
+                              <Button
+                                  android:layout_width="match_parent"
+                                  android:layout_height="match_parent"
+                                  android:background="@android:color/transparent"
+                                  android:id="@+id/CerrarSesion"/>
+                          </RelativeLayout>
+                      </androidx.cardview.widget.CardView>
+
+                  </LinearLayout>
+
+              </LinearLayout>
+
+
+           </RelativeLayout>
+       </LinearLayout>
+   </ScrollView>
+</RelativeLayout>

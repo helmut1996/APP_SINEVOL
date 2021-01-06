@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.Toast;
@@ -29,8 +31,13 @@ public class Maincuentas extends AppCompatActivity {
 
     RecyclerView listaCuentas;
     TableLayout tabla;
-    EditText cliente,telefono,direccion,search;
+    EditText cliente,telefono,direccion;
+    AutoCompleteTextView search;
     RecyclerviewAdapterCuentas adaptadorCuentas;
+    String []clientes= new String[]{
+            "cleinte1","Helmut","brian","jefrry"
+    };
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +51,19 @@ public class Maincuentas extends AppCompatActivity {
         cliente=findViewById(R.id.editCliente);
         telefono=findViewById(R.id.edittelefono);
         direccion=findViewById(R.id.editdireccion);
-        search=findViewById(R.id.editbuscarcuentas);
+        search=findViewById(R.id.buscadorClienteCuentas);
+
+
+        id=getIntent().getIntExtra("Id",0);
+
+        System.out.println("ID vendedor activity cuentas===========>"+ id);
 
         desabilitarText();
 
         setRecycler();
 
+        ArrayAdapter<String> adaptercliente=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,clientes);
+        search.setAdapter(Clientes());
 
     }
 
@@ -63,17 +77,6 @@ public class Maincuentas extends AppCompatActivity {
 
     public List<ModelItemCuentas> getlist(){
         List<ModelItemCuentas> listCEstado= new ArrayList<>();
-       /* listCEstado.add(new ModelItemCuentas("helmut","credito",22403355,"direccion","15/05/20","descipcion prueba",50000,3000,8000));
-        listCEstado.add(new ModelItemCuentas("helmut","credito",22403355,"direccion","15/05/20","descipcion prueba",50000,3000,8000));
-        listCEstado.add(new ModelItemCuentas("helmut","credito",22403355,"direccion","15/05/20","descipcion prueba",50000,3000,8000));
-        listCEstado.add(new ModelItemCuentas("helmut","credito",22403355,"direccion","15/05/20","descipcion prueba",50000,3000,8000));
-        listCEstado.add(new ModelItemCuentas("helmut","credito",22403355,"direccion","15/05/20","descipcion prueba",50000,3000,8000));
-        listCEstado.add(new ModelItemCuentas("helmut","credito",22403355,"direccion","15/05/20","descipcion prueba",50000,3000,8000));
-        listCEstado.add(new ModelItemCuentas("helmut","credito",22403355,"direccion","15/05/20","descipcion prueba",50000,3000,8000));
-        listCEstado.add(new ModelItemCuentas("helmut","credito",22403355,"direccion","15/05/20","descipcion prueba",50000,3000,8000));
-        listCEstado.add(new ModelItemCuentas("helmut","credito",22403355,"direccion","15/05/20","descipcion prueba",50000,3000,8000));
-        listCEstado.add(new ModelItemCuentas("helmut","credito",22403355,"direccion","15/05/20","descipcion prueba",50000,3000,8000));
-        */
 
         try {
             DBConnection dbConnection = new DBConnection();
@@ -98,6 +101,31 @@ public class Maincuentas extends AppCompatActivity {
         cliente.setEnabled(false);
         telefono.setEnabled(false);
         direccion.setEnabled(false);
+    }
+
+
+
+    public ArrayAdapter Clientes() {
+        ArrayAdapter NoCoreAdapter=null;
+        DBConnection sesion;
+        sesion = DBConnection.getDbConnection();
+
+        String query = "select  Nombre,idCliente from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc";
+        try {
+            Statement stm = sesion.getConnection().createStatement();
+            ResultSet rs = stm.executeQuery(query);
+
+            ArrayList<String> data = new ArrayList<>();
+            while (rs.next()) {
+                data.add(rs.getString("Nombre"));
+                data.add(rs.getString("idCliente"));
+
+            }
+            NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return NoCoreAdapter;
     }
 
 }

@@ -16,7 +16,7 @@ import com.example.myapplication.ConexionBD.DBConnection;
 import java.sql.SQLException;
 
 public class MainMenu extends AppCompatActivity implements View.OnClickListener{
-    ImageButton btn_factura,btn_recibo,btn_cuentas,btn_cerrar;
+    Button btn_factura,btn_recibo,btn_cuentas,btn_cerrar;
     DBConnection sesion;
     int id;
     String nombreVendedor;
@@ -34,9 +34,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
             System.out.println("----> NombreVendedor: " + nombreVendedor);
         }
 
-        btn_factura = (ImageButton)findViewById(R.id.btnfactura);
-        btn_cuentas = (ImageButton) findViewById(R.id.btnrecibo);
-        btn_recibo = (ImageButton) findViewById(R.id.btncuenta);
+        btn_factura = findViewById(R.id.btnfactura);
+        btn_cuentas =  findViewById(R.id.btnrecibo);
+        btn_recibo =  findViewById(R.id.btncuenta);
         btn_cerrar= findViewById(R.id.CerrarSesion);
         btn_factura.setOnClickListener(this);
         btn_recibo.setOnClickListener(this);
@@ -60,7 +60,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
                 startActivity(intent1);
                 break;
             case R.id.btncuenta:
-                startActivity(new Intent(getApplicationContext(),Maincuentas.class));
+                Intent intent2 = new Intent(getApplicationContext(), Maincuentas.class);
+                intent2.putExtra("Id",id);
+                intent2.putExtra("NombreVendedor",nombreVendedor);
+                startActivity(intent2);
                 break;
             case R.id.CerrarSesion:
                 try {
