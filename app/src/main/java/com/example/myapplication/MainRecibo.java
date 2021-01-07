@@ -111,6 +111,8 @@ String []clientes= new String[]{
         });
         Clientes();
         Facturas();
+
+
     }
 
     public ArrayAdapter Clientes() {
