@@ -20,7 +20,7 @@ interface IPosPrinterService {
     * <li>4:PRINTER_IS_BUSY    此时打印机正在打印
     * <li>5:PRINTE_ERROR_UNKNOWN  打印机异常
     */
-    int getPrinterStatus();
+     int getPrinterStatus();
 
     /**
     * 打印机初始化

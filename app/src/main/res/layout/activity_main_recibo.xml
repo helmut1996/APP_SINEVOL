@@ -35,6 +35,12 @@
                 android:layout_weight="1"
                 android:hint="@string/cliente" />
 
+            <TextView
+                android:id="@+id/tv_IdclienteRecibo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="idcliente"
+              />
         </LinearLayout>
 
         <LinearLayout
@@ -86,13 +92,17 @@
             android:layout_margin="15dp"
             android:orientation="vertical">
 
-            <AutoCompleteTextView
-                android:id="@+id/editBuscadorFactura"
+            <Spinner
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="No Factura" />
+                android:id="@+id/buscadorFacturaCliente"
+                />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/black"/>
         </LinearLayout>
 
         <LinearLayout

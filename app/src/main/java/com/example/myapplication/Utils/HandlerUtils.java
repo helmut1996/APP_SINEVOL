@@ -3,6 +3,7 @@ package com.example.myapplication.Utils;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.RemoteException;
 
 import java.lang.ref.SoftReference;
 
@@ -14,7 +15,7 @@ public class HandlerUtils {
      * 在使用handler的地方继承此接口，然后把实例化的引用给实例化的handler
      */
     public interface IHandlerIntent {
-        void handlerIntent(Message message);
+        void handlerIntent(Message message) throws RemoteException;
     }
 
     public static final class MyHandler extends Handler
@@ -34,7 +35,11 @@ public class HandlerUtils {
         public void handleMessage(Message msg) {
             IHandlerIntent t = owner.get();
             if (null != t) {
-                t.handlerIntent(msg);
+                try {
+                    t.handlerIntent(msg);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

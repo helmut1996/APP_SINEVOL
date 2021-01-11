@@ -53,7 +53,6 @@ public class Maincuentas extends AppCompatActivity {
         direccion=findViewById(R.id.editdireccion);
         search=findViewById(R.id.buscadorClienteCuentas);
 
-
         id=getIntent().getIntExtra("Id",0);
 
         System.out.println("ID vendedor activity cuentas===========>"+ id);
@@ -84,7 +83,7 @@ public class Maincuentas extends AppCompatActivity {
 
             Statement st=dbConnection.getConnection().createStatement();
 
-            ResultSet rs=st.executeQuery("exec sp_EstadoCuenta 106");
+            ResultSet rs=st.executeQuery("exec sp_EstadoCuenta "+id);
             while(rs.next()){
                 listCEstado.add(new ModelItemCuentas("helmut",rs.getString("TipoCompra"),22403355,"direccion",rs.getString("Fecha"),rs.getString("Descripcion"), rs.getInt("Entrada1"), rs.getInt("Salida1"), rs.getInt("Total")));
             }
