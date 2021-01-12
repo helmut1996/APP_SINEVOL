@@ -119,6 +119,9 @@ private List<ClasslistItemC>obtenerclientesBD(){
             DBConnection dbConnection = new DBConnection();
             dbConnection.conectar();
 
+
+
+
             Statement st=dbConnection.getConnection().createStatement();
 
             ResultSet rs=st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo,idCliente from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc");

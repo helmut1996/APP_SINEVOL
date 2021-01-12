@@ -40,6 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="idcliente"
+                android:visibility="gone
+"
               />
         </LinearLayout>
 
@@ -61,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/L_zona" />
+                 />
         </LinearLayout>
 
         <LinearLayout
@@ -172,6 +174,13 @@
                 android:text="0
 " />
         </LinearLayout>
+        <TextView
+            android:id="@+id/idcuentasxCobrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="idCuentasxCobrar"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/textView38"

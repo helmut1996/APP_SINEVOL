@@ -15,10 +15,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -43,7 +46,10 @@ import com.iposprinter.iposprinterservice.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import static com.example.myapplication.MemInfo.bitmapRecycle;
@@ -56,12 +62,13 @@ import static com.example.myapplication.Utils.PrintContentsExamples.customCHZ1;
 public class MainRecibo extends AppCompatActivity {
     AutoCompleteTextView buscadorCliente;
     EditText abono, descuento;
-    TextView saldo, numresf, fecha, zona, vendedor, tvIdclienyte;
+    TextView saldo, numresf, fecha, zona, vendedor, tvIdclienyte,tvIdCuentasxCobrar;
     ImageButton Guardar, imprimir;
     EditText onservacion;
     Spinner BuscadorFactura;
     public static int id;
     public static String nombreVendedor, idcliente;
+    public static Double SaldoR,Desc;
 
     String[] clientes = new String[]{
             "cleinte1", "Helmut", "brian", "jefrry"
@@ -233,6 +240,7 @@ public class MainRecibo extends AppCompatActivity {
             mIPosPrinterService = null;
         }
     };
+    ///////////////////////Impresora//////////////////////////////////
 
 
     @Override
@@ -276,7 +284,7 @@ public class MainRecibo extends AppCompatActivity {
 
         registerReceiver(IPosPrinterStatusListener,printerStatusFilter);
         
-        
+        ///llamando los complementos
         tvIdclienyte=findViewById(R.id.tv_IdclienteRecibo);
         fecha = findViewById(R.id.tvr_fecha);
         zona = findViewById(R.id.tvr_zona);
@@ -290,8 +298,10 @@ public class MainRecibo extends AppCompatActivity {
         onservacion = findViewById(R.id.editObservacion);
         Guardar = findViewById(R.id.btnGuardarRecibo);
         imprimir = findViewById(R.id.btnImprimirRecibo);
+        tvIdCuentasxCobrar = findViewById(R.id.idcuentasxCobrar);
+/////////////////////////////////////////////////////////
 
-
+        /*pasando id del  vendedor*/
         id = getIntent().getIntExtra("Id", 0);
 
         Bundle extra = getIntent().getExtras();
@@ -300,23 +310,96 @@ public class MainRecibo extends AppCompatActivity {
             System.out.println("----> NombreVendedor: " + nombreVendedor);
             vendedor.setText(extra.getString("NombreVendedor"));
         }
+        /*pasando id del  vendedor*/
 
+        /*Capturando la fecha*/
+        String ct = DateFormat.getDateInstance().format(new Date());
+        fecha.setText(ct);
+        /*Capturando la fecha*/
 
         //ArrayAdapter<String> adaptercliente = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, clientes);
         buscadorCliente.setAdapter(Clientes());
 
-        System.out.println("*******Cliente :"+buscadorCliente);
+
+
 
         buscadorCliente.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tvIdclienyte.setText(buscadorCliente.getText().toString());
+                BuscadorFactura.setAdapter(Facturas());
+
             }
         });
 
         ArrayAdapter<CharSequence> adapter  = ArrayAdapter.createFromResource(this, R.array.facturas_clientes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        BuscadorFactura.setAdapter(Facturas());
+        //BuscadorFactura.setAdapter(Facturas());
+
+
+        BuscadorFactura.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                BuscadorFactura.getSelectedItem().toString();
+                calcularsaldo();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+        abono.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (abono.getText().toString().trim().equals("")) {
+                    abono.requestFocus();
+                    abono.setText("");
+                    //saldo.setText(SaldoR.toString());
+            }else{
+                    Double tmpSaldo = SaldoR - Double.parseDouble(s.toString());
+                    saldo.setText(tmpSaldo.toString());
+                    System.out.println("Saber que es la variable"+SaldoR);
+                }
+
+
+
+            }
+        });
+
+        descuento.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                SaldoR = SaldoR - Double.parseDouble(s.toString());
+                saldo.setText(SaldoR.toString());
+                System.out.println("Saber que es la variable"+SaldoR);
+            }
+        });
 
         Guardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -347,6 +430,9 @@ public class MainRecibo extends AppCompatActivity {
 
     }
 
+    /*
+    *Funciones de la imprsora
+    * */
     public int getPrinterStatus(){
 
         Log.i(TAG,"***** printerStatus"+printerStatus);
@@ -360,7 +446,7 @@ public class MainRecibo extends AppCompatActivity {
     }
 
     /**
-     * 打印机初始化
+     * La impresora se inicializa
      */
     public void printerInit(){
         ThreadPoolManager.getInstance().executeTask(new Runnable() {
@@ -402,6 +488,11 @@ public class MainRecibo extends AppCompatActivity {
         });
     }
 
+    /**
+     *Funciones de la imprsora
+     *
+     * */
+
     public ArrayAdapter Clientes() {
         ArrayAdapter NoCoreAdapter = null;
         DBConnection sesion;
@@ -415,14 +506,8 @@ public class MainRecibo extends AppCompatActivity {
             ArrayList<String> data = new ArrayList<>();
             while (rs.next()) {
                 data.add(rs.getString("Nombre"));
-                data.add(rs.getString("idCliente"));
-                //idcliente=rs.getString("idCliente");
-                //idcliente = rs.getString("Nombre");
-                //tvIdclienyte.setText(idcliente);
-
+                //data.add(rs.getString("idCliente"));
             }
-
-            System.out.println("IDCLIENTE No.:"+idcliente);
 
             NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
         } catch (SQLException e) {
@@ -436,21 +521,44 @@ public class MainRecibo extends AppCompatActivity {
         DBConnection sesion;
         sesion = DBConnection.getDbConnection();
 
-        String query = "exec sp_listarCxC 1158";
+        String query =( "exec sp_BuscarClienteFacturaMovil '"+tvIdclienyte.getText().toString() + "'");
         try {
             Statement stm = sesion.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
 
             ArrayList<String> data = new ArrayList<>();
+
             while (rs.next()) {
                 data.add(rs.getString("IdFactura"));
-
+                zona.setText(rs.getString("Zona"));
             }
             NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return NoCoreAdapter;
+    }
+
+    public void calcularsaldo(){
+        DBConnection sesion;
+        sesion=DBConnection.getDbConnection();
+        String query="exec sp_SaldoFacturaMovil " + BuscadorFactura.getSelectedItem();
+
+        try {
+            Statement stm = sesion.getConnection().createStatement();
+            ResultSet rs = stm.executeQuery(query);
+
+            ArrayList<String> data = new ArrayList<>();
+            while (rs.next()){
+              tvIdCuentasxCobrar.setText( rs.getString("idCuentasxCobrar"));
+
+              SaldoR = rs.getDouble("SaldoRestante");
+              saldo.setText(SaldoR.toString());
+               //saldo.setText(rs.getString("SaldoRestante"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public void limpiarcampos() {
@@ -481,6 +589,4 @@ public class MainRecibo extends AppCompatActivity {
 
     }
 
-
 }
-
