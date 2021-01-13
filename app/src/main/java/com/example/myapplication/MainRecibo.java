@@ -43,6 +43,7 @@ import com.example.myapplication.Utils.BytesUtil;
 import com.example.myapplication.Utils.HandlerUtils;
 import com.iposprinter.iposprinterservice.*;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -64,12 +65,13 @@ public class MainRecibo extends AppCompatActivity {
     EditText abono, descuento;
     TextView saldo, numresf, fecha, zona, vendedor, tvIdclienyte,tvIdCuentasxCobrar;
     ImageButton Guardar, imprimir;
-    EditText onservacion;
+    EditText observacion;
     Spinner BuscadorFactura;
-    public static int id;
+    public static int id,idClientesRecibo;
     public static String nombreVendedor, idcliente;
-    public static Double SaldoR,Desc;
+    public static Double SaldoR;
 
+    public static int IdTalonario,NumeracionInicial, numeracion,IdPagosCxC;
     String[] clientes = new String[]{
             "cleinte1", "Helmut", "brian", "jefrry"
     };
@@ -295,7 +297,7 @@ public class MainRecibo extends AppCompatActivity {
         descuento = findViewById(R.id.editDescuento);
         saldo = findViewById(R.id.tvr_saldo);
         numresf = findViewById(R.id.tv_NReferencia);
-        onservacion = findViewById(R.id.editObservacion);
+        observacion = findViewById(R.id.editObservacion);
         Guardar = findViewById(R.id.btnGuardarRecibo);
         imprimir = findViewById(R.id.btnImprimirRecibo);
         tvIdCuentasxCobrar = findViewById(R.id.idcuentasxCobrar);
@@ -329,6 +331,7 @@ public class MainRecibo extends AppCompatActivity {
                 tvIdclienyte.setText(buscadorCliente.getText().toString());
                 BuscadorFactura.setAdapter(Facturas());
 
+
             }
         });
 
@@ -350,9 +353,6 @@ public class MainRecibo extends AppCompatActivity {
             }
         });
 
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
 
         abono.addTextChangedListener(new TextWatcher() {
             @Override
@@ -362,22 +362,23 @@ public class MainRecibo extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (abono.getText().toString().trim().equals("")) {
+                    abono.requestFocus();
+                    saldo.setText(SaldoR.toString());
 
+                }else if(!descuento.getText().toString().trim().equals("")){
+                    Double tmpDescuento = Double.parseDouble(descuento.getText().toString());
+                    Double tmpSaldo = SaldoR - Double.parseDouble(s.toString()) - tmpDescuento;
+                    saldo.setText(tmpSaldo.toString());
+                }
+                else{
+                    Double tmpSaldo = SaldoR - Double.parseDouble(s.toString());
+                    saldo.setText(tmpSaldo.toString());
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (abono.getText().toString().trim().equals("")) {
-                    abono.requestFocus();
-                    abono.setText("");
-                    //saldo.setText(SaldoR.toString());
-            }else{
-                    Double tmpSaldo = SaldoR - Double.parseDouble(s.toString());
-                    saldo.setText(tmpSaldo.toString());
-                    System.out.println("Saber que es la variable"+SaldoR);
-                }
-
-
 
             }
         });
@@ -390,14 +391,23 @@ public class MainRecibo extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (descuento.getText().toString().trim().equals("")) {
+                    descuento.requestFocus();
+
+                }else if(!abono.getText().toString().trim().equals("")){
+                    Double tmpDescuento = Double.parseDouble(abono.getText().toString());
+                    Double tmpSaldo = SaldoR - Double.parseDouble(s.toString()) - tmpDescuento;
+                    saldo.setText(tmpSaldo.toString());
+                }   else{
+                    Double tmpSaldo = SaldoR - Double.parseDouble(s.toString());
+                    saldo.setText(tmpSaldo.toString());
+                }
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                SaldoR = SaldoR - Double.parseDouble(s.toString());
-                saldo.setText(SaldoR.toString());
-                System.out.println("Saber que es la variable"+SaldoR);
+
             }
         });
 
@@ -407,11 +417,12 @@ public class MainRecibo extends AppCompatActivity {
 
                 if (buscadorCliente.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "debes eligir el Cliente", Toast.LENGTH_SHORT).show();
-                } else if (abono.getText().toString().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "El Abono no puede ser 0", Toast.LENGTH_LONG).show();
-                } else if (descuento.getText().toString().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "El Descuento no puede ser 0", Toast.LENGTH_LONG).show();
                 } else {
+                    try {
+                        AgregarReciboSQLSEVER();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     GuardarReciboSQLite();
                     limpiarcampos();
                     Toast.makeText(getApplicationContext(), " Recibo Guardado....", Toast.LENGTH_LONG).show();
@@ -428,6 +439,12 @@ public class MainRecibo extends AppCompatActivity {
          }
      });
 
+
+        /*try {
+            talonario();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
     }
 
     /*
@@ -506,7 +523,6 @@ public class MainRecibo extends AppCompatActivity {
             ArrayList<String> data = new ArrayList<>();
             while (rs.next()) {
                 data.add(rs.getString("Nombre"));
-                //data.add(rs.getString("idCliente"));
             }
 
             NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
@@ -531,6 +547,8 @@ public class MainRecibo extends AppCompatActivity {
             while (rs.next()) {
                 data.add(rs.getString("IdFactura"));
                 zona.setText(rs.getString("Zona"));
+                idClientesRecibo=(rs.getInt("idCliente"));
+                System.out.println("ID CLIENTE RECIBO: "+idClientesRecibo);
             }
             NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
         } catch (SQLException e) {
@@ -565,7 +583,7 @@ public class MainRecibo extends AppCompatActivity {
         buscadorCliente.setText("");
         abono.setText("");
         descuento.setText("");
-        onservacion.setText("");
+        observacion.setText("");
         saldo.setText("");
 
     }
@@ -586,6 +604,85 @@ public class MainRecibo extends AppCompatActivity {
         long idResultante = db.insert(utilidadesFact.TABLA_RECIBO, utilidadesFact.CAMPO_NOMBRE_CLIEBTE, values);
         Toast.makeText(this, "agregado: " + idResultante, Toast.LENGTH_SHORT).show();
 
+
+    }
+
+/*public void talonario() throws SQLException {
+    DBConnection dbConnection = new DBConnection();
+    dbConnection.conectar();
+   Statement st2= dbConnection.getConnection().createStatement();
+            ResultSet rs2 = st2.executeQuery("select top 1 idTalonario from Talonarios order by idTalonario desc");
+            while (rs2.next()) {
+                IdTalonario = rs.getInt("idTalonario");
+                System.out.println("==============> Ultimo Registro IdTalonario :" + IdTalonario);
+            };
+}
+*/
+
+   public void AgregarReciboSQLSEVER() throws SQLException {
+
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.conectar();
+
+        try {
+            dbConnection.getConnection().setAutoCommit(false);
+            Statement st= dbConnection.getConnection().createStatement();
+            ResultSet rs = st.executeQuery("select top 1 NumeracionInicial from Talonarios order by idTalonario desc");
+            while (rs.next()){
+                NumeracionInicial=rs.getInt("NumeracionInicial");
+                numeracion= NumeracionInicial+1;
+                System.out.println("==============> Ultimo Registro NumeroInicial :"+numeracion);
+
+            }
+
+            PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertTalonario ?,?,?");
+            pst.setInt(1, Integer.parseInt(String.valueOf(id)));
+            pst.setInt(2, Integer.parseInt(String.valueOf(numeracion)));
+            pst.setString(3,vendedor.getText().toString());
+            pst.executeUpdate();
+
+            Statement st2= dbConnection.getConnection().createStatement();
+            ResultSet rs2 = st2.executeQuery("select top 1 idTalonario from Talonarios order by idTalonario desc");
+            while (rs2.next()) {
+                IdTalonario = rs2   .getInt("idTalonario");
+                System.out.println("==============> Ultimo Registro IdTalonario :" + IdTalonario);
+            }
+
+
+            PreparedStatement pst2 = dbConnection.getConnection().prepareStatement( "  exec sp_insertPagoCxC ?,?,?,?,?");
+            pst2.setInt(1,Integer.parseInt(String.valueOf(IdTalonario)));
+            pst2.setDouble(2,Double.parseDouble(abono.getText().toString()));
+            pst2.setInt(3,Integer.parseInt(String.valueOf(idClientesRecibo)));
+            pst2.setString(4,observacion.getText().toString());
+            pst2.setString(5,tvIdclienyte.getText().toString());
+            pst2.executeUpdate();
+
+            Statement st3= dbConnection.getConnection().createStatement();
+            ResultSet rs3 = st3.executeQuery("select top 1 idPagoCxC from Pagos_CxC order by idPagoCxC desc");
+            while (rs3.next()) {
+                IdPagosCxC = rs3.getInt("idPagoCxC");
+                System.out.println("==============> Ultimo Registro IdPagosCxC :" + IdPagosCxC);
+            }
+
+            PreparedStatement pst3 = dbConnection.getConnection().prepareStatement( " exec sp_insertDetallePagoCxC ?,?,?,?");
+            pst3.setInt(1,Integer.parseInt(String.valueOf(IdPagosCxC)));
+            pst3.setInt(2,Integer.parseInt(tvIdCuentasxCobrar.getText().toString()));
+            pst3.setDouble(3,Double.parseDouble(saldo.getText().toString()));
+            pst3.setDouble(4,Double.parseDouble(descuento.getText().toString()));
+            pst3.executeUpdate();
+
+            /*PreparedStatement pst4 = dbConnection.getConnection().prepareStatement( "exec sp_insertNotaDebito ?,?,?,?,?,?");
+
+            pst4.executeUpdate();*/
+        }
+        catch (SQLException e){
+            dbConnection.getConnection().rollback();
+            System.out.println("ERROR: ======> "+e);
+            Toast.makeText(this," No Registrado SQLServer",Toast.LENGTH_LONG).show();
+        }finally {
+
+            dbConnection.getConnection().setAutoCommit(true);
+        }
 
     }
 
