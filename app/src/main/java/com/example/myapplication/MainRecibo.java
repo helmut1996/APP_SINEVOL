@@ -37,6 +37,9 @@ import android.widget.Toast;
 
 import com.example.myapplication.ConexionBD.DBConnection;
 import com.example.myapplication.SQLite.conexionSQLiteHelper;
+import com.example.myapplication.SQLite.entidades.FacturasAdd;
+import com.example.myapplication.SQLite.entidades.ProductosAdd;
+import com.example.myapplication.SQLite.ulilidades.utilidades;
 import com.example.myapplication.SQLite.ulilidades.utilidadesFact;
 import com.example.myapplication.Utils.ButtonDelayUtils;
 import com.example.myapplication.Utils.BytesUtil;
@@ -75,6 +78,10 @@ public class MainRecibo extends AppCompatActivity {
     String[] clientes = new String[]{
             "cleinte1", "Helmut", "brian", "jefrry"
     };
+
+
+    ArrayList<String>listainformacion;
+    ArrayList<FacturasAdd>listarecibo;
 
     ///////////////////////Impresora//////////////////////////////////
 
@@ -435,16 +442,10 @@ public class MainRecibo extends AppCompatActivity {
          @Override
          public void onClick(View v) {
              if (getPrinterStatus() == PRINTER_NORMAL)
-                 printText();
+                 Consultarlista();
          }
      });
 
-
-        /*try {
-            talonario();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
     }
 
     /*
@@ -489,15 +490,51 @@ public class MainRecibo extends AppCompatActivity {
         ThreadPoolManager.getInstance().executeTask(new Runnable() {
             @Override
             public void run() {
+
+                listainformacion=new ArrayList<String>();
+
                 try {
-                    mIPosPrinterService.printSpecifiedTypeText("    Hola Mundo\n", "ST", 48, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("   Imprimiendo prueba Recibo\n", "ST", 32, callback);
-                    mIPosPrinterService.printBlankLines(1, 8, callback);
+
+                    for (int i=0; i<listarecibo.size();i++){
+                    mIPosPrinterService.printSpecifiedTypeText(" \t\t RECIBO\n", "ST", 48, callback);
+                    mIPosPrinterService.printSpecifiedTypeText(vendedor.getText().toString(), "ST", 32, callback);
+                    mIPosPrinterService.printSpecifiedTypeText(fecha.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
+
+                    mIPosPrinterService.printSpecifiedTypeText("Recibo de:" + " " + listarecibo.get(i).getNombreCliente(), "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " + "_______________________________\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("C$" +saldo.getText().toString()+" \n\n\n", "ST", 24, callback);
+                    mIPosPrinterService.printBlankLines(1, 8, callback);
+
+                    mIPosPrinterService.setPrinterPrintAlignment(0,callback);
+                    mIPosPrinterService.setPrinterPrintFontSize(24,callback);
+                    String[] text = new String[4];
+                    int[] width = new int[] { 8, 6, 6, 7 };
+                    int[] align = new int[] { 0, 2, 2, 2 }; // Izquierda, derecha
+                    text[0] = "N.Ref";
+                    text[1] = "Fact";
+                    text[2] = "Monto";
+                    text[3] = "Saldo";
+                    mIPosPrinterService.printColumnsText(text, width, align, 1,callback);
+                    text[0] = String.valueOf(listarecibo.get(i).getNumReferencia());
+                    text[1] = listarecibo.get(i).getFactura();
+                    text[2] = String.valueOf(listarecibo.get(i).getSaldoRes());
+                    text[3] = String.valueOf(listarecibo.get(i).getSaldoRes());
+                    mIPosPrinterService.printColumnsText(text, width, align, 0,callback);
+
+                    mIPosPrinterService.printSpecifiedTypeText("Saldo Total:C$ " + " " + "0.0", "ST", 24, callback);
+                    mIPosPrinterService.printBlankLines(1, 16, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("observaciones" + " " + "_______________________________\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Recibo" + " " + "_______________________________\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Entrada" + " " + "_______________________________", "ST", 24, callback);
+
+                    mIPosPrinterService.printerPerformPrint(32,  callback);
                     mIPosPrinterService.setPrinterPrintAlignment(0,callback);
                     mIPosPrinterService.printBlankLines(1, 16, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("**********END***********\n\n", "ST", 32, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("**********END***********", "ST", 32, callback);
                     mIPosPrinterService.printerPerformPrint(160,  callback);
+                    }
+
                 }catch (RemoteException e){
                     e.printStackTrace();
                 }
@@ -600,26 +637,40 @@ public class MainRecibo extends AppCompatActivity {
         values.put(utilidadesFact.CAMPO_ABONO, abono.getText().toString());
         values.put(utilidadesFact.CAMPO_DESCUENTO, descuento.getText().toString());
         values.put(utilidadesFact.CAMPO_SALDO_RES, saldo.getText().toString());
-        values.put(utilidadesFact.CAMPO_NUMERO_RESF, numresf.getText().toString());
+        values.put(utilidadesFact.CAMPO_NUMERO_RESF, String.valueOf(tvIdCuentasxCobrar));
         long idResultante = db.insert(utilidadesFact.TABLA_RECIBO, utilidadesFact.CAMPO_NOMBRE_CLIEBTE, values);
         Toast.makeText(this, "agregado: " + idResultante, Toast.LENGTH_SHORT).show();
 
 
     }
 
-/*public void talonario() throws SQLException {
-    DBConnection dbConnection = new DBConnection();
-    dbConnection.conectar();
-   Statement st2= dbConnection.getConnection().createStatement();
-            ResultSet rs2 = st2.executeQuery("select top 1 idTalonario from Talonarios order by idTalonario desc");
-            while (rs2.next()) {
-                IdTalonario = rs.getInt("idTalonario");
-                System.out.println("==============> Ultimo Registro IdTalonario :" + IdTalonario);
-            };
-}
-*/
+    public void Consultarlista() {
 
-   public void AgregarReciboSQLSEVER() throws SQLException {
+        /*mandando a llamar conexion a SQLite */
+        conexionSQLiteHelper conn = new conexionSQLiteHelper(this, "bd_productos", null, 1);
+        SQLiteDatabase db=conn.getReadableDatabase();
+        FacturasAdd facturasAdd = null;
+        listarecibo=new ArrayList<FacturasAdd>();
+        //query SQLite
+        Cursor cursor=db.rawQuery("select * from "+ utilidadesFact.TABLA_RECIBO,null);
+        while (cursor.moveToNext()){
+            facturasAdd=new FacturasAdd();
+            facturasAdd.setNombreCliente(cursor.getString(0));
+            facturasAdd.setFactura(cursor.getString(1));
+            facturasAdd.setFecha(cursor.getString(2));
+            facturasAdd.setAbono(cursor.getDouble(3));
+            facturasAdd.setDescuento(cursor.getDouble(4));
+            facturasAdd.setSaldoRes(cursor.getDouble(5));
+            facturasAdd.setNumReferencia(cursor.getInt(6));
+
+            listarecibo.add(facturasAdd);
+        }
+        printText();
+    }
+
+
+
+    public void AgregarReciboSQLSEVER() throws SQLException {
 
         DBConnection dbConnection = new DBConnection();
         dbConnection.conectar();
@@ -667,13 +718,17 @@ public class MainRecibo extends AppCompatActivity {
             PreparedStatement pst3 = dbConnection.getConnection().prepareStatement( " exec sp_insertDetallePagoCxC ?,?,?,?");
             pst3.setInt(1,Integer.parseInt(String.valueOf(IdPagosCxC)));
             pst3.setInt(2,Integer.parseInt(tvIdCuentasxCobrar.getText().toString()));
-            pst3.setDouble(3,Double.parseDouble(saldo.getText().toString()));
+            pst3.setDouble(3,Double.parseDouble(abono.getText().toString()));
             pst3.setDouble(4,Double.parseDouble(descuento.getText().toString()));
             pst3.executeUpdate();
 
-            /*PreparedStatement pst4 = dbConnection.getConnection().prepareStatement( "exec sp_insertNotaDebito ?,?,?,?,?,?");
-
-            pst4.executeUpdate();*/
+            if (Double.parseDouble(saldo.getText().toString())<0){
+                PreparedStatement pst4 = dbConnection.getConnection().prepareStatement( "exec sp_insertNotaDebito ?,?,?");
+                pst4.setInt(1,Integer.parseInt(String.valueOf(IdPagosCxC)));
+                pst4.setInt(2,Integer.parseInt(String.valueOf(idClientesRecibo)));
+                pst4.setDouble(3,Double.parseDouble(saldo.getText().toString())*-1);
+                pst4.executeUpdate();
+            }
         }
         catch (SQLException e){
             dbConnection.getConnection().rollback();

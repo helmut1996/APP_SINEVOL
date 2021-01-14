@@ -2,7 +2,6 @@ package com.example.myapplication.SQLite.ulilidades;
 
 public class utilidadesFact {
     public static final String TABLA_RECIBO="recibo";
-
     public static final String CAMPO_NOMBRE_CLIEBTE="nombrecliente";
     public static final String CAMPO_FACTURA="factura";
     public static final String CAMPO_FECHA="fecha";

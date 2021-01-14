@@ -3,6 +3,7 @@ package com.example.myapplication.SQLite.entidades;
 public class FacturasAdd {
   private String NombreCliente;
   private String NombreVendedor;
+  private String Factura;
   private String Fecha;
   private double Abono;
   private double Descuento;
@@ -10,6 +11,17 @@ public class FacturasAdd {
   private  double SaldoRes;
 
     public FacturasAdd() {
+    }
+
+    public FacturasAdd(String nombreCliente, String nombreVendedor, String factura, String fecha, double abono, double descuento, int numReferencia, double saldoRes) {
+        NombreCliente = nombreCliente;
+        NombreVendedor = nombreVendedor;
+        Factura = factura;
+        Fecha = fecha;
+        Abono = abono;
+        Descuento = descuento;
+        NumReferencia = numReferencia;
+        SaldoRes = saldoRes;
     }
 
     public String getNombreCliente() {
@@ -26,6 +38,14 @@ public class FacturasAdd {
 
     public void setNombreVendedor(String nombreVendedor) {
         NombreVendedor = nombreVendedor;
+    }
+
+    public String getFactura() {
+        return Factura;
+    }
+
+    public void setFactura(String factura) {
+        Factura = factura;
     }
 
     public String getFecha() {
