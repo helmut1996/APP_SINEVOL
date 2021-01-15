@@ -6,9 +6,10 @@ public class ModelItemCuentas {
     private String direccionCliente;
     private String fechaCliente;
     private String descripcionCliente;
-    private int entradaCliente;
+    private Integer entradaCliente;
     private int salidaCliente;
     private int totalCliente;
+
 
     public String getCredito(String credito) {
         return this.credito;
@@ -23,7 +24,7 @@ public class ModelItemCuentas {
 
 
 
-    public ModelItemCuentas(String nombreCliente, String credito, int telefonoCliente, String direccionCliente, String fechaCliente, String descripcionCliente, int entradaCliente, int salidaCliente, int totalCliente) {
+    public ModelItemCuentas(String nombreCliente, String credito, int telefonoCliente, String direccionCliente, String fechaCliente, String descripcionCliente, Integer entradaCliente, int salidaCliente, int totalCliente) {
         this.nombreCliente = nombreCliente;
         this.credito=credito;
         this.telefonoCliente = telefonoCliente;
@@ -77,11 +78,11 @@ public class ModelItemCuentas {
         this.descripcionCliente = descripcionCliente;
     }
 
-    public int getEntradaCliente() {
+    public Integer getEntradaCliente() {
         return entradaCliente;
     }
 
-    public void setEntradaCliente(int entradaCliente) {
+    public void setEntradaCliente(Integer entradaCliente) {
         this.entradaCliente = entradaCliente;
     }
 

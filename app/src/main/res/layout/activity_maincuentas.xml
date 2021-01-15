@@ -7,6 +7,12 @@
     tools:context=".Maincuentas"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cliente"
+        android:id="@+id/tvC_cliente"
+        android:visibility="gone"/>
 <AutoCompleteTextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,18 +29,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editCliente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:enabled="true"
-            android:hint="Cliente"
-            android:text="0004-Teodoro Vilchez"
-            android:textSize="13sp"/>
-
-        <EditText
+        <TextView
             android:id="@+id/edittelefono"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,10 +37,9 @@
             android:layout_weight="1"
             android:enabled="true"
             android:hint="Telefono"
-            android:text="8884-4565"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/editdireccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,8 +47,7 @@
             android:layout_weight="1"
             android:enabled="true"
             android:hint="Direccion"
-            tools:text="Mercado Horiental"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
     </LinearLayout>
     <TableLayout
         android:layout_width="match_parent"

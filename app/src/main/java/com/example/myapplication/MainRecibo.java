@@ -432,6 +432,7 @@ public class MainRecibo extends AppCompatActivity {
                     }
                     GuardarReciboSQLite();
                     limpiarcampos();
+
                     Toast.makeText(getApplicationContext(), " Recibo Guardado....", Toast.LENGTH_LONG).show();
                 }
 
@@ -495,15 +496,14 @@ public class MainRecibo extends AppCompatActivity {
 
                 try {
 
-                    for (int i=0; i<listarecibo.size();i++){
                     mIPosPrinterService.printSpecifiedTypeText(" \t\t RECIBO\n", "ST", 48, callback);
                     mIPosPrinterService.printSpecifiedTypeText(vendedor.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText(fecha.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
-
-                    mIPosPrinterService.printSpecifiedTypeText("Recibo de:" + " " + listarecibo.get(i).getNombreCliente(), "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Recibo de:" + " " + tvIdclienyte.getText().toString(), "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " + "_______________________________\n", "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("C$" +saldo.getText().toString()+" \n\n\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("\t\t\t\t\tC$" +SaldoR+" \n\n\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("***=>aplicado descuento", "ST", 24, callback);
                     mIPosPrinterService.printBlankLines(1, 8, callback);
 
                     mIPosPrinterService.setPrinterPrintAlignment(0,callback);
@@ -516,24 +516,26 @@ public class MainRecibo extends AppCompatActivity {
                     text[2] = "Monto";
                     text[3] = "Saldo";
                     mIPosPrinterService.printColumnsText(text, width, align, 1,callback);
+
+                    for (int i=0; i<listarecibo.size();i++){
                     text[0] = String.valueOf(listarecibo.get(i).getNumReferencia());
                     text[1] = listarecibo.get(i).getFactura();
-                    text[2] = String.valueOf(listarecibo.get(i).getSaldoRes());
+                    text[2] = String.valueOf(listarecibo.get(i).getAbono());
                     text[3] = String.valueOf(listarecibo.get(i).getSaldoRes());
                     mIPosPrinterService.printColumnsText(text, width, align, 0,callback);
-
-                    mIPosPrinterService.printSpecifiedTypeText("Saldo Total:C$ " + " " + "0.0", "ST", 24, callback);
+                    }
+                    mIPosPrinterService.printSpecifiedTypeText("Saldo Total:C$ " + " " +saldo.getText().toString(), "ST", 24, callback);
                     mIPosPrinterService.printBlankLines(1, 16, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("observaciones" + " " + "_______________________________\n", "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Recibo" + " " + "_______________________________\n", "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Entrada" + " " + "_______________________________", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("observaciones" + " " + "__________________\n\n\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Recibo" + " " + "_______________________\n\n\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Entrada" + " " + "______________________", "ST", 24, callback);
 
                     mIPosPrinterService.printerPerformPrint(32,  callback);
                     mIPosPrinterService.setPrinterPrintAlignment(0,callback);
                     mIPosPrinterService.printBlankLines(1, 16, callback);
                     mIPosPrinterService.printSpecifiedTypeText("**********END***********", "ST", 32, callback);
                     mIPosPrinterService.printerPerformPrint(160,  callback);
-                    }
+
 
                 }catch (RemoteException e){
                     e.printStackTrace();
@@ -609,7 +611,7 @@ public class MainRecibo extends AppCompatActivity {
 
               SaldoR = rs.getDouble("SaldoRestante");
               saldo.setText(SaldoR.toString());
-               //saldo.setText(rs.getString("SaldoRestante"));
+
             }
         }catch (SQLException e){
             e.printStackTrace();

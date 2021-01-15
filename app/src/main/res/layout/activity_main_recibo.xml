@@ -40,8 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="idcliente"
-                android:visibility="gone
-"
+                android:visibility="gone"
               />
         </LinearLayout>
 
@@ -180,7 +179,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:text="idCuentasxCobrar"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/textView38"

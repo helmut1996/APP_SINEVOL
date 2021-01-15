@@ -8,10 +8,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -31,14 +34,14 @@ public class Maincuentas extends AppCompatActivity {
 
     RecyclerView listaCuentas;
     TableLayout tabla;
-    EditText cliente,telefono,direccion;
+    TextView telefono,direccion,cliente;
     AutoCompleteTextView search;
     RecyclerviewAdapterCuentas adaptadorCuentas;
     String []clientes= new String[]{
             "cleinte1","Helmut","brian","jefrry"
     };
     int id;
-
+    String tel,direc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +51,7 @@ public class Maincuentas extends AppCompatActivity {
         getSupportActionBar().setTitle("Estado Cuentas");
 
         listaCuentas= findViewById(R.id.RecyclerCuentas);
-        cliente=findViewById(R.id.editCliente);
+        cliente=findViewById(R.id.tvC_cliente);
         telefono=findViewById(R.id.edittelefono);
         direccion=findViewById(R.id.editdireccion);
         search=findViewById(R.id.buscadorClienteCuentas);
@@ -61,8 +64,16 @@ public class Maincuentas extends AppCompatActivity {
 
         setRecycler();
 
-        ArrayAdapter<String> adaptercliente=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,clientes);
+     //   ArrayAdapter<String> adaptercliente=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,clientes);
         search.setAdapter(Clientes());
+
+        search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                cliente.setText(search.getText().toString());
+           Clientes();
+            }
+        });
 
     }
 
@@ -85,7 +96,7 @@ public class Maincuentas extends AppCompatActivity {
 
             ResultSet rs=st.executeQuery("exec sp_EstadoCuenta 106 ");
             while(rs.next()){
-                listCEstado.add(new ModelItemCuentas("helmut",rs.getString("TipoCompra"),22403355,"direccion",rs.getString("Fecha"),rs.getString("Descripcion"), rs.getInt("Entrada1"), rs.getInt("Salida1"), rs.getInt("Total")));
+                listCEstado.add(new ModelItemCuentas("helmut",rs.getString("TipoCompra"),22403355,"direccion",rs.getString("Fecha"),rs.getString("Descripcion"),rs.getInt("Entrada"), rs.getInt("Salida"), rs.getInt("Total")));
             }
 
         } catch (SQLException e) {
@@ -97,7 +108,6 @@ public class Maincuentas extends AppCompatActivity {
 
     }
     private void desabilitarText() {
-        cliente.setEnabled(false);
         telefono.setEnabled(false);
         direccion.setEnabled(false);
     }
@@ -109,7 +119,7 @@ public class Maincuentas extends AppCompatActivity {
         DBConnection sesion;
         sesion = DBConnection.getDbConnection();
 
-        String query = "select  Nombre,idCliente from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc";
+        String query = "select  Nombre,idCliente,Telefono1,Direccion from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc";
         try {
             Statement stm = sesion.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
@@ -117,8 +127,8 @@ public class Maincuentas extends AppCompatActivity {
             ArrayList<String> data = new ArrayList<>();
             while (rs.next()) {
                 data.add(rs.getString("Nombre"));
-                data.add(rs.getString("idCliente"));
-
+                telefono.setText(rs.getString("Telefono1"));
+                direccion.setText(rs.getString("Direccion"));
             }
             NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
         } catch (SQLException e) {
@@ -126,5 +136,28 @@ public class Maincuentas extends AppCompatActivity {
         }
         return NoCoreAdapter;
     }
+
+ /*   public ArrayAdapter Facturas() {
+        ArrayAdapter NoCoreAdapter = null;
+        DBConnection sesion;
+        sesion = DBConnection.getDbConnection();
+
+        String query =( "exec sp_BuscarClienteFacturaMovil '"+cliente.getText().toString() + "'");
+        try {
+            Statement stm = sesion.getConnection().createStatement();
+            ResultSet rs = stm.executeQuery(query);
+
+            ArrayList<String> data = new ArrayList<>();
+
+            while (rs.next()) {
+                data.add(rs.getString("IdFactura"));
+                direccion.setText(rs.getString("Zona"));
+            }
+            NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return NoCoreAdapter;
+    }*/
 
 }
