@@ -40,8 +40,7 @@ public class Maincuentas extends AppCompatActivity {
     String []clientes= new String[]{
             "cleinte1","Helmut","brian","jefrry"
     };
-    int id;
-    String tel,direc;
+    int id,entrada,salida,total;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +95,15 @@ public class Maincuentas extends AppCompatActivity {
 
             ResultSet rs=st.executeQuery("exec sp_EstadoCuenta 106 ");
             while(rs.next()){
-                listCEstado.add(new ModelItemCuentas("helmut",rs.getString("TipoCompra"),22403355,"direccion",rs.getString("Fecha"),rs.getString("Descripcion"),rs.getInt("Entrada"), rs.getInt("Salida"), rs.getInt("Total")));
+                listCEstado.add(new ModelItemCuentas("helmut",
+                        rs.getString("TipoCompra"),
+                        22403355,
+                        "direccion",
+                        rs.getString("Fecha"),
+                        rs.getString("Descripcion"),
+                  entrada=Integer.parseInt(String.valueOf(rs.getInt("Entrada1"))),
+                  salida=Integer.parseInt(String.valueOf(rs.getInt("Salida1"))),
+                  total=Integer.parseInt(String.valueOf(rs.getInt("Total")))));
             }
 
         } catch (SQLException e) {

@@ -250,6 +250,8 @@ int IdVendedor;
                     Toast.makeText(this,"La cantidad no puede ser 0" ,Toast.LENGTH_SHORT).show();
                 }else if (precioEscogido == 0){
                     Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
+                } else if(Integer.parseInt(editcantidad.getText().toString())>Integer.parseInt(textcontar.getText().toString())){
+                    Toast.makeText(this,"no hay disponible",Toast.LENGTH_SHORT).show();
                 }
                 else{
                     GuardarProductos();
@@ -279,7 +281,10 @@ int IdVendedor;
                     Toast.makeText(this,"La cantidad no puede ser 0" ,Toast.LENGTH_SHORT).show();
                 }else if (precioEscogido == 0){
                         Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
-                } else {
+                }else if(Integer.parseInt(editcantidad.getText().toString())>Integer.parseInt(textcontar.getText().toString())){
+                    Toast.makeText(this,"no hay disponible",Toast.LENGTH_SHORT).show();
+                }
+                else {
 
                     GuardarProductos();
 
