@@ -6,9 +6,9 @@ public class ModelItemCuentas {
     private String direccionCliente;
     private String fechaCliente;
     private String descripcionCliente;
-    private Integer entradaCliente;
-    private int salidaCliente;
-    private int totalCliente;
+    private Float entradaCliente;
+    private Float salidaCliente;
+    private Float totalCliente;
 
 
     public String getCredito(String credito) {
@@ -24,7 +24,7 @@ public class ModelItemCuentas {
 
 
 
-    public ModelItemCuentas(String nombreCliente, String credito, int telefonoCliente, String direccionCliente, String fechaCliente, String descripcionCliente, Integer entradaCliente, int salidaCliente, int totalCliente) {
+    public ModelItemCuentas(String nombreCliente, String credito, int telefonoCliente, String direccionCliente, String fechaCliente, String descripcionCliente, Float entradaCliente, Float salidaCliente, Float totalCliente) {
         this.nombreCliente = nombreCliente;
         this.credito=credito;
         this.telefonoCliente = telefonoCliente;
@@ -78,27 +78,27 @@ public class ModelItemCuentas {
         this.descripcionCliente = descripcionCliente;
     }
 
-    public Integer getEntradaCliente() {
+    public Float getEntradaCliente() {
         return entradaCliente;
     }
 
-    public void setEntradaCliente(Integer entradaCliente) {
+    public void setEntradaCliente(Float entradaCliente) {
         this.entradaCliente = entradaCliente;
     }
 
-    public int getSalidaCliente() {
+    public Float getSalidaCliente() {
         return salidaCliente;
     }
 
-    public void setSalidaCliente(int salidaCliente) {
+    public void setSalidaCliente(Float salidaCliente) {
         this.salidaCliente = salidaCliente;
     }
 
-    public int getTotalCliente() {
+    public Float getTotalCliente() {
         return totalCliente;
     }
 
-    public void setTotalCliente(int totalCliente) {
+    public void setTotalCliente(Float totalCliente) {
         this.totalCliente = totalCliente;
     }
     public String getCredito() {

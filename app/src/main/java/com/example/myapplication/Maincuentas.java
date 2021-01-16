@@ -29,7 +29,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Maincuentas extends AppCompatActivity {
 
     RecyclerView listaCuentas;
@@ -40,7 +39,8 @@ public class Maincuentas extends AppCompatActivity {
     String []clientes= new String[]{
             "cleinte1","Helmut","brian","jefrry"
     };
-    int id,entrada,salida,total;
+    int id;
+    Integer entrada;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +70,7 @@ public class Maincuentas extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 cliente.setText(search.getText().toString());
-           Clientes();
+           Facturas();
             }
         });
 
@@ -82,7 +82,6 @@ public class Maincuentas extends AppCompatActivity {
         adaptadorCuentas= new RecyclerviewAdapterCuentas(this,getlist());
         listaCuentas.setAdapter(adaptadorCuentas);
     }
-
 
     public List<ModelItemCuentas> getlist(){
         List<ModelItemCuentas> listCEstado= new ArrayList<>();
@@ -101,9 +100,9 @@ public class Maincuentas extends AppCompatActivity {
                         "direccion",
                         rs.getString("Fecha"),
                         rs.getString("Descripcion"),
-                  entrada=Integer.parseInt(String.valueOf(rs.getInt("Entrada1"))),
-                  salida=Integer.parseInt(String.valueOf(rs.getInt("Salida1"))),
-                  total=Integer.parseInt(String.valueOf(rs.getInt("Total")))));
+                         rs.getFloat("Entrada"),
+                        rs.getFloat("Salida"),
+                        rs.getFloat("SaldoRestante")));
             }
 
         } catch (SQLException e) {
@@ -119,8 +118,6 @@ public class Maincuentas extends AppCompatActivity {
         direccion.setEnabled(false);
     }
 
-
-
     public ArrayAdapter Clientes() {
         ArrayAdapter NoCoreAdapter=null;
         DBConnection sesion;
@@ -135,7 +132,6 @@ public class Maincuentas extends AppCompatActivity {
             while (rs.next()) {
                 data.add(rs.getString("Nombre"));
                 telefono.setText(rs.getString("Telefono1"));
-                direccion.setText(rs.getString("Direccion"));
             }
             NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
         } catch (SQLException e) {
@@ -144,7 +140,7 @@ public class Maincuentas extends AppCompatActivity {
         return NoCoreAdapter;
     }
 
- /*   public ArrayAdapter Facturas() {
+    public ArrayAdapter Facturas() {
         ArrayAdapter NoCoreAdapter = null;
         DBConnection sesion;
         sesion = DBConnection.getDbConnection();
@@ -165,6 +161,6 @@ public class Maincuentas extends AppCompatActivity {
             e.printStackTrace();
         }
         return NoCoreAdapter;
-    }*/
+    }
 
 }

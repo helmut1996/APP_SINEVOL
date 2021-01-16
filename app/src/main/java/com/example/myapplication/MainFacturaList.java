@@ -143,6 +143,13 @@ public static String IDVendedor;
     CalcularTotalFactura();
     }
 
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 getMenuInflater().inflate(R.menu.menu,menu);

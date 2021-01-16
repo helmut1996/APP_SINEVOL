@@ -330,8 +330,6 @@ public class MainRecibo extends AppCompatActivity {
         buscadorCliente.setAdapter(Clientes());
 
 
-
-
         buscadorCliente.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -502,7 +500,7 @@ public class MainRecibo extends AppCompatActivity {
                     mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Recibo de:" + " " + tvIdclienyte.getText().toString(), "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " + "_______________________________\n", "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("\t\t\t\t\tC$" +SaldoR+" \n\n\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("\t\t\t\t\tC$" +saldo.getText().toString()+" \n\n\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("***=>aplicado descuento", "ST", 24, callback);
                     mIPosPrinterService.printBlankLines(1, 8, callback);
 
