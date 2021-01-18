@@ -6,9 +6,9 @@ public class ModelItemCuentas {
     private String direccionCliente;
     private String fechaCliente;
     private String descripcionCliente;
-    private Float entradaCliente;
-    private Float salidaCliente;
-    private Float totalCliente;
+    private String entradaCliente;
+    private String salidaCliente;
+    private String totalCliente;
 
 
     public String getCredito(String credito) {
@@ -24,7 +24,7 @@ public class ModelItemCuentas {
 
 
 
-    public ModelItemCuentas(String nombreCliente, String credito, int telefonoCliente, String direccionCliente, String fechaCliente, String descripcionCliente, Float entradaCliente, Float salidaCliente, Float totalCliente) {
+    public ModelItemCuentas(String nombreCliente, String credito, int telefonoCliente, String direccionCliente, String fechaCliente, String descripcionCliente, String entradaCliente, String salidaCliente, String totalCliente) {
         this.nombreCliente = nombreCliente;
         this.credito=credito;
         this.telefonoCliente = telefonoCliente;
@@ -78,27 +78,27 @@ public class ModelItemCuentas {
         this.descripcionCliente = descripcionCliente;
     }
 
-    public Float getEntradaCliente() {
+    public String getEntradaCliente() {
         return entradaCliente;
     }
 
-    public void setEntradaCliente(Float entradaCliente) {
+    public void setEntradaCliente(String entradaCliente) {
         this.entradaCliente = entradaCliente;
     }
 
-    public Float getSalidaCliente() {
+    public String getSalidaCliente() {
         return salidaCliente;
     }
 
-    public void setSalidaCliente(Float salidaCliente) {
+    public void setSalidaCliente(String salidaCliente) {
         this.salidaCliente = salidaCliente;
     }
 
-    public Float getTotalCliente() {
+    public String getTotalCliente() {
         return totalCliente;
     }
 
-    public void setTotalCliente(Float totalCliente) {
+    public void setTotalCliente(String totalCliente) {
         this.totalCliente = totalCliente;
     }
     public String getCredito() {

@@ -100,9 +100,9 @@ public class Maincuentas extends AppCompatActivity {
                         "direccion",
                         rs.getString("Fecha"),
                         rs.getString("Descripcion"),
-                         rs.getFloat("Entrada"),
-                        rs.getFloat("Salida"),
-                        rs.getFloat("SaldoRestante")));
+                         rs.getString("Entrada"),
+                        rs.getString("Salida"),
+                        rs.getString("SaldoRestante")));
             }
 
         } catch (SQLException e) {
