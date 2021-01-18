@@ -115,7 +115,7 @@ public class MainRecibo extends AppCompatActivity {
     private final String  PRINTER_BUSY_ACTION = "com.iposprinter.iposprinterservice.BUSY_ACTION";
     private final String  PRINTER_CURRENT_TASK_PRINT_COMPLETE_ACTION = "com.iposprinter.iposprinterservice.CURRENT_TASK_PRINT_COMPLETE_ACTION";
 
-    /*定义消息*/
+    /*Mensaje*/
     private final int MSG_TEST                               = 1;
     private final int MSG_IS_NORMAL                          = 2;
     private final int MSG_IS_BUSY                            = 3;
@@ -127,14 +127,14 @@ public class MainRecibo extends AppCompatActivity {
     private final int MSG_MOTOR_HIGH_TEMP_INIT_PRINTER       = 9;
     private final int MSG_CURRENT_TASK_PRINT_COMPLETE     = 10;
 
-    /*循环打印类型*/
+    /*El tipo de imprecion circular*/
     private final int  MULTI_THREAD_LOOP_PRINT  = 1;
     private final int  INPUT_CONTENT_LOOP_PRINT = 2;
     private final int  DEMO_LOOP_PRINT          = 3;
     private final int  PRINT_DRIVER_ERROR_TEST  = 4;
     private final int  DEFAULT_LOOP_PRINT       = 0;
 
-    //循环打印标志位
+    // Ciclo a través de la broca de la bandera
     private       int  loopPrintFlag            = DEFAULT_LOOP_PRINT;
     private       byte loopContent              = 0x00;
     private       int  printDriverTestCount     = 0;
@@ -358,7 +358,6 @@ public class MainRecibo extends AppCompatActivity {
             }
         });
 
-
         abono.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -442,6 +441,8 @@ public class MainRecibo extends AppCompatActivity {
          public void onClick(View v) {
              if (getPrinterStatus() == PRINTER_NORMAL)
                  Consultarlista();
+                 borrardatosTabla();
+             Toast.makeText(getApplicationContext(),"Imprimiendo...!!!",Toast.LENGTH_LONG).show();
          }
      });
 
@@ -641,7 +642,6 @@ public class MainRecibo extends AppCompatActivity {
         long idResultante = db.insert(utilidadesFact.TABLA_RECIBO, utilidadesFact.CAMPO_NOMBRE_CLIEBTE, values);
         Toast.makeText(this, "agregado: " + idResultante, Toast.LENGTH_SHORT).show();
 
-
     }
 
     public void Consultarlista() {
@@ -664,11 +664,17 @@ public class MainRecibo extends AppCompatActivity {
             facturasAdd.setNumReferencia(cursor.getInt(6));
 
             listarecibo.add(facturasAdd);
+            db.close();
         }
         printText();
     }
 
-
+    public void borrardatosTabla(){
+        conexionSQLiteHelper conn = new conexionSQLiteHelper(this, "bd_productos", null, 1);
+        SQLiteDatabase db=conn.getReadableDatabase();
+        db.execSQL("delete from recibo");
+        db.close();
+    }
 
     public void AgregarReciboSQLSEVER() throws SQLException {
 

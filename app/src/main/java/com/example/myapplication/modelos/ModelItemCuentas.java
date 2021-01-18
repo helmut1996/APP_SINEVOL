@@ -23,7 +23,6 @@ public class ModelItemCuentas {
     }
 
 
-
     public ModelItemCuentas(String nombreCliente, String credito, int telefonoCliente, String direccionCliente, String fechaCliente, String descripcionCliente, String entradaCliente, String salidaCliente, String totalCliente) {
         this.nombreCliente = nombreCliente;
         this.credito=credito;
@@ -111,4 +110,3 @@ public class ModelItemCuentas {
 
 
 }
-
