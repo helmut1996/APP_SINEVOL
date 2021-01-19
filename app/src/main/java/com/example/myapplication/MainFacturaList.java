@@ -180,7 +180,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
                         Intent intent3 = new Intent(getApplicationContext(),MainFactura.class);
                         startActivity(intent3);
                       //  RecargarDatos.llenarProductosBD("");
-                        //borrardatosTabla();
+                        borrardatosTabla();
                         //finish();
 
 

@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 import com.example.myapplication.ConexionBD.DBConnection;
 import com.example.myapplication.SQLite.conexionSQLiteHelper;
 import com.example.myapplication.SQLite.ulilidades.utilidades;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -44,6 +46,7 @@ private TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,texti
 private Spinner precios,monedas;
 private ImageView img;
 private EditText editcantidad;
+private LinearLayout cuerpoProductCliente;
 
 
 /* variables globales */
@@ -70,6 +73,7 @@ int IdVendedor;
             //Verifica permisos para Android 6.0+
             checkExternalStoragePermission(); }
 
+        cuerpoProductCliente=findViewById(R.id.linearLayoutClienteProducto);
         ///////// Botones
         IbuttonAgregar = findViewById(R.id.btn_Agregar);
         IbuttonSiguiente = findViewById(R.id.btn_siguente);
@@ -245,13 +249,25 @@ int IdVendedor;
             case R.id.btn_siguente:
 
                 if (editcantidad.getText().toString().isEmpty()){
-                    Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
+
+                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"Debe ingresar una cantidad!!",Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 } else if(Integer.parseInt(editcantidad.getText().toString())==0){
-                    Toast.makeText(this,"La cantidad no puede ser 0" ,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this,"La cantidad no puede ser 0" ,Toast.LENGTH_SHORT).show();
+
+                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"La Cantidad no puede ser 0!!",Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }else if (precioEscogido == 0){
-                    Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
+
+                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"Precio Seleccionado 0!!",Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 } else if(Integer.parseInt(editcantidad.getText().toString())>Integer.parseInt(textcontar.getText().toString())){
-                    Toast.makeText(this,"no hay disponible",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this,"no hay disponible",Toast.LENGTH_SHORT).show();
+
+                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"No hay disponible!!",Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
                 else{
                     GuardarProductos();
@@ -276,13 +292,24 @@ int IdVendedor;
                 System.out.println("Valor del precio===========>"+precioEscogido);
                 if (editcantidad.getText().toString().isEmpty()){
 
-                    Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"Debe ingresar una cantidad!!",Snackbar.LENGTH_LONG);
+                    snackbar.show();
+      //              Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
                 }else if(Integer.parseInt(editcantidad.getText().toString())==0){
-                    Toast.makeText(this,"La cantidad no puede ser 0" ,Toast.LENGTH_SHORT).show();
+
+                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"La Cantidad no puede ser 0!!",Snackbar.LENGTH_LONG);
+                    snackbar.show();
+    //                Toast.makeText(this,"La cantidad no puede ser 0" ,Toast.LENGTH_SHORT).show();
                 }else if (precioEscogido == 0){
-                        Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
+
+                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"Precio seleccionado es  0!!",Snackbar.LENGTH_LONG);
+                    snackbar.show();
+  //                      Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
                 }else if(Integer.parseInt(editcantidad.getText().toString())>Integer.parseInt(textcontar.getText().toString())){
-                    Toast.makeText(this,"no hay disponible",Toast.LENGTH_SHORT).show();
+
+                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"No hay Disponible!!",Snackbar.LENGTH_LONG);
+                    snackbar.show();
+//                    Toast.makeText(this,"no hay disponible",Toast.LENGTH_SHORT).show();
                 }
                 else {
 
@@ -306,7 +333,10 @@ int IdVendedor;
 
         Cursor c=db.rawQuery("SELECT * FROM producto WHERE id='"+tvIDproducto.getText()+"'", null);
         if(c.moveToFirst()) {
-            Toast.makeText(this,"Error ya existe este registro",Toast.LENGTH_LONG).show();
+           // Toast.makeText(this,"Error ya existe este registro",Toast.LENGTH_LONG).show();
+
+            Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"Error ya esta registrado!!",Snackbar.LENGTH_LONG);
+            snackbar.show();
         }
         else { // Inserting record
             ContentValues values= new ContentValues();
@@ -316,7 +346,7 @@ int IdVendedor;
             values.put(utilidades.CAMPO_PRECIO,precios.getSelectedItem().toString());
             values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
             long idResultante= db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
-            Toast.makeText(this,"ID PRODUCTO: " + idResultante,Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"CANTIDAD INGRESADA: " + idResultante,Toast.LENGTH_SHORT).show();
 
         }
 

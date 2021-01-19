@@ -21,6 +21,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +32,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +46,7 @@ import com.example.myapplication.SQLite.ulilidades.utilidadesFact;
 import com.example.myapplication.Utils.ButtonDelayUtils;
 import com.example.myapplication.Utils.BytesUtil;
 import com.example.myapplication.Utils.HandlerUtils;
+import com.google.android.material.snackbar.Snackbar;
 import com.iposprinter.iposprinterservice.*;
 
 import java.sql.PreparedStatement;
@@ -64,6 +67,7 @@ import static com.example.myapplication.Utils.PrintContentsExamples.customCHR;
 import static com.example.myapplication.Utils.PrintContentsExamples.customCHZ1;
 
 public class MainRecibo extends AppCompatActivity {
+    LinearLayout cuerpo;
     AutoCompleteTextView buscadorCliente;
     EditText abono, descuento;
     TextView saldo, numresf, fecha, zona, vendedor, tvIdclienyte,tvIdCuentasxCobrar;
@@ -294,6 +298,7 @@ public class MainRecibo extends AppCompatActivity {
         registerReceiver(IPosPrinterStatusListener,printerStatusFilter);
         
         ///llamando los complementos
+        cuerpo=findViewById(R.id.linearLayout);
         tvIdclienyte=findViewById(R.id.tv_IdclienteRecibo);
         fecha = findViewById(R.id.tvr_fecha);
         zona = findViewById(R.id.tvr_zona);
@@ -430,7 +435,9 @@ public class MainRecibo extends AppCompatActivity {
                     GuardarReciboSQLite();
                     limpiarcampos();
 
-                    Toast.makeText(getApplicationContext(), " Recibo Guardado....", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar= Snackbar.make(cuerpo,"Guardando recibo!!",Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                  //  Toast.makeText(getApplicationContext(), " Recibo Guardado....", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -441,8 +448,11 @@ public class MainRecibo extends AppCompatActivity {
          public void onClick(View v) {
              if (getPrinterStatus() == PRINTER_NORMAL)
                  Consultarlista();
-                 borrardatosTabla();
-             Toast.makeText(getApplicationContext(),"Imprimiendo...!!!",Toast.LENGTH_LONG).show();
+               //  borrardatosTabla();
+
+             Snackbar snackbar= Snackbar.make(cuerpo,"Imprimiendo Recibo!!",Snackbar.LENGTH_LONG);
+             snackbar.show();
+            // Toast.makeText(getApplicationContext(),"Imprimiendo...!!!",Toast.LENGTH_LONG).show();
          }
      });
 
@@ -640,7 +650,7 @@ public class MainRecibo extends AppCompatActivity {
         values.put(utilidadesFact.CAMPO_SALDO_RES, saldo.getText().toString());
         values.put(utilidadesFact.CAMPO_NUMERO_RESF, String.valueOf(tvIdCuentasxCobrar));
         long idResultante = db.insert(utilidadesFact.TABLA_RECIBO, utilidadesFact.CAMPO_NOMBRE_CLIEBTE, values);
-        Toast.makeText(this, "agregado: " + idResultante, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "agregado: " + idResultante, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -739,7 +749,9 @@ public class MainRecibo extends AppCompatActivity {
         catch (SQLException e){
             dbConnection.getConnection().rollback();
             System.out.println("ERROR: ======> "+e);
-            Toast.makeText(this," No Registrado SQLServer",Toast.LENGTH_LONG).show();
+           // Toast.makeText(this," No Registrado SQLServer",Toast.LENGTH_LONG).show();
+            Snackbar snackbar= Snackbar.make(cuerpo,"No Registrado SQLServer",Snackbar.LENGTH_LONG);
+            snackbar.show();
         }finally {
 
             dbConnection.getConnection().setAutoCommit(true);
