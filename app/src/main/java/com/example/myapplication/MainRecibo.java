@@ -45,6 +45,7 @@ import com.example.myapplication.SQLite.ulilidades.utilidades;
 import com.example.myapplication.SQLite.ulilidades.utilidadesFact;
 import com.example.myapplication.Utils.ButtonDelayUtils;
 import com.example.myapplication.Utils.BytesUtil;
+import com.example.myapplication.Utils.Coversion_Numero_Letra;
 import com.example.myapplication.Utils.HandlerUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.iposprinter.iposprinterservice.*;
@@ -334,7 +335,6 @@ public class MainRecibo extends AppCompatActivity {
         //ArrayAdapter<String> adaptercliente = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, clientes);
         buscadorCliente.setAdapter(Clientes());
 
-
         buscadorCliente.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -347,7 +347,6 @@ public class MainRecibo extends AppCompatActivity {
 
         ArrayAdapter<CharSequence> adapter  = ArrayAdapter.createFromResource(this, R.array.facturas_clientes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //BuscadorFactura.setAdapter(Facturas());
 
 
         BuscadorFactura.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -455,6 +454,17 @@ public class MainRecibo extends AppCompatActivity {
 
          }
      });
+
+        //convercion de numeros a letras
+        Coversion_Numero_Letra c = new Coversion_Numero_Letra();
+
+        int numero=0;
+        numero= Integer.parseInt(saldo.getText().toString());
+
+       String letras=  c.Convertir(String.valueOf(numero),true);
+
+        System.out.println("Conversion===>"+letras);
+        //convercion de numeros a letras
 
     }
 
@@ -652,7 +662,7 @@ public class MainRecibo extends AppCompatActivity {
         values.put(utilidadesFact.CAMPO_NUMERO_RESF, String.valueOf(tvIdCuentasxCobrar));
         long idResultante = db.insert(utilidadesFact.TABLA_RECIBO, utilidadesFact.CAMPO_NOMBRE_CLIEBTE, values);
        // Toast.makeText(this, "agregado: " + idResultante, Toast.LENGTH_SHORT).show();
-
+        db.close();
     }
 
     public void Consultarlista() {
