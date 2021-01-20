@@ -177,11 +177,11 @@ getMenuInflater().inflate(R.menu.menu,menu);
                         startActivity(intent2);
                         break;
                     case R.id.Mbtn_Home:
-                        Intent intent3 = new Intent(getApplicationContext(),MainFactura.class);
+                        Intent intent3 = new Intent(getApplicationContext(),MainMenu.class);
                         startActivity(intent3);
                       //  RecargarDatos.llenarProductosBD("");
                         borrardatosTabla();
-                        //finish();
+                        finish();
 
 
                 }
@@ -243,7 +243,6 @@ getMenuInflater().inflate(R.menu.menu,menu);
     }
 
     public  void AgregarDatosSQLSEVER() throws SQLException {
-        String numeroFactura = "0";
         Date hoy= new Date();
 
 
@@ -285,7 +284,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
         }catch (SQLException e){
             dbConnection.getConnection().rollback();
             System.out.println("ERROR: ======> "+e);
-            Toast.makeText(this," No Registrado SQLServer",Toast.LENGTH_LONG).show();
+            Toast.makeText(this," No Registrado en SQLServer",Toast.LENGTH_LONG).show();
         }finally {
 
             dbConnection.getConnection().setAutoCommit(true);

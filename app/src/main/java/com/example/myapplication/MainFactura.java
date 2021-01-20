@@ -15,6 +15,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -59,6 +60,7 @@ public class MainFactura extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Clientes");
+
 
         id=getIntent().getIntExtra("Id",0);
         System.out.println("ID vendedor activity lista cliente===========>"+ id);
@@ -106,7 +108,6 @@ public class MainFactura extends AppCompatActivity {
     public void initValues(){
         LinearLayoutManager manager= new LinearLayoutManager(this);
         recyclerViewCliente.setLayoutManager(manager);
-
         itemCList=obtenerclientesBD();
         adapterCliente= new RecycleviewAdapter(itemCList);
         recyclerViewCliente.setAdapter(adapterCliente);

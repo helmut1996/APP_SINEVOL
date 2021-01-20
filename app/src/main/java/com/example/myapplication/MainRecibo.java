@@ -422,10 +422,12 @@ public class MainRecibo extends AppCompatActivity {
 
         Guardar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
 
+            public void onClick(View v) {
+                int ab=0;
+                int des=0;
                 if (buscadorCliente.getText().toString().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "debes eligir el Cliente", Toast.LENGTH_SHORT).show();
+                    buscadorCliente.setError("Debe seleccionar un cliente");
                 } else {
                     try {
                         AgregarReciboSQLSEVER();
@@ -434,10 +436,8 @@ public class MainRecibo extends AppCompatActivity {
                     }
                     GuardarReciboSQLite();
                     limpiarcampos();
-
                     Snackbar snackbar= Snackbar.make(cuerpo,"Guardando recibo!!",Snackbar.LENGTH_LONG);
                     snackbar.show();
-                  //  Toast.makeText(getApplicationContext(), " Recibo Guardado....", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -452,7 +452,7 @@ public class MainRecibo extends AppCompatActivity {
 
              Snackbar snackbar= Snackbar.make(cuerpo,"Imprimiendo Recibo!!",Snackbar.LENGTH_LONG);
              snackbar.show();
-            // Toast.makeText(getApplicationContext(),"Imprimiendo...!!!",Toast.LENGTH_LONG).show();
+
          }
      });
 
@@ -577,6 +577,7 @@ public class MainRecibo extends AppCompatActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return NoCoreAdapter;
     }
 
@@ -749,7 +750,6 @@ public class MainRecibo extends AppCompatActivity {
         catch (SQLException e){
             dbConnection.getConnection().rollback();
             System.out.println("ERROR: ======> "+e);
-           // Toast.makeText(this," No Registrado SQLServer",Toast.LENGTH_LONG).show();
             Snackbar snackbar= Snackbar.make(cuerpo,"No Registrado SQLServer",Snackbar.LENGTH_LONG);
             snackbar.show();
         }finally {

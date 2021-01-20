@@ -249,23 +249,15 @@ int IdVendedor;
             case R.id.btn_siguente:
 
                 if (editcantidad.getText().toString().isEmpty()){
-                   // Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
-
-                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"Debe ingresar una cantidad!!",Snackbar.LENGTH_LONG);
-                    snackbar.show();
+                    editcantidad.setError("Debe Ingresar una cantidad");
                 } else if(Integer.parseInt(editcantidad.getText().toString())==0){
-                    //Toast.makeText(this,"La cantidad no puede ser 0" ,Toast.LENGTH_SHORT).show();
-
-                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"La Cantidad no puede ser 0!!",Snackbar.LENGTH_LONG);
-                    snackbar.show();
+                    editcantidad.setError("la cantidad no puede ser 0");
                 }else if (precioEscogido == 0){
                   //  Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
-
                     Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"Precio Seleccionado 0!!",Snackbar.LENGTH_LONG);
                     snackbar.show();
                 } else if(Integer.parseInt(editcantidad.getText().toString())>Integer.parseInt(textcontar.getText().toString())){
                     //Toast.makeText(this,"no hay disponible",Toast.LENGTH_SHORT).show();
-
                     Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"No hay disponible!!",Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
@@ -291,17 +283,11 @@ int IdVendedor;
 
                 System.out.println("Valor del precio===========>"+precioEscogido);
                 if (editcantidad.getText().toString().isEmpty()){
-
-                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"Debe ingresar una cantidad!!",Snackbar.LENGTH_LONG);
-                    snackbar.show();
-      //              Toast.makeText(this,"debes ingresar una cantidad",Toast.LENGTH_SHORT).show();
+                    editcantidad.setError("Debe Ingresar una cantidad");
                 }else if(Integer.parseInt(editcantidad.getText().toString())==0){
 
-                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"La Cantidad no puede ser 0!!",Snackbar.LENGTH_LONG);
-                    snackbar.show();
-    //                Toast.makeText(this,"La cantidad no puede ser 0" ,Toast.LENGTH_SHORT).show();
+                    editcantidad.setError("la cantidad no puede ser 0");
                 }else if (precioEscogido == 0){
-
                     Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"Precio seleccionado es  0!!",Snackbar.LENGTH_LONG);
                     snackbar.show();
   //                      Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
