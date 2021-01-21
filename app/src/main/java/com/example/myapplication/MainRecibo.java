@@ -37,6 +37,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.myapplication.ConexionBD.DBConnection;
 import com.example.myapplication.SQLite.conexionSQLiteHelper;
 import com.example.myapplication.SQLite.entidades.FacturasAdd;
@@ -90,27 +91,29 @@ public class MainRecibo extends AppCompatActivity {
 
     ///////////////////////Impresora//////////////////////////////////
 
-    private static final String TAG                 = "MainRecibo";
+    //private static final String TAG                 = "MainRecibo";
     /* Demo 版本号*/
-    private static final String VERSION        = "V1.1.0";
+    //private static final String VERSION        = "V1.1.0";
 
-
+/*
     private IPosPrinterService mIPosPrinterService;
     private IPosPrinterCallback callback = null;
     private Random random = new Random();
     private HandlerUtils.MyHandler handler;
 
-
+*/
     /*Definir el estado de la impresora*/
-    private final int PRINTER_NORMAL = 0;
+  /*  private final int PRINTER_NORMAL = 0;
     private final int PRINTER_PAPERLESS = 1;
     private final int PRINTER_THP_HIGH_TEMPERATURE = 2;
     private final int PRINTER_MOTOR_HIGH_TEMPERATURE = 3;
     private final int PRINTER_IS_BUSY = 4;
     private final int PRINTER_ERROR_UNKNOWN = 5;
     /*El estado actual de la impresora*/
-    private int printerStatus = 0;
 
+   // private int printerStatus = 0;
+
+    /*
     private final String  PRINTER_NORMAL_ACTION = "com.iposprinter.iposprinterservice.NORMAL_ACTION";
     private final String  PRINTER_PAPERLESS_ACTION = "com.iposprinter.iposprinterservice.PAPERLESS_ACTION";
     private final String  PRINTER_PAPEREXISTS_ACTION = "com.iposprinter.iposprinterservice.PAPEREXISTS_ACTION";
@@ -119,8 +122,9 @@ public class MainRecibo extends AppCompatActivity {
     private final String  PRINTER_MOTOR_HIGHTEMP_ACTION = "com.iposprinter.iposprinterservice.MOTOR_HIGHTEMP_ACTION";
     private final String  PRINTER_BUSY_ACTION = "com.iposprinter.iposprinterservice.BUSY_ACTION";
     private final String  PRINTER_CURRENT_TASK_PRINT_COMPLETE_ACTION = "com.iposprinter.iposprinterservice.CURRENT_TASK_PRINT_COMPLETE_ACTION";
-
+*/
     /*Mensaje*/
+  /*
     private final int MSG_TEST                               = 1;
     private final int MSG_IS_NORMAL                          = 2;
     private final int MSG_IS_BUSY                            = 3;
@@ -132,7 +136,11 @@ public class MainRecibo extends AppCompatActivity {
     private final int MSG_MOTOR_HIGH_TEMP_INIT_PRINTER       = 9;
     private final int MSG_CURRENT_TASK_PRINT_COMPLETE     = 10;
 
+    */
+
     /*El tipo de imprecion circular*/
+
+    /*borrar solo este *
     private final int  MULTI_THREAD_LOOP_PRINT  = 1;
     private final int  INPUT_CONTENT_LOOP_PRINT = 2;
     private final int  DEMO_LOOP_PRINT          = 3;
@@ -238,9 +246,10 @@ public class MainRecibo extends AppCompatActivity {
             {
                 handler.sendEmptyMessageDelayed(MSG_TEST,0);
             }*/
-        }
-    };
+        //}
+    //};
 
+    /*
     private ServiceConnection connectService = new ServiceConnection() {
 
         @Override
@@ -253,7 +262,7 @@ public class MainRecibo extends AppCompatActivity {
         public void onServiceDisconnected(ComponentName name) {
             mIPosPrinterService = null;
         }
-    };
+    };*/
     ///////////////////////Impresora//////////////////////////////////
 
 
@@ -266,7 +275,7 @@ public class MainRecibo extends AppCompatActivity {
         getSupportActionBar().setTitle("Recibos");
 
 
-
+/*
         callback = new IPosPrinterCallback.Stub() {
 
             @Override
@@ -297,7 +306,9 @@ public class MainRecibo extends AppCompatActivity {
         printerStatusFilter.addAction(PRINTER_BUSY_ACTION);
 
         registerReceiver(IPosPrinterStatusListener,printerStatusFilter);
-        
+
+
+ */
         ///llamando los complementos
         cuerpo=findViewById(R.id.linearLayout);
         tvIdclienyte=findViewById(R.id.tv_IdclienteRecibo);
@@ -423,20 +434,28 @@ public class MainRecibo extends AppCompatActivity {
             @Override
 
             public void onClick(View v) {
-                int ab=0;
-                int des=0;
+
                 if (buscadorCliente.getText().toString().isEmpty()) {
                     buscadorCliente.setError("Debe seleccionar un cliente");
                 } else {
-                    try {
-                        AgregarReciboSQLSEVER();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                    if(abono.getText().toString().isEmpty() && descuento.getText().toString().isEmpty())
+                        Toast.makeText(getApplicationContext(), "Error campos vacios", Toast.LENGTH_LONG).show();
+                    else {
+                        if((!abono.getText().toString().isEmpty()) && descuento.getText().toString().isEmpty())
+                        {
+                           descuento.setText("0");
+                           ejecutarGuardado();
+                        }
+                        else
+                        {
+                            if((abono.getText().toString().isEmpty()) && !descuento.getText().toString().isEmpty())
+                            {
+                                abono.setText("0");
+                                ejecutarGuardado();
+                            }
+                        }
                     }
-                    GuardarReciboSQLite();
                     limpiarcampos();
-                    Snackbar snackbar= Snackbar.make(cuerpo,"Guardando recibo!!",Snackbar.LENGTH_LONG);
-                    snackbar.show();
                 }
 
             }
@@ -445,7 +464,7 @@ public class MainRecibo extends AppCompatActivity {
         imprimir.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-             if (getPrinterStatus() == PRINTER_NORMAL)
+  //           if (getPrinterStatus() == PRINTER_NORMAL)
                  Consultarlista();
                //  borrardatosTabla();
 
@@ -458,19 +477,31 @@ public class MainRecibo extends AppCompatActivity {
         //convercion de numeros a letras
         Coversion_Numero_Letra c = new Coversion_Numero_Letra();
 
-        int numero=0;
-        numero= Integer.parseInt(saldo.getText().toString());
 
-       String letras=  c.Convertir(String.valueOf(numero),true);
+       String letras=  c.Convertir("250",true);
 
         System.out.println("Conversion===>"+letras);
         //convercion de numeros a letras
 
     }
 
+    void ejecutarGuardado()
+    {
+        try {
+            AgregarReciboSQLSEVER();
+            GuardarReciboSQLite();
+            Snackbar snackbar= Snackbar.make(cuerpo,"Guardando recibo!!",Snackbar.LENGTH_LONG);
+            snackbar.show();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     /*
     *Funciones de la imprsora
     * */
+
+    /*
     public int getPrinterStatus(){
 
         Log.i(TAG,"***** printerStatus"+printerStatus);
@@ -483,9 +514,13 @@ public class MainRecibo extends AppCompatActivity {
         return  printerStatus;
     }
 
+
+     */
     /**
      * La impresora se inicializa
      */
+
+/*
     public void printerInit(){
         ThreadPoolManager.getInstance().executeTask(new Runnable() {
             @Override
@@ -563,10 +598,14 @@ public class MainRecibo extends AppCompatActivity {
         });
     }
 
+
+ */
+
     /**
      *Funciones de la imprsora
      *
      * */
+
 
     public ArrayAdapter Clientes() {
         ArrayAdapter NoCoreAdapter = null;
@@ -631,7 +670,9 @@ public class MainRecibo extends AppCompatActivity {
 
               SaldoR = rs.getDouble("SaldoRestante");
               saldo.setText(SaldoR.toString());
-
+                Coversion_Numero_Letra c = new Coversion_Numero_Letra();
+                String letras=  c.Convertir(SaldoR.toString(),true);
+                System.out.println(letras);
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -644,7 +685,8 @@ public class MainRecibo extends AppCompatActivity {
         descuento.setText("");
         observacion.setText("");
         saldo.setText("");
-
+        BuscadorFactura.setAdapter(null);
+        buscadorCliente.requestFocus();
     }
 
     public void GuardarReciboSQLite() {
@@ -687,7 +729,7 @@ public class MainRecibo extends AppCompatActivity {
             listarecibo.add(facturasAdd);
             db.close();
         }
-        printText();
+       // printText();
     }
 
     public void borrardatosTabla(){

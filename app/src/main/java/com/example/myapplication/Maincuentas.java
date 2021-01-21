@@ -39,7 +39,8 @@ public class Maincuentas extends AppCompatActivity {
     String []clientes= new String[]{
             "cleinte1","Helmut","brian","jefrry"
     };
-    int id,idCliente;
+    int id;
+    String nombre,idCliente,DCliente;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,7 @@ public class Maincuentas extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 cliente.setText(search.getText().toString());
-                SolicitandoDatos();
+
 
             }
         });
@@ -91,9 +92,21 @@ public class Maincuentas extends AppCompatActivity {
 
             Statement st=dbConnection.getConnection().createStatement();
 
-            ResultSet rs=st.executeQuery("exec sp_EstadoCuenta '"+idCliente+"' ");
+            //ResultSet rs=st.executeQuery("exec sp_EstadoCuenta '" + idCliente +"'");
+            ResultSet rs=st.executeQuery("exec sp_EstadoCuenta 127");
             while(rs.next()){
-                listCEstado.add(new ModelItemCuentas("helmut",
+                /*listCEstado.add(new ModelItemCuentas(nombre
+                        ,rs.getString("TipoCompra"),
+                        22403355,
+                        //rs.getInt("TelefonoCliente"),
+                        rs.getString("direccion"),
+                        rs.getString("Fecha"),
+                        rs.getString("Descripcion"),
+                        rs.getString("Entrada"),
+                        rs.getString("Salida"),
+                        rs.getString("SaldoRestante")));*/
+                listCEstado.add(new ModelItemCuentas(
+                         "helmut",
                         rs.getString("TipoCompra"),
                         22403355,
                         "direccion",
@@ -103,6 +116,7 @@ public class Maincuentas extends AppCompatActivity {
                         rs.getString("Salida"),
                         rs.getString("SaldoRestante")));
             }
+            ////System.out.println(rs.getString("TelefonoCliente"));
 
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
@@ -126,7 +140,6 @@ public class Maincuentas extends AppCompatActivity {
             ArrayList<String> data = new ArrayList<>();
             while (rs.next()) {
                 data.add(rs.getString("Nombre"));
-
             }
             NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
         } catch (SQLException e) {
@@ -136,28 +149,5 @@ public class Maincuentas extends AppCompatActivity {
     }
 
 
-    public ArrayAdapter SolicitandoDatos() {
-        ArrayAdapter NoCoreAdapter = null;
-        DBConnection sesion;
-        sesion = DBConnection.getDbConnection();
-
-        String query =( "exec sp_BuscarClienteFacturaMovil '"+cliente.getText().toString() + "'");
-        try {
-            Statement stm = sesion.getConnection().createStatement();
-            ResultSet rs = stm.executeQuery(query);
-
-            ArrayList<String> data = new ArrayList<>();
-
-            while (rs.next()) {
-                data.add(rs.getString("IdFactura"));
-                idCliente=(rs.getInt("idCliente"));
-                System.out.println("ID CLIENTE CUENTAS: "+idCliente);
-            }
-            NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return NoCoreAdapter;
-    }
 
 }
