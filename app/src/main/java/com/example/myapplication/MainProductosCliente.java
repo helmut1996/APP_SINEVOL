@@ -292,10 +292,7 @@ int IdVendedor;
                     snackbar.show();
   //                      Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
                 }else if(Integer.parseInt(editcantidad.getText().toString())>Integer.parseInt(textcontar.getText().toString())){
-
-                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"No hay Disponible!!",Snackbar.LENGTH_LONG);
-                    snackbar.show();
-//                    Toast.makeText(this,"no hay disponible",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"no hay inventario suficiente  de este producto ",Toast.LENGTH_SHORT).show();
                 }
                 else {
 
