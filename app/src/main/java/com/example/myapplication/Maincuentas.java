@@ -39,7 +39,9 @@ public class Maincuentas extends AppCompatActivity {
     String []clientes= new String[]{
             "cleinte1","Helmut","brian","jefrry"
     };
-    int id,idCliente;
+    public static int id,idCliente;
+   // String tel,direccion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +61,6 @@ public class Maincuentas extends AppCompatActivity {
         System.out.println("ID vendedor activity cuentas===========>"+ id);
 
 
-        setRecycler();
 
      //   ArrayAdapter<String> adaptercliente=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,clientes);
         search.setAdapter(Clientes());
@@ -68,7 +69,14 @@ public class Maincuentas extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 cliente.setText(search.getText().toString());
-                SolicitandoDatos();
+                try {
+                    busqueda();
+                  //  setRecycler();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                setRecycler();
 
             }
         });
@@ -90,8 +98,8 @@ public class Maincuentas extends AppCompatActivity {
             dbConnection.conectar();
 
             Statement st=dbConnection.getConnection().createStatement();
-
-            ResultSet rs=st.executeQuery("exec sp_EstadoCuenta '"+idCliente+"' ");
+            int idPrueba = 106;
+            ResultSet rs=st.executeQuery("exec sp_EstadoCuenta "+idCliente);
             while(rs.next()){
                 listCEstado.add(new ModelItemCuentas("helmut",
                         rs.getString("TipoCompra"),
@@ -135,29 +143,16 @@ public class Maincuentas extends AppCompatActivity {
         return NoCoreAdapter;
     }
 
+    public void busqueda() throws SQLException {
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.conectar();
+        Statement st = dbConnection.getConnection().createStatement();
+        ResultSet rs = st.executeQuery("select idCliente,Telefono1,Direccion from Clientes where Nombre = '" + cliente.getText().toString() + "' ");
+        while (rs.next()) {
+            idCliente = rs.getInt("idCliente");
+            telefono.setText(rs.getString("Telefono1"));
+            direccion.setText(rs.getString("Direccion"));
 
-    public ArrayAdapter SolicitandoDatos() {
-        ArrayAdapter NoCoreAdapter = null;
-        DBConnection sesion;
-        sesion = DBConnection.getDbConnection();
-
-        String query =( "exec sp_BuscarClienteFacturaMovil '"+cliente.getText().toString() + "'");
-        try {
-            Statement stm = sesion.getConnection().createStatement();
-            ResultSet rs = stm.executeQuery(query);
-
-            ArrayList<String> data = new ArrayList<>();
-
-            while (rs.next()) {
-                data.add(rs.getString("IdFactura"));
-                idCliente=(rs.getInt("idCliente"));
-                System.out.println("ID CLIENTE CUENTAS: "+idCliente);
-            }
-            NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return NoCoreAdapter;
     }
-
 }
