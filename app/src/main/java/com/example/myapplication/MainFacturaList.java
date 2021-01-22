@@ -49,7 +49,7 @@ MainFacturaList extends AppCompatActivity {
 ///////////////////variables Dialog detalle producto/////////////////////////////////////
     conexionSQLiteHelper conn;
     private static final String TAG ="MainFacturaList";
-    double TotalComision= 3000;
+    double TotalComision= 0;
 /////////////////////////////Variables por parametros////////////////////////////////////////
 public static String NombreCliente;
 public static String CodigoCliente;

@@ -78,6 +78,7 @@ public class MainRecibo extends AppCompatActivity {
     public static int id,idClientesRecibo;
     public static String nombreVendedor, idcliente;
     public static Double SaldoR;
+    String letra;
 
     public static int IdTalonario,NumeracionInicial, numeracion,IdPagosCxC;
     String[] clientes = new String[]{
@@ -428,15 +429,24 @@ public class MainRecibo extends AppCompatActivity {
                 if (buscadorCliente.getText().toString().isEmpty()) {
                     buscadorCliente.setError("Debe seleccionar un cliente");
                 } else {
-                    try {
-                        AgregarReciboSQLSEVER();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                    if(abono.getText().toString().isEmpty() && descuento.getText().toString().isEmpty())
+                        Toast.makeText(getApplicationContext(), "Error campos vacios", Toast.LENGTH_LONG).show();
+                    else {
+                        if((!abono.getText().toString().isEmpty()) && descuento.getText().toString().isEmpty())
+                        {
+                            descuento.setText("0");
+                            ejecutarGuardado();
+                        }
+                        else
+                        {
+                            if((abono.getText().toString().isEmpty()) && !descuento.getText().toString().isEmpty())
+                            {
+                                abono.setText("0");
+                                ejecutarGuardado();
+                            }
+                        }
                     }
-                    GuardarReciboSQLite();
-                    limpiarcampos();
-                    Snackbar snackbar= Snackbar.make(cuerpo,"Guardando recibo!!",Snackbar.LENGTH_LONG);
-                    snackbar.show();
+
                 }
 
             }
@@ -448,23 +458,14 @@ public class MainRecibo extends AppCompatActivity {
              if (getPrinterStatus() == PRINTER_NORMAL)
                  Consultarlista();
                //  borrardatosTabla();
-
+             ///limpiarcampos();
              Snackbar snackbar= Snackbar.make(cuerpo,"Imprimiendo Recibo!!",Snackbar.LENGTH_LONG);
              snackbar.show();
 
          }
      });
 
-        //convercion de numeros a letras
-        Coversion_Numero_Letra c = new Coversion_Numero_Letra();
 
-        int numero=0;
-        numero= Integer.parseInt(saldo.getText().toString());
-
-       String letras=  c.Convertir(String.valueOf(numero),true);
-
-        System.out.println("Conversion===>"+letras);
-        //convercion de numeros a letras
 
     }
 
@@ -520,7 +521,7 @@ public class MainRecibo extends AppCompatActivity {
                     mIPosPrinterService.printSpecifiedTypeText(fecha.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Recibo de:" + " " + tvIdclienyte.getText().toString(), "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " + "_______________________________\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " +letra, "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("\t\t\t\t\tC$" +saldo.getText().toString()+" \n\n\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("***=>aplicado descuento", "ST", 24, callback);
                     mIPosPrinterService.printBlankLines(1, 8, callback);
@@ -556,6 +557,8 @@ public class MainRecibo extends AppCompatActivity {
                     mIPosPrinterService.printerPerformPrint(160,  callback);
 
 
+
+
                 }catch (RemoteException e){
                     e.printStackTrace();
                 }
@@ -567,6 +570,19 @@ public class MainRecibo extends AppCompatActivity {
      *Funciones de la imprsora
      *
      * */
+
+    void ejecutarGuardado()
+    {
+        try {
+            AgregarReciboSQLSEVER();
+            GuardarReciboSQLite();
+            Snackbar snackbar= Snackbar.make(cuerpo,"Guardando recibo!!",Snackbar.LENGTH_LONG);
+            snackbar.show();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public ArrayAdapter Clientes() {
         ArrayAdapter NoCoreAdapter = null;
@@ -631,6 +647,8 @@ public class MainRecibo extends AppCompatActivity {
 
               SaldoR = rs.getDouble("SaldoRestante");
               saldo.setText(SaldoR.toString());
+              Coversion_Numero_Letra convertir = new Coversion_Numero_Letra();
+             letra= convertir.Convertir(SaldoR.toString(),true);
 
             }
         }catch (SQLException e){
