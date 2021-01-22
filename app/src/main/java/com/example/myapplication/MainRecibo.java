@@ -88,7 +88,8 @@ public class MainRecibo extends AppCompatActivity {
 
     ArrayList<String>listainformacion;
     ArrayList<FacturasAdd>listarecibo;
-
+    conexionSQLiteHelper conn;
+    double TotalFact;
     ///////////////////////Impresora//////////////////////////////////
 
     private static final String TAG                 = "MainRecibo";
@@ -340,6 +341,7 @@ public class MainRecibo extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tvIdclienyte.setText(buscadorCliente.getText().toString());
+                buscadorCliente.setEnabled(false);
                 BuscadorFactura.setAdapter(Facturas());
 
 
@@ -424,8 +426,7 @@ public class MainRecibo extends AppCompatActivity {
             @Override
 
             public void onClick(View v) {
-                int ab=0;
-                int des=0;
+
                 if (buscadorCliente.getText().toString().isEmpty()) {
                     buscadorCliente.setError("Debe seleccionar un cliente");
                 } else {
@@ -436,6 +437,8 @@ public class MainRecibo extends AppCompatActivity {
                         {
                             descuento.setText("0");
                             ejecutarGuardado();
+
+
                         }
                         else
                         {
@@ -449,19 +452,25 @@ public class MainRecibo extends AppCompatActivity {
 
                 }
 
+
             }
+
         });
 
         imprimir.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
              if (getPrinterStatus() == PRINTER_NORMAL)
-                 Consultarlista();
-               //  borrardatosTabla();
-             ///limpiarcampos();
+                  Consultarlista();
+                 borrardatosTabla();
              Snackbar snackbar= Snackbar.make(cuerpo,"Imprimiendo Recibo!!",Snackbar.LENGTH_LONG);
-             snackbar.show();
-
+             snackbar.setAction("Aceptar", new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                limpiarcampos();
+                 }
+             }).setDuration(5000).show();
+             buscadorCliente.setEnabled(true);
          }
      });
 
@@ -516,6 +525,8 @@ public class MainRecibo extends AppCompatActivity {
 
                 try {
 
+                    for (int p=0; p<2;p++){
+
                     mIPosPrinterService.printSpecifiedTypeText(" \t\t RECIBO\n", "ST", 48, callback);
                     mIPosPrinterService.printSpecifiedTypeText(vendedor.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText(fecha.getText().toString(), "ST", 32, callback);
@@ -534,19 +545,21 @@ public class MainRecibo extends AppCompatActivity {
                     text[0] = "N.Ref";
                     text[1] = "Fact";
                     text[2] = "Monto";
-                    text[3] = "Saldo";
+                    text[3] = "Abono";
                     mIPosPrinterService.printColumnsText(text, width, align, 1,callback);
 
                     for (int i=0; i<listarecibo.size();i++){
+
                     text[0] = String.valueOf(listarecibo.get(i).getNumReferencia());
                     text[1] = listarecibo.get(i).getFactura();
-                    text[2] = String.valueOf(listarecibo.get(i).getAbono());
-                    text[3] = String.valueOf(listarecibo.get(i).getSaldoRes());
+                    text[2] = String.valueOf(listarecibo.get(i).getAbono()+listarecibo.get(i).getAbono());
+                    text[3] = String.valueOf(listarecibo.get(i).getAbono());
                     mIPosPrinterService.printColumnsText(text, width, align, 0,callback);
                     }
-                    mIPosPrinterService.printSpecifiedTypeText("Saldo Total:C$ " + " " +saldo.getText().toString(), "ST", 24, callback);
+                   ;
                     mIPosPrinterService.printBlankLines(1, 16, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("observaciones" + " " + "__________________\n\n\n", "ST", 24, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Saldo Total:C$ " + " " +saldo.getText().toString(), "ST", 24, callback);
+              //      mIPosPrinterService.printSpecifiedTypeText("observaciones" + " " + "__________________\n\n\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Recibo" + " " + "_______________________\n\n\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Entrada" + " " + "______________________", "ST", 24, callback);
 
@@ -556,7 +569,7 @@ public class MainRecibo extends AppCompatActivity {
                     mIPosPrinterService.printSpecifiedTypeText("**********END***********", "ST", 32, callback);
                     mIPosPrinterService.printerPerformPrint(160,  callback);
 
-
+                    }
 
 
                 }catch (RemoteException e){
@@ -574,6 +587,7 @@ public class MainRecibo extends AppCompatActivity {
     void ejecutarGuardado()
     {
         try {
+
             AgregarReciboSQLSEVER();
             GuardarReciboSQLite();
             Snackbar snackbar= Snackbar.make(cuerpo,"Guardando recibo!!",Snackbar.LENGTH_LONG);
@@ -677,7 +691,7 @@ public class MainRecibo extends AppCompatActivity {
         values.put(utilidadesFact.CAMPO_ABONO, abono.getText().toString());
         values.put(utilidadesFact.CAMPO_DESCUENTO, descuento.getText().toString());
         values.put(utilidadesFact.CAMPO_SALDO_RES, saldo.getText().toString());
-        values.put(utilidadesFact.CAMPO_NUMERO_RESF, String.valueOf(tvIdCuentasxCobrar));
+        values.put(utilidadesFact.CAMPO_NUMERO_RESF, IdPagosCxC);
         long idResultante = db.insert(utilidadesFact.TABLA_RECIBO, utilidadesFact.CAMPO_NOMBRE_CLIEBTE, values);
        // Toast.makeText(this, "agregado: " + idResultante, Toast.LENGTH_SHORT).show();
         db.close();
@@ -785,6 +799,19 @@ public class MainRecibo extends AppCompatActivity {
             dbConnection.getConnection().setAutoCommit(true);
         }
 
+
     }
 
+   /* public void CalcularTotalFactura(){
+        SQLiteDatabase db= conn.getReadableDatabase();
+        String total="select sum(precio * cantidad ) as Total from producto";
+        Cursor query =  db.rawQuery(total,null);
+        if (query.moveToFirst()){
+            TotalFact= query.getString(query.getColumnIndex("Total"));
+            System.out.println("TOTAL DE LA FACTURA ACTUALMENTE ES : ----> "+TotalFact);
+
+            textV_total.setText(TotalFact);
+        }
+        db.close();
+    }*/
 }
