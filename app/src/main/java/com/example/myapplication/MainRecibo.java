@@ -78,7 +78,6 @@ public class MainRecibo extends AppCompatActivity {
     public static int id,idClientesRecibo;
     public static String nombreVendedor, idcliente;
     public static Double SaldoR;
-    String letras;
 
     public static int IdTalonario,NumeracionInicial, numeracion,IdPagosCxC;
     String[] clientes = new String[]{
@@ -424,27 +423,20 @@ public class MainRecibo extends AppCompatActivity {
             @Override
 
             public void onClick(View v) {
+                int ab=0;
+                int des=0;
                 if (buscadorCliente.getText().toString().isEmpty()) {
                     buscadorCliente.setError("Debe seleccionar un cliente");
                 } else {
-                    if(abono.getText().toString().isEmpty() && descuento.getText().toString().isEmpty())
-                        Toast.makeText(getApplicationContext(), "Error campos vacios", Toast.LENGTH_LONG).show();
-                    else {
-                        if((!abono.getText().toString().isEmpty()) && descuento.getText().toString().isEmpty())
-                        {
-                            descuento.setText("0");
-                            ejecutarGuardado();
-                        }
-                        else
-                        {
-                            if((abono.getText().toString().isEmpty()) && !descuento.getText().toString().isEmpty())
-                            {
-                                abono.setText("0");
-                                ejecutarGuardado();
-                            }
-                        }
+                    try {
+                        AgregarReciboSQLSEVER();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-                  //  limpiarcampos();
+                    GuardarReciboSQLite();
+                    limpiarcampos();
+                    Snackbar snackbar= Snackbar.make(cuerpo,"Guardando recibo!!",Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
 
             }
@@ -463,7 +455,16 @@ public class MainRecibo extends AppCompatActivity {
          }
      });
 
+        //convercion de numeros a letras
+        Coversion_Numero_Letra c = new Coversion_Numero_Letra();
 
+        int numero=0;
+        numero= Integer.parseInt(saldo.getText().toString());
+
+       String letras=  c.Convertir(String.valueOf(numero),true);
+
+        System.out.println("Conversion===>"+letras);
+        //convercion de numeros a letras
 
     }
 
@@ -519,7 +520,7 @@ public class MainRecibo extends AppCompatActivity {
                     mIPosPrinterService.printSpecifiedTypeText(fecha.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Recibo de:" + " " + tvIdclienyte.getText().toString(), "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " +letras + "\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " + "_______________________________\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("\t\t\t\t\tC$" +saldo.getText().toString()+" \n\n\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("***=>aplicado descuento", "ST", 24, callback);
                     mIPosPrinterService.printBlankLines(1, 8, callback);
@@ -531,20 +532,18 @@ public class MainRecibo extends AppCompatActivity {
                     int[] align = new int[] { 0, 2, 2, 2 }; // Izquierda, derecha
                     text[0] = "N.Ref";
                     text[1] = "Fact";
-                    text[2] = "abono";
-                    text[3] = "desc";
+                    text[2] = "Monto";
+                    text[3] = "Saldo";
                     mIPosPrinterService.printColumnsText(text, width, align, 1,callback);
 
                     for (int i=0; i<listarecibo.size();i++){
                     text[0] = String.valueOf(listarecibo.get(i).getNumReferencia());
                     text[1] = listarecibo.get(i).getFactura();
                     text[2] = String.valueOf(listarecibo.get(i).getAbono());
-                    text[3] = String.valueOf(listarecibo.get(i).getDescuento());
+                    text[3] = String.valueOf(listarecibo.get(i).getSaldoRes());
                     mIPosPrinterService.printColumnsText(text, width, align, 0,callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Saldo Total:C$ " + " " +listarecibo.get(i).getSaldoRes(), "ST", 24, callback);
-
                     }
-
+                    mIPosPrinterService.printSpecifiedTypeText("Saldo Total:C$ " + " " +saldo.getText().toString(), "ST", 24, callback);
                     mIPosPrinterService.printBlankLines(1, 16, callback);
                     mIPosPrinterService.printSpecifiedTypeText("observaciones" + " " + "__________________\n\n\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Recibo" + " " + "_______________________\n\n\n", "ST", 24, callback);
@@ -568,16 +567,6 @@ public class MainRecibo extends AppCompatActivity {
      *Funciones de la imprsora
      *
      * */
-   public void ejecutarGuardado() {
-        try {
-            AgregarReciboSQLSEVER();
-            GuardarReciboSQLite();
-            Snackbar snackbar= Snackbar.make(cuerpo,"Guardando recibo!!",Snackbar.LENGTH_LONG);
-            snackbar.show();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public ArrayAdapter Clientes() {
         ArrayAdapter NoCoreAdapter = null;
@@ -641,10 +630,7 @@ public class MainRecibo extends AppCompatActivity {
               tvIdCuentasxCobrar.setText( rs.getString("idCuentasxCobrar"));
 
               SaldoR = rs.getDouble("SaldoRestante");
-                saldo.setText(SaldoR.toString());
-                Coversion_Numero_Letra c = new Coversion_Numero_Letra();
-                 letras=  c.Convertir(SaldoR.toString(),true);
-                System.out.println(letras);
+              saldo.setText(SaldoR.toString());
 
             }
         }catch (SQLException e){
