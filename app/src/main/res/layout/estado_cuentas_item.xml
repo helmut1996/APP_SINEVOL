@@ -19,93 +19,99 @@
         android:scrollbars="horizontal|vertical"
         android:layout_width="wrap_content"
         android:layout_marginTop="5dip">
-        <TableLayout
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:stretchColumns="1,2,3,4,5,6"
-            android:layout_gravity="right"
-            android:background="#A8B5B3"
-            android:layout_marginBottom="1dp">
-            <TableRow>
+            android:layout_height="match_parent"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="10dp">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1,2,3,4,5,6"
+                android:layout_gravity="right"
+                android:background="#A8B5B3"
+                android:layout_marginBottom="1dp">
+                <TableRow>
 
-                <TextView
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:layout_column="1"
-                    android:id="@+id/tv_fecha"
-                    android:padding="8dp"
-                    />
+                    <TextView
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_column="1"
+                        android:id="@+id/tv_fecha"
+                        android:padding="8dp"
+                        />
 
-                <TextView
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:layout_column="1"
-                    android:id="@+id/tv_descripcion"
-                    android:padding="8dp"
-                    />
+                    <TextView
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_column="1"
+                        android:id="@+id/tv_descripcion"
+                        android:padding="8dp"
+                        />
 
-                <TextView
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:layout_column="1"
-                    android:id="@+id/tv_salida"
-                    android:padding="8dp"
-                    />
+                    <TextView
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_column="1"
+                        android:id="@+id/tv_salida"
+                        android:padding="8dp"
+                        />
 
-                <TextView
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:layout_column="1"
-                    android:id="@+id/tv_entrada"
-                    android:padding="8dp"
-                    />
+                    <TextView
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_column="1"
+                        android:id="@+id/tv_entrada"
+                        android:padding="8dp"
+                        />
 
-                <TextView
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:layout_column="1"
-                    android:id="@+id/tv_total"
-                    android:padding="8dp"
-                    />
+                    <TextView
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_column="1"
+                        android:id="@+id/tv_total"
+                        android:padding="8dp"
+                        />
 
-                <TextView
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:layout_column="1"
-                    android:id="@+id/tv_compra"
-                    android:padding="8dp" />
+                    <TextView
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_column="1"
+                        android:id="@+id/tv_compra"
+                        android:padding="8dp" />
 
-                <TextView
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:layout_column="1"
-                    android:id="@+id/tv_nombrecliente"
-                    android:padding="8dp"
-                    android:visibility="gone"/>
+                    <TextView
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_column="1"
+                        android:id="@+id/tv_nombrecliente"
+                        android:padding="8dp"
+                        android:visibility="gone"/>
 
-                <TextView
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:layout_column="1"
-                    android:id="@+id/tv_direccion"
-                    android:padding="8dp"
-                    android:visibility="gone"/>
+                    <TextView
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_column="1"
+                        android:id="@+id/tv_direccion"
+                        android:padding="8dp"
+                        android:visibility="gone"/>
 
-                <TextView
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:layout_column="1"
-                    android:id="@+id/tv_telefono"
-                    android:padding="8dp"
-                    android:visibility="gone"/>
-            </TableRow>
-        </TableLayout>
+                    <TextView
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_column="1"
+                        android:id="@+id/tv_telefono"
+                        android:padding="8dp"
+                        android:visibility="gone"/>
+                </TableRow>
+            </TableLayout>
+
+        </androidx.cardview.widget.CardView>
 
     </HorizontalScrollView>
 
 </ScrollView>
-
-
 
 
 </LinearLayout>

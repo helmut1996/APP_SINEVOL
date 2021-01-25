@@ -79,7 +79,7 @@ public class MainRecibo extends AppCompatActivity {
     public static String nombreVendedor, idcliente;
     public static Double SaldoR;
     String letra;
-    String totalabono;
+    String totalabono,totalSaldo;
 
     conexionSQLiteHelper conn;
     public static int IdTalonario, NumeracionInicial, numeracion, IdPagosCxC;
@@ -89,7 +89,7 @@ public class MainRecibo extends AppCompatActivity {
 
     ArrayList<String> listainformacion;
     ArrayList<FacturasAdd> listarecibo;
-    public static String TotalAbono="0";
+
 
     ///////////////////////Impresora//////////////////////////////////
 
@@ -439,16 +439,23 @@ public class MainRecibo extends AppCompatActivity {
                         if ((!abono.getText().toString().isEmpty()) && descuento.getText().toString().isEmpty()) {
                             descuento.setText("0");
                             ejecutarGuardado();
+                            calcularsaldo();
                             CalcularTotalAbono();
+                            CalcularSaldoTotal();
                              buscadorCliente.setEnabled(false);
-
+                             abono.setText("");
+                             descuento.setText("");
 
                         } else {
                             if ((abono.getText().toString().isEmpty()) && !descuento.getText().toString().isEmpty()) {
                                 buscadorCliente.setEnabled(false);
                                 abono.setText("0");
+                                calcularsaldo();
                                 ejecutarGuardado();
                                 CalcularTotalAbono();
+                                CalcularSaldoTotal();
+                                abono.setText("");
+                                descuento.setText("");
 
                             }
 
@@ -559,7 +566,7 @@ public class MainRecibo extends AppCompatActivity {
                     }
 
                     mIPosPrinterService.printBlankLines(1, 16, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Abono Total:C$ " + " " + saldo2.getText().toString() + "\n\n\n\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Saldo Total:C$ " + " " + totalSaldo + "\n\n\n\n", "ST", 24, callback);
                     //      mIPosPrinterService.printSpecifiedTypeText("observaciones" + " " + "__________________\n\n\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Recibo" + " " + "_______________________\n\n\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Entrada" + " " + "______________________", "ST", 24, callback);
@@ -643,6 +650,7 @@ public class MainRecibo extends AppCompatActivity {
         }
         return NoCoreAdapter;
     }
+
     public void CalcularTotalAbono() {
         conexionSQLiteHelper conn = new conexionSQLiteHelper(this, "bd_productos", null, 1);
         SQLiteDatabase db = conn.getReadableDatabase();
@@ -652,8 +660,7 @@ public class MainRecibo extends AppCompatActivity {
         if (query.moveToFirst()){
              totalabono= query.getString(query.getColumnIndex("Total"));
 
-
-            System.out.println("====> Prueba;"+totalabono);
+            System.out.println("====> Prueba TotalAbono;"+totalabono);
             saldo2.setText(totalabono);
 
             Coversion_Numero_Letra convertir = new Coversion_Numero_Letra();
@@ -662,8 +669,19 @@ public class MainRecibo extends AppCompatActivity {
         }
 
         db.close();
+    }
 
+    public void CalcularSaldoTotal(){
+        conexionSQLiteHelper conn = new conexionSQLiteHelper(this, "bd_productos", null, 1);
+        SQLiteDatabase db = conn.getReadableDatabase();
+        String total2="select sum(saldorestante) as Total2 from recibo";
+        Cursor query= db.rawQuery(total2,null);
 
+        if (query.moveToFirst()){
+            totalSaldo=query.getString(query.getColumnIndex("Total2"));
+            System.out.println("======>PruebaSaldoTotal"+totalSaldo);
+        }
+        db.close();
     }
 
     public void calcularsaldo() {

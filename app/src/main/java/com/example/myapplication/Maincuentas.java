@@ -82,7 +82,7 @@ public class Maincuentas extends AppCompatActivity {
         });
 
     }
-
+/// ejecucion del recycler view
     private void setRecycler() {
         listaCuentas.setHasFixedSize(true);
         listaCuentas.setLayoutManager(new LinearLayoutManager(this));
@@ -90,6 +90,7 @@ public class Maincuentas extends AppCompatActivity {
         listaCuentas.setAdapter(adaptadorCuentas);
     }
 
+    ///mostrando los datos del estado Cuentas
     public List<ModelItemCuentas> getlist(){
         List<ModelItemCuentas> listCEstado= new ArrayList<>();
 
@@ -121,6 +122,7 @@ public class Maincuentas extends AppCompatActivity {
 
     }
 
+    // metodo de busqueda de los clientes
     public ArrayAdapter Clientes() {
         ArrayAdapter NoCoreAdapter=null;
         DBConnection sesion;
@@ -143,6 +145,7 @@ public class Maincuentas extends AppCompatActivity {
         return NoCoreAdapter;
     }
 
+    // metodo para la busqueda espesifica de cada estado de cuentas por cada cliente
     public void busqueda() throws SQLException {
         DBConnection dbConnection = new DBConnection();
         dbConnection.conectar();

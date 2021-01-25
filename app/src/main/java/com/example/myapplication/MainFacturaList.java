@@ -255,8 +255,9 @@ getMenuInflater().inflate(R.menu.menu,menu);
             PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertPrefact ?,?,?,?,?,?,?");
             pst.setInt(1, Integer.parseInt(textIdcliente.getText().toString()));
             pst.setInt(2, Integer.parseInt(textIdvendedor.getText().toString()));
-            pst.setString(3,T_ventas.getSelectedItem().toString());
-            pst.setString(4,T_factura.getSelectedItem().toString());
+            pst.setString(3, T_factura.getSelectedItem().toString()
+            );
+            pst.setString(4,T_ventas.getSelectedItem().toString());
             pst.setFloat(5, Float.parseFloat(textV_total.getText().toString()));
             pst.setDouble(6,TotalComision);
             pst.setString(7,textV_Cliente.getText().toString());

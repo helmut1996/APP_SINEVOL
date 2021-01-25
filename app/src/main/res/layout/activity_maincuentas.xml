@@ -12,12 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/cliente"
-        android:id="@+id/tvC_Idcliente" />
+        android:id="@+id/tvC_Idcliente"
+        android:visibility="gone"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/cliente"
-        android:id="@+id/tvC_cliente" />
+        android:id="@+id/tvC_cliente"
+        android:visibility="gone"/>
 <AutoCompleteTextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
