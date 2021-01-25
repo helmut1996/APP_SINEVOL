@@ -108,6 +108,7 @@ public class MainFactura extends AppCompatActivity {
     public void initValues(){
         LinearLayoutManager manager= new LinearLayoutManager(this);
         recyclerViewCliente.setLayoutManager(manager);
+        recyclerViewCliente.setHasFixedSize(true);
         itemCList=obtenerclientesBD();
         adapterCliente= new RecycleviewAdapter(itemCList);
         recyclerViewCliente.setAdapter(adapterCliente);

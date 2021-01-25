@@ -27,7 +27,19 @@
                    android:layout_height="230dp"
                    android:orientation="vertical"
                    android:gravity="center"
-                   android:background="@drawable/logo2">
+                   android:background="@drawable/logo2"
+                   android:id="@+id/fondo">
+
+
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="Vendedor"
+                       android:textSize="18sp"
+                       android:gravity="center"
+                       android:textColor="@color/white"
+                       android:layout_marginTop="80dp"
+                       android:id="@+id/tv_titulo"/>
 
                </LinearLayout>
 

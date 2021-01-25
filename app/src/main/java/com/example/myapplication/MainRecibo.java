@@ -71,30 +71,31 @@ public class MainRecibo extends AppCompatActivity {
     LinearLayout cuerpo;
     AutoCompleteTextView buscadorCliente;
     EditText abono, descuento;
-    TextView saldo, numresf, fecha, zona, vendedor, tvIdclienyte,tvIdCuentasxCobrar,saldo2;
+    TextView saldo, numresf, fecha, zona, vendedor, tvIdclienyte, tvIdCuentasxCobrar, saldo2;
     ImageButton Guardar, imprimir;
     EditText observacion;
     Spinner BuscadorFactura;
-    public static int id,idClientesRecibo;
+    public static int id, idClientesRecibo;
     public static String nombreVendedor, idcliente;
     public static Double SaldoR;
     String letra;
+    String totalabono;
 
     conexionSQLiteHelper conn;
-    public static int IdTalonario,NumeracionInicial, numeracion,IdPagosCxC;
+    public static int IdTalonario, NumeracionInicial, numeracion, IdPagosCxC;
     String[] clientes = new String[]{
             "cleinte1", "Helmut", "brian", "jefrry"
     };
 
-    ArrayList<String>listainformacion;
-    ArrayList<FacturasAdd>listarecibo;
-    public static String TotalAbono;
+    ArrayList<String> listainformacion;
+    ArrayList<FacturasAdd> listarecibo;
+    public static String TotalAbono="0";
 
     ///////////////////////Impresora//////////////////////////////////
 
-    private static final String TAG                 = "MainRecibo";
+    private static final String TAG = "MainRecibo";
     /* Demo 版本号*/
-    private static final String VERSION        = "V1.1.0";
+    private static final String VERSION = "V1.1.0";
 
 
     private IPosPrinterService mIPosPrinterService;
@@ -113,38 +114,38 @@ public class MainRecibo extends AppCompatActivity {
     /*El estado actual de la impresora*/
     private int printerStatus = 0;
 
-    private final String  PRINTER_NORMAL_ACTION = "com.iposprinter.iposprinterservice.NORMAL_ACTION";
-    private final String  PRINTER_PAPERLESS_ACTION = "com.iposprinter.iposprinterservice.PAPERLESS_ACTION";
-    private final String  PRINTER_PAPEREXISTS_ACTION = "com.iposprinter.iposprinterservice.PAPEREXISTS_ACTION";
-    private final String  PRINTER_THP_HIGHTEMP_ACTION = "com.iposprinter.iposprinterservice.THP_HIGHTEMP_ACTION";
-    private final String  PRINTER_THP_NORMALTEMP_ACTION = "com.iposprinter.iposprinterservice.THP_NORMALTEMP_ACTION";
-    private final String  PRINTER_MOTOR_HIGHTEMP_ACTION = "com.iposprinter.iposprinterservice.MOTOR_HIGHTEMP_ACTION";
-    private final String  PRINTER_BUSY_ACTION = "com.iposprinter.iposprinterservice.BUSY_ACTION";
-    private final String  PRINTER_CURRENT_TASK_PRINT_COMPLETE_ACTION = "com.iposprinter.iposprinterservice.CURRENT_TASK_PRINT_COMPLETE_ACTION";
+    private final String PRINTER_NORMAL_ACTION = "com.iposprinter.iposprinterservice.NORMAL_ACTION";
+    private final String PRINTER_PAPERLESS_ACTION = "com.iposprinter.iposprinterservice.PAPERLESS_ACTION";
+    private final String PRINTER_PAPEREXISTS_ACTION = "com.iposprinter.iposprinterservice.PAPEREXISTS_ACTION";
+    private final String PRINTER_THP_HIGHTEMP_ACTION = "com.iposprinter.iposprinterservice.THP_HIGHTEMP_ACTION";
+    private final String PRINTER_THP_NORMALTEMP_ACTION = "com.iposprinter.iposprinterservice.THP_NORMALTEMP_ACTION";
+    private final String PRINTER_MOTOR_HIGHTEMP_ACTION = "com.iposprinter.iposprinterservice.MOTOR_HIGHTEMP_ACTION";
+    private final String PRINTER_BUSY_ACTION = "com.iposprinter.iposprinterservice.BUSY_ACTION";
+    private final String PRINTER_CURRENT_TASK_PRINT_COMPLETE_ACTION = "com.iposprinter.iposprinterservice.CURRENT_TASK_PRINT_COMPLETE_ACTION";
 
     /*Mensaje*/
-    private final int MSG_TEST                               = 1;
-    private final int MSG_IS_NORMAL                          = 2;
-    private final int MSG_IS_BUSY                            = 3;
-    private final int MSG_PAPER_LESS                         = 4;
-    private final int MSG_PAPER_EXISTS                       = 5;
-    private final int MSG_THP_HIGH_TEMP                      = 6;
-    private final int MSG_THP_TEMP_NORMAL                    = 7;
-    private final int MSG_MOTOR_HIGH_TEMP                    = 8;
-    private final int MSG_MOTOR_HIGH_TEMP_INIT_PRINTER       = 9;
-    private final int MSG_CURRENT_TASK_PRINT_COMPLETE     = 10;
+    private final int MSG_TEST = 1;
+    private final int MSG_IS_NORMAL = 2;
+    private final int MSG_IS_BUSY = 3;
+    private final int MSG_PAPER_LESS = 4;
+    private final int MSG_PAPER_EXISTS = 5;
+    private final int MSG_THP_HIGH_TEMP = 6;
+    private final int MSG_THP_TEMP_NORMAL = 7;
+    private final int MSG_MOTOR_HIGH_TEMP = 8;
+    private final int MSG_MOTOR_HIGH_TEMP_INIT_PRINTER = 9;
+    private final int MSG_CURRENT_TASK_PRINT_COMPLETE = 10;
 
     /*El tipo de imprecion circular*/
-    private final int  MULTI_THREAD_LOOP_PRINT  = 1;
-    private final int  INPUT_CONTENT_LOOP_PRINT = 2;
-    private final int  DEMO_LOOP_PRINT          = 3;
-    private final int  PRINT_DRIVER_ERROR_TEST  = 4;
-    private final int  DEFAULT_LOOP_PRINT       = 0;
+    private final int MULTI_THREAD_LOOP_PRINT = 1;
+    private final int INPUT_CONTENT_LOOP_PRINT = 2;
+    private final int DEMO_LOOP_PRINT = 3;
+    private final int PRINT_DRIVER_ERROR_TEST = 4;
+    private final int DEFAULT_LOOP_PRINT = 0;
 
     // Ciclo a través de la broca de la bandera
-    private       int  loopPrintFlag            = DEFAULT_LOOP_PRINT;
-    private       byte loopContent              = 0x00;
-    private       int  printDriverTestCount     = 0;
+    private int loopPrintFlag = DEFAULT_LOOP_PRINT;
+    private byte loopContent = 0x00;
+    private int printDriverTestCount = 0;
 
 
     private final HandlerUtils.IHandlerIntent iHandlerIntent = new HandlerUtils.IHandlerIntent() {
@@ -189,21 +190,20 @@ public class MainRecibo extends AppCompatActivity {
     };
 
 
-    private void setButtonEnable(boolean flag){
+    private void setButtonEnable(boolean flag) {
         imprimir.setEnabled(flag);
     }
 
 
-    private  BroadcastReceiver IPosPrinterStatusListener = new BroadcastReceiver(){
+    private BroadcastReceiver IPosPrinterStatusListener = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent){
+        public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if(action == null)
-            {
-                Log.d(TAG,"IPosPrinterStatusListener onReceive action = null");
+            if (action == null) {
+                Log.d(TAG, "IPosPrinterStatusListener onReceive action = null");
                 return;
             }
-            Log.d(TAG,"IPosPrinterStatusListener action = "+action);
+            Log.d(TAG, "IPosPrinterStatusListener action = " + action);
            /* if(action.equals(PRINTER_NORMAL_ACTION))
             {
                 handler.sendEmptyMessageDelayed(MSG_IS_NORMAL,0);
@@ -268,17 +268,16 @@ public class MainRecibo extends AppCompatActivity {
         getSupportActionBar().setTitle("Recibos");
 
 
-
         callback = new IPosPrinterCallback.Stub() {
 
             @Override
             public void onRunResult(final boolean isSuccess) throws RemoteException {
-                Log.i(TAG,"result:" + isSuccess + "\n");
+                Log.i(TAG, "result:" + isSuccess + "\n");
             }
 
             @Override
             public void onReturnString(final String value) throws RemoteException {
-                Log.i(TAG,"result:" + value + "\n");
+                Log.i(TAG, "result:" + value + "\n");
             }
         };
 
@@ -286,7 +285,6 @@ public class MainRecibo extends AppCompatActivity {
         intent.setPackage("com.iposprinter.iposprinterservice");
         intent.setAction("com.iposprinter.iposprinterservice.IPosPrintService");
         bindService(intent, connectService, Context.BIND_AUTO_CREATE);
-
 
 
         IntentFilter printerStatusFilter = new IntentFilter();
@@ -298,12 +296,12 @@ public class MainRecibo extends AppCompatActivity {
         printerStatusFilter.addAction(PRINTER_MOTOR_HIGHTEMP_ACTION);
         printerStatusFilter.addAction(PRINTER_BUSY_ACTION);
 
-        registerReceiver(IPosPrinterStatusListener,printerStatusFilter);
+        registerReceiver(IPosPrinterStatusListener, printerStatusFilter);
 
         ///llamando los complementos
-        saldo2=findViewById(R.id.tvr_saldo2);
-        cuerpo=findViewById(R.id.linearLayout);
-        tvIdclienyte=findViewById(R.id.tv_IdclienteRecibo);
+        saldo2 = findViewById(R.id.tvr_saldo2);
+        cuerpo = findViewById(R.id.linearLayout);
+        tvIdclienyte = findViewById(R.id.tv_IdclienteRecibo);
         fecha = findViewById(R.id.tvr_fecha);
         zona = findViewById(R.id.tvr_zona);
         vendedor = findViewById(R.id.tv_NombreVendedor);
@@ -318,6 +316,7 @@ public class MainRecibo extends AppCompatActivity {
         imprimir = findViewById(R.id.btnImprimirRecibo);
         tvIdCuentasxCobrar = findViewById(R.id.idcuentasxCobrar);
 /////////////////////////////////////////////////////////
+
 
         /*pasando id del  vendedor*/
         id = getIntent().getIntExtra("Id", 0);
@@ -349,7 +348,7 @@ public class MainRecibo extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<CharSequence> adapter  = ArrayAdapter.createFromResource(this, R.array.facturas_clientes, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.facturas_clientes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
@@ -358,6 +357,9 @@ public class MainRecibo extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 BuscadorFactura.getSelectedItem().toString();
                 calcularsaldo();
+
+                abono.setText("");
+                descuento.setText("");
             }
 
             @Override
@@ -378,12 +380,11 @@ public class MainRecibo extends AppCompatActivity {
                     abono.requestFocus();
                     saldo.setText(SaldoR.toString());
 
-                }else if(!descuento.getText().toString().trim().equals("")){
+                } else if (!descuento.getText().toString().trim().equals("")) {
                     Double tmpDescuento = Double.parseDouble(descuento.getText().toString());
                     Double tmpSaldo = SaldoR - Double.parseDouble(s.toString()) - tmpDescuento;
                     saldo.setText(tmpSaldo.toString());
-                }
-                else{
+                } else {
                     Double tmpSaldo = SaldoR - Double.parseDouble(s.toString());
                     saldo.setText(tmpSaldo.toString());
                 }
@@ -406,11 +407,11 @@ public class MainRecibo extends AppCompatActivity {
                 if (descuento.getText().toString().trim().equals("")) {
                     descuento.requestFocus();
 
-                }else if(!abono.getText().toString().trim().equals("")){
+                } else if (!abono.getText().toString().trim().equals("")) {
                     Double tmpDescuento = Double.parseDouble(abono.getText().toString());
                     Double tmpSaldo = SaldoR - Double.parseDouble(s.toString()) - tmpDescuento;
                     saldo.setText(tmpSaldo.toString());
-                }   else{
+                } else {
                     Double tmpSaldo = SaldoR - Double.parseDouble(s.toString());
                     saldo.setText(tmpSaldo.toString());
                 }
@@ -423,7 +424,7 @@ public class MainRecibo extends AppCompatActivity {
             }
         });
 
-        sumaAbono();
+
         Guardar.setOnClickListener(new View.OnClickListener() {
             @Override
 
@@ -432,87 +433,78 @@ public class MainRecibo extends AppCompatActivity {
                 if (buscadorCliente.getText().toString().isEmpty()) {
                     buscadorCliente.setError("Debe seleccionar un cliente");
                 } else {
-                    if(abono.getText().toString().isEmpty() && descuento.getText().toString().isEmpty())
+                    if (abono.getText().toString().isEmpty() && descuento.getText().toString().isEmpty())
                         Toast.makeText(getApplicationContext(), "Error campos vacios", Toast.LENGTH_LONG).show();
                     else {
-                        if((!abono.getText().toString().isEmpty()) && descuento.getText().toString().isEmpty())
-                        {
+                        if ((!abono.getText().toString().isEmpty()) && descuento.getText().toString().isEmpty()) {
                             descuento.setText("0");
                             ejecutarGuardado();
+                            CalcularTotalAbono();
+                             buscadorCliente.setEnabled(false);
 
 
-                        }
-                        else
-                        {
-                            if((abono.getText().toString().isEmpty()) && !descuento.getText().toString().isEmpty())
-                            {
+                        } else {
+                            if ((abono.getText().toString().isEmpty()) && !descuento.getText().toString().isEmpty()) {
+                                buscadorCliente.setEnabled(false);
                                 abono.setText("0");
                                 ejecutarGuardado();
+                                CalcularTotalAbono();
+
                             }
+
                         }
                     }
 
                 }
 
-                buscadorCliente.setEnabled(false);
-                abono.setText("");
-                descuento.setText("");
 
             }
 
         });
 
         imprimir.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-             //if (getPrinterStatus() == PRINTER_NORMAL)
-                  Consultarlista();
-             buscadorCliente.setEnabled(true);
-             Snackbar snackbar= Snackbar.make(cuerpo,"Imprimiendo Recibo!!",Snackbar.LENGTH_LONG);
-             snackbar.show();
+            @Override
+            public void onClick(View v) {
+                if (getPrinterStatus() == PRINTER_NORMAL)
+                    Consultarlista();
+                buscadorCliente.setEnabled(true);
+                Snackbar snackbar = Snackbar.make(cuerpo, "Imprimiendo Recibo!!", Snackbar.LENGTH_LONG);
+                snackbar.show();
 
-             try {
-                 Thread.sleep(50000);
-                 Toast.makeText(MainRecibo.this, "Proceso terminado", Toast.LENGTH_SHORT).show();
-                 limpiarcampos();
-                 borrardatosTabla();
-
-             } catch (InterruptedException e) {
-                 e.printStackTrace();
-             }
-
-         }
-     });
+                limpiarcampos();
+                borrardatosTabla();
+            }
+        });
 
 
-//CalcularTotalAbono();
+
     }
 
     /*
-    *Funciones de la imprsora
-    * */
-    public int getPrinterStatus(){
+     *Funciones de la imprsora
+     * */
+    public int getPrinterStatus() {
 
-        Log.i(TAG,"***** printerStatus"+printerStatus);
-        try{
+        Log.i(TAG, "***** printerStatus" + printerStatus);
+        try {
             printerStatus = mIPosPrinterService.getPrinterStatus();
-        }catch (RemoteException e){
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
-        Log.i(TAG,"#### printerStatus"+printerStatus);
-        return  printerStatus;
+        Log.i(TAG, "#### printerStatus" + printerStatus);
+        return printerStatus;
     }
 
     /**
      * La impresora se inicializa
      */
-    public void printerInit(){
+    public void printerInit() {
         ThreadPoolManager.getInstance().executeTask(new Runnable() {
             @Override
             public void run() {
-                try{
+                try {
                     mIPosPrinterService.printerInit(callback);
-                }catch (RemoteException e){
+                } catch (RemoteException e) {
                     e.printStackTrace();
                 }
             }
@@ -520,8 +512,7 @@ public class MainRecibo extends AppCompatActivity {
     }
 
     public void loopPrint(int flag) {
-        switch (flag)
-        {
+        switch (flag) {
 
         }
     }
@@ -531,57 +522,57 @@ public class MainRecibo extends AppCompatActivity {
             @Override
             public void run() {
 
-                listainformacion=new ArrayList<String>();
+                listainformacion = new ArrayList<String>();
 
                 try {
 
-                   // for (int p=0; p<2;p++){
+                    // for (int p=0; p<2;p++){
 
                     mIPosPrinterService.printSpecifiedTypeText(" \t\t RECIBO\n", "ST", 48, callback);
                     mIPosPrinterService.printSpecifiedTypeText(vendedor.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText(fecha.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Recibo de:" + " " + tvIdclienyte.getText().toString(), "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " +letra, "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("\t\t\t\t\tC$" +saldo.getText().toString()+" \n\n\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " + letra, "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("\t\t\t\t\tC$" + saldo2.getText().toString() + " \n\n\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("***=>aplicado descuento", "ST", 24, callback);
                     mIPosPrinterService.printBlankLines(1, 8, callback);
 
-                    mIPosPrinterService.setPrinterPrintAlignment(0,callback);
-                    mIPosPrinterService.setPrinterPrintFontSize(24,callback);
+                    mIPosPrinterService.setPrinterPrintAlignment(0, callback);
+                    mIPosPrinterService.setPrinterPrintFontSize(24, callback);
                     String[] text = new String[4];
-                    int[] width = new int[] { 8, 6, 6, 7 };
-                    int[] align = new int[] { 0, 2, 2, 2 }; // Izquierda, derecha
+                    int[] width = new int[]{8, 6, 6, 7};
+                    int[] align = new int[]{0, 2, 2, 2}; // Izquierda, derecha
                     text[0] = "N.Ref";
                     text[1] = "Fact";
-                    text[2] = "Saldo";
-                    text[3] = "Abono";
-                    mIPosPrinterService.printColumnsText(text, width, align, 1,callback);
+                    text[2] = "Abono";
+                    text[3] = "Saldo";
+                    mIPosPrinterService.printColumnsText(text, width, align, 1, callback);
 
-                    for (int i=0; i<listarecibo.size();i++){
+                    for (int i = 0; i < listarecibo.size(); i++) {
 
-                    text[0] = String.valueOf(listarecibo.get(i).getNumReferencia());
-                    text[1] = listarecibo.get(i).getFactura();
-                    text[2] = String.valueOf(listarecibo.get(i).getSaldoRes());
-                    text[3] = String.valueOf(listarecibo.get(i).getAbono());
-                    mIPosPrinterService.printColumnsText(text, width, align, 0,callback);
+                        text[0] = String.valueOf(listarecibo.get(i).getNumReferencia());
+                        text[1] = listarecibo.get(i).getFactura();
+                        text[2] = String.valueOf( listarecibo.get(i).getAbono());
+                        text[3] = String.valueOf(listarecibo.get(i).getSaldoRes());
+                        mIPosPrinterService.printColumnsText(text, width, align, 0, callback);
                     }
-                   ;
+
                     mIPosPrinterService.printBlankLines(1, 16, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("Saldo Total:C$ " + " " +saldo.getText().toString(), "ST", 24, callback);
-              //      mIPosPrinterService.printSpecifiedTypeText("observaciones" + " " + "__________________\n\n\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Abono Total:C$ " + " " + saldo2.getText().toString() + "\n\n\n\n", "ST", 24, callback);
+                    //      mIPosPrinterService.printSpecifiedTypeText("observaciones" + " " + "__________________\n\n\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Recibo" + " " + "_______________________\n\n\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Entrada" + " " + "______________________", "ST", 24, callback);
 
-                    mIPosPrinterService.printerPerformPrint(32,  callback);
-                    mIPosPrinterService.setPrinterPrintAlignment(0,callback);
+                    mIPosPrinterService.printerPerformPrint(32, callback);
+                    mIPosPrinterService.setPrinterPrintAlignment(0, callback);
                     mIPosPrinterService.printBlankLines(1, 16, callback);
                     mIPosPrinterService.printSpecifiedTypeText("**********END***********", "ST", 32, callback);
-                    mIPosPrinterService.printerPerformPrint(160,  callback);
-                //}
+                    mIPosPrinterService.printerPerformPrint(160, callback);
+                    //}
 
 
-                }catch (RemoteException e){
+                } catch (RemoteException e) {
                     e.printStackTrace();
                 }
             }
@@ -589,17 +580,15 @@ public class MainRecibo extends AppCompatActivity {
     }
 
     /**
-     *Funciones de la imprsora
-     *
-     * */
+     * Funciones de la imprsora
+     */
 
-    void ejecutarGuardado()
-    {
+    void ejecutarGuardado() {
         try {
 
             AgregarReciboSQLSEVER();
             GuardarReciboSQLite();
-            Snackbar snackbar= Snackbar.make(cuerpo,"Guardando recibo!!",Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(cuerpo, "Guardando recibo!!", Snackbar.LENGTH_LONG);
             snackbar.show();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -635,7 +624,7 @@ public class MainRecibo extends AppCompatActivity {
         DBConnection sesion;
         sesion = DBConnection.getDbConnection();
 
-        String query =( "exec sp_BuscarClienteFacturaMovil '"+tvIdclienyte.getText().toString() + "'");
+        String query = ("exec sp_BuscarClienteFacturaMovil '" + tvIdclienyte.getText().toString() + "'");
         try {
             Statement stm = sesion.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
@@ -645,8 +634,8 @@ public class MainRecibo extends AppCompatActivity {
             while (rs.next()) {
                 data.add(rs.getString("IdFactura"));
                 zona.setText(rs.getString("Zona"));
-                idClientesRecibo=(rs.getInt("idCliente"));
-                System.out.println("ID CLIENTE RECIBO: "+idClientesRecibo);
+                idClientesRecibo = (rs.getInt("idCliente"));
+                System.out.println("ID CLIENTE RECIBO: " + idClientesRecibo);
             }
             NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
         } catch (SQLException e) {
@@ -654,27 +643,48 @@ public class MainRecibo extends AppCompatActivity {
         }
         return NoCoreAdapter;
     }
+    public void CalcularTotalAbono() {
+        conexionSQLiteHelper conn = new conexionSQLiteHelper(this, "bd_productos", null, 1);
+        SQLiteDatabase db = conn.getReadableDatabase();
+        String total="select sum(abono ) as Total from recibo";
+        Cursor query =  db.rawQuery(total,null);
 
-    public void calcularsaldo(){
+        if (query.moveToFirst()){
+             totalabono= query.getString(query.getColumnIndex("Total"));
+
+
+            System.out.println("====> Prueba;"+totalabono);
+            saldo2.setText(totalabono);
+
+            Coversion_Numero_Letra convertir = new Coversion_Numero_Letra();
+            letra = convertir.Convertir(totalabono, true);
+            System.out.println("vonvercion de total abono====> "+letra);
+        }
+
+        db.close();
+
+
+    }
+
+    public void calcularsaldo() {
         DBConnection sesion;
-        sesion=DBConnection.getDbConnection();
-        String query="exec sp_SaldoFacturaMovil " + BuscadorFactura.getSelectedItem();
+        sesion = DBConnection.getDbConnection();
+        String query = "exec sp_SaldoFacturaMovil " + BuscadorFactura.getSelectedItem();
 
         try {
             Statement stm = sesion.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
 
             ArrayList<String> data = new ArrayList<>();
-            while (rs.next()){
-              tvIdCuentasxCobrar.setText( rs.getString("idCuentasxCobrar"));
+            while (rs.next()) {
+                tvIdCuentasxCobrar.setText(rs.getString("idCuentasxCobrar"));
 
-              SaldoR = rs.getDouble("SaldoRestante");
-              saldo.setText(SaldoR.toString());
-              Coversion_Numero_Letra convertir = new Coversion_Numero_Letra();
-             letra= convertir.Convertir(SaldoR.toString(),true);
+                SaldoR = rs.getDouble("SaldoRestante");
+                saldo.setText(SaldoR.toString());
+
 
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -702,7 +712,7 @@ public class MainRecibo extends AppCompatActivity {
         values.put(utilidadesFact.CAMPO_SALDO_RES, saldo.getText().toString());
         values.put(utilidadesFact.CAMPO_NUMERO_RESF, IdPagosCxC);
         long idResultante = db.insert(utilidadesFact.TABLA_RECIBO, utilidadesFact.CAMPO_NOMBRE_CLIEBTE, values);
-       // Toast.makeText(this, "agregado: " + idResultante, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "agregado: " + idResultante, Toast.LENGTH_SHORT).show();
         db.close();
     }
 
@@ -710,13 +720,13 @@ public class MainRecibo extends AppCompatActivity {
 
         /*mandando a llamar conexion a SQLite */
         conexionSQLiteHelper conn = new conexionSQLiteHelper(this, "bd_productos", null, 1);
-        SQLiteDatabase db=conn.getReadableDatabase();
+        SQLiteDatabase db = conn.getReadableDatabase();
         FacturasAdd facturasAdd = null;
-        listarecibo=new ArrayList<FacturasAdd>();
+        listarecibo = new ArrayList<FacturasAdd>();
         //query SQLite
-        Cursor cursor=db.rawQuery("select * from "+ utilidadesFact.TABLA_RECIBO,null);
-        while (cursor.moveToNext()){
-            facturasAdd=new FacturasAdd();
+        Cursor cursor = db.rawQuery("select * from " + utilidadesFact.TABLA_RECIBO, null);
+        while (cursor.moveToNext()) {
+            facturasAdd = new FacturasAdd();
             facturasAdd.setNombreCliente(cursor.getString(0));
             facturasAdd.setFactura(cursor.getString(1));
             facturasAdd.setFecha(cursor.getString(2));
@@ -731,9 +741,9 @@ public class MainRecibo extends AppCompatActivity {
         printText();
     }
 
-    public void borrardatosTabla(){
+    public void borrardatosTabla() {
         conexionSQLiteHelper conn = new conexionSQLiteHelper(this, "bd_productos", null, 1);
-        SQLiteDatabase db=conn.getReadableDatabase();
+        SQLiteDatabase db = conn.getReadableDatabase();
         db.execSQL("delete from recibo");
         db.close();
     }
@@ -745,83 +755,68 @@ public class MainRecibo extends AppCompatActivity {
 
         try {
             dbConnection.getConnection().setAutoCommit(false);
-            Statement st= dbConnection.getConnection().createStatement();
+            Statement st = dbConnection.getConnection().createStatement();
             ResultSet rs = st.executeQuery("select top 1 NumeracionInicial from Talonarios order by idTalonario desc");
-            while (rs.next()){
-                NumeracionInicial=rs.getInt("NumeracionInicial");
-                numeracion= NumeracionInicial+1;
-                System.out.println("==============> Ultimo Registro NumeroInicial :"+numeracion);
+            while (rs.next()) {
+                NumeracionInicial = rs.getInt("NumeracionInicial");
+                numeracion = NumeracionInicial + 1;
+                System.out.println("==============> Ultimo Registro NumeroInicial :" + numeracion);
 
             }
 
-            PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertTalonario ?,?,?");
+            PreparedStatement pst = dbConnection.getConnection().prepareStatement("exec sp_insertTalonario ?,?,?");
             pst.setInt(1, Integer.parseInt(String.valueOf(id)));
             pst.setInt(2, Integer.parseInt(String.valueOf(numeracion)));
-            pst.setString(3,vendedor.getText().toString());
+            pst.setString(3, vendedor.getText().toString());
             pst.executeUpdate();
 
-            Statement st2= dbConnection.getConnection().createStatement();
+            Statement st2 = dbConnection.getConnection().createStatement();
             ResultSet rs2 = st2.executeQuery("select top 1 idTalonario from Talonarios order by idTalonario desc");
             while (rs2.next()) {
-                IdTalonario = rs2   .getInt("idTalonario");
+                IdTalonario = rs2.getInt("idTalonario");
                 System.out.println("==============> Ultimo Registro IdTalonario :" + IdTalonario);
             }
 
 
-            PreparedStatement pst2 = dbConnection.getConnection().prepareStatement( "  exec sp_insertPagoCxC ?,?,?,?,?");
-            pst2.setInt(1,Integer.parseInt(String.valueOf(IdTalonario)));
-            pst2.setDouble(2,Double.parseDouble(abono.getText().toString()));
-            pst2.setInt(3,Integer.parseInt(String.valueOf(idClientesRecibo)));
-            pst2.setString(4,observacion.getText().toString());
-            pst2.setString(5,tvIdclienyte.getText().toString());
+            PreparedStatement pst2 = dbConnection.getConnection().prepareStatement("  exec sp_insertPagoCxC ?,?,?,?,?");
+            pst2.setInt(1, Integer.parseInt(String.valueOf(IdTalonario)));
+            pst2.setDouble(2, Double.parseDouble(abono.getText().toString()));
+            pst2.setInt(3, Integer.parseInt(String.valueOf(idClientesRecibo)));
+            pst2.setString(4, observacion.getText().toString());
+            pst2.setString(5, tvIdclienyte.getText().toString());
             pst2.executeUpdate();
 
-            Statement st3= dbConnection.getConnection().createStatement();
+            Statement st3 = dbConnection.getConnection().createStatement();
             ResultSet rs3 = st3.executeQuery("select top 1 idPagoCxC from Pagos_CxC order by idPagoCxC desc");
             while (rs3.next()) {
                 IdPagosCxC = rs3.getInt("idPagoCxC");
                 System.out.println("==============> Ultimo Registro IdPagosCxC :" + IdPagosCxC);
             }
 
-            PreparedStatement pst3 = dbConnection.getConnection().prepareStatement( " exec sp_insertDetallePagoCxC ?,?,?,?");
-            pst3.setInt(1,Integer.parseInt(String.valueOf(IdPagosCxC)));
-            pst3.setInt(2,Integer.parseInt(tvIdCuentasxCobrar.getText().toString()));
-            pst3.setDouble(3,Double.parseDouble(abono.getText().toString()));
-            pst3.setDouble(4,Double.parseDouble(descuento.getText().toString()));
+            PreparedStatement pst3 = dbConnection.getConnection().prepareStatement(" exec sp_insertDetallePagoCxC ?,?,?,?");
+            pst3.setInt(1, Integer.parseInt(String.valueOf(IdPagosCxC)));
+            pst3.setInt(2, Integer.parseInt(tvIdCuentasxCobrar.getText().toString()));
+            pst3.setDouble(3, Double.parseDouble(abono.getText().toString()));
+            pst3.setDouble(4, Double.parseDouble(descuento.getText().toString()));
             pst3.executeUpdate();
 
-            if (Double.parseDouble(saldo.getText().toString())<0){
-                PreparedStatement pst4 = dbConnection.getConnection().prepareStatement( "exec sp_insertNotaDebito ?,?,?");
-                pst4.setInt(1,Integer.parseInt(String.valueOf(IdPagosCxC)));
-                pst4.setInt(2,Integer.parseInt(String.valueOf(idClientesRecibo)));
-                pst4.setDouble(3,Double.parseDouble(saldo.getText().toString())*-1);
+            if (Double.parseDouble(saldo.getText().toString()) < 0) {
+                PreparedStatement pst4 = dbConnection.getConnection().prepareStatement("exec sp_insertNotaDebito ?,?,?");
+                pst4.setInt(1, Integer.parseInt(String.valueOf(IdPagosCxC)));
+                pst4.setInt(2, Integer.parseInt(String.valueOf(idClientesRecibo)));
+                pst4.setDouble(3, Double.parseDouble(saldo.getText().toString()) * -1);
                 pst4.executeUpdate();
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             dbConnection.getConnection().rollback();
-            System.out.println("ERROR: ======> "+e);
-            Snackbar snackbar= Snackbar.make(cuerpo,"No Registrado SQLServer",Snackbar.LENGTH_LONG);
+            System.out.println("ERROR: ======> " + e);
+            Snackbar snackbar = Snackbar.make(cuerpo, "No Registrado SQLServer", Snackbar.LENGTH_LONG);
             snackbar.show();
-        }finally {
+        } finally {
 
             dbConnection.getConnection().setAutoCommit(true);
         }
 
 
     }
-
-    /*
-    public void CalcularTotalAbono(){
-        SQLiteDatabase db= conn.getReadableDatabase();
-        String total="select sum(abono+abono) as Total from recibo";
-        Cursor query =  db.rawQuery(total,null);
-        if (query.moveToFirst()){
-            TotalAbono= query.getString(query.getColumnIndex("Total"));
-            System.out.println("TOTAL DEL ABONO  ACTUALMENTE ES : ----> "+TotalAbono);
-
-            //textV_total.setText(TotalFact);
-        }
-        db.close();
-    }*/
 }

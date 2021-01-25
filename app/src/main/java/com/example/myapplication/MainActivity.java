@@ -25,7 +25,7 @@ import java.sql.Statement;
 public class MainActivity extends AppCompatActivity{
     EditText editPint;
     Button btn_entar;
-    TextView usuario;
+
     String NombreVendedor;
 
     @Override
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity{
 
         editPint = (EditText) findViewById(R.id.edit_Pin);
         btn_entar = (Button) findViewById(R.id.btn_entrar);
-        usuario = findViewById(R.id.usuario);
+
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

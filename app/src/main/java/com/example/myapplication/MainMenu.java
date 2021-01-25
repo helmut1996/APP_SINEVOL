@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.myapplication.ConexionBD.DBConnection;
 
@@ -21,19 +22,24 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     int id;
     String nombreVendedor;
     Intent i;
-
+    TextView titulo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         getSupportActionBar().setTitle("Menu Principal");
+
         id=getIntent().getIntExtra("IdVendedor",0);
         Bundle extra=getIntent().getExtras();
         if (extra != null) {
+
             nombreVendedor = extra.getString("NombreVendedor");
             System.out.println("----> NombreVendedor: " + nombreVendedor);
+
+
         }
 
+        titulo=findViewById(R.id.tv_titulo);
         btn_factura = findViewById(R.id.btnfactura);
         btn_cuentas =  findViewById(R.id.btnrecibo);
         btn_recibo =  findViewById(R.id.btncuenta);
@@ -42,6 +48,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         btn_recibo.setOnClickListener(this);
         btn_cuentas.setOnClickListener(this);
         btn_cerrar.setOnClickListener(this);
+        titulo.setText(nombreVendedor);
     }
 
 
