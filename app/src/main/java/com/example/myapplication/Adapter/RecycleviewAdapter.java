@@ -1,5 +1,6 @@
 package com.example.myapplication.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -93,6 +94,7 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
                     intent.putExtra("Zonacliente",zona.getText());
                     intent.putExtra("Idcliente",idcliente.getText());
                     context.startActivity(intent);
+                    ((Activity)context).finish();
 
 
                 }

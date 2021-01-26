@@ -61,17 +61,17 @@
     </string-array>
 
     <string-array name="precios">
-    <item>precio1:200 C$</item>
+        <item>precio1:200 C$</item>
         <item>Precio2:500 C$</item>
         <item>Precio3: 0 C$</item>
         <item>Precio4: 0 C$</item>
         <item>Precio5: 0 C$</item>
     </string-array>
 
-<string-array name="tipo_moneda">
-    <item>Cordoba</item>
-    <item>Dolar</item>
-</string-array>
+    <string-array name="tipo_moneda">
+        <item>Cordoba</item>
+        <item>Dolar</item>
+    </string-array>
 
 
     <string-array name="tipo_ventas">

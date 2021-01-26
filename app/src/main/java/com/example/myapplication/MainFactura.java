@@ -59,7 +59,7 @@ public class MainFactura extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Clientes");
+        getSupportActionBar().setTitle(" Lista Clientes");
 
 
         id=getIntent().getIntExtra("Id",0);

@@ -68,6 +68,8 @@ public static String IDVendedor;
         getSupportActionBar().setTitle("Facturacion");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+
         textV_Codigo = findViewById(R.id.textViewCodigo);
         textV_Cliente = findViewById(R.id.textViewcliente);
         textV_zona = findViewById(R.id.textView_Zona);

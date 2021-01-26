@@ -258,7 +258,7 @@ int IdVendedor;
                     snackbar.show();
                 } else if(Integer.parseInt(editcantidad.getText().toString())>Integer.parseInt(textcontar.getText().toString())){
                     //Toast.makeText(this,"no hay disponible",Toast.LENGTH_SHORT).show();
-                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"No hay disponible!!",Snackbar.LENGTH_LONG);
+                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"no hay inventario suficiente  de este producto ",Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
                 else{
@@ -292,7 +292,7 @@ int IdVendedor;
                     snackbar.show();
   //                      Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
                 }else if(Integer.parseInt(editcantidad.getText().toString())>Integer.parseInt(textcontar.getText().toString())){
-                    Toast.makeText(this,"no hay inventario suficiente  de este producto ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"no hay inventario suficiente  de este producto ",Toast.LENGTH_LONG).show();
                 }
                 else {
 
@@ -316,10 +316,8 @@ int IdVendedor;
 
         Cursor c=db.rawQuery("SELECT * FROM producto WHERE id='"+tvIDproducto.getText()+"'", null);
         if(c.moveToFirst()) {
-           // Toast.makeText(this,"Error ya existe este registro",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Error ya seleccionaste este Producto",Toast.LENGTH_LONG).show();
 
-            Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"Error ya esta registrado!!",Snackbar.LENGTH_LONG);
-            snackbar.show();
         }
         else { // Inserting record
             ContentValues values= new ContentValues();

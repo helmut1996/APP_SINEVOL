@@ -1,5 +1,6 @@
 package com.example.myapplication.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -106,6 +107,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
                     intent.putExtra("idproducto",tvidproducto.getText());
 
                     context.startActivity(intent);
+                    ((Activity)context).finish();
                 }
             });
 
