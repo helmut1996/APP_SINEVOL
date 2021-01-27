@@ -162,7 +162,18 @@ import java.util.List;
 
             while (rs.next()){
 
-                listProducto.add(new ModelItemsProducto(rs.getString("Nombre"),rs.getString("UM"),rs.getDouble("Precio1"), rs.getString("Producto"),rs.getString("info1"),rs.getString("info2"),rs.getString("info3"),rs.getString("info4"),rs.getString("info5"),rs.getString("ImagenApk"),rs.getInt("Stock"),rs.getInt("idInventario")));
+                listProducto.add(new ModelItemsProducto(rs.getString("Nombre"),
+                        rs.getString("UM"),
+                        rs.getDouble("Precio1"),
+                        rs.getString("Producto"),
+                        rs.getString("info1"),
+                        rs.getString("info2"),
+                        rs.getString("info3"),
+                        rs.getString("info4"),
+                        rs.getString("info5"),
+                        rs.getString("ImagenApk"),
+                        rs.getInt("Stock"),
+                        rs.getInt("idInventario")));
             }
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();

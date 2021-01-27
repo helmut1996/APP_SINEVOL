@@ -43,7 +43,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="3dp"
             android:orientation="horizontal">
 
             <TextView
@@ -62,13 +62,14 @@
                 android:layout_weight="1"
                 android:text="@string/nombre_vendedor"
                 android:textAllCaps="true"
-                android:textColor="#121111" />
+                android:textColor="#121111"
+                android:gravity="right"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="3dp"
             android:orientation="horizontal">
 
             <TextView
@@ -90,7 +91,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="3dp"
             android:orientation="horizontal">
 
             <TextView
@@ -109,7 +110,8 @@
                 android:layout_weight="1"
                 android:text="@string/L_zona"
                 android:textAllCaps="true"
-                android:textColor="#0E0C0C" />
+                android:textColor="#0E0C0C"
+                android:gravity="right"/>
         </LinearLayout>
 
         <LinearLayout
@@ -139,7 +141,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="3dp"
             android:orientation="horizontal">
 
             <TextView
@@ -166,7 +168,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_margin="5dp">
+            android:layout_margin="2dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -183,7 +185,17 @@
                 android:textColor="@color/black"
                 android:textAllCaps="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:gravity="right"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="C$"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:gravity="right"/>
 
 
         </LinearLayout>
@@ -223,7 +235,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_margin="5dp">
+            android:layout_margin="3dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -250,20 +262,11 @@
     </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="3dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginBottom="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lista Productos"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:layout_gravity="center_horizontal"
-                />
 
 
             <ListView

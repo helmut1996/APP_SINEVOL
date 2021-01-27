@@ -243,15 +243,6 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/btn_Agregar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Cancelar"
-                android:textSize="12sp"
-              android:src="@drawable/ic_baseline_add_circle"  />
-
-            <ImageButton
                 android:id="@+id/btn_siguente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

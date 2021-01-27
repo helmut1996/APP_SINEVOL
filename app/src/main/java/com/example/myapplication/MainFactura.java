@@ -128,7 +128,10 @@ private List<ClasslistItemC>obtenerclientesBD(){
 
             ResultSet rs=st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo,idCliente from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc");
             while(rs.next()){
-                listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),rs.getString("Direccion"),rs.getInt("Codigo"),rs.getInt("idCliente")));
+                listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),
+                        rs.getString("Direccion"),
+                        rs.getInt("Codigo"),
+                        rs.getInt("idCliente")));
 
             }
 

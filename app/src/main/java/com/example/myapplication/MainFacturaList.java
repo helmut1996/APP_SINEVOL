@@ -3,7 +3,10 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -164,27 +167,72 @@ getMenuInflater().inflate(R.menu.menu,menu);
                 switch (item.getItemId()){
                     case R.id.Mbtn_guardar:
 
-                        try {
-                            AgregarDatosSQLSEVER();
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                        borrardatosTabla();
-                        Toast.makeText(this,"Guardar",Toast.LENGTH_SHORT).show();
-                        Intent refresh = new Intent(this, MainMenu.class);
-                        startActivity(refresh);
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(MainFacturaList.this);
+                        alerta.setMessage("Quieres Guardar")
+                                .setCancelable(false)
+                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                           try {
+
+                                             AgregarDatosSQLSEVER();
+                                        }
+                                        catch (SQLException e)
+                                         {
+                                            e.printStackTrace();
+                                        }
+                                             borrardatosTabla();
+                                          Toast.makeText(getApplicationContext(),"Guardar",Toast.LENGTH_SHORT).show();
+                                            Intent refresh = new Intent(getApplicationContext(), MainMenu.class);
+                                            startActivity(refresh);
+
+                                    }
+                                })
+                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        AlertDialog alertDialog= alerta.create();
+                        alertDialog.setTitle("Guardar Prefactura");
+                        alertDialog.show();
+
                         break;
+
                     case R.id.Mbtn_addProducto:
                         Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
                         startActivity(intent2);
                         break;
                     case R.id.Mbtn_Home:
-                        Intent intent3 = new Intent(getApplicationContext(),MainMenu.class);
-                        startActivity(intent3);
-                      //  RecargarDatos.llenarProductosBD("");
-                        borrardatosTabla();
-                        finish();
 
+
+                        AlertDialog.Builder alerta2 = new AlertDialog.Builder(MainFacturaList.this);
+                        alerta2.setMessage("Regresar al menu principal")
+                                .setCancelable(false)
+                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        Intent intent3 = new Intent(getApplicationContext(),MainMenu.class);
+                                        startActivity(intent3);
+                                        borrardatosTabla();
+                                        // finish();
+
+                                    }
+                                })
+                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        AlertDialog titulo= alerta2.create();
+                        titulo.setTitle("Advertencia");
+                        titulo.show();
 
                 }
 
@@ -228,7 +276,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
             TotalFact= query.getString(query.getColumnIndex("Total"));
             System.out.println("TOTAL DE LA FACTURA ACTUALMENTE ES : ----> "+TotalFact);
 
-            textV_total.setText(TotalFact);
+            textV_total.setText(TotalFact );
         }
         db.close();
     }
@@ -247,14 +295,13 @@ getMenuInflater().inflate(R.menu.menu,menu);
     public  void AgregarDatosSQLSEVER() throws SQLException {
         Date hoy= new Date();
 
-
         java.sql.Date dataStartSql = new java.sql.Date(hoy.getTime());
         DBConnection dbConnection = new DBConnection();
         dbConnection.conectar();
 
         try {
             dbConnection.getConnection().setAutoCommit(false);
-            PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertPrefact ?,?,?,?,?,?,?");
+            PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertPrefacturas ?,?,?,?,?,?,?");
             pst.setInt(1, Integer.parseInt(textIdcliente.getText().toString()));
             pst.setInt(2, Integer.parseInt(textIdvendedor.getText().toString()));
             pst.setString(3, T_factura.getSelectedItem().toString()
@@ -266,7 +313,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
             pst.executeUpdate();
 
             Statement st= dbConnection.getConnection().createStatement();
-             ResultSet rs = st.executeQuery("select top 1 idPrefactura from Prefactura order by idPrefactura desc");
+             ResultSet rs = st.executeQuery("select top 1 idPrefactura from Prefacturas order by idPrefactura desc");
              while (rs.next()){
                  valor  = rs.getString("idPrefactura");
                  System.out.println("==============> Ultimo Registro:"+valor);
@@ -274,7 +321,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
              }
 
             for (int i=0; i<listaproducto.size();i++){
-                PreparedStatement pst2 = dbConnection.getConnection().prepareStatement( "exec sp_insertDetallePrefact ?,?,?,?,?,?");
+                PreparedStatement pst2 = dbConnection.getConnection().prepareStatement( "exec sp_insertDetallePrefacturas ?,?,?,?,?,?");
                 pst2.setInt(1, Integer.parseInt(valor));
                 pst2.setInt(2, listaproducto.get(i).getId_producto());//idInventario
                 pst2.setDouble(3, listaproducto.get(i).getPrecios());//precio cordobas

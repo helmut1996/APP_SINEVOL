@@ -94,7 +94,7 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
                     intent.putExtra("Zonacliente",zona.getText());
                     intent.putExtra("Idcliente",idcliente.getText());
                     context.startActivity(intent);
-                    ((Activity)context).finish();
+                   
 
 
                 }

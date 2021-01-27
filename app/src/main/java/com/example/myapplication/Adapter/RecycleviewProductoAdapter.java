@@ -50,6 +50,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
         holder.tvimagen.setText(listaProducto.get(position).getImg());
         holder.tvcantidad.setText(String.valueOf(listaProducto.get(position).getStock()));
         holder.tvidproducto.setText(String.valueOf(listaProducto.get(position).getIdproducto()));
+
     }
 
     @Override
@@ -107,7 +108,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
                     intent.putExtra("idproducto",tvidproducto.getText());
 
                     context.startActivity(intent);
-                    ((Activity)context).finish();
+
                 }
             });
 

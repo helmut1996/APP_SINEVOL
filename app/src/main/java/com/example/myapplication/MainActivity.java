@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.StrictMode;
@@ -33,9 +35,21 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ////////comprobacion de internet
+       /* ConnectivityManager con = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        Boolean eswifi = con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
+
+
+        if (!eswifi) {
+            startActivity(new Intent(MainActivity.this, MainError_Internet.class));
+
+        } else{
+            Toast.makeText(getApplicationContext(),"Dispositivo Conectado",Toast.LENGTH_LONG).show();
+        }
+
+*/
         editPint = (EditText) findViewById(R.id.edit_Pin);
         btn_entar = (Button) findViewById(R.id.btn_entrar);
-
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -54,7 +68,6 @@ public class MainActivity extends AppCompatActivity{
                 Statement stm = dbConnection.getConnection().createStatement();
                 ResultSet rs = stm.executeQuery("Select IdVendedor, Nombre From Vendedores where Pin='" + editPint.getText().toString() + "'");
                 if (rs.next()) {
-                    //usuario.setText(rs.getString(2));
                     NombreVendedor= rs.getString(2);
                     int id=rs.getInt(1);
                     Intent i = new Intent(this,MainMenu.class);

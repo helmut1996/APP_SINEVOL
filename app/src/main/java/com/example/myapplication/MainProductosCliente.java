@@ -41,7 +41,7 @@ import java.util.ArrayList;
 
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
     /*variables de los componentes de la vista*/
-private ImageButton IbuttonAgregar,IbuttonSiguiente;
+private ImageButton IbuttonSiguiente;
 private TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvcontadorproducto,tvimagenBD,tvIDproducto;
 private Spinner precios,monedas;
 private ImageView img;
@@ -56,8 +56,9 @@ String ZonaCliente;
 String IdCliente;
 int IdVendedor;
 
- private String producto;
-
+    private String producto;
+    double precioEscogido;
+    int idResultante;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -75,7 +76,7 @@ int IdVendedor;
 
         cuerpoProductCliente=findViewById(R.id.linearLayoutClienteProducto);
         ///////// Botones
-        IbuttonAgregar = findViewById(R.id.btn_Agregar);
+
         IbuttonSiguiente = findViewById(R.id.btn_siguente);
 
         editcantidad=findViewById(R.id.editTextCantidad);
@@ -96,7 +97,6 @@ int IdVendedor;
         precios = findViewById(R.id.spinerPrecios);
         monedas = findViewById(R.id.spinner_tipo_moneda);
 
-        IbuttonAgregar.setOnClickListener(this);
         IbuttonSiguiente.setOnClickListener(this);
 
 //////////////////////////////pasando datos por parametros entre activitys/////////////////////////////////
@@ -166,6 +166,50 @@ int IdVendedor;
         /*mandando a llamar las imagenes libreria */
                                         cargarImagen();
      }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu3,menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        precioEscogido= (Double.parseDouble(precios.getSelectedItem().toString()));
+        switch (item.getItemId()){
+            case R.id.Mbtn_MenuAdd:
+
+                System.out.println("Valor del precio===========>"+precioEscogido);
+                if (editcantidad.getText().toString().isEmpty()){
+                    editcantidad.setError("Debe Ingresar una cantidad");
+                }else if(Integer.parseInt(editcantidad.getText().toString())==0){
+
+                    editcantidad.setError("la cantidad no puede ser 0");
+                }else if (precioEscogido == 0){
+                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"Precio seleccionado es  0!!",Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    //                      Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
+                }else if(Integer.parseInt(editcantidad.getText().toString())>Integer.parseInt(textcontar.getText().toString())){
+                    Toast.makeText(this,"no hay inventario suficiente  de este producto ",Toast.LENGTH_LONG).show();
+                }
+                else {
+
+                    GuardarProductos();
+
+                    Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
+                    startActivity(intent2);
+                }
+
+                break;
+
+
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private void checkExternalStoragePermission() {
         int permissionCheck = ContextCompat.checkSelfPermission(
@@ -243,7 +287,7 @@ int IdVendedor;
 
     @Override
     public void onClick(View v) {
-        double precioEscogido = (Double.parseDouble(precios.getSelectedItem().toString()));
+        precioEscogido= (Double.parseDouble(precios.getSelectedItem().toString()));
         switch (v.getId()){
 
             case R.id.btn_siguente:
@@ -260,8 +304,7 @@ int IdVendedor;
                     //Toast.makeText(this,"no hay disponible",Toast.LENGTH_SHORT).show();
                     Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"no hay inventario suficiente  de este producto ",Snackbar.LENGTH_LONG);
                     snackbar.show();
-                }
-                else{
+                } else{
                     GuardarProductos();
 
                     MainListaproducto datos= new MainListaproducto();
@@ -275,31 +318,6 @@ int IdVendedor;
                     intent1.putExtra("nombreproducto",tvnombreproducto.getText());
                     intent1.putExtra("cantidad",editcantidad.getText());
                     startActivity(intent1);
-                }
-
-                break;
-            case R.id.btn_Agregar:
-                // implementar agregar
-
-                System.out.println("Valor del precio===========>"+precioEscogido);
-                if (editcantidad.getText().toString().isEmpty()){
-                    editcantidad.setError("Debe Ingresar una cantidad");
-                }else if(Integer.parseInt(editcantidad.getText().toString())==0){
-
-                    editcantidad.setError("la cantidad no puede ser 0");
-                }else if (precioEscogido == 0){
-                    Snackbar snackbar= Snackbar.make(cuerpoProductCliente,"Precio seleccionado es  0!!",Snackbar.LENGTH_LONG);
-                    snackbar.show();
-  //                      Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
-                }else if(Integer.parseInt(editcantidad.getText().toString())>Integer.parseInt(textcontar.getText().toString())){
-                    Toast.makeText(this,"no hay inventario suficiente  de este producto ",Toast.LENGTH_LONG).show();
-                }
-                else {
-
-                    GuardarProductos();
-
-                    Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
-                    startActivity(intent2);
                 }
 
                 break;
@@ -326,8 +344,14 @@ int IdVendedor;
             values.put(utilidades.CAMPO_CANTIDAD,editcantidad.getText().toString());
             values.put(utilidades.CAMPO_PRECIO,precios.getSelectedItem().toString());
             values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
-            long idResultante= db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
-            Toast.makeText(this,"CANTIDAD INGRESADA: " + idResultante,Toast.LENGTH_SHORT).show();
+
+            if (idResultante<=5){
+                idResultante= (int) db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
+                Toast.makeText(this,"CANTIDAD INGRESADA: " + idResultante,Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this,"sobre pasa limite para agregar productos  " ,Toast.LENGTH_SHORT).show();
+            }
+
 
         }
 

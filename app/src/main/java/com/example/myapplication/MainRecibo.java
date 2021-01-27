@@ -472,6 +472,7 @@ public class MainRecibo extends AppCompatActivity {
         imprimir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (getPrinterStatus() == PRINTER_NORMAL)
                     Consultarlista();
                 buscadorCliente.setEnabled(true);
@@ -533,7 +534,7 @@ public class MainRecibo extends AppCompatActivity {
 
                 try {
 
-                    // for (int p=0; p<2;p++){
+                     for (int p=0; p<2;p++){
 
                     mIPosPrinterService.printSpecifiedTypeText(" \t\t RECIBO\n", "ST", 48, callback);
                     mIPosPrinterService.printSpecifiedTypeText(vendedor.getText().toString(), "ST", 32, callback);
@@ -567,7 +568,6 @@ public class MainRecibo extends AppCompatActivity {
 
                     mIPosPrinterService.printBlankLines(1, 16, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Saldo Total:C$ " + " " + totalSaldo + "\n\n\n\n", "ST", 24, callback);
-                    //      mIPosPrinterService.printSpecifiedTypeText("observaciones" + " " + "__________________\n\n\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Recibo" + " " + "_______________________\n\n\n", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Entrada" + " " + "______________________", "ST", 24, callback);
 
@@ -576,7 +576,7 @@ public class MainRecibo extends AppCompatActivity {
                     mIPosPrinterService.printBlankLines(1, 16, callback);
                     mIPosPrinterService.printSpecifiedTypeText("**********END***********", "ST", 32, callback);
                     mIPosPrinterService.printerPerformPrint(160, callback);
-                    //}
+                    }
 
 
                 } catch (RemoteException e) {
@@ -789,7 +789,8 @@ public class MainRecibo extends AppCompatActivity {
             pst.executeUpdate();
 
             Statement st2 = dbConnection.getConnection().createStatement();
-            ResultSet rs2 = st2.executeQuery("select top 1 idTalonario from Talonarios order by idTalonario desc");
+            ResultSet rs2 = st2.executeQuery("\n" +
+                    "select top 1 idTalonario,idVendedor from Talonarios where idVendedor =' "+id+ "'  order by idTalonario desc");
             while (rs2.next()) {
                 IdTalonario = rs2.getInt("idTalonario");
                 System.out.println("==============> Ultimo Registro IdTalonario :" + IdTalonario);

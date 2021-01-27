@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -38,10 +39,17 @@ public class ClassDialogFactura extends DialogFragment {
         View view = inflater.inflate(R.layout.detalle_factura,null);
 
         builder.setView(view)
-                .setTitle("Detalle Factura")
+                .setTitle("Detalle Producto")
                 .setPositiveButton("Actualizar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Intent refresh = new Intent(getContext(), MainFacturaList.class);
+                        refresh.putExtra("NombreCliente",variable.NombreCliente);
+                        refresh.putExtra("CodigoCliente",variable.CodigoCliente);
+                        refresh.putExtra("ZonaCliente",variable.ZonaCliente);
+                        refresh.putExtra("IdCliente",variable.IDCliente);
+                        refresh.putExtra("IdVendedor",variable.IDVendedor);
+                        startActivity(refresh);
                         ActualizarDatosSQLite();
 
                     }
@@ -49,6 +57,14 @@ public class ClassDialogFactura extends DialogFragment {
                 .setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Intent refresh = new Intent(getContext(), MainFacturaList.class);
+                        refresh.putExtra("NombreCliente",variable.NombreCliente);
+                        refresh.putExtra("CodigoCliente",variable.CodigoCliente);
+                        refresh.putExtra("ZonaCliente",variable.ZonaCliente);
+                        refresh.putExtra("IdCliente",variable.IDCliente);
+                        refresh.putExtra("IdVendedor",variable.IDVendedor);
+                        startActivity(refresh);
+
                         EliminarDatosSQLite();
 
 
@@ -96,15 +112,6 @@ public class ClassDialogFactura extends DialogFragment {
         db.close();
 
         Toast.makeText(getContext(),"Actualizado!!!",Toast.LENGTH_SHORT).show();
-        Intent refresh = new Intent(getContext(), MainFacturaList.class);
-        refresh.putExtra("NombreCliente",variable.NombreCliente);
-        refresh.putExtra("CodigoCliente",variable.CodigoCliente);
-        refresh.putExtra("ZonaCliente",variable.ZonaCliente);
-        refresh.putExtra("IdCliente",variable.IDCliente);
-        refresh.putExtra("IdVendedor",variable.IDVendedor);
-        startActivity(refresh);
-
-
     }
 
     private void EliminarDatosSQLite() {
@@ -112,13 +119,6 @@ public class ClassDialogFactura extends DialogFragment {
         SQLiteDatabase db=conn.getReadableDatabase();
         db.execSQL("DELETE FROM producto WHERE id = "+precio_D.getText().toString()+" ");
         db.close();
-      Intent refresh = new Intent(getContext(), MainFacturaList.class);
-        refresh.putExtra("NombreCliente",variable.NombreCliente);
-        refresh.putExtra("CodigoCliente",variable.CodigoCliente);
-        refresh.putExtra("ZonaCliente",variable.ZonaCliente);
-        refresh.putExtra("IdCliente",variable.IDCliente);
-        refresh.putExtra("IdVendedor",variable.IDVendedor);
-        startActivity(refresh);
         Toast.makeText(getContext(),"Registro Eliminado!!!",Toast.LENGTH_SHORT).show();
     }
 
