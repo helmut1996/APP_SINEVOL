@@ -2,6 +2,7 @@ package com.example.myapplication.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +10,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.MainFactura;
+import com.example.myapplication.MainFacturaList;
 import com.example.myapplication.MainListaproducto;
+import com.example.myapplication.MainMenu;
 import com.example.myapplication.MainProductosCliente;
 import com.example.myapplication.R;
 import com.example.myapplication.modelos.ModelItemsProducto;
@@ -88,26 +92,74 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
                 public void onClick(View v) {
                     MainListaproducto datos = new MainListaproducto();
                     MainFactura datos2= new MainFactura();
-                   Intent intent=new Intent(context,MainProductosCliente.class);
-                   intent.putExtra("NombreCliente",datos.nombrecliente);
-                    intent.putExtra("CodigoCliente",datos.codigocliente);
-                    intent.putExtra("ZonaCliente",datos.zonacliente);
-                    intent.putExtra("IdCliente",datos.idcliente);
-                    intent.putExtra("IdVendedor",datos2.id);
+                   int stock= Integer.parseInt(tvcantidad.getText().toString());
+
+                    if (stock<100){
+                        AlertDialog.Builder alerta2 = new AlertDialog.Builder(context);
+                        alerta2.setMessage("Hay poca cantidad Disponible de este producto quieres agregarlo?")
+                                .setCancelable(false)
+                                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent=new Intent(context,MainProductosCliente.class);
+                                        intent.putExtra("NombreCliente",datos.nombrecliente);
+                                        intent.putExtra("CodigoCliente",datos.codigocliente);
+                                        intent.putExtra("ZonaCliente",datos.zonacliente);
+                                        intent.putExtra("IdCliente",datos.idcliente);
+                                        intent.putExtra("IdVendedor",datos2.id);
 
 
-                    intent.putExtra("NombreP",tvproducto.getText());
-                    intent.putExtra("UnidadMed",tvunidadM.getText());
-                    intent.putExtra("info1",tvinfo1.getText());
-                    intent.putExtra("info2",tvinfo2.getText());
-                    intent.putExtra("info3",tvinfo3.getText());
-                    intent.putExtra("info4",tvinfo4.getText());
-                    intent.putExtra("info5",tvinfo5.getText());
-                    intent.putExtra("imagenproducto",tvimagen.getText());
-                    intent.putExtra("stock",tvcantidad.getText());
-                    intent.putExtra("idproducto",tvidproducto.getText());
+                                        intent.putExtra("NombreP",tvproducto.getText());
+                                        intent.putExtra("UnidadMed",tvunidadM.getText());
+                                        intent.putExtra("info1",tvinfo1.getText());
+                                        intent.putExtra("info2",tvinfo2.getText());
+                                        intent.putExtra("info3",tvinfo3.getText());
+                                        intent.putExtra("info4",tvinfo4.getText());
+                                        intent.putExtra("info5",tvinfo5.getText());
+                                        intent.putExtra("imagenproducto",tvimagen.getText());
+                                        intent.putExtra("stock",tvcantidad.getText());
+                                        intent.putExtra("idproducto",tvidproducto.getText());
 
-                    context.startActivity(intent);
+
+                                        context.startActivity(intent);
+
+                                    }
+                                })
+                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        AlertDialog titulo= alerta2.create();
+                        titulo.setTitle(tvproducto.getText().toString());
+                        titulo.show();
+
+                    }else{
+                        Intent intent=new Intent(context,MainProductosCliente.class);
+                        intent.putExtra("NombreCliente",datos.nombrecliente);
+                        intent.putExtra("CodigoCliente",datos.codigocliente);
+                        intent.putExtra("ZonaCliente",datos.zonacliente);
+                        intent.putExtra("IdCliente",datos.idcliente);
+                        intent.putExtra("IdVendedor",datos2.id);
+
+
+                        intent.putExtra("NombreP",tvproducto.getText());
+                        intent.putExtra("UnidadMed",tvunidadM.getText());
+                        intent.putExtra("info1",tvinfo1.getText());
+                        intent.putExtra("info2",tvinfo2.getText());
+                        intent.putExtra("info3",tvinfo3.getText());
+                        intent.putExtra("info4",tvinfo4.getText());
+                        intent.putExtra("info5",tvinfo5.getText());
+                        intent.putExtra("imagenproducto",tvimagen.getText());
+                        intent.putExtra("stock",tvcantidad.getText());
+                        intent.putExtra("idproducto",tvidproducto.getText());
+
+
+                        context.startActivity(intent);
+
+                    }
 
                 }
             });

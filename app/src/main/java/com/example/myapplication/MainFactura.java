@@ -40,12 +40,12 @@ import java.util.List;
 public class MainFactura extends AppCompatActivity {
 
 
-   // VARIABLE PARA RECYCLEVIEW
+    // VARIABLE PARA RECYCLEVIEW
     RecyclerView recyclerViewCliente;
     RecycleviewAdapter adapterCliente;
     EditText search;
     List<ClasslistItemC> itemCList;
-   public static int id;
+    public static int id;
 
 
     @Override
@@ -62,8 +62,8 @@ public class MainFactura extends AppCompatActivity {
         getSupportActionBar().setTitle(" Lista Clientes");
 
 
-        id=getIntent().getIntExtra("Id",0);
-        System.out.println("ID vendedor activity lista cliente===========>"+ id);
+        id = getIntent().getIntExtra("Id", 0);
+        System.out.println("ID vendedor activity lista cliente===========>" + id);
 
         initview();
         initValues();
@@ -90,9 +90,9 @@ public class MainFactura extends AppCompatActivity {
     }
 
     private void filter(String text) {
-        ArrayList<ClasslistItemC>filteredlist = new ArrayList<>();
-        for (ClasslistItemC item: itemCList){
-            if (item.getNombre().toUpperCase().contains(search.getText().toString().toUpperCase())){
+        ArrayList<ClasslistItemC> filteredlist = new ArrayList<>();
+        for (ClasslistItemC item : itemCList) {
+            if (item.getNombre().toUpperCase().contains(search.getText().toString().toUpperCase())) {
                 filteredlist.add(item);
             }
         }
@@ -100,48 +100,67 @@ public class MainFactura extends AppCompatActivity {
 
     }
 
-    public void initview(){
-        recyclerViewCliente=findViewById(R.id.listaClientes);
-        search=findViewById(R.id.search);
+    public void initview() {
+        recyclerViewCliente = findViewById(R.id.listaClientes);
+        search = findViewById(R.id.search);
     }
 
-    public void initValues(){
-        LinearLayoutManager manager= new LinearLayoutManager(this);
+    public void initValues() {
+        LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerViewCliente.setLayoutManager(manager);
         recyclerViewCliente.setHasFixedSize(true);
-        itemCList=obtenerclientesBD();
-        adapterCliente= new RecycleviewAdapter(itemCList);
+        itemCList = obtenerclientesBD();
+        adapterCliente = new RecycleviewAdapter(itemCList);
         recyclerViewCliente.setAdapter(adapterCliente);
     }
 
 
-private List<ClasslistItemC>obtenerclientesBD(){
-        List<ClasslistItemC>listCliiente= new ArrayList<>();
+    private List<ClasslistItemC> obtenerclientesBD() {
+        List<ClasslistItemC> listCliiente = new ArrayList<>();
         try {
             DBConnection dbConnection = new DBConnection();
             dbConnection.conectar();
 
 
+            if (id == 2) {
+                try {
+
+                    Statement st = dbConnection.getConnection().createStatement();
+
+                    ResultSet rs = st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo,idCliente from Clientes where Estado = 'Activo' order by Nombre asc");
+                    while (rs.next()) {
+                        listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),
+                                rs.getString("Direccion"),
+                                rs.getInt("Codigo"),
+                                rs.getInt("idCliente")));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
 
 
-            Statement st=dbConnection.getConnection().createStatement();
+            } else {
+                Statement st = dbConnection.getConnection().createStatement();
 
-            ResultSet rs=st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo,idCliente from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc");
-            while(rs.next()){
-                listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),
-                        rs.getString("Direccion"),
-                        rs.getInt("Codigo"),
-                        rs.getInt("idCliente")));
+                ResultSet rs = st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo,idCliente from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc");
+                while (rs.next()) {
+                    listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),
+                            rs.getString("Direccion"),
+                            rs.getInt("Codigo"),
+                            rs.getInt("idCliente")));
+
+                }
+
 
             }
 
+
         } catch (SQLException e) {
-            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
         return listCliiente;
-}
-
+    }
 
 }

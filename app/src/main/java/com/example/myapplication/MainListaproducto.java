@@ -48,6 +48,7 @@ import java.util.List;
     public static String zonacliente;
     public static String idcliente;
     public static int idvendedor;
+    public static int stock;
 
 
 
@@ -172,8 +173,10 @@ import java.util.List;
                         rs.getString("info4"),
                         rs.getString("info5"),
                         rs.getString("ImagenApk"),
-                        rs.getInt("Stock"),
+                       stock= rs.getInt("Stock"),
                         rs.getInt("idInventario")));
+
+
             }
         } catch (SQLException e) {
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();

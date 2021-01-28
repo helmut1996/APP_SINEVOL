@@ -536,7 +536,7 @@ public class MainRecibo extends AppCompatActivity {
 
                      for (int p=0; p<2;p++){
 
-                    mIPosPrinterService.printSpecifiedTypeText(" \t\t RECIBO\n", "ST", 48, callback);
+                    mIPosPrinterService.printSpecifiedTypeText(" \tRECIBO No."+IdTalonario+"\n", "ST", 48, callback);
                     mIPosPrinterService.printSpecifiedTypeText(vendedor.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText(fecha.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
