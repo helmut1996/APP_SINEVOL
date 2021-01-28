@@ -71,7 +71,7 @@ public class MainRecibo extends AppCompatActivity {
     LinearLayout cuerpo;
     AutoCompleteTextView buscadorCliente;
     EditText abono, descuento;
-    TextView saldo, numresf, fecha, zona, vendedor, tvIdclienyte, tvIdCuentasxCobrar, saldo2;
+    TextView saldo, numresf, fecha, zona, vendedor, tvIdclienyte, tvIdCuentasxCobrar, saldo2,NRecibo;
     ImageButton Guardar, imprimir;
     EditText observacion;
     Spinner BuscadorFactura;
@@ -299,6 +299,7 @@ public class MainRecibo extends AppCompatActivity {
         registerReceiver(IPosPrinterStatusListener, printerStatusFilter);
 
         ///llamando los complementos
+        NRecibo=findViewById(R.id.tvr_NRecibo);
         saldo2 = findViewById(R.id.tvr_saldo2);
         cuerpo = findViewById(R.id.linearLayout);
         tvIdclienyte = findViewById(R.id.tv_IdclienteRecibo);
@@ -345,19 +346,20 @@ public class MainRecibo extends AppCompatActivity {
                 BuscadorFactura.setAdapter(Facturas());
 
 
+
+
+
             }
         });
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.facturas_clientes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-
         BuscadorFactura.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 BuscadorFactura.getSelectedItem().toString();
                 calcularsaldo();
-
                 abono.setText("");
                 descuento.setText("");
             }
@@ -424,6 +426,11 @@ public class MainRecibo extends AppCompatActivity {
             }
         });
 
+        try {
+            Talonario();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         Guardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -485,8 +492,11 @@ public class MainRecibo extends AppCompatActivity {
         });
 
 
+        descuento.setEnabled(false);
 
     }
+
+
 
     /*
      *Funciones de la imprsora
@@ -716,6 +726,28 @@ public class MainRecibo extends AppCompatActivity {
 
     }
 
+    public void Talonario() throws SQLException {
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.conectar();
+
+        try {
+            Statement st = dbConnection.getConnection().createStatement();
+            ResultSet rs = st.executeQuery("select top 1 NumeracionInicial,Estado,idVendedor from Talonarios where idVendedor = '"+id+"' and Estado= 'Pendiente' order by idTalonario ");
+            while (rs.next()) {
+                NumeracionInicial = rs.getInt("NumeracionInicial");
+                numeracion = NumeracionInicial;
+                System.out.println("==========> Ultimo Registro NumeroInicial :" + numeracion);
+                System.out.println("id vendedor Funcion Talonario=====>"+id);
+                //NRecibo.setText(NumeracionInicial);
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+
+    }
+
     public void GuardarReciboSQLite() {
         /*mandando a llamar conexion a SQLite */
         conexionSQLiteHelper conn = new conexionSQLiteHelper(this, "bd_productos", null, 1);
@@ -774,7 +806,7 @@ public class MainRecibo extends AppCompatActivity {
         try {
             dbConnection.getConnection().setAutoCommit(false);
             Statement st = dbConnection.getConnection().createStatement();
-            ResultSet rs = st.executeQuery("select top 1 NumeracionInicial from Talonarios order by idTalonario desc");
+            ResultSet rs = st.executeQuery("select top 1 NumeracionInicial,Estado,idVendedor from Talonarios where idVendedor = ' "+id+" ' and Estado= 'Pendiente' order by idTalonario ");
             while (rs.next()) {
                 NumeracionInicial = rs.getInt("NumeracionInicial");
                 numeracion = NumeracionInicial + 1;
@@ -790,7 +822,7 @@ public class MainRecibo extends AppCompatActivity {
 
             Statement st2 = dbConnection.getConnection().createStatement();
             ResultSet rs2 = st2.executeQuery("\n" +
-                    "select top 1 idTalonario,idVendedor from Talonarios where idVendedor =' "+id+ "'  order by idTalonario desc");
+                    "select top 1 idTalonario from Talonarios  order by idTalonario desc");
             while (rs2.next()) {
                 IdTalonario = rs2.getInt("idTalonario");
                 System.out.println("==============> Ultimo Registro IdTalonario :" + IdTalonario);

@@ -261,7 +261,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
         listainformacion=new ArrayList<String>();
         for (int i=0; i<listaproducto.size();i++){
 
-            listainformacion.add(listaproducto.get(i).getNombreproduc()+" - Cant:"+listaproducto.get(i).getCantidad()+"- C$"+listaproducto.get(i).getPrecios());
+            listainformacion.add(listaproducto.get(i).getNombreproduc()+"\n \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t |"+listaproducto.get(i).getCantidad()+"\n C$"+listaproducto.get(i).getPrecios());
             System.out.println("MOSTRANDO LA CANTIDAD GUARDADA "+listaproducto.get(i).getCantidad());
 
         }

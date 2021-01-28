@@ -346,7 +346,7 @@ int IdVendedor;
             values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
 
             idResultante= (int) db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
-            if (idResultante<=5){
+            if (idResultante<30 ){
                 Toast.makeText(this,"CANTIDAD INGRESADA: " + idResultante,Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(this,"sobre pasa limite para agregar productos  " ,Toast.LENGTH_SHORT).show();
