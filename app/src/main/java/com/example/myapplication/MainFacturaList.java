@@ -185,6 +185,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
                                              borrardatosTabla();
                                           Toast.makeText(getApplicationContext(),"Guardar",Toast.LENGTH_SHORT).show();
                                             Intent refresh = new Intent(getApplicationContext(), MainMenu.class);
+                                            refresh.putExtra("IdVendedor",IDVendedor);
                                             startActivity(refresh);
 
                                     }
@@ -217,6 +218,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         Intent intent3 = new Intent(getApplicationContext(),MainMenu.class);
+                                        intent3.putExtra("IdVendedor",IDVendedor);
                                         startActivity(intent3);
                                         borrardatosTabla();
                                         // finish();
@@ -261,7 +263,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
         listainformacion=new ArrayList<String>();
         for (int i=0; i<listaproducto.size();i++){
 
-            listainformacion.add(listaproducto.get(i).getNombreproduc()+"\n \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t |"+listaproducto.get(i).getCantidad()+"\n C$"+listaproducto.get(i).getPrecios());
+            listainformacion.add(listaproducto.get(i).getNombreproduc()+"\n \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t "+listaproducto.get(i).getCantidad()+"\n C$"+listaproducto.get(i).getPrecios());
             System.out.println("MOSTRANDO LA CANTIDAD GUARDADA "+listaproducto.get(i).getCantidad());
 
         }

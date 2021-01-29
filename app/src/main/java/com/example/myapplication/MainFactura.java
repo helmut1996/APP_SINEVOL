@@ -89,6 +89,11 @@ public class MainFactura extends AppCompatActivity {
 
     }
 
+    public void onStart(){
+        super.onStart();
+        obtenerclientesBD();
+    }
+
     private void filter(String text) {
         ArrayList<ClasslistItemC> filteredlist = new ArrayList<>();
         for (ClasslistItemC item : itemCList) {

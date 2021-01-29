@@ -83,6 +83,7 @@ public class MainRecibo extends AppCompatActivity {
 
     conexionSQLiteHelper conn;
     public static int IdTalonario, NumeracionInicial, numeracion, IdPagosCxC;
+    public static String Estado;
     String[] clientes = new String[]{
             "cleinte1", "Helmut", "brian", "jefrry"
     };
@@ -426,11 +427,6 @@ public class MainRecibo extends AppCompatActivity {
             }
         });
 
-        try {
-            Talonario();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
         Guardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -496,8 +492,6 @@ public class MainRecibo extends AppCompatActivity {
 
     }
 
-
-
     /*
      *Funciones de la imprsora
      * */
@@ -546,7 +540,7 @@ public class MainRecibo extends AppCompatActivity {
 
                      for (int p=0; p<2;p++){
 
-                    mIPosPrinterService.printSpecifiedTypeText(" \tRECIBO No."+IdTalonario+"\n", "ST", 48, callback);
+                    mIPosPrinterService.printSpecifiedTypeText(" \tRECIBO ", "ST", 48, callback);
                     mIPosPrinterService.printSpecifiedTypeText(vendedor.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText(fecha.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
@@ -561,6 +555,7 @@ public class MainRecibo extends AppCompatActivity {
                     String[] text = new String[4];
                     int[] width = new int[]{8, 6, 6, 7};
                     int[] align = new int[]{0, 2, 2, 2}; // Izquierda, derecha
+
                     text[0] = "N.Ref";
                     text[1] = "Fact";
                     text[2] = "Abono";
@@ -568,7 +563,6 @@ public class MainRecibo extends AppCompatActivity {
                     mIPosPrinterService.printColumnsText(text, width, align, 1, callback);
 
                     for (int i = 0; i < listarecibo.size(); i++) {
-
                         text[0] = String.valueOf(listarecibo.get(i).getNumReferencia());
                         text[1] = listarecibo.get(i).getFactura();
                         text[2] = String.valueOf( listarecibo.get(i).getAbono());
@@ -604,6 +598,7 @@ public class MainRecibo extends AppCompatActivity {
         try {
 
             AgregarReciboSQLSEVER();
+            Estado();
             GuardarReciboSQLite();
             Snackbar snackbar = Snackbar.make(cuerpo, "Guardando recibo!!", Snackbar.LENGTH_LONG);
             snackbar.show();
@@ -694,6 +689,27 @@ public class MainRecibo extends AppCompatActivity {
         db.close();
     }
 
+    public void Estado(){
+
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.conectar();
+
+        int actualizacion= 0;
+        try {
+
+            PreparedStatement stmt= dbConnection.getConnection().prepareStatement("UPDATE Talonarios SET Estado = 'Entregado' WHERE NumeracionInicial = ? ");
+
+            stmt.setString(1, String.valueOf(numeracion));
+            actualizacion = stmt.executeUpdate();
+
+            System.out.println("Actualizacion de Estado===>"+actualizacion);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     public void calcularsaldo() {
         DBConnection sesion;
         sesion = DBConnection.getDbConnection();
@@ -726,27 +742,7 @@ public class MainRecibo extends AppCompatActivity {
 
     }
 
-    public void Talonario() throws SQLException {
-        DBConnection dbConnection = new DBConnection();
-        dbConnection.conectar();
 
-        try {
-            Statement st = dbConnection.getConnection().createStatement();
-            ResultSet rs = st.executeQuery("select top 1 NumeracionInicial,Estado,idVendedor from Talonarios where idVendedor = '"+id+"' and Estado= 'Pendiente' order by idTalonario ");
-            while (rs.next()) {
-                NumeracionInicial = rs.getInt("NumeracionInicial");
-                numeracion = NumeracionInicial;
-                System.out.println("==========> Ultimo Registro NumeroInicial :" + numeracion);
-                System.out.println("id vendedor Funcion Talonario=====>"+id);
-                //NRecibo.setText(NumeracionInicial);
-            }
-
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-
-
-    }
 
     public void GuardarReciboSQLite() {
         /*mandando a llamar conexion a SQLite */
@@ -809,16 +805,18 @@ public class MainRecibo extends AppCompatActivity {
             ResultSet rs = st.executeQuery("select top 1 NumeracionInicial,Estado,idVendedor from Talonarios where idVendedor = ' "+id+" ' and Estado= 'Pendiente' order by idTalonario ");
             while (rs.next()) {
                 NumeracionInicial = rs.getInt("NumeracionInicial");
-                numeracion = NumeracionInicial + 1;
+                numeracion = NumeracionInicial;
                 System.out.println("==============> Ultimo Registro NumeroInicial :" + numeracion);
 
             }
 
+            /*
             PreparedStatement pst = dbConnection.getConnection().prepareStatement("exec sp_insertTalonario ?,?,?");
             pst.setInt(1, Integer.parseInt(String.valueOf(id)));
             pst.setInt(2, Integer.parseInt(String.valueOf(numeracion)));
             pst.setString(3, vendedor.getText().toString());
             pst.executeUpdate();
+            */
 
             Statement st2 = dbConnection.getConnection().createStatement();
             ResultSet rs2 = st2.executeQuery("\n" +
@@ -836,6 +834,7 @@ public class MainRecibo extends AppCompatActivity {
             pst2.setString(4, observacion.getText().toString());
             pst2.setString(5, tvIdclienyte.getText().toString());
             pst2.executeUpdate();
+
 
             Statement st3 = dbConnection.getConnection().createStatement();
             ResultSet rs3 = st3.executeQuery("select top 1 idPagoCxC from Pagos_CxC order by idPagoCxC desc");
@@ -858,6 +857,14 @@ public class MainRecibo extends AppCompatActivity {
                 pst4.setDouble(3, Double.parseDouble(saldo.getText().toString()) * -1);
                 pst4.executeUpdate();
             }
+
+            PreparedStatement stmt= dbConnection.getConnection().prepareStatement("UPDATE Talonarios SET Estado = 'Entregado' WHERE idTalonario = ? ");
+
+            stmt.setString(1, String.valueOf(IdTalonario));
+          int actualizacion=  stmt.executeUpdate();
+            System.out.println("Actualizacion de Estado===>"+actualizacion);
+
+
         } catch (SQLException e) {
             dbConnection.getConnection().rollback();
             System.out.println("ERROR: ======> " + e);
