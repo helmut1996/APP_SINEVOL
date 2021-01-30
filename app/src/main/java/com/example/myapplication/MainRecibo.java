@@ -300,7 +300,6 @@ public class MainRecibo extends AppCompatActivity {
         registerReceiver(IPosPrinterStatusListener, printerStatusFilter);
 
         ///llamando los complementos
-        NRecibo=findViewById(R.id.tvr_NRecibo);
         saldo2 = findViewById(R.id.tvr_saldo2);
         cuerpo = findViewById(R.id.linearLayout);
         tvIdclienyte = findViewById(R.id.tv_IdclienteRecibo);
@@ -538,7 +537,7 @@ public class MainRecibo extends AppCompatActivity {
 
                 try {
 
-                     for (int p=0; p<2;p++){
+                  //   for (int p=0; p<2;p++){
 
                     mIPosPrinterService.printSpecifiedTypeText(" \tRECIBO ", "ST", 48, callback);
                     mIPosPrinterService.printSpecifiedTypeText(vendedor.getText().toString(), "ST", 32, callback);
@@ -547,7 +546,7 @@ public class MainRecibo extends AppCompatActivity {
                     mIPosPrinterService.printSpecifiedTypeText("Recibo de:" + " " + tvIdclienyte.getText().toString(), "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " + letra, "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("\t\t\t\t\tC$" + saldo2.getText().toString() + " \n\n\n", "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("***=>aplicado descuento", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("No.Rec=>"+numeracion+" ", "ST", 24, callback);
                     mIPosPrinterService.printBlankLines(1, 8, callback);
 
                     mIPosPrinterService.setPrinterPrintAlignment(0, callback);
@@ -580,7 +579,7 @@ public class MainRecibo extends AppCompatActivity {
                     mIPosPrinterService.printBlankLines(1, 16, callback);
                     mIPosPrinterService.printSpecifiedTypeText("**********END***********", "ST", 32, callback);
                     mIPosPrinterService.printerPerformPrint(160, callback);
-                    }
+                    //}
 
 
                 } catch (RemoteException e) {
@@ -697,9 +696,9 @@ public class MainRecibo extends AppCompatActivity {
         int actualizacion= 0;
         try {
 
-            PreparedStatement stmt= dbConnection.getConnection().prepareStatement("UPDATE Talonarios SET Estado = 'Entregado' WHERE NumeracionInicial = ? ");
+            PreparedStatement stmt= dbConnection.getConnection().prepareStatement("UPDATE Talonarios SET Estado = 'Entregado' WHERE idTalonario = ? ");
 
-            stmt.setString(1, String.valueOf(numeracion));
+            stmt.setString(1, String.valueOf(IdTalonario));
             actualizacion = stmt.executeUpdate();
 
             System.out.println("Actualizacion de Estado===>"+actualizacion);
@@ -801,6 +800,7 @@ public class MainRecibo extends AppCompatActivity {
 
         try {
             dbConnection.getConnection().setAutoCommit(false);
+
             Statement st = dbConnection.getConnection().createStatement();
             ResultSet rs = st.executeQuery("select top 1 NumeracionInicial,Estado,idVendedor from Talonarios where idVendedor = ' "+id+" ' and Estado= 'Pendiente' order by idTalonario ");
             while (rs.next()) {
@@ -820,7 +820,7 @@ public class MainRecibo extends AppCompatActivity {
 
             Statement st2 = dbConnection.getConnection().createStatement();
             ResultSet rs2 = st2.executeQuery("\n" +
-                    "select top 1 idTalonario from Talonarios  order by idTalonario desc");
+                    "select top 1 idTalonario,Estado from Talonarios where idVendedor=' " +id+"' and Estado = 'Pendiente'  order by idTalonario ");
             while (rs2.next()) {
                 IdTalonario = rs2.getInt("idTalonario");
                 System.out.println("==============> Ultimo Registro IdTalonario :" + IdTalonario);
@@ -840,7 +840,7 @@ public class MainRecibo extends AppCompatActivity {
             ResultSet rs3 = st3.executeQuery("select top 1 idPagoCxC from Pagos_CxC order by idPagoCxC desc");
             while (rs3.next()) {
                 IdPagosCxC = rs3.getInt("idPagoCxC");
-                System.out.println("==============> Ultimo Registro IdPagosCxC :" + IdPagosCxC);
+                System.out.println("============> Ultimo Registro IdPagosCxC :" + IdPagosCxC);
             }
 
             PreparedStatement pst3 = dbConnection.getConnection().prepareStatement(" exec sp_insertDetallePagoCxC ?,?,?,?");
@@ -858,11 +858,6 @@ public class MainRecibo extends AppCompatActivity {
                 pst4.executeUpdate();
             }
 
-            PreparedStatement stmt= dbConnection.getConnection().prepareStatement("UPDATE Talonarios SET Estado = 'Entregado' WHERE idTalonario = ? ");
-
-            stmt.setString(1, String.valueOf(IdTalonario));
-          int actualizacion=  stmt.executeUpdate();
-            System.out.println("Actualizacion de Estado===>"+actualizacion);
 
 
         } catch (SQLException e) {

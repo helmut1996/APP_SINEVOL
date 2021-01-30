@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.StrictMode;
@@ -35,19 +36,6 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ////////comprobacion de internet
-       /* ConnectivityManager con = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        Boolean eswifi = con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
-
-
-        if (!eswifi) {
-            startActivity(new Intent(MainActivity.this, MainError_Internet.class));
-
-        } else{
-            Toast.makeText(getApplicationContext(),"Dispositivo Conectado",Toast.LENGTH_LONG).show();
-        }
-
-*/
         editPint = (EditText) findViewById(R.id.edit_Pin);
         btn_entar = (Button) findViewById(R.id.btn_entrar);
 
@@ -56,6 +44,27 @@ public class MainActivity extends AppCompatActivity{
         StrictMode.setThreadPolicy(policy);
         }
 
+    protected void onStart() {
+        super.onStart();
+        isconnected();
+    }
+
+
+    public void isconnected(){
+        ConnectivityManager connectivity=(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info_wifi= connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo info_datos= connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (String.valueOf(info_wifi.getState()).equals("CONNECTED")){
+            Toast.makeText(this,"Conectado con wifi",Toast.LENGTH_LONG).show();
+        }else{
+            if (String.valueOf(info_datos.getState()).equals("CONNECTED")){
+                Toast.makeText(this,"Conectado con datos",Toast.LENGTH_LONG).show();
+            }else{
+                startActivity(new Intent(MainActivity.this, MainError_Internet.class));
+                Toast.makeText(this,"Sin internet",Toast.LENGTH_LONG).show();
+            }
+        }
+    }
     public void conectar (View view)
     {
         if (editPint.getText().toString().equals("")) {
@@ -76,6 +85,7 @@ public class MainActivity extends AppCompatActivity{
                     startActivity(i);
                     finish();
                 } else {
+
                     Toast.makeText(getApplicationContext(), "Pin incorrecto", Toast.LENGTH_LONG).show();
                 }
             } catch (SQLException e) {
