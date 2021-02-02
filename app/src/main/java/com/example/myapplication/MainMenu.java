@@ -63,6 +63,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         btn_cuentas.setOnClickListener(this);
         btn_cerrar.setOnClickListener(this);
         titulo.setText(nombreVendedor);
+
+        MainFacturaList datos = new MainFacturaList();
+        System.out.println("Id Vemdedpr de FacturaList"+ datos.IDVendedor);
+
     }
 
 

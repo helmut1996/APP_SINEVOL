@@ -40,6 +40,7 @@
                         android:layout_column="1"
                         android:id="@+id/tv_fecha"
                         android:padding="8dp"
+                        android:textColor="#fff"
                         />
 
                     <TextView
@@ -48,6 +49,7 @@
                         android:layout_column="1"
                         android:id="@+id/tv_descripcion"
                         android:padding="8dp"
+                        android:textColor="#0C0C0C"
                         />
 
                     <TextView
@@ -56,6 +58,7 @@
                         android:layout_column="1"
                         android:id="@+id/tv_salida"
                         android:padding="8dp"
+                        android:textColor="#fff"
                         />
 
                     <TextView
@@ -64,6 +67,7 @@
                         android:layout_column="1"
                         android:id="@+id/tv_entrada"
                         android:padding="8dp"
+                        android:textColor="#fff"
                         />
 
                     <TextView
@@ -72,6 +76,7 @@
                         android:layout_column="1"
                         android:id="@+id/tv_total"
                         android:padding="8dp"
+                        android:textColor="#fff"
                         />
 
                     <TextView
@@ -79,7 +84,9 @@
                         android:textStyle="bold"
                         android:layout_column="1"
                         android:id="@+id/tv_compra"
-                        android:padding="8dp" />
+                        android:padding="8dp"
+                        android:textColor="#fff"
+                        />
 
                     <TextView
                         android:textSize="11sp"

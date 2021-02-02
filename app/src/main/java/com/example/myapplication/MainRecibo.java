@@ -75,7 +75,8 @@ public class MainRecibo extends AppCompatActivity {
     ImageButton Guardar, imprimir;
     EditText observacion;
     Spinner BuscadorFactura;
-    public static int id, idClientesRecibo;
+    public static int id,
+            idClientesRecibo;
     public static String nombreVendedor, idcliente;
     public static Double SaldoR;
     String letra;
@@ -344,6 +345,8 @@ public class MainRecibo extends AppCompatActivity {
                 tvIdclienyte.setText(buscadorCliente.getText().toString());
 
                 BuscadorFactura.setAdapter(Facturas());
+                buscadorCliente.setAdapter(Clientes());
+
 
 
 
@@ -433,6 +436,7 @@ public class MainRecibo extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (buscadorCliente.getText().toString().isEmpty()) {
+
                     buscadorCliente.setError("Debe seleccionar un cliente");
                 } else {
                     if (abono.getText().toString().isEmpty() && descuento.getText().toString().isEmpty())
@@ -445,8 +449,8 @@ public class MainRecibo extends AppCompatActivity {
                             CalcularTotalAbono();
                             CalcularSaldoTotal();
                              buscadorCliente.setEnabled(false);
-                             abono.setText("");
-                             descuento.setText("");
+                          //   abono.setText("");
+                           //  descuento.setText("");
 
                         } else {
                             if ((abono.getText().toString().isEmpty()) && !descuento.getText().toString().isEmpty()) {
@@ -456,8 +460,9 @@ public class MainRecibo extends AppCompatActivity {
                                 ejecutarGuardado();
                                 CalcularTotalAbono();
                                 CalcularSaldoTotal();
-                                abono.setText("");
-                                descuento.setText("");
+                            //    abono.setText("");
+                               // descuento.setText("");
+
 
                             }
 
@@ -471,9 +476,15 @@ public class MainRecibo extends AppCompatActivity {
 
         });
 
+
         imprimir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    AgregarReciboSQLSEVER();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
                 if (getPrinterStatus() == PRINTER_NORMAL)
                     Consultarlista();
@@ -481,19 +492,25 @@ public class MainRecibo extends AppCompatActivity {
                 Snackbar snackbar = Snackbar.make(cuerpo, "Imprimiendo Recibo!!", Snackbar.LENGTH_LONG);
                 snackbar.show();
 
-                limpiarcampos();
                 borrardatosTabla();
+
+                 limpiarcampos();
             }
         });
 
 
         descuento.setEnabled(false);
-
     }
 
     /*
      *Funciones de la imprsora
      * */
+
+    public  void onStart(){
+        super.onStart();
+        Talonario();
+       // NReferencia();
+    }
     public int getPrinterStatus() {
 
         Log.i(TAG, "***** printerStatus" + printerStatus);
@@ -594,7 +611,7 @@ public class MainRecibo extends AppCompatActivity {
      */
 
     void ejecutarGuardado() {
-        try {
+       /* try {
 
             AgregarReciboSQLSEVER();
             Estado();
@@ -604,6 +621,13 @@ public class MainRecibo extends AppCompatActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        */
+
+        Estado();
+        GuardarReciboSQLite();
+        Snackbar snackbar = Snackbar.make(cuerpo, "Guardando recibo!!", Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
 
@@ -706,6 +730,22 @@ public class MainRecibo extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+    public void Talonario(){
+        DBConnection dbConnection=new DBConnection();
+        dbConnection.conectar();
+        try {
+            Statement st2 = dbConnection.getConnection().createStatement();
+            ResultSet rs2 = st2.executeQuery("\n" +
+                    "select top 1 idTalonario,Estado from Talonarios where idVendedor=' " +id+"' and Estado = 'Pendiente'  order by idTalonario ");
+            while (rs2.next()) {
+                IdTalonario = rs2.getInt("idTalonario");
+                System.out.println("==============> Ultimo Registro IdTalonario :" + IdTalonario);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -818,18 +858,20 @@ public class MainRecibo extends AppCompatActivity {
             pst.executeUpdate();
             */
 
+
+            /*
             Statement st2 = dbConnection.getConnection().createStatement();
             ResultSet rs2 = st2.executeQuery("\n" +
                     "select top 1 idTalonario,Estado from Talonarios where idVendedor=' " +id+"' and Estado = 'Pendiente'  order by idTalonario ");
             while (rs2.next()) {
                 IdTalonario = rs2.getInt("idTalonario");
                 System.out.println("==============> Ultimo Registro IdTalonario :" + IdTalonario);
-            }
+            }*/
 
 
             PreparedStatement pst2 = dbConnection.getConnection().prepareStatement("  exec sp_insertPagoCxC ?,?,?,?,?");
             pst2.setInt(1, Integer.parseInt(String.valueOf(IdTalonario)));
-            pst2.setDouble(2, Double.parseDouble(abono.getText().toString()));
+            pst2.setDouble(2,Float.parseFloat(abono.getText().toString()));
             pst2.setInt(3, Integer.parseInt(String.valueOf(idClientesRecibo)));
             pst2.setString(4, observacion.getText().toString());
             pst2.setString(5, tvIdclienyte.getText().toString());
@@ -843,10 +885,11 @@ public class MainRecibo extends AppCompatActivity {
                 System.out.println("============> Ultimo Registro IdPagosCxC :" + IdPagosCxC);
             }
 
+
             PreparedStatement pst3 = dbConnection.getConnection().prepareStatement(" exec sp_insertDetallePagoCxC ?,?,?,?");
             pst3.setInt(1, Integer.parseInt(String.valueOf(IdPagosCxC)));
             pst3.setInt(2, Integer.parseInt(tvIdCuentasxCobrar.getText().toString()));
-            pst3.setDouble(3, Double.parseDouble(abono.getText().toString()));
+            pst3.setDouble(3, Float.parseFloat(abono.getText().toString()));
             pst3.setDouble(4, Double.parseDouble(descuento.getText().toString()));
             pst3.executeUpdate();
 
@@ -859,7 +902,6 @@ public class MainRecibo extends AppCompatActivity {
             }
 
 
-
         } catch (SQLException e) {
             dbConnection.getConnection().rollback();
             System.out.println("ERROR: ======> " + e);
@@ -869,7 +911,6 @@ public class MainRecibo extends AppCompatActivity {
 
             dbConnection.getConnection().setAutoCommit(true);
         }
-
 
     }
 }
