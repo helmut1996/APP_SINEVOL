@@ -9,11 +9,14 @@ public class FacturasAdd {
   private double Descuento;
   private int NumReferencia;
   private  double SaldoRes;
+  private int idCuentasxCobrar;
+  private int idPagoCxC;
 
     public FacturasAdd() {
     }
 
-    public FacturasAdd(String nombreCliente, String nombreVendedor, String factura, String fecha, double abono, double descuento, int numReferencia, double saldoRes) {
+
+    public FacturasAdd(String nombreCliente, String nombreVendedor, String factura, String fecha, double abono, double descuento, int numReferencia, double saldoRes, int idcuentasxCobrar, int idpagoCxC) {
         NombreCliente = nombreCliente;
         NombreVendedor = nombreVendedor;
         Factura = factura;
@@ -22,6 +25,8 @@ public class FacturasAdd {
         Descuento = descuento;
         NumReferencia = numReferencia;
         SaldoRes = saldoRes;
+        idCuentasxCobrar=idcuentasxCobrar;
+        idPagoCxC=idpagoCxC;
     }
 
     public String getNombreCliente() {
@@ -87,4 +92,14 @@ public class FacturasAdd {
     public void setSaldoRes(double saldoRes) {
         SaldoRes = saldoRes;
     }
+
+
+    public int getIdCuentasxCobrar() { return idCuentasxCobrar; }
+
+    public void setIdCuentasxCobrar(int idCuentasxCobrar) { this.idCuentasxCobrar = idCuentasxCobrar; }
+
+    public int getIdPagoCxC() { return idPagoCxC; }
+
+    public void setIdPagoCxC(int idPagoCxC) { this.idPagoCxC = idPagoCxC; }
+
 }

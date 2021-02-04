@@ -211,7 +211,8 @@
             android:id="@+id/tv_NReferencia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="9"
+            android:text="0"
+            android:gravity="center"
             android:visibility="gone"/>
 
         <LinearLayout
