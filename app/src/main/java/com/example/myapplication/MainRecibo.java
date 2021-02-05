@@ -257,6 +257,7 @@ public class MainRecibo extends AppCompatActivity {
     ///////////////////////Impresora//////////////////////////////////
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -264,7 +265,6 @@ public class MainRecibo extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Recibos");
-
 
         callback = new IPosPrinterCallback.Stub() {
 
@@ -433,7 +433,7 @@ public class MainRecibo extends AppCompatActivity {
                 } else if (abono.getText().toString().isEmpty()) {
                   abono.setError("el campo  Abono esta vacio");
 
-                } else if(Integer.parseInt(abono.getText().toString())==0){
+                } else if(Double.parseDouble(abono.getText().toString())==0){
                     abono.setError("la cantidad del abono no puede ser  0");
 
                 } else {
@@ -449,6 +449,7 @@ public class MainRecibo extends AppCompatActivity {
                              buscadorCliente.setEnabled(false);
                              abono.setText("");
                              observacion.setText("");
+                             saldo.setText(SaldoR.toString());
 
                         } else {
                             if ((abono.getText().toString().isEmpty()) && !descuento.getText().toString().isEmpty()) {
@@ -460,7 +461,7 @@ public class MainRecibo extends AppCompatActivity {
                                 CalcularSaldoTotal();
                                 abono.setText("");
                                 observacion.setText("");
-
+                                saldo.setText(SaldoR.toString());
 
                             }
 
@@ -479,14 +480,17 @@ public class MainRecibo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (getPrinterStatus() == PRINTER_NORMAL){
 
                 try {
+                    if (getPrinterStatus() == PRINTER_NORMAL) {
+
+
                         Consultarlista();
                         AgregarReciboSQLSEVER();
+                        printText(); 
                         borrardatosTabla();
-                         limpiarcampos();
-
+                        limpiarcampos();
+                    }
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -496,7 +500,7 @@ public class MainRecibo extends AppCompatActivity {
                 Snackbar snackbar = Snackbar.make(cuerpo, "Imprimiendo Recibo!!", Snackbar.LENGTH_LONG);
                 snackbar.show();
 
-                }
+
             }
         });
 
@@ -532,6 +536,7 @@ public class MainRecibo extends AppCompatActivity {
     /**
      * La impresora se inicializa
      */
+
     public void printerInit() {
         ThreadPoolManager.getInstance().executeTask(new Runnable() {
             @Override
@@ -562,39 +567,43 @@ public class MainRecibo extends AppCompatActivity {
 
                   //   for (int p=0; p<2;p++){
 
-                    mIPosPrinterService.printSpecifiedTypeText(" \tRECIBO No."+numeracion+" ", "ST", 48, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("RECIBO No."+numeracion+" ", "ST", 48, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("NREF:" +IdPagosCxC+ "\t\t\t"+fecha.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText(vendedor.getText().toString(), "ST", 32, callback);
-                    mIPosPrinterService.printSpecifiedTypeText(fecha.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Recibo de:" + " " + tvIdclienyte.getText().toString(), "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " + letra, "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("\t\t\t\t\tC$" + saldo2.getText().toString() + " \n\n\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("\t\t\t\t\tC$" + saldo2.getText().toString() + " \n\n\n", "ST", 32, callback);
                     mIPosPrinterService.printBlankLines(1, 8, callback);
 
                     mIPosPrinterService.setPrinterPrintAlignment(0, callback);
                     mIPosPrinterService.setPrinterPrintFontSize(24, callback);
-                    String[] text = new String[4];
-                    int[] width = new int[]{8, 6, 6, 7};
-                    int[] align = new int[]{0, 2, 2, 2}; // Izquierda, derecha
+                    String[] text = new String[3];
+                    int[] width = new int[]{6, 8, 8};
+                    int[] align = new int[]{0, 2, 2}; // Izquierda, derecha
 
-                    text[0] = "N.Ref";
-                    text[1] = "Fact";
-                    text[2] = "Abono";
-                    text[3] = "Saldo";
+                    text[0] = "Fact";
+                    text[1] = "Abono";
+                    text[2] = "Saldo";
                     mIPosPrinterService.printColumnsText(text, width, align, 1, callback);
 
                     for (int i = 0; i < listarecibo.size(); i++) {
-                        text[0] = String.valueOf(IdPagosCxC);
-                        text[1] = listarecibo.get(i).getFactura();
-                        text[2] = String.valueOf( listarecibo.get(i).getAbono());
-                        text[3] = String.valueOf(listarecibo.get(i).getSaldoRes());
+                        text[0] = listarecibo.get(i).getFactura();
+                        text[1] = String.valueOf( listarecibo.get(i).getAbono());
+                        text[2] = String.valueOf(listarecibo.get(i).getSaldoRes());
                         mIPosPrinterService.printColumnsText(text, width, align, 0, callback);
+
                     }
 
                     mIPosPrinterService.printBlankLines(1, 16, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Saldo Total:C$ " + " " + totalSaldo + "\n\n\n\n", "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Recibo" + " " + "_______________________\n\n\n", "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Entrada" + " " + "______________________", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Observaciones", "ST", 24, callback);
+                    for (int j = 0; j < listarecibo.size(); j++) {
+                        mIPosPrinterService.printSpecifiedTypeText(listarecibo.get(j).getObservaciones(), "ST", 24, callback);
+                    }
+                    mIPosPrinterService.printSpecifiedTypeText("____________________________\n\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Recibe Conforme" + " " + "\n\n\n_______________________\n\n\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Entragado Conforme" + " " + "\n\n\n______________________", "ST", 24, callback);
 
                     mIPosPrinterService.printerPerformPrint(32, callback);
                     mIPosPrinterService.setPrinterPrintAlignment(0, callback);
@@ -748,6 +757,7 @@ public class MainRecibo extends AppCompatActivity {
                     "select top 1 idTalonario,Estado from Talonarios where idVendedor=' " +id+"' and Estado = 'Pendiente'  order by idTalonario ");
             while (rs2.next()) {
                 IdTalonario = rs2.getInt("idTalonario");
+
                 System.out.println("==============> Ultimo Registro IdTalonario :" + IdTalonario);
             }
 
@@ -824,6 +834,7 @@ public void NReferencia(){
         values.put(utilidadesFact.CAMPO_SALDO_RES, saldo.getText().toString());
         values.put(utilidadesFact.CAMPO_NUMERO_RESF, IdPagosCxC2);
         values.put(utilidadesFact.CAMPO_CUENTASXCOBRAR, tvIdCuentasxCobrar.getText().toString());
+        values.put(utilidadesFact.CAMPO_OBSERVACIONES, observacion.getText().toString());
         long idResultante = db.insert(utilidadesFact.TABLA_RECIBO, utilidadesFact.CAMPO_NOMBRE_CLIEBTE, values);
         // Toast.makeText(this, "agregado: " + idResultante, Toast.LENGTH_SHORT).show();
         db.close();
@@ -848,12 +859,13 @@ public void NReferencia(){
             facturasAdd.setSaldoRes(cursor.getDouble(5));
             facturasAdd.setNumReferencia(cursor.getInt(6));
             facturasAdd.setIdCuentasxCobrar(cursor.getInt(7));
+            facturasAdd.setObservaciones(cursor.getString(8));
 
 
             listarecibo.add(facturasAdd);
             db.close();
         }
-        printText();
+
     }
 
     public void borrardatosTabla() {

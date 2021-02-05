@@ -177,6 +177,7 @@ int IdVendedor;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        precioEscogido= (Double.parseDouble(precios.getSelectedItem().toString()));
         switch (item.getItemId()){
             case R.id.Mbtn_MenuAdd:
 
