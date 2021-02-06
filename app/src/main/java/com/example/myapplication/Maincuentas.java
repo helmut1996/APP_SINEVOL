@@ -125,12 +125,12 @@ public class Maincuentas extends AppCompatActivity {
     // metodo de busqueda de los clientes
     public ArrayAdapter Clientes() {
         ArrayAdapter NoCoreAdapter=null;
-        DBConnection sesion;
-        sesion = DBConnection.getDbConnection();
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.conectar();
 
         String query = "select  Nombre,idCliente,Telefono1,Direccion from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc";
         try {
-            Statement stm = sesion.getConnection().createStatement();
+            Statement stm = dbConnection.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
 
             ArrayList<String> data = new ArrayList<>();

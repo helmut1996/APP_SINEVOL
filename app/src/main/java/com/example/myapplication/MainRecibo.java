@@ -582,7 +582,7 @@ public class MainRecibo extends AppCompatActivity {
                     int[] width = new int[]{6, 8, 8};
                     int[] align = new int[]{0, 2, 2}; // Izquierda, derecha
 
-                    text[0] = "Fact";
+                    text[0] = "N.Fact";
                     text[1] = "Abono";
                     text[2] = "Saldo";
                     mIPosPrinterService.printColumnsText(text, width, align, 1, callback);
@@ -649,12 +649,12 @@ public class MainRecibo extends AppCompatActivity {
 
     public ArrayAdapter Clientes() {
         ArrayAdapter NoCoreAdapter = null;
-        DBConnection sesion;
-        sesion = DBConnection.getDbConnection();
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.conectar();
 
         String query = "select Nombre, idCliente from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre desc";
         try {
-            Statement stm = sesion.getConnection().createStatement();
+            Statement stm = dbConnection.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
 
             ArrayList<String> data = new ArrayList<>();
@@ -672,12 +672,12 @@ public class MainRecibo extends AppCompatActivity {
 
     public ArrayAdapter Facturas() {
         ArrayAdapter NoCoreAdapter = null;
-        DBConnection sesion;
-        sesion = DBConnection.getDbConnection();
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.conectar();
 
         String query = ("exec sp_BuscarClienteFacturaMovil '" + tvIdclienyte.getText().toString() + "'");
         try {
-            Statement stm = sesion.getConnection().createStatement();
+            Statement stm = dbConnection.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
 
             ArrayList<String> data = new ArrayList<>();

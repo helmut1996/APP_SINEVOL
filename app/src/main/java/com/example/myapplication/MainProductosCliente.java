@@ -200,6 +200,7 @@ int IdVendedor;
 
                     Intent intent2 = new Intent(getApplicationContext(),MainListaproducto.class);
                     startActivity(intent2);
+                    finish();
                 }
 
                 break;
@@ -319,6 +320,7 @@ int IdVendedor;
                     intent1.putExtra("nombreproducto",tvnombreproducto.getText());
                     intent1.putExtra("cantidad",editcantidad.getText());
                     startActivity(intent1);
+                    finish();
                 }
 
                 break;

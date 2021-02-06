@@ -249,9 +249,11 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
+                android:background="#76BD23"
+                android:src="@drawable/ic_baseline_subdirectory_arrow_right_24"
                 android:text="Siguiente"
                 android:textSize="12sp"
-                android:src="@drawable/ic_baseline_subdirectory_arrow_right_24"/>
+                android:layout_marginBottom="15dp"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

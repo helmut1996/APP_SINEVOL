@@ -295,9 +295,6 @@ getMenuInflater().inflate(R.menu.menu,menu);
     }
 
     public  void AgregarDatosSQLSEVER() throws SQLException {
-        Date hoy= new Date();
-
-        java.sql.Date dataStartSql = new java.sql.Date(hoy.getTime());
         DBConnection dbConnection = new DBConnection();
         dbConnection.conectar();
 
