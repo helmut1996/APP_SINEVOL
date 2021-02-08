@@ -1,8 +1,8 @@
 package com.example.myapplication;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentValues;
@@ -421,54 +421,79 @@ public class MainRecibo extends AppCompatActivity {
         });
 
 
+
         Guardar.setOnClickListener(new View.OnClickListener() {
             @Override
 
             public void onClick(View v) {
 
-                if (buscadorCliente.getText().toString().isEmpty()) {
+                androidx.appcompat.app.AlertDialog.Builder alerta = new androidx.appcompat.app.AlertDialog.Builder(MainRecibo.this);
+                alerta.setMessage("Quieres Guardar Recibo")
+                        .setCancelable(false)
+                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                    buscadorCliente.setError("Debe seleccionar un cliente");
 
-                } else if (abono.getText().toString().isEmpty()) {
-                  abono.setError("el campo  Abono esta vacio");
+                                if (buscadorCliente.getText().toString().isEmpty()) {
 
-                } else if(Double.parseDouble(abono.getText().toString())==0){
-                    abono.setError("la cantidad del abono no puede ser  0");
+                                    buscadorCliente.setError("Debe seleccionar un cliente");
 
-                } else {
-                    if (abono.getText().toString().isEmpty() && descuento.getText().toString().isEmpty())
-                        Toast.makeText(getApplicationContext(), "Error campos vacios", Toast.LENGTH_LONG).show();
-                    else {
-                        if ((!abono.getText().toString().isEmpty()) && descuento.getText().toString().isEmpty()) {
-                            descuento.setText("0");
-                            ejecutarGuardado();
-                            calcularsaldo();
-                            CalcularTotalAbono();
-                            CalcularSaldoTotal();
-                             buscadorCliente.setEnabled(false);
-                             abono.setText("");
-                             observacion.setText("");
-                             saldo.setText(SaldoR.toString());
+                                } else if (abono.getText().toString().isEmpty()) {
+                                    abono.setError("el campo  Abono esta vacio");
 
-                        } else {
-                            if ((abono.getText().toString().isEmpty()) && !descuento.getText().toString().isEmpty()) {
-                                buscadorCliente.setEnabled(false);
-                                abono.setText("0");
-                                calcularsaldo();
-                                ejecutarGuardado();
-                                CalcularTotalAbono();
-                                CalcularSaldoTotal();
-                                abono.setText("");
-                                observacion.setText("");
-                                saldo.setText(SaldoR.toString());
+                                } else if(Double.parseDouble(abono.getText().toString())==0){
+                                    abono.setError("la cantidad del abono no puede ser  0");
+
+                                } else {
+                                    if (abono.getText().toString().isEmpty() && descuento.getText().toString().isEmpty())
+                                        Toast.makeText(getApplicationContext(), "Error campos vacios", Toast.LENGTH_LONG).show();
+                                    else {
+                                        if ((!abono.getText().toString().isEmpty()) && descuento.getText().toString().isEmpty()) {
+                                            descuento.setText("0");
+                                            ejecutarGuardado();
+                                            calcularsaldo();
+                                            CalcularTotalAbono();
+                                            CalcularSaldoTotal();
+                                            buscadorCliente.setEnabled(false);
+                                            abono.setText("");
+                                            observacion.setText("");
+                                            saldo.setText(SaldoR.toString());
+
+                                        } else {
+                                            if ((abono.getText().toString().isEmpty()) && !descuento.getText().toString().isEmpty()) {
+                                                buscadorCliente.setEnabled(false);
+                                                imprimir.setEnabled(true);
+                                                abono.setText("0");
+                                                calcularsaldo();
+                                                ejecutarGuardado();
+                                                CalcularTotalAbono();
+                                                CalcularSaldoTotal();
+                                                abono.setText("");
+                                                observacion.setText("");
+                                                saldo.setText(SaldoR.toString());
+
+                                            }
+
+                                        }
+                                    }
+
+                                }
 
                             }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
 
-                        }
-                    }
+                AlertDialog alertDialog= alerta.create();
+                alertDialog.setTitle("Recibo");
+                alertDialog.show();
 
-                }
+
 
 
             }
@@ -481,25 +506,45 @@ public class MainRecibo extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                try {
-                    if (getPrinterStatus() == PRINTER_NORMAL) {
+                AlertDialog.Builder alerta = new AlertDialog.Builder(MainRecibo.this);
+                alerta.setMessage("Quieres Imprimir")
+                        .setCancelable(false)
+                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                try {
+                                    if (getPrinterStatus() == PRINTER_NORMAL) {
 
 
-                        Consultarlista();
-                        AgregarReciboSQLSEVER();
-                        printText(); 
-                        borrardatosTabla();
-                        limpiarcampos();
-                    }
+                                        Consultarlista();
+                                        AgregarReciboSQLSEVER();
+                                        printText();
+                                        borrardatosTabla();
+                                        limpiarcampos();
+                                    }
 
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
 
-                buscadorCliente.setEnabled(true);
-                Snackbar snackbar = Snackbar.make(cuerpo, "Imprimiendo Recibo!!", Snackbar.LENGTH_LONG);
-                snackbar.show();
+                                buscadorCliente.setEnabled(true);
+                                Snackbar snackbar = Snackbar.make(cuerpo, "Imprimiendo Recibo!!", Snackbar.LENGTH_LONG);
+                                snackbar.show();
 
+
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alertDialog= alerta.create();
+                alertDialog.setTitle("Imprimir Recibo");
+                alertDialog.show();
 
             }
         });

@@ -116,10 +116,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
        NetworkInfo info_wifi= connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
        NetworkInfo info_datos= connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
        if (String.valueOf(info_wifi.getState()).equals("CONNECTED")){
-           Toast.makeText(this,"Conectado con wifi",Toast.LENGTH_LONG).show();
+         //  Toast.makeText(this,"Conectado con wifi",Toast.LENGTH_LONG).show();
        }else{
            if (String.valueOf(info_datos.getState()).equals("CONNECTED")){
-               Toast.makeText(this,"Conectado con datos",Toast.LENGTH_LONG).show();
+             //  Toast.makeText(this,"Conectado con datos",Toast.LENGTH_LONG).show();
            }else{
                 Toast.makeText(this,"Sin internet",Toast.LENGTH_LONG).show();
            }

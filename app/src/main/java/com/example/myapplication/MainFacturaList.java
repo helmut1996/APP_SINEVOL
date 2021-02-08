@@ -300,7 +300,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
 
         try {
             dbConnection.getConnection().setAutoCommit(false);
-            PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertPrefact ?,?,?,?,?,?,?");
+            PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertPrefacturas ?,?,?,?,?,?,?");
             pst.setInt(1, Integer.parseInt(textIdcliente.getText().toString()));
             pst.setInt(2, Integer.parseInt(textIdvendedor.getText().toString()));
             pst.setString(3, T_factura.getSelectedItem().toString()
@@ -312,7 +312,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
             pst.executeUpdate();
 
             Statement st= dbConnection.getConnection().createStatement();
-             ResultSet rs = st.executeQuery("select top 1 idPrefactura from Prefactura order by idPrefactura desc");
+             ResultSet rs = st.executeQuery("select top 1 idPrefactura from Prefacturas order by idPrefactura desc");
              while (rs.next()){
                  valor  = rs.getString("idPrefactura");
                  System.out.println("==============> Ultimo Registro:"+valor);
@@ -320,7 +320,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
              }
 
             for (int i=0; i<listaproducto.size();i++){
-                PreparedStatement pst2 = dbConnection.getConnection().prepareStatement( "exec sp_insertDetallePrefact   ?,?,?,?,?,?");
+                PreparedStatement pst2 = dbConnection.getConnection().prepareStatement( "exec sp_insertDetallePrefacturas   ?,?,?,?,?,?");
                 pst2.setInt(1, Integer.parseInt(valor));
                 pst2.setInt(2, listaproducto.get(i).getId_producto());//idInventario
                 pst2.setDouble(3, listaproducto.get(i).getPrecios());//precio cordobas
