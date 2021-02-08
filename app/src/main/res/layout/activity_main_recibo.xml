@@ -27,7 +27,11 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:orientation="vertical">
-
+            <TextView
+                android:id="@+id/tv_NRecibo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NRecibo" />
 
             <AutoCompleteTextView
                 android:id="@+id/editBuscarCliente"

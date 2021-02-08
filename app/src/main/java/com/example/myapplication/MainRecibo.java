@@ -313,6 +313,7 @@ public class MainRecibo extends AppCompatActivity {
         Guardar = findViewById(R.id.btnGuardarRecibo);
         imprimir = findViewById(R.id.btnImprimirRecibo);
         tvIdCuentasxCobrar = findViewById(R.id.idcuentasxCobrar);
+        NRecibo=findViewById(R.id.tv_NRecibo);
         /////////////////////////////////////////////////////////
 
 
@@ -514,23 +515,35 @@ public class MainRecibo extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 try {
-                                    if (getPrinterStatus() == PRINTER_NORMAL) {
+                                    if(listarecibo == null || listarecibo.size() == 0)
+                                    {
+                                        if (getPrinterStatus() == PRINTER_NORMAL) {
 
 
-                                        Consultarlista();
-                                        AgregarReciboSQLSEVER();
-                                        printText();
-                                        borrardatosTabla();
-                                        limpiarcampos();
+                                            Consultarlista();
+                                            AgregarReciboSQLSEVER();
+                                            printText();
+                                            borrardatosTabla();
+                                            limpiarcampos();
+
+                                            buscadorCliente.setEnabled(true);
+                                            Snackbar snackbar = Snackbar.make(cuerpo, "Imprimiendo Recibo!!", Snackbar.LENGTH_LONG);
+                                            snackbar.show();
+                                        }
+
+
                                     }
+                                    else{
+                                        Snackbar snackbar = Snackbar.make(cuerpo, "Debe Guardar por lo menos 1 recibo para imprimir!!", Snackbar.LENGTH_LONG);
+                                        snackbar.show();
+
+                                    }
+
 
                                 } catch (SQLException e) {
                                     e.printStackTrace();
                                 }
 
-                                buscadorCliente.setEnabled(true);
-                                Snackbar snackbar = Snackbar.make(cuerpo, "Imprimiendo Recibo!!", Snackbar.LENGTH_LONG);
-                                snackbar.show();
 
 
                             }
@@ -551,7 +564,7 @@ public class MainRecibo extends AppCompatActivity {
 
 
         descuento.setEnabled(false);
-        Talonario();
+        NRecibo.setText("Recibo No."+numeracion);
     }
 
     /*
@@ -934,7 +947,7 @@ public void NReferencia(){
             pst2.setDouble(2,Double.parseDouble(saldo2.getText().toString()));
             pst2.setInt(3, Integer.parseInt(String.valueOf(idClientesRecibo)));
             pst2.setString(4, observacion.getText().toString());
-            pst2.setString(5, tvIdclienyte.getText().toString());
+            pst2.setString(5, vendedor.getText().toString());
             pst2.executeUpdate();
 
 
