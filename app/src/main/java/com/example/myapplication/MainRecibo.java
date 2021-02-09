@@ -343,6 +343,8 @@ public class MainRecibo extends AppCompatActivity {
                 BuscadorFactura.setAdapter(Facturas());
                 buscadorCliente.setAdapter(Clientes());
 
+                NRecibo.setText("Recibo No."+numeracion);
+
 
             }
         });
@@ -515,8 +517,14 @@ public class MainRecibo extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 try {
-                                    if(listarecibo == null || listarecibo.size() == 0)
+                                    if(buscadorCliente.getText().toString().isEmpty())
                                     {
+                                        Snackbar snackbar = Snackbar.make(cuerpo, "Debe Guardar por lo menos 1 recibo para imprimir!!", Snackbar.LENGTH_LONG);
+                                        snackbar.show();
+
+                                    }
+                                    else{
+
                                         if (getPrinterStatus() == PRINTER_NORMAL) {
 
 
@@ -531,11 +539,6 @@ public class MainRecibo extends AppCompatActivity {
                                             snackbar.show();
                                         }
 
-
-                                    }
-                                    else{
-                                        Snackbar snackbar = Snackbar.make(cuerpo, "Debe Guardar por lo menos 1 recibo para imprimir!!", Snackbar.LENGTH_LONG);
-                                        snackbar.show();
 
                                     }
 
@@ -564,7 +567,6 @@ public class MainRecibo extends AppCompatActivity {
 
 
         descuento.setEnabled(false);
-        NRecibo.setText("Recibo No."+numeracion);
     }
 
     /*
@@ -842,7 +844,6 @@ public void NReferencia(){
         e.printStackTrace();
     }
 
-
 }
 
     public void calcularsaldo() {
@@ -860,7 +861,6 @@ public void NReferencia(){
 
                 SaldoR = rs.getDouble("SaldoRestante");
                 saldo.setText(SaldoR.toString());
-
 
             }
         } catch (SQLException e) {
