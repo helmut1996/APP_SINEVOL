@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,6 +22,9 @@ import android.widget.Toast;
 
 import com.example.myapplication.Adapter.RecyclerviewAdapterCuentas;
 import com.example.myapplication.ConexionBD.DBConnection;
+import com.example.myapplication.SQLite.conexionSQLiteHelper;
+import com.example.myapplication.SQLite.entidades.VendedorAdd;
+import com.example.myapplication.SQLite.ulilidades.utilidadesVendedor;
 import com.example.myapplication.modelos.ClasslistItemC;
 import com.example.myapplication.modelos.ModelItemCuentas;
 
@@ -32,7 +37,6 @@ import java.util.List;
 public class Maincuentas extends AppCompatActivity {
 
     RecyclerView listaCuentas;
-    TableLayout tabla;
     TextView telefono,direccion,cliente;
     AutoCompleteTextView search;
     RecyclerviewAdapterCuentas adaptadorCuentas;
@@ -40,7 +44,11 @@ public class Maincuentas extends AppCompatActivity {
             "cleinte1","Helmut","brian","jefrry"
     };
     public static int id,idCliente;
-   // String tel,direccion;
+    int id2;
+    String NombreVendedor;
+
+    ArrayList<VendedorAdd>listavendedor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +69,20 @@ public class Maincuentas extends AppCompatActivity {
         System.out.println("ID vendedor activity cuentas===========>"+ id);
 
 
+        ConsultarVendedorSQLite();
 
-     //   ArrayAdapter<String> adaptercliente=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,clientes);
+
+        for (int i=0; i<listavendedor.size();i++){
+
+            id2=listavendedor.get(i).getIdVendedor();
+            NombreVendedor=listavendedor.get(i).getNombreVendedor();
+            System.out.println("llamando el nombre del vendedor SQLite Estado Cuentas ====> "+NombreVendedor);
+            System.out.println("llamando el ID del vendedor SQLite Estado Cuentas====> "+id2);
+
+
+
+
+            //   ArrayAdapter<String> adaptercliente=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,clientes);
         search.setAdapter(Clientes());
 
         search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -80,6 +100,10 @@ public class Maincuentas extends AppCompatActivity {
 
             }
         });
+
+
+
+        }
 
     }
 /// ejecucion del recycler view
@@ -128,7 +152,7 @@ public class Maincuentas extends AppCompatActivity {
         DBConnection dbConnection = new DBConnection();
         dbConnection.conectar();
 
-        String query = "select  Nombre,idCliente,Telefono1,Direccion from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc";
+        String query = "select  Nombre,idCliente,Telefono1,Direccion from Clientes where idVendedor='" + id2 + "' AND Estado = 'Activo' order by Nombre asc";
         try {
             Statement stm = dbConnection.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
@@ -156,6 +180,23 @@ public class Maincuentas extends AppCompatActivity {
             telefono.setText(rs.getString("Telefono1"));
             direccion.setText(rs.getString("Direccion"));
 
+        }
+    }
+
+
+    public void ConsultarVendedorSQLite(){
+        conexionSQLiteHelper conn= new conexionSQLiteHelper(this,"bd_productos",null,1);
+        SQLiteDatabase db=conn.getReadableDatabase();
+        VendedorAdd vendedorAdd = null;
+        listavendedor=new ArrayList<VendedorAdd>();
+        //query SQLite
+        Cursor cursor=db.rawQuery("select * from "+ utilidadesVendedor.TABLA_VENDEDORES,null);
+        while (cursor.moveToNext()){
+            vendedorAdd=new VendedorAdd();
+            vendedorAdd.setIdVendedor(cursor.getInt(0));
+            vendedorAdd.setNombreVendedor(cursor.getString(1));
+
+            listavendedor.add(vendedorAdd);
         }
     }
 }

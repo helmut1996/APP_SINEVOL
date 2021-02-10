@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Editable;
@@ -28,6 +30,9 @@ import android.widget.Toast;
 
 import com.example.myapplication.Adapter.RecycleviewAdapter;
 import com.example.myapplication.ConexionBD.DBConnection;
+import com.example.myapplication.SQLite.conexionSQLiteHelper;
+import com.example.myapplication.SQLite.entidades.VendedorAdd;
+import com.example.myapplication.SQLite.ulilidades.utilidadesVendedor;
 import com.example.myapplication.modelos.ClasslistItemC;
 import com.google.android.material.button.MaterialButton;
 
@@ -47,6 +52,10 @@ public class MainFactura extends AppCompatActivity {
     List<ClasslistItemC> itemCList;
     public static int id;
 
+    int id2;
+    String NombreVendedor;
+    ArrayList<VendedorAdd>listavendedor;
+    ArrayList<String> listainformacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +73,18 @@ public class MainFactura extends AppCompatActivity {
 
         id = getIntent().getIntExtra("Id", 0);
         System.out.println("ID vendedor activity lista cliente===========>" + id);
+
+        ConsultarVendedorSQLite();
+        listainformacion = new ArrayList<String>();
+        for (int i=0; i<listavendedor.size();i++){
+
+            id2=listavendedor.get(i).getIdVendedor();
+            NombreVendedor=listavendedor.get(i).getNombreVendedor();
+            System.out.println("llamando el nombre del vendedor SQLite Lista Cliente====> "+NombreVendedor);
+            System.out.println("llamando el ID del vendedor SQLite lista Clientes====> "+id2);
+
+        }
+
 
         initview();
         initValues();
@@ -148,7 +169,7 @@ public class MainFactura extends AppCompatActivity {
             } else {
                 Statement st = dbConnection.getConnection().createStatement();
 
-                ResultSet rs = st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo,idCliente from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc");
+                ResultSet rs = st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo,idCliente from Clientes where idVendedor='" + id2 + "' AND Estado = 'Activo' order by Nombre asc");
                 while (rs.next()) {
                     listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),
                             rs.getString("Direccion"),
@@ -168,4 +189,21 @@ public class MainFactura extends AppCompatActivity {
         return listCliiente;
     }
 
+
+
+    public void ConsultarVendedorSQLite(){
+        conexionSQLiteHelper conn= new conexionSQLiteHelper(this,"bd_productos",null,1);
+        SQLiteDatabase db=conn.getReadableDatabase();
+        VendedorAdd vendedorAdd = null;
+        listavendedor=new ArrayList<VendedorAdd>();
+        //query SQLite
+        Cursor cursor=db.rawQuery("select * from "+ utilidadesVendedor.TABLA_VENDEDORES,null);
+        while (cursor.moveToNext()){
+            vendedorAdd=new VendedorAdd();
+            vendedorAdd.setIdVendedor(cursor.getInt(0));
+            vendedorAdd.setNombreVendedor(cursor.getString(1));
+
+            listavendedor.add(vendedorAdd);
+        }
+    }
 }

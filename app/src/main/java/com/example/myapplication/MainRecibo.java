@@ -81,6 +81,7 @@ public class MainRecibo extends AppCompatActivity {
     public static Double SaldoR;
     String letra;
     String totalabono,totalSaldo;
+    int idCuentasxCobrarid;
 
     conexionSQLiteHelper conn;
     public static int IdTalonario, NumeracionInicial, numeracion, IdPagosCxC, IdPagosCxC2;
@@ -858,7 +859,8 @@ public void NReferencia(){
             ArrayList<String> data = new ArrayList<>();
             while (rs.next()) {
                 tvIdCuentasxCobrar.setText(rs.getString("idCuentasxCobrar"));
-
+                idCuentasxCobrarid=rs.getInt("idCuentasxCobrar");
+                System.out.println("IDCuentasxCobrar" + idCuentasxCobrarid);
                 SaldoR = rs.getDouble("SaldoRestante");
                 saldo.setText(SaldoR.toString());
 
@@ -891,7 +893,7 @@ public void NReferencia(){
         values.put(utilidadesFact.CAMPO_DESCUENTO, descuento.getText().toString());
         values.put(utilidadesFact.CAMPO_SALDO_RES, saldo.getText().toString());
         values.put(utilidadesFact.CAMPO_NUMERO_RESF, IdPagosCxC2);
-        values.put(utilidadesFact.CAMPO_CUENTASXCOBRAR, tvIdCuentasxCobrar.getText().toString());
+        values.put(utilidadesFact.CAMPO_CUENTASXCOBRAR, idCuentasxCobrarid);
         values.put(utilidadesFact.CAMPO_OBSERVACIONES, observacion.getText().toString());
         long idResultante = db.insert(utilidadesFact.TABLA_RECIBO, utilidadesFact.CAMPO_NOMBRE_CLIEBTE, values);
         // Toast.makeText(this, "agregado: " + idResultante, Toast.LENGTH_SHORT).show();

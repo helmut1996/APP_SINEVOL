@@ -10,7 +10,10 @@ import com.example.myapplication.SQLite.ulilidades.utilidades;
 
 import com.example.myapplication.SQLite.ulilidades.utilidadesFact;
 
+import com.example.myapplication.SQLite.ulilidades.utilidadesVendedor;
+
 public class conexionSQLiteHelper extends SQLiteOpenHelper {
+
 
     /*variable para crear tabla en sqlite*/
 
@@ -22,12 +25,15 @@ public class conexionSQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
             db.execSQL(utilidades.CREAR_TABLA_PRODUCTO);
             db.execSQL( utilidadesFact.CREAR_TABLA_RECIBO);
+            db.execSQL(utilidadesVendedor.CREAR_TABLA_VENDEDORES);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS producto");
         db.execSQL("DROP TABLE IF EXISTS recibo");
+        db.execSQL("DROP TABLE IF EXISTS vendedores");
         onCreate(db);
 
     }
