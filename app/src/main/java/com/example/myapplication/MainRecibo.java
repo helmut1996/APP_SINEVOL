@@ -889,7 +889,7 @@ public void NReferencia(){
             pst2.setDouble(2,Double.parseDouble(saldo2.getText().toString()));
             pst2.setInt(3, Integer.parseInt(String.valueOf(idClientesRecibo)));
             pst2.setString(4, observacion.getText().toString());
-            pst2.setString(5, tvIdclienyte.getText().toString());
+            pst2.setString(5, vendedor.getText().toString());
             pst2.executeUpdate();
 
 
