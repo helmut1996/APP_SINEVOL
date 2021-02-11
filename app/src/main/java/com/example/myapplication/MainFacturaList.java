@@ -330,6 +330,20 @@ getMenuInflater().inflate(R.menu.menu,menu);
                 pst2.executeUpdate();
             }
 
+            for (int i=0; i<listaproducto.size();i++){
+                PreparedStatement pst3 = dbConnection.getConnection().prepareStatement( "exec sp_InsertKardex ?,?,?,?,?,?,?,?");
+                pst3.setInt(1, listaproducto.get(i).getId_producto());//idInventario
+                pst3.setInt(2, Integer.parseInt(valor)); //Idprefacura
+                pst3.setString(3, "Prefactura No. "+valor+" ");
+                pst3.setFloat(4,listaproducto.get(i).getCantidad());// cantidad
+                pst3.setDouble(5, listaproducto.get(i).getPrecios());//precio cordobas
+                pst3.setString(6, "Prefactura Creada");
+                pst3.setString(7,textV_Cliente.getText().toString());// Nombre Cliente
+
+                pst3.setString(8,null);//Observaciones
+                pst3.executeUpdate();
+            }
+
         }catch (SQLException e){
             dbConnection.getConnection().rollback();
             System.out.println("ERROR: ======> "+e);
