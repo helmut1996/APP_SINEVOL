@@ -480,25 +480,30 @@ public class MainRecibo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if (buscadorCliente.getText().toString().isEmpty() && abono.getText().toString().isEmpty()){
+                    Snackbar snackbar = Snackbar.make(cuerpo, "Debes de Guardar un recibo para Imprimir", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }else{
 
-                try {
-                    if (getPrinterStatus() == PRINTER_NORMAL) {
+                    try {
+                        if (getPrinterStatus() == PRINTER_NORMAL) {
 
 
-                        Consultarlista();
-                        AgregarReciboSQLSEVER();
-                        printText(); 
-                        borrardatosTabla();
-                        limpiarcampos();
+                            Consultarlista();
+                            AgregarReciboSQLSEVER();
+                            printText();
+                            borrardatosTabla();
+                            limpiarcampos();
+                        }
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
 
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                    buscadorCliente.setEnabled(true);
+                    Snackbar snackbar = Snackbar.make(cuerpo, "Imprimiendo Recibo!!", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
-
-                buscadorCliente.setEnabled(true);
-                Snackbar snackbar = Snackbar.make(cuerpo, "Imprimiendo Recibo!!", Snackbar.LENGTH_LONG);
-                snackbar.show();
 
 
             }
@@ -625,18 +630,6 @@ public class MainRecibo extends AppCompatActivity {
      */
 
     void ejecutarGuardado() {
-       /* try {
-
-            AgregarReciboSQLSEVER();
-            Estado();
-            GuardarReciboSQLite();
-            Snackbar snackbar = Snackbar.make(cuerpo, "Guardando recibo!!", Snackbar.LENGTH_LONG);
-            snackbar.show();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        */
 
         Estado();
         GuardarReciboSQLite();
