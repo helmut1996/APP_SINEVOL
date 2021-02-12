@@ -1,8 +1,8 @@
 package com.example.myapplication;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentValues;
@@ -480,31 +480,51 @@ public class MainRecibo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (buscadorCliente.getText().toString().isEmpty() && abono.getText().toString().isEmpty()){
-                    Snackbar snackbar = Snackbar.make(cuerpo, "Debes de Guardar un recibo para Imprimir", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                }else{
+                androidx.appcompat.app.AlertDialog.Builder alerta = new androidx.appcompat.app.AlertDialog.Builder(MainRecibo.this);
+                alerta.setMessage("Quieres Guardar ")
+                        .setCancelable(false)
+                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                    try {
-                        if (getPrinterStatus() == PRINTER_NORMAL) {
+
+                                if (buscadorCliente.getText().toString().isEmpty() && abono.getText().toString().isEmpty()){
+                                    Snackbar snackbar = Snackbar.make(cuerpo, "Debes de Guardar un recibo para Imprimir", Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                }else{
+
+                                    try {
+                                        if (getPrinterStatus() == PRINTER_NORMAL) {
 
 
-                            Consultarlista();
-                            AgregarReciboSQLSEVER();
-                            printText();
-                            borrardatosTabla();
-                            limpiarcampos();
-                        }
+                                            Consultarlista();
+                                            AgregarReciboSQLSEVER();
+                                            printText();
+                                            borrardatosTabla();
+                                            limpiarcampos();
+                                        }
 
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
 
-                    buscadorCliente.setEnabled(true);
-                    Snackbar snackbar = Snackbar.make(cuerpo, "Imprimiendo Recibo!!", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                }
+                                    buscadorCliente.setEnabled(true);
+                                    Snackbar snackbar = Snackbar.make(cuerpo, "Imprimiendo Recibo!!", Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                }
 
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alertDialog= alerta.create();
+                alertDialog.setTitle("Guardar Recibo");
+                alertDialog.show();
 
             }
         });

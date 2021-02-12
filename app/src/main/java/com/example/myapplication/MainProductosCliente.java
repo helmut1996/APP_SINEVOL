@@ -1,12 +1,14 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -47,7 +49,7 @@ private Spinner precios,monedas;
 private ImageView img;
 private EditText editcantidad;
 private LinearLayout cuerpoProductCliente;
-
+    int TotalP;
 
 /* variables globales */
 String NombreCliente;
@@ -193,6 +195,10 @@ int IdVendedor;
                     //                      Toast.makeText(this,"Precio seleccionado es 0",Toast.LENGTH_SHORT).show();
                 }else if(Integer.parseInt(editcantidad.getText().toString())>Integer.parseInt(textcontar.getText().toString())){
                     Toast.makeText(this,"no hay inventario suficiente  de este producto ",Toast.LENGTH_LONG).show();
+                }else if(idResultante==30){
+                Toast.makeText(this,"Ya no Puedes Ingresar mas de 30 productos",Toast.LENGTH_LONG).show();
+                    Intent intent2 = new Intent(getApplicationContext(),MainFacturaList.class);
+                    startActivity(intent2);
                 }
                 else {
 
@@ -204,8 +210,6 @@ int IdVendedor;
                 }
 
                 break;
-
-
 
         }
 
@@ -334,12 +338,24 @@ int IdVendedor;
         /*abrir la conexion a SQLite*/
         SQLiteDatabase db= conn.getWritableDatabase();
 
-
         Cursor c=db.rawQuery("SELECT * FROM producto WHERE id='"+tvIDproducto.getText()+"'", null);
         if(c.moveToFirst()) {
             Toast.makeText(this,"Error ya seleccionaste este Producto",Toast.LENGTH_LONG).show();
 
         }
+        /*
+        String CantProducto=" select count(*) from producto as TotalProducto";
+        Cursor Query= db.rawQuery(CantProducto,null);
+        if (Query.moveToFirst()){
+             TotalP = Query.getInt(Query.getColumnIndex("TotalProducto"));
+            System.out.println("Total de Productos Agregados==>" + TotalP);
+        }else if (TotalP==5){
+
+            Toast.makeText(this,"Solo puedes Guardar 30 Productos " + idResultante,Toast.LENGTH_LONG).show();
+
+        }
+
+         */
         else { // Inserting record
             ContentValues values= new ContentValues();
             values.put(utilidades.CAMPO_ID,tvIDproducto.getText().toString());
@@ -347,14 +363,9 @@ int IdVendedor;
             values.put(utilidades.CAMPO_CANTIDAD,editcantidad.getText().toString());
             values.put(utilidades.CAMPO_PRECIO,precios.getSelectedItem().toString());
             values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
-
             idResultante= (int) db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
-            if (idResultante<30 ){
-                Toast.makeText(this,"CANTIDAD INGRESADA: " + idResultante,Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(this,"sobre pasa limite para agregar productos  " ,Toast.LENGTH_SHORT).show();
-            }
 
+            Toast.makeText(this,"CANTIDAD INGRESADA: " + idResultante,Toast.LENGTH_LONG).show();
 
         }
 

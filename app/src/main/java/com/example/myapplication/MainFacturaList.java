@@ -39,7 +39,7 @@ import java.util.Date;
 public class
 MainFacturaList extends AppCompatActivity {
 
-    TextView textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible, textV_total,textIdcliente,textIdvendedor;
+    TextView textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible, textV_total,textIdcliente,textIdvendedor,tvtotalproducto;
     Spinner T_factura,T_ventas;
     ListView lista_factura;
     ArrayList<String>listainformacion;
@@ -102,6 +102,8 @@ public static String IDVendedor;
 
             }
         });
+
+
         ////////////////////////////// ListView///////////////////////////////
                 //conexion de SQLite
         conn=new conexionSQLiteHelper(getApplicationContext(),"bd_productos",null,1);
