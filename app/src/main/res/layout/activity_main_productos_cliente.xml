@@ -98,10 +98,21 @@
                 android:textColor="#040303" />
 
             <Spinner
+                android:layout_weight="1"
                 android:id="@+id/spinerPrecios"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text=" prcio1"
+                android:textAllCaps="true"
+                android:textColor="#040303"
+                android:id="@+id/tipoPrecio"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
@@ -124,7 +135,8 @@
             <Spinner
                 android:id="@+id/spinner_tipo_moneda"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

@@ -322,13 +322,14 @@ getMenuInflater().inflate(R.menu.menu,menu);
              }
 
             for (int i=0; i<listaproducto.size();i++){
-                PreparedStatement pst2 = dbConnection.getConnection().prepareStatement( "exec sp_insertDetallePrefacturas   ?,?,?,?,?,?");
+                PreparedStatement pst2 = dbConnection.getConnection().prepareStatement( "exec sp_insertDetallePrefacturas   ?,?,?,?,?,?,?");
                 pst2.setInt(1, Integer.parseInt(valor));
                 pst2.setInt(2, listaproducto.get(i).getId_producto());//idInventario
                 pst2.setDouble(3, listaproducto.get(i).getPrecios());//precio cordobas
                 pst2.setDouble(4,0.0);//precio Dolar
                 pst2.setFloat(5,listaproducto.get(i).getCantidad());// cantidad
                 pst2.setDouble(6,3.00);//PorcComision
+                pst2.setInt(7, Integer.parseInt(listaproducto.get(i).getTipoprecio()));//tipoPrecio
                 pst2.executeUpdate();
             }
 

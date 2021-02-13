@@ -44,7 +44,7 @@ import java.util.ArrayList;
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
     /*variables de los componentes de la vista*/
 private ImageButton IbuttonSiguiente;
-private TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvcontadorproducto,tvimagenBD,tvIDproducto;
+private TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvtiporecio,tvimagenBD,tvIDproducto;
 private Spinner precios,monedas;
 private ImageView img;
 private EditText editcantidad;
@@ -95,7 +95,9 @@ int IdVendedor;
         tvimagenBD=findViewById(R.id.imagenBD);
         tvunidadmedida=findViewById(R.id.text_unidadM);
         tvIDproducto=findViewById(R.id.IDProduto);
+        tvtiporecio=findViewById(R.id.tipoPrecio);
         ////////// Spinmer
+
         precios = findViewById(R.id.spinerPrecios);
         monedas = findViewById(R.id.spinner_tipo_moneda);
 
@@ -125,11 +127,31 @@ int IdVendedor;
             producto = extra.getString("NombreP");
             tvnombreproducto.setText(NombrePreducto);
             tvunidadmedida.setText(extra.getString("UnidadMed"));
-            textinfo1.setText(extra.getString("info1"));
-            textinfo2.setText(extra.getString("info2"));
-            textinfo3.setText(extra.getString("info3"));
-            textinfo4.setText(extra.getString("info4"));
-            textinfo5.setText(extra.getString("info5"));
+            String info1,info2,info3,info4,info5;
+
+            info1=extra.getString("info1");
+            info2=extra.getString("info2");
+            info3=extra.getString("info3");
+            info4=extra.getString("info4");
+            info5=extra.getString("info5");
+
+           if (info1!=null || info2!=null || info3!=null || info4!=null || info5!=null){
+               textinfo1.setText(info1);
+               textinfo2.setText(info2);
+               textinfo3.setText(info3);
+               textinfo4.setText(info4);
+               textinfo5.setText(info5);
+            }else{
+
+               textinfo1.setText("");
+               textinfo2.setText("");
+               textinfo3.setText("");
+               textinfo4.setText("");
+               textinfo5.setText("");
+
+           }
+
+
             textcontar.setText(extra.getString("stock"));
             tvimagenBD.setText(extra.getString("imagenproducto"));
             tvIDproducto.setText(extra.getString("idproducto"));
@@ -163,6 +185,28 @@ int IdVendedor;
 
             }
         });
+
+                precios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position==0){
+                            tvtiporecio.setText("1");
+                        }else if(position==1){
+                            tvtiporecio.setText("2");
+                        }else if (position==2){
+                            tvtiporecio.setText("3");
+                        }else if (position==3){
+                            tvtiporecio.setText("4");
+                        }else if (position==4){
+                            tvtiporecio.setText("5");
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
 
 
         /*mandando a llamar las imagenes libreria */
@@ -343,19 +387,7 @@ int IdVendedor;
             Toast.makeText(this,"Error ya seleccionaste este Producto",Toast.LENGTH_LONG).show();
 
         }
-        /*
-        String CantProducto=" select count(*) from producto as TotalProducto";
-        Cursor Query= db.rawQuery(CantProducto,null);
-        if (Query.moveToFirst()){
-             TotalP = Query.getInt(Query.getColumnIndex("TotalProducto"));
-            System.out.println("Total de Productos Agregados==>" + TotalP);
-        }else if (TotalP==5){
 
-            Toast.makeText(this,"Solo puedes Guardar 30 Productos " + idResultante,Toast.LENGTH_LONG).show();
-
-        }
-
-         */
         else { // Inserting record
             ContentValues values= new ContentValues();
             values.put(utilidades.CAMPO_ID,tvIDproducto.getText().toString());
@@ -363,6 +395,7 @@ int IdVendedor;
             values.put(utilidades.CAMPO_CANTIDAD,editcantidad.getText().toString());
             values.put(utilidades.CAMPO_PRECIO,precios.getSelectedItem().toString());
             values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
+            values.put(utilidades.CAMPO_TIPOPRECIO,tvtiporecio.getText().toString());
             idResultante= (int) db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
 
             Toast.makeText(this,"CANTIDAD INGRESADA: " + idResultante,Toast.LENGTH_LONG).show();
