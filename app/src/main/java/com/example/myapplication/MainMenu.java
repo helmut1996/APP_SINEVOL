@@ -23,7 +23,9 @@ import com.example.myapplication.ConexionBD.DBConnection;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Objects;
 
 public class MainMenu extends AppCompatActivity implements View.OnClickListener{
@@ -47,6 +49,20 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         if (extra != null) {
 
             nombreVendedor = extra.getString("NombreVendedor");
+            if (nombreVendedor == null) {
+                try {
+                    DBConnection dbConnection = new DBConnection();
+                    dbConnection.conectar();
+                    Statement stm = dbConnection.getConnection().createStatement();
+                    ResultSet rs = stm.executeQuery("Select Nombre From Vendedores where idVendedor="+id);
+                    if (rs.next()) {
+                        nombreVendedor= rs.getString(1);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
             System.out.println("----> NombreVendedor: " + nombreVendedor);
 
 

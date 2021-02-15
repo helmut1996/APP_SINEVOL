@@ -58,7 +58,7 @@ public static String NombreCliente;
 public static String CodigoCliente;
 public static String ZonaCliente;
 public static String IDCliente;
-public static String IDVendedor;
+public static int IDVendedor;
 
     MainFactura id = new MainFactura();
 
@@ -132,7 +132,7 @@ public static String IDVendedor;
             CodigoCliente=(extra.getString("CodigoCliente"));
             ZonaCliente=(extra.getString("ZonaCliente"));
           IDCliente=(extra.getString("IdCliente"));
-            IDVendedor=(extra.getString("IdVendedor"));
+          IDVendedor=(extra.getInt("IdVendedor"));
 
 
             textV_Cliente.setText(NombreCliente);
