@@ -7,11 +7,24 @@
     tools:context=".MainError_Internet">
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:gravity="center"
         android:text="Se perdio la conexxion del internet "
         android:textSize="40sp"
-        android:gravity="center">
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        tools:layout_editor_absoluteX="0dp">
 
     </TextView>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="226dp"
+        android:layout_height="242dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/fallo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

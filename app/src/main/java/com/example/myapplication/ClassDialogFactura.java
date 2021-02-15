@@ -40,7 +40,8 @@ public class ClassDialogFactura extends DialogFragment {
 
         builder.setView(view)
                 .setTitle("Detalle Producto")
-                .setPositiveButton("Actualizar", new DialogInterface.OnClickListener() {
+                .setIcon(R.drawable.ic_baseline_content_paste)
+                .setPositiveButton("Actualizar",  new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent refresh = new Intent(getContext(), MainFacturaList.class);
@@ -66,7 +67,6 @@ public class ClassDialogFactura extends DialogFragment {
                         startActivity(refresh);
 
                         EliminarDatosSQLite();
-
 
                     }
                 }

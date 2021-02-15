@@ -384,7 +384,7 @@ int IdVendedor;
 
         if (cantidad_registrado.moveToFirst()) {
             if (cantidad_registrado.getInt(cantidad_registrado.getColumnIndex("cantidad")) == 30) {
-                Toast.makeText(this,"Has llegado al limite de registro",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Limite de Registros permitidos "+idResultante+" Productos",Toast.LENGTH_LONG).show();
                 return;
             }
         }
