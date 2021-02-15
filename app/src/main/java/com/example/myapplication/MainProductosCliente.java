@@ -285,12 +285,11 @@ int IdVendedor;
     public ArrayAdapter precioDolar()
     {
         ArrayAdapter NoCoreAdapter=null;
-        DBConnection sesion;
-        sesion = DBConnection.getDbConnection();
-
+       DBConnection dbConnection= new DBConnection();
+       dbConnection.conectar();
         String query = "select PrecioDolar1, PrecioDolar2,PrecioDolar3,PrecioDolar4,PrecioDolar5 from Inventario where Nombre='" + producto + "'";
         try {
-            Statement stm = sesion.getConnection().createStatement();
+            Statement stm = dbConnection.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
 
             ArrayList<String> data = new ArrayList<>();
@@ -311,12 +310,11 @@ int IdVendedor;
     public ArrayAdapter precioCordoba()
     {
         ArrayAdapter NoCoreAdapter=null;
-        DBConnection sesion;
-        sesion = DBConnection.getDbConnection();
-
+       DBConnection dbConnection = new DBConnection();
+       dbConnection.conectar();
         String query = "select Precio1, Precio2,Precio3,Precio4,Precio5 from Inventario where Nombre='" + producto + "'";
         try {
-            Statement stm = sesion.getConnection().createStatement();
+            Statement stm = dbConnection.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
 
             ArrayList<String> data = new ArrayList<>();
