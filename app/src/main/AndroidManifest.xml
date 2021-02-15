@@ -31,8 +31,7 @@
             android:name=".Maincuentas"
             android:parentActivityName=".MainFactura" />
         <activity
-            android:name=".MainFactura"
-            android:parentActivityName=".MainFactura" />
+            android:name=".MainFactura" />
         <activity android:name=".MainMenu" />
         <activity
             android:name=".MainActivity"

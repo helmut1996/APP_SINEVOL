@@ -81,6 +81,7 @@ public class MainRecibo extends AppCompatActivity {
     public static Double SaldoR;
     String letra;
     String totalabono,totalSaldo;
+    int idcuentasxcobrar;
 
     conexionSQLiteHelper conn;
     public static int IdTalonario, NumeracionInicial, numeracion, IdPagosCxC, IdPagosCxC2;
@@ -94,7 +95,6 @@ public class MainRecibo extends AppCompatActivity {
     private static final String TAG = "MainRecibo";
     /* Demo 版本号*/
     private static final String VERSION = "V1.1.0";
-
 
     private IPosPrinterService mIPosPrinterService;
     private IPosPrinterCallback callback = null;
@@ -814,7 +814,7 @@ public void NReferencia(){
             ArrayList<String> data = new ArrayList<>();
             while (rs.next()) {
                 tvIdCuentasxCobrar.setText(rs.getString("idCuentasxCobrar"));
-
+                idcuentasxcobrar= Integer.parseInt(rs.getString("idCuentasxCobrar"));
                 SaldoR = rs.getDouble("SaldoRestante");
                 saldo.setText(SaldoR.toString());
 
@@ -848,7 +848,7 @@ public void NReferencia(){
         values.put(utilidadesFact.CAMPO_DESCUENTO, descuento.getText().toString());
         values.put(utilidadesFact.CAMPO_SALDO_RES, saldo.getText().toString());
         values.put(utilidadesFact.CAMPO_NUMERO_RESF, IdPagosCxC2);
-        values.put(utilidadesFact.CAMPO_CUENTASXCOBRAR, tvIdCuentasxCobrar.getText().toString());
+        values.put(utilidadesFact.CAMPO_CUENTASXCOBRAR, idcuentasxcobrar);
         values.put(utilidadesFact.CAMPO_OBSERVACIONES, observacion.getText().toString());
         long idResultante = db.insert(utilidadesFact.TABLA_RECIBO, utilidadesFact.CAMPO_NOMBRE_CLIEBTE, values);
         // Toast.makeText(this, "agregado: " + idResultante, Toast.LENGTH_SHORT).show();
