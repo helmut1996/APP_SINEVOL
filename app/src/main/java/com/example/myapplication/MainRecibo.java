@@ -313,6 +313,7 @@ public class MainRecibo extends AppCompatActivity {
         Guardar = findViewById(R.id.btnGuardarRecibo);
         imprimir = findViewById(R.id.btnImprimirRecibo);
         tvIdCuentasxCobrar = findViewById(R.id.idcuentasxCobrar);
+        NRecibo=findViewById(R.id.tvNumRecibo);
         /////////////////////////////////////////////////////////
 
 
@@ -341,6 +342,7 @@ public class MainRecibo extends AppCompatActivity {
 
                 BuscadorFactura.setAdapter(Facturas());
                 buscadorCliente.setAdapter(Clientes());
+                NRecibo.setText("No.Recibo:"+numeracion);
 
 
             }
