@@ -380,12 +380,20 @@ int IdVendedor;
         /*abrir la conexion a SQLite*/
         SQLiteDatabase db= conn.getWritableDatabase();
 
+        Cursor cantidad_registrado=db.rawQuery("SELECT count(*) as cantidad from producto", null);
+
+        if (cantidad_registrado.moveToFirst()) {
+            if (cantidad_registrado.getInt(cantidad_registrado.getColumnIndex("cantidad")) == 30) {
+                Toast.makeText(this,"Has llegado al limite de registro",Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+        cantidad_registrado.close();
+
         Cursor c=db.rawQuery("SELECT * FROM producto WHERE id='"+tvIDproducto.getText()+"'", null);
         if(c.moveToFirst()) {
             Toast.makeText(this,"Error ya seleccionaste este Producto",Toast.LENGTH_LONG).show();
-
         }
-
         else { // Inserting record
             ContentValues values= new ContentValues();
             values.put(utilidades.CAMPO_ID,tvIDproducto.getText().toString());
@@ -397,8 +405,7 @@ int IdVendedor;
             idResultante= (int) db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
 
             Toast.makeText(this,"CANTIDAD INGRESADA: " + idResultante,Toast.LENGTH_LONG).show();
-
         }
-
+        c.close();
     }
 }
