@@ -329,7 +329,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
                 pst2.setDouble(4,0.0);//precio Dolar
                 pst2.setFloat(5,listaproducto.get(i).getCantidad());// cantidad
                 pst2.setDouble(6,3.00);//PorcComision
-                pst2.setInt(7, Integer.parseInt(listaproducto.get(i).getTipoprecio()));//tipoPrecio
+                pst2.setString(7, listaproducto.get(i).getTipoprecio());//tipoPrecio
                 pst2.executeUpdate();
             }
 
