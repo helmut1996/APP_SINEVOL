@@ -802,19 +802,22 @@ public void NReferencia(){
 
 }
 
+
     public void calcularsaldo() {
-        DBConnection sesion;
-        sesion = DBConnection.getDbConnection();
+        DBConnection dbConnection=new DBConnection();
+        dbConnection.conectar();
         String query = "exec sp_SaldoFacturaMovil " + BuscadorFactura.getSelectedItem();
 
         try {
-            Statement stm = sesion.getConnection().createStatement();
+            Statement stm = dbConnection.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
 
             ArrayList<String> data = new ArrayList<>();
             while (rs.next()) {
-                tvIdCuentasxCobrar.setText(rs.getString("idCuentasxCobrar"));
+               tvIdCuentasxCobrar.setText(rs.getString("idCuentasxCobrar"));
                 idcuentasxcobrar= Integer.parseInt(rs.getString("idCuentasxCobrar"));
+
+                System.out.println("IDCuentasxCobrar Capturando:====>" +idcuentasxcobrar);
                 SaldoR = rs.getDouble("SaldoRestante");
                 saldo.setText(SaldoR.toString());
 
