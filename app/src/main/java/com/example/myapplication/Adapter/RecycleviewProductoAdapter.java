@@ -119,7 +119,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
                                         intent.putExtra("imagenproducto",tvimagen.getText());
                                         intent.putExtra("stock",tvcantidad.getText());
                                         intent.putExtra("idproducto",tvidproducto.getText());
-
+                                        intent.putExtra("idinventario",datos.IdInventario);
 
                                         context.startActivity(intent);
 

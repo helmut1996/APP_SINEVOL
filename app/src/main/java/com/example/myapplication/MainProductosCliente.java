@@ -57,6 +57,7 @@ String CodigoCliente;
 String ZonaCliente;
 String IdCliente;
 int IdVendedor;
+int IdInventario;
 
     private String producto;
     double precioEscogido;
@@ -114,6 +115,9 @@ int IdVendedor;
 
             CodigoCliente = extra.getString("CodigoCliente");
             System.out.println("Codigo Cliente Activity ProductosClientea----->"+CodigoCliente);
+
+            IdInventario = extra.getInt("idinventario");
+            System.out.println("IDINVENTARIO Activity ProductosClientea----->"+IdInventario);
 
             IdCliente = extra.getString("IdCliente");
             System.out.println("ID Cliente Activity ProductosClientea----->"+IdCliente);
@@ -301,10 +305,12 @@ int IdVendedor;
                 data.add(rs.getString("PrecioDolar5"));
             }
             NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
+            stm.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return NoCoreAdapter;
+
     }
 
     public ArrayAdapter precioCordoba()
@@ -325,7 +331,9 @@ int IdVendedor;
                 data.add(rs.getString("Precio4"));
                 data.add(rs.getString("Precio5"));
             }
+            System.out.println("Nombre:"+producto);
             NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
+            stm.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -335,7 +343,7 @@ int IdVendedor;
 
     @Override
     public void onClick(View v) {
-        precioEscogido= (Double.parseDouble(precios.getSelectedItem().toString()));
+//        precioEscogido= (Double.parseDouble(precios.getSelectedItem().toString()));
         switch (v.getId()){
 
             case R.id.btn_siguente:

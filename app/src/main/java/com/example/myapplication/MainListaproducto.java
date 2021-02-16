@@ -49,6 +49,7 @@ import java.util.List;
     public static String idcliente;
     public static int idvendedor;
     public static int stock;
+    public static int IdInventario;
 
 
 
@@ -174,7 +175,7 @@ import java.util.List;
                         rs.getString("info5"),
                         rs.getString("ImagenApk"),
                        stock= rs.getInt("Stock"),
-                        rs.getInt("idInventario")));
+                       IdInventario= rs.getInt("idInventario")));
 
 
             }
