@@ -341,8 +341,9 @@ public class MainRecibo extends AppCompatActivity {
                 tvIdclienyte.setText(buscadorCliente.getText().toString());
 
                 BuscadorFactura.setAdapter(Facturas());
+                NReferencia();
                 buscadorCliente.setAdapter(Clientes());
-                NRecibo.setText("No.Recibo:"+numeracion);
+
 
 
             }
@@ -510,7 +511,6 @@ public class MainRecibo extends AppCompatActivity {
                                     Snackbar snackbar = Snackbar.make(cuerpo, "Debes de Guardar un recibo para Imprimir", Snackbar.LENGTH_LONG);
                                     snackbar.show();
                                 }
-
                                 else{
 
                                     try {
@@ -811,6 +811,7 @@ public void NReferencia(){
             NumeracionInicial = rs.getInt("NumeracionInicial");
             numeracion = NumeracionInicial;
             System.out.println("==============> Ultimo Registro NumeroInicial :" + numeracion);
+            NRecibo.setText("No.Recibo:"+numeracion);
 
         }
     } catch (SQLException e) {
