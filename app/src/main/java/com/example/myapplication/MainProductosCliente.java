@@ -49,7 +49,7 @@ private Spinner precios,monedas;
 private ImageView img;
 private EditText editcantidad;
 private LinearLayout cuerpoProductCliente;
-    int TotalP;
+int TotalP;
 
 /* variables globales */
 String NombreCliente;
@@ -68,7 +68,7 @@ int IdInventario;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_productos_cliente);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+     //   getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Productos");
 
 
@@ -265,6 +265,13 @@ int IdInventario;
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        precioCordoba();
+    }
+
     private void checkExternalStoragePermission() {
         int permissionCheck = ContextCompat.checkSelfPermission(
                 this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -303,7 +310,9 @@ int IdInventario;
                 data.add(rs.getString("PrecioDolar3"));
                 data.add(rs.getString("PrecioDolar4"));
                 data.add(rs.getString("PrecioDolar5"));
+
             }
+            System.out.println("Capturando nombre Producto====>"+producto);
             NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
             stm.close();
         } catch (SQLException e) {
@@ -318,7 +327,7 @@ int IdInventario;
         ArrayAdapter NoCoreAdapter=null;
        DBConnection dbConnection = new DBConnection();
        dbConnection.conectar();
-        String query = "select Precio1, Precio2,Precio3,Precio4,Precio5 from Inventario where Nombre='" + producto + "'";
+        String query = "select Precio1, Precio2,Precio3,Precio4,Precio5 from Inventario where Nombre= '" +producto+" ' ";
         try {
             Statement stm = dbConnection.getConnection().createStatement();
             ResultSet rs = stm.executeQuery(query);
@@ -332,6 +341,8 @@ int IdInventario;
                 data.add(rs.getString("Precio5"));
             }
             System.out.println("Nombre:"+producto);
+
+            System.out.println("Capturando nombre Producto====>"+producto);
             NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
             stm.close();
         } catch (SQLException e) {
@@ -343,7 +354,7 @@ int IdInventario;
 
     @Override
     public void onClick(View v) {
-//        precioEscogido= (Double.parseDouble(precios.getSelectedItem().toString()));
+      precioEscogido= (Double.parseDouble(precios.getSelectedItem().toString()));
         switch (v.getId()){
 
             case R.id.btn_siguente:

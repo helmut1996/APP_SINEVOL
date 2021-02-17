@@ -22,8 +22,7 @@
             android:name=".MainFacturaList"
             android:parentActivityName=".MainProductosCliente" />
         <activity
-            android:name=".MainProductosCliente"
-            android:parentActivityName=".MainListaproducto" />
+            android:name=".MainProductosCliente"/>
         <activity
             android:name=".MainRecibo"
             android:parentActivityName=".MainFactura" />
