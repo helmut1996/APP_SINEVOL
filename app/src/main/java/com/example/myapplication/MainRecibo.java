@@ -498,6 +498,8 @@ public class MainRecibo extends AppCompatActivity {
         imprimir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                conexionSQLiteHelper conn= new conexionSQLiteHelper(MainRecibo.this,"bd_productos",null,1);
+                SQLiteDatabase db= conn.getWritableDatabase();
 
                 androidx.appcompat.app.AlertDialog.Builder alerta = new androidx.appcompat.app.AlertDialog.Builder(MainRecibo.this);
                 alerta.setMessage("Quieres Guardar ")
@@ -505,7 +507,15 @@ public class MainRecibo extends AppCompatActivity {
                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                Cursor verificar_recibos=db.rawQuery("select count(*) as cantidad from recibo;", null);
 
+                                if (verificar_recibos.moveToFirst()) {
+                                    if (verificar_recibos.getInt(verificar_recibos.getColumnIndex("cantidad")) == 0) {
+                                        Snackbar snackbar = Snackbar.make(cuerpo, "Debes de Guardar un recibo para Imprimir", Snackbar.LENGTH_LONG);
+                                        snackbar.show();
+                                        return;
+                                    }
+                                }
 
                                 if (buscadorCliente.getText().toString().isEmpty() && abono.getText().toString().isEmpty()){
                                     Snackbar snackbar = Snackbar.make(cuerpo, "Debes de Guardar un recibo para Imprimir", Snackbar.LENGTH_LONG);
