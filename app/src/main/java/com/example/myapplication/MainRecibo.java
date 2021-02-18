@@ -15,7 +15,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Message;
@@ -55,6 +54,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -329,8 +330,10 @@ public class MainRecibo extends AppCompatActivity {
         /*pasando id del  vendedor*/
 
         /*Capturando la fecha*/
-        String ct = DateFormat.getDateInstance().format(new Date());
-        fecha.setText(ct);
+        Date date = new Date();
+        DateFormat dateFormat=new SimpleDateFormat("dd/MM/yy");
+        System.out.println(dateFormat.format(date));
+        fecha.setText(dateFormat.format(date));
         /*Capturando la fecha*/
 
         buscadorCliente.setAdapter(Clientes());
@@ -341,9 +344,10 @@ public class MainRecibo extends AppCompatActivity {
                 tvIdclienyte.setText(buscadorCliente.getText().toString());
 
                 BuscadorFactura.setAdapter(Facturas());
-                NReferencia();
-                buscadorCliente.setAdapter(Clientes());
 
+                buscadorCliente.setAdapter(Clientes());
+                Talonario();
+                NReferencia();
 
 
             }
@@ -561,20 +565,12 @@ public class MainRecibo extends AppCompatActivity {
 
 
         descuento.setEnabled(false);
-        Talonario();
+        //Talonario();
     }
 
     /*
      *Funciones de la imprsora
      * */
-
-    public  void onStart(){
-        super.onStart();
-        Talonario();
-        NReferencia();
-    }
-
-
 
     public int getPrinterStatus() {
 
@@ -623,18 +619,18 @@ public class MainRecibo extends AppCompatActivity {
                   //   for (int p=0; p<2;p++){
 
                     mIPosPrinterService.printSpecifiedTypeText("RECIBO No."+numeracion+" ", "ST", 48, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("NREF:" +IdPagosCxC+ "\t\t\t"+fecha.getText().toString(), "ST", 32, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("NREF:" +IdPagosCxC+ "\t\t"+fecha.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText(vendedor.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Recibo de:" + " " + tvIdclienyte.getText().toString(), "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Recibo de:" + " " + tvIdclienyte.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " + letra, "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("\t\t\t\t\tC$" + saldo2.getText().toString() + " \n\n\n", "ST", 32, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Total Abonado: C$" + saldo2.getText().toString() + " \n\n\n", "ST", 32, callback);
                     mIPosPrinterService.printBlankLines(1, 8, callback);
 
                     mIPosPrinterService.setPrinterPrintAlignment(0, callback);
                     mIPosPrinterService.setPrinterPrintFontSize(24, callback);
                     String[] text = new String[3];
-                    int[] width = new int[]{6, 8, 8};
+                    int[] width = new int[]{6, 10, 10};
                     int[] align = new int[]{0, 2, 2}; // Izquierda, derecha
 
                     text[0] = "N.Fact";
@@ -651,7 +647,7 @@ public class MainRecibo extends AppCompatActivity {
                     }
 
                     mIPosPrinterService.printBlankLines(1, 16, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Saldo Total:C$ " + " " + totalSaldo + "\n\n\n\n", "ST", 24, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Saldo Total: C$ "+ totalSaldo + "\n\n\n\n", "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Observaciones", "ST", 24, callback);
                     for (int j = 0; j < listarecibo.size(); j++) {
                         mIPosPrinterService.printSpecifiedTypeText(listarecibo.get(j).getObservaciones(), "ST", 24, callback);
@@ -768,6 +764,8 @@ public class MainRecibo extends AppCompatActivity {
         if (query.moveToFirst()){
             totalSaldo=query.getString(query.getColumnIndex("Total2"));
             System.out.println("======>PruebaSaldoTotal"+totalSaldo);
+
+
         }
         db.close();
     }
@@ -863,7 +861,7 @@ public void NReferencia(){
         descuento.setText("");
         observacion.setText("");
         saldo.setText("");
-        NRecibo.setText("");
+        NRecibo.setText("No.Recibo:");
     }
 
 
@@ -921,23 +919,6 @@ public void NReferencia(){
         db.execSQL("delete from recibo");
         db.close();
     }
-
-    public void ValidarRecibo(){
-        conexionSQLiteHelper conn = new conexionSQLiteHelper(this, "bd_productos", null, 1);
-        SQLiteDatabase db= conn.getWritableDatabase();
-
-        Cursor cantidad_registrado=db.rawQuery("SELECT count(*) as cantidad from recibo", null);
-
-        if (cantidad_registrado.moveToFirst()) {
-            if (cantidad_registrado.getInt(cantidad_registrado.getColumnIndex("cantidad")) == 0) {
-                Toast.makeText(this,"No hay Recibo Guardado",Toast.LENGTH_LONG).show();
-                return;
-            }
-        }
-        cantidad_registrado.close();
-
-    }
-
 
     public void AgregarReciboSQLSEVER() throws SQLException {
 
