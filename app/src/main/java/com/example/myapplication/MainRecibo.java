@@ -502,7 +502,7 @@ public class MainRecibo extends AppCompatActivity {
                 SQLiteDatabase db= conn.getWritableDatabase();
 
                 androidx.appcompat.app.AlertDialog.Builder alerta = new androidx.appcompat.app.AlertDialog.Builder(MainRecibo.this);
-                alerta.setMessage("Quieres Guardar ")
+                alerta.setMessage("Quieres Imprimir")
                         .setCancelable(false)
                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                             @Override
@@ -553,7 +553,7 @@ public class MainRecibo extends AppCompatActivity {
                         });
 
                 AlertDialog alertDialog= alerta.create();
-                alertDialog.setTitle("Guardar Recibo");
+                alertDialog.setTitle("Generar Recibo");
                 alertDialog.show();
 
             }
