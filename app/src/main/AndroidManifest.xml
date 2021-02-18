@@ -14,23 +14,22 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".MainError_Internet"></activity>
+        <activity android:name=".MainCheques"></activity>
+        <activity android:name=".MainError_Internet" />
         <activity
             android:name=".MainListaproducto"
             android:parentActivityName=".MainProductosCliente" />
         <activity
             android:name=".MainFacturaList"
             android:parentActivityName=".MainProductosCliente" />
-        <activity
-            android:name=".MainProductosCliente"/>
+        <activity android:name=".MainProductosCliente" />
         <activity
             android:name=".MainRecibo"
             android:parentActivityName=".MainFactura" />
         <activity
             android:name=".Maincuentas"
             android:parentActivityName=".MainFactura" />
-        <activity
-            android:name=".MainFactura" />
+        <activity android:name=".MainFactura" />
         <activity android:name=".MainMenu" />
         <activity
             android:name=".MainActivity"

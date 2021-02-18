@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +24,8 @@ import android.text.Editable;
 import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -565,8 +568,30 @@ public class MainRecibo extends AppCompatActivity {
 
 
         descuento.setEnabled(false);
-        //Talonario();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu4,menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.Mbtn_MenuCheque:
+                Intent intent = new Intent(getApplicationContext(),MainCheques.class);
+                startActivity(intent);
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     /*
      *Funciones de la imprsora
