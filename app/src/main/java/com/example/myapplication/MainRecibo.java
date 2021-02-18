@@ -572,14 +572,6 @@ public class MainRecibo extends AppCompatActivity {
      *Funciones de la imprsora
      * */
 
-    public  void onStart(){
-        super.onStart();
-
-
-    }
-
-
-
     public int getPrinterStatus() {
 
         Log.i(TAG, "***** printerStatus" + printerStatus);
@@ -869,7 +861,7 @@ public void NReferencia(){
         descuento.setText("");
         observacion.setText("");
         saldo.setText("");
-        NRecibo.setText("");
+        NRecibo.setText("No.Recibo:");
     }
 
 
@@ -927,23 +919,6 @@ public void NReferencia(){
         db.execSQL("delete from recibo");
         db.close();
     }
-
-    public void ValidarRecibo(){
-        conexionSQLiteHelper conn = new conexionSQLiteHelper(this, "bd_productos", null, 1);
-        SQLiteDatabase db= conn.getWritableDatabase();
-
-        Cursor cantidad_registrado=db.rawQuery("SELECT count(*) as cantidad from recibo", null);
-
-        if (cantidad_registrado.moveToFirst()) {
-            if (cantidad_registrado.getInt(cantidad_registrado.getColumnIndex("cantidad")) == 0) {
-                Toast.makeText(this,"No hay Recibo Guardado",Toast.LENGTH_LONG).show();
-                return;
-            }
-        }
-        cantidad_registrado.close();
-
-    }
-
 
     public void AgregarReciboSQLSEVER() throws SQLException {
 

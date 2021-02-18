@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.example.myapplication.SQLite.conexionSQLiteHelper;
 import com.example.myapplication.SQLite.entidades.ProductosAdd;
 import com.example.myapplication.SQLite.ulilidades.utilidades;
 import com.example.myapplication.modelos.ClasslistItemC;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,6 +44,7 @@ MainFacturaList extends AppCompatActivity {
     TextView textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible, textV_total,textIdcliente,textIdvendedor,tvtotalproducto;
     Spinner T_factura,T_ventas;
     ListView lista_factura;
+    LinearLayout cuerpo;
     ArrayList<String>listainformacion;
     ArrayList<ProductosAdd>listaproducto;
     ///////////////////////////////////////
@@ -80,6 +83,7 @@ public static int IDVendedor;
         textV_total = findViewById(R.id.textV_total);
         textIdcliente= findViewById(R.id.textV_idcliente);
         textIdvendedor= findViewById(R.id.textV_idvendedor);
+        cuerpo=findViewById(R.id.cuerpo);
 
         T_ventas = findViewById(R.id.spinner_tventas);
         T_factura = findViewById(R.id.spinner_facura);
@@ -150,13 +154,6 @@ public static int IDVendedor;
     CalcularTotalFactura();
     }
 
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        finish();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 getMenuInflater().inflate(R.menu.menu,menu);
@@ -168,7 +165,8 @@ getMenuInflater().inflate(R.menu.menu,menu);
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.Mbtn_guardar:
-
+                        conexionSQLiteHelper conn= new conexionSQLiteHelper(MainFacturaList.this,"bd_productos",null,1);
+                        SQLiteDatabase db= conn.getWritableDatabase();
                         AlertDialog.Builder alerta = new AlertDialog.Builder(MainFacturaList.this);
                         alerta.setMessage("Quieres Guardar")
                                 .setCancelable(false)
@@ -176,14 +174,28 @@ getMenuInflater().inflate(R.menu.menu,menu);
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                           try {
+                                        Cursor verificar_prefactura=db.rawQuery("select count(*) as cantidad from producto;", null);
 
-                                             AgregarDatosSQLSEVER();
+                                        if (verificar_prefactura.moveToFirst()) {
+                                            if (verificar_prefactura.getInt(verificar_prefactura.getColumnIndex("cantidad")) == 0) {
+                                                Snackbar snackbar = Snackbar.make(cuerpo, "No puedes Guardar Prefactura Vacia", Snackbar.LENGTH_LONG);
+                                                snackbar.show();
+                                                return;
+                                            }
+                                        }else{
+
+
+                                            try {
+
+                                                AgregarDatosSQLSEVER();
+                                            }
+                                            catch (SQLException e)
+                                            {
+                                                e.printStackTrace();
+                                            }
                                         }
-                                        catch (SQLException e)
-                                         {
-                                            e.printStackTrace();
-                                        }
+
+
                                              borrardatosTabla();
                                           Toast.makeText(getApplicationContext(),"Guardar",Toast.LENGTH_SHORT).show();
                                             Intent refresh = new Intent(getApplicationContext(), MainMenu.class);
