@@ -300,7 +300,7 @@ public class MainRecibo extends AppCompatActivity {
 
         registerReceiver(IPosPrinterStatusListener, printerStatusFilter);
 
-        ///llamando los complementos
+        ///llamando los componentos
         saldo2 = findViewById(R.id.tvr_saldo2);
         cuerpo = findViewById(R.id.linearLayout);
         tvIdclienyte = findViewById(R.id.tv_IdclienteRecibo);

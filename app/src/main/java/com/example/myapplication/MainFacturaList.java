@@ -181,17 +181,14 @@ getMenuInflater().inflate(R.menu.menu,menu);
                                                 Snackbar snackbar = Snackbar.make(cuerpo, "No puedes Guardar Prefactura Vacia", Snackbar.LENGTH_LONG);
                                                 snackbar.show();
                                                 return;
-                                            }
-                                        }else{
-
-
-                                            try {
-
-                                                AgregarDatosSQLSEVER();
-                                            }
-                                            catch (SQLException e)
-                                            {
-                                                e.printStackTrace();
+                                            }else{
+                                                try {
+                                                    AgregarDatosSQLSEVER();
+                                                }
+                                                catch (SQLException e)
+                                                {
+                                                    e.printStackTrace();
+                                                }
                                             }
                                         }
 
