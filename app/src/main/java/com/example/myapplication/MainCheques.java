@@ -31,6 +31,7 @@ import com.example.myapplication.Utils.HandlerUtils;
 import com.iposprinter.iposprinterservice.IPosPrinterCallback;
 import com.iposprinter.iposprinterservice.IPosPrinterService;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -361,14 +362,21 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
                     MCheque.setError("El monto no puede ser 0");
                 } else {
                     if (getPrinterStatus() == PRINTER_NORMAL) {
-                        printText();
-                        Toast.makeText(getApplicationContext(),"Cheque Guardado",Toast.LENGTH_LONG).show();
+                        try {
+                            AgregarChequesSQLSEVER();
+                            printText();
+                            LimpiarCampos();
+                            Toast.makeText(getApplicationContext(),"Cheque Guardado",Toast.LENGTH_LONG).show();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+
+
                     }
 
 
                 }
-
-
 
             }
 
@@ -421,7 +429,7 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
 
                 try {
                     mIPosPrinterService.printSpecifiedTypeText("RECIBO "+ NumeracionInicialC+"\n", "ST", 48, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("NRefC:"+IdCheque+" \n", "ST", 32, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("NRefCK:"+IdCheque+" \n", "ST", 32, callback);
                     mIPosPrinterService.printBlankLines(1, 8, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Fecha:"+fecha.getText().toString()+" \n", "ST", 32, callback);
                     mIPosPrinterService.printBlankLines(1, 8, callback);
@@ -471,6 +479,14 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
 
 
     // Funciones del modulo de Cheques
+    public void  LimpiarCampos(){
+        BuscadorClienteC.setText("");
+        NCheque.setText("");
+        MCheque.setText("");
+        Beneficiario.setText("");
+        ObservacionesC.setText("");
+    }
+
     public ArrayAdapter Clientes() {
         ArrayAdapter NoCoreAdapter=null;
         DBConnection dbConnection = new DBConnection();
@@ -560,5 +576,34 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public  void AgregarChequesSQLSEVER() throws SQLException {
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.conectar();
+
+        try {
+            dbConnection.getConnection().setAutoCommit(false);
+            PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertCheque ?,?,?,?,?,?,?,?");
+            pst.setInt(1, Integer.parseInt(idBanco.getText().toString()));
+            pst.setString(2,NCheque.getText().toString());
+            pst.setString(3, Beneficiario.getText().toString());
+            pst.setFloat(4, Float.parseFloat(MCheque.getText().toString()));
+            pst.setInt(5, IdTalonario);
+            pst.setInt(6, Integer.parseInt(IdCliente.getText().toString()));
+            pst.setString(7,vendedor.getText().toString());
+            pst.setString(8,ObservacionesC.getText().toString());
+            pst.executeUpdate();
+
+        }catch (SQLException e){
+            dbConnection.getConnection().rollback();
+            System.out.println("ERROR: ======> "+e);
+            Toast.makeText(this," No Registrado en SQLServer",Toast.LENGTH_LONG).show();
+        }finally {
+
+            dbConnection.getConnection().setAutoCommit(true);
+        }
+
     }
 }
