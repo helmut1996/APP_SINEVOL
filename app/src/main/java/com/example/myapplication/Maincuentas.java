@@ -36,9 +36,7 @@ public class Maincuentas extends AppCompatActivity {
     TextView telefono,direccion,cliente;
     AutoCompleteTextView search;
     RecyclerviewAdapterCuentas adaptadorCuentas;
-    String []clientes= new String[]{
-            "cleinte1","Helmut","brian","jefrry"
-    };
+
     public static int id,idCliente;
    // String tel,direccion;
 

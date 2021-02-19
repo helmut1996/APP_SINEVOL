@@ -74,6 +74,15 @@
     </string-array>
 
 
+    <string-array name="bancos">
+        <item>Seleccione Banco</item>
+        <item>LaFise</item>
+        <item>BAC</item>
+        <item>BANPRO</item>
+        <item>BDF</item>
+        <item>Avanz/Procredit</item>
+    </string-array>
+
     <string-array name="tipo_ventas">
         <item>Credito</item>
         <item>Contado</item>

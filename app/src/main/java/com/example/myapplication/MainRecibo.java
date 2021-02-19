@@ -583,6 +583,8 @@ public class MainRecibo extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.Mbtn_MenuCheque:
                 Intent intent = new Intent(getApplicationContext(),MainCheques.class);
+                intent.putExtra("NombreVendedor",vendedor.getText().toString());
+                intent.putExtra("id",id);
                 startActivity(intent);
                 break;
 

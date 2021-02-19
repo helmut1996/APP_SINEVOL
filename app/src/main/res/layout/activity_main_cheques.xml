@@ -21,7 +21,12 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="15dp"
             android:orientation="vertical">
-
+            <TextView
+                android:id="@+id/tvc_NombreCliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre"
+                android:visibility="gone" />
 
             <AutoCompleteTextView
                 android:id="@+id/editBuscarClienteC"
@@ -31,12 +36,11 @@
                 android:hint="@string/cliente" />
 
             <TextView
-                android:id="@+id/tv_IdclienteRecibo"
+                android:id="@+id/tvc_IdclienteCheque"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="idcliente"
-                android:visibility="gone"
-                />
+                android:visibility="gone"/>
         </LinearLayout>
 
 
@@ -58,7 +62,8 @@
                 android:id="@+id/tvc_zona"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
@@ -77,7 +82,8 @@
                 android:id="@+id/tvc_vendedor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
@@ -102,7 +108,14 @@
                 android:gravity="center"/>
         </LinearLayout>
 
-
+        <TextView
+            android:id="@+id/tvc_idBaanco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0"
+            android:layout_gravity="end"
+            android:visibility="gone"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -120,7 +133,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/black"/>
+
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
