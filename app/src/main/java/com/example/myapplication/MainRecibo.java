@@ -84,7 +84,7 @@ public class MainRecibo extends AppCompatActivity {
     public static String nombreVendedor, idcliente;
     public static Double SaldoR;
     String letra;
-    String totalabono,totalSaldo;
+    Double totalabono,totalSaldo;
     int idcuentasxcobrar;
 
     conexionSQLiteHelper conn;
@@ -465,7 +465,7 @@ public class MainRecibo extends AppCompatActivity {
                                             buscadorCliente.setEnabled(false);
                                             abono.setText("");
                                             observacion.setText("");
-                                            saldo.setText(SaldoR.toString());
+                                            saldo.setText(String.format("%,.2f",SaldoR));
 
                                         } else {
                                             if ((abono.getText().toString().isEmpty()) && !descuento.getText().toString().isEmpty()) {
@@ -651,7 +651,7 @@ public class MainRecibo extends AppCompatActivity {
                     mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Recibo de:" + " " + tvIdclienyte.getText().toString(), "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " + letra, "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Total Abonado: C$" + saldo2.getText().toString() + " \n\n\n", "ST", 32, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Total Abonado: C$" + String.format("%,.2f",totalabono) + " \n\n\n", "ST", 32, callback);
                     mIPosPrinterService.printBlankLines(1, 8, callback);
 
                     mIPosPrinterService.setPrinterPrintAlignment(0, callback);
@@ -667,14 +667,14 @@ public class MainRecibo extends AppCompatActivity {
 
                     for (int i = 0; i < listarecibo.size(); i++) {
                         text[0] = listarecibo.get(i).getFactura();
-                        text[1] = String.valueOf( listarecibo.get(i).getAbono());
-                        text[2] = String.valueOf(listarecibo.get(i).getSaldoRes());
+                        text[1] = String.format("%,.2f", listarecibo.get(i).getAbono());
+                        text[2] = String.format("%,.2f",listarecibo.get(i).getSaldoRes());
                         mIPosPrinterService.printColumnsText(text, width, align, 0, callback);
 
                     }
 
                     mIPosPrinterService.printBlankLines(1, 16, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Saldo Total: C$ "+ totalSaldo + "\n\n\n\n", "ST", 32, callback);
+                    mIPosPrinterService.printSpecifiedTypeText("Saldo Total: C$ "+ String.format("%,.2f",totalSaldo) + "\n\n\n\n", "ST", 32, callback);
                     mIPosPrinterService.printSpecifiedTypeText("Observaciones", "ST", 24, callback);
                     for (int j = 0; j < listarecibo.size(); j++) {
                         mIPosPrinterService.printSpecifiedTypeText(listarecibo.get(j).getObservaciones(), "ST", 24, callback);
@@ -768,13 +768,13 @@ public class MainRecibo extends AppCompatActivity {
         Cursor query =  db.rawQuery(total,null);
 
         if (query.moveToFirst()){
-             totalabono= query.getString(query.getColumnIndex("Total"));
+             totalabono= query.getDouble(query.getColumnIndex("Total"));
 
             System.out.println("====> Prueba TotalAbono;"+totalabono);
-            saldo2.setText(totalabono);
+            saldo2.setText(totalabono.toString());
 
             Coversion_Numero_Letra convertir = new Coversion_Numero_Letra();
-            letra = convertir.Convertir(totalabono, true);
+            letra = convertir.Convertir(String.valueOf(totalabono), true);
             System.out.println("vonvercion de total abono====> "+letra);
         }
 
@@ -789,7 +789,7 @@ public class MainRecibo extends AppCompatActivity {
         Cursor query= db.rawQuery(total2,null);
 
         if (query.moveToFirst()){
-            totalSaldo=query.getString(query.getColumnIndex("Total2"));
+            totalSaldo=query.getDouble(query.getColumnIndex("Total2"));
             System.out.println("======>PruebaSaldoTotal"+totalSaldo);
 
 
@@ -983,11 +983,11 @@ public void NReferencia(){
 
             }
 
-            if (Double.parseDouble(saldo.getText().toString()) < 0) {
+            if(SaldoR<0)  {
                 PreparedStatement pst4 = dbConnection.getConnection().prepareStatement("exec sp_insertNotaDebito ?,?,?");
                 pst4.setInt(1, Integer.parseInt(String.valueOf(IdPagosCxC)));
                 pst4.setInt(2, Integer.parseInt(String.valueOf(idClientesRecibo)));
-                pst4.setDouble(3, Double.parseDouble(saldo.getText().toString()) * -1);
+                pst4.setDouble(3, Double.parseDouble(SaldoR.toString()) * -1);
                 pst4.executeUpdate();
             }
 

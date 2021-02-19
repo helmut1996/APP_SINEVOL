@@ -51,7 +51,8 @@ MainFacturaList extends AppCompatActivity {
     public static String nombre ="HOLA MUNDO";
    public static int cantidadProducto, idProd ;
    public static double precioProducto;
-   public static String nombreImagen, TotalFact, valor,idInventario;
+   public static String nombreImagen,valor,idInventario;
+   double TotalFact;
 ///////////////////variables Dialog detalle producto/////////////////////////////////////
     conexionSQLiteHelper conn;
     private static final String TAG ="MainFacturaList";
@@ -286,10 +287,10 @@ getMenuInflater().inflate(R.menu.menu,menu);
         String total="select sum(precio * cantidad ) as Total from producto";
         Cursor query =  db.rawQuery(total,null);
         if (query.moveToFirst()){
-            TotalFact= query.getString(query.getColumnIndex("Total"));
+            TotalFact= query.getDouble(query.getColumnIndex("Total"));
             System.out.println("TOTAL DE LA FACTURA ACTUALMENTE ES : ----> "+TotalFact);
 
-            textV_total.setText(TotalFact );
+            textV_total.setText(String.format("%,.2f",TotalFact));
         }
         db.close();
     }
@@ -317,7 +318,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
             pst.setString(3, T_factura.getSelectedItem().toString()
             );
             pst.setString(4,T_ventas.getSelectedItem().toString());
-            pst.setFloat(5, Float.parseFloat(textV_total.getText().toString()));
+            pst.setDouble(5, Double.parseDouble(String.valueOf(TotalFact)));
             pst.setDouble(6,TotalComision);
             pst.setString(7,textV_Cliente.getText().toString());
             pst.executeUpdate();
