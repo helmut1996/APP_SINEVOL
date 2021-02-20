@@ -642,8 +642,7 @@ public class MainRecibo extends AppCompatActivity {
                 listainformacion = new ArrayList<String>();
 
                 try {
-
-                  //   for (int p=0; p<2;p++){
+                    for (int p=0; p<2;p++){
 
                     mIPosPrinterService.printSpecifiedTypeText("RECIBO No."+numeracion+" ", "ST", 48, callback);
                     mIPosPrinterService.printSpecifiedTypeText("NREF:" +IdPagosCxC+ "\t\t"+fecha.getText().toString(), "ST", 32, callback);
@@ -688,7 +687,7 @@ public class MainRecibo extends AppCompatActivity {
                     mIPosPrinterService.printBlankLines(1, 16, callback);
                     mIPosPrinterService.printSpecifiedTypeText("**********END***********", "ST", 32, callback);
                     mIPosPrinterService.printerPerformPrint(160, callback);
-                    //}
+                    }
 
 
                 } catch (RemoteException e) {
