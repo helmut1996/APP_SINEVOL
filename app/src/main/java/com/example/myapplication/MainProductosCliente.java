@@ -44,7 +44,7 @@ import java.util.ArrayList;
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
     /*variables de los componentes de la vista*/
 private ImageButton IbuttonSiguiente;
-private TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvtipoprecio,tvimagenBD,tvIDproducto;
+private TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvtipoprecio,tvimagenBD,tvIDproducto,tvUnidadMedida;
 private Spinner precios,monedas;
 private ImageView img;
 private EditText editcantidad;
@@ -97,6 +97,7 @@ int IdInventario;
         tvunidadmedida=findViewById(R.id.text_unidadM);
         tvIDproducto=findViewById(R.id.IDProduto);
         tvtipoprecio=findViewById(R.id.tipoPrecio);
+        tvUnidadMedida=findViewById(R.id.tvUnidadMedida);
         ////////// Spinmer
 
         precios = findViewById(R.id.spinerPrecios);
@@ -131,6 +132,7 @@ int IdInventario;
             producto = extra.getString("NombreP");
             tvnombreproducto.setText(NombrePreducto);
             tvunidadmedida.setText(extra.getString("UnidadMed"));
+            tvUnidadMedida.setText(extra.getString("UnidadMed"));
             String info1,info2,info3,info4,info5;
 
             info1=extra.getString("info1");

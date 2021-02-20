@@ -108,10 +108,18 @@ public class ClassDialogFactura extends DialogFragment {
         /*mandando a llamar conexion a SQLite */
        conexionSQLiteHelper conn= new conexionSQLiteHelper(getContext(),"bd_productos",null,1);
         SQLiteDatabase db=conn.getReadableDatabase();
-        db.execSQL("update producto set cantidad ="+cantidad.getText().toString()+" where id = "+precio_D.getText().toString()+" ");
-        db.close();
+                if (editcantidad2.getText().toString().isEmpty()){
+                    Toast.makeText(getContext(),"No se Actualizo en cantidad vacia",Toast.LENGTH_LONG).show();
+                } else if(Integer.parseInt(editcantidad2.getText().toString())==0){
 
-        Toast.makeText(getContext(),"Actualizado!!!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"No se Actualizo en cantidad 0",Toast.LENGTH_LONG).show();
+        }else {
+            db.execSQL("update producto set cantidad ="+cantidad.getText().toString()+" where id = "+precio_D.getText().toString()+" ");
+            db.close();
+
+            Toast.makeText(getContext(),"Actualizado!!!",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void EliminarDatosSQLite() {
@@ -121,6 +129,5 @@ public class ClassDialogFactura extends DialogFragment {
         db.close();
         Toast.makeText(getContext(),"Registro Eliminado!!!",Toast.LENGTH_SHORT).show();
     }
-
 
 }
