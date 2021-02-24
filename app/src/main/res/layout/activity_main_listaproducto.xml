@@ -21,7 +21,12 @@
             android:layout_margin="16dp"
             android:hint="@string/text_buscar"
             android:id="@+id/search2"/>
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Buscar"
+            android:id="@+id/btn_Buscar"
+            android:layout_marginBottom="10dp"/>
 
 
         <androidx.recyclerview.widget.RecyclerView

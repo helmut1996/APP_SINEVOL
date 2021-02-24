@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -41,6 +42,7 @@ import java.util.List;
 
     RecyclerView recyclerlistproducto;
     EditText search2;
+    Button btnBuscar;
     RecycleviewProductoAdapter adaptadorProducto;
     List<ModelItemsProducto> listaProducto;
     public static String nombrecliente;
@@ -105,7 +107,13 @@ import java.util.List;
             @Override
             public void afterTextChanged(Editable s) {
 
-                filter2(s.toString());
+                btnBuscar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        filter2(s.toString());
+                    }
+                });
+
             }
         });
 
@@ -190,6 +198,8 @@ import java.util.List;
 
         recyclerlistproducto= findViewById(R.id.list_producto);
         search2 = findViewById(R.id.search2);
+        btnBuscar=findViewById(R.id.btn_Buscar);
+
 
     }
     public void initVlaues(String Buscar){
