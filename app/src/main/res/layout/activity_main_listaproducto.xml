@@ -27,8 +27,7 @@
             android:text="Buscar"
             android:id="@+id/btn_Buscar"
             android:layout_marginBottom="10dp"/>
-
-
+        
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_producto"
             android:layout_width="match_parent"
