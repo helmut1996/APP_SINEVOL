@@ -942,7 +942,7 @@ public void NReferencia(){
     public void borrardatosTabla() {
       conexionSQLiteHelper conn = new conexionSQLiteHelper(this, "bd_productos", null, 1);
         SQLiteDatabase db = conn.getReadableDatabase();
-        db.execSQL("delete from recibo");
+            db.execSQL("delete from recibo");
         db.close();
     }
 

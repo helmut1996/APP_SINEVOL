@@ -44,6 +44,7 @@ public class MainFactura extends AppCompatActivity {
     RecyclerView recyclerViewCliente;
     RecycleviewAdapter adapterCliente;
     EditText search;
+    Button btn_buscador_cliente;
     List<ClasslistItemC> itemCList;
     public static int id;
 
@@ -82,15 +83,16 @@ public class MainFactura extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                filter(s.toString());
+                btn_buscador_cliente.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        recyclerViewCliente.setAdapter(adapterCliente);
+                        filter(s.toString());
+                    }
+                });
             }
         });
 
-    }
-
-    public void onStart(){
-        super.onStart();
-        obtenerclientesBD();
     }
 
     private void filter(String text) {
@@ -107,6 +109,7 @@ public class MainFactura extends AppCompatActivity {
     public void initview() {
         recyclerViewCliente = findViewById(R.id.listaClientes);
         search = findViewById(R.id.search);
+        btn_buscador_cliente=findViewById(R.id.btnBuscadorCliente);
     }
 
     public void initValues() {
@@ -115,7 +118,7 @@ public class MainFactura extends AppCompatActivity {
         recyclerViewCliente.setHasFixedSize(true);
         itemCList = obtenerclientesBD();
         adapterCliente = new RecycleviewAdapter(itemCList);
-        recyclerViewCliente.setAdapter(adapterCliente);
+
     }
 
 

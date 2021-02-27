@@ -199,6 +199,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
                                             Intent refresh = new Intent(getApplicationContext(), MainMenu.class);
                                             refresh.putExtra("IdVendedor",IDVendedor);
                                             startActivity(refresh);
+                                            finish();
 
                                     }
                                 })
@@ -233,7 +234,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
                                         intent3.putExtra("IdVendedor",IDVendedor);
                                         startActivity(intent3);
                                         borrardatosTabla();
-                                        // finish();
+                                        finish();
 
                                     }
                                 })

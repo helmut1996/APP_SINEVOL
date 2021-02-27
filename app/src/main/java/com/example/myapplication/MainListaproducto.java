@@ -110,6 +110,7 @@ import java.util.List;
                 btnBuscar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        recyclerlistproducto.setAdapter(adaptadorProducto);
                         filter2(s.toString());
                     }
                 });
@@ -168,7 +169,7 @@ import java.util.List;
 
             Statement st = dbConnection.getConnection().createStatement();
             ResultSet rs = st.executeQuery("\n" +
-                    "select top 25 concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,i.Nombre as Producto,um.Nombre as UM,i.idInventario, i.ImagenApk, i.Precio1,ad.info1,ad.info2,ad.info3,ad.info4,ad.info5,i.Stock from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida inner join InventarioInfoAdic ad on i.idInventario= ad.idInventario where i.Estado = 'Activo' and i.Nombre like '%"+Buscar+"%' and Stock >0");
+                        "select top 25 concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,i.Nombre as Producto,um.Nombre as UM,i.idInventario, i.ImagenApk, i.Precio1,ad.info1,ad.info2,ad.info3,ad.info4,ad.info5,i.Stock from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida inner join InventarioInfoAdic ad on i.idInventario= ad.idInventario where i.Estado = 'Activo' and i.Nombre like '%"+Buscar+"%' and Stock >0");
 
             while (rs.next()){
 
@@ -207,6 +208,6 @@ import java.util.List;
        recyclerlistproducto.setLayoutManager(manager);
        listaProducto=llenarProductosBD(Buscar);
        adaptadorProducto= new RecycleviewProductoAdapter((ArrayList<ModelItemsProducto>) listaProducto);
-       recyclerlistproducto.setAdapter(adaptadorProducto);
+
     }
 }
