@@ -20,7 +20,7 @@ public class ProductosAdd {
         this.precios = precios;
         this.imagenProducto= imagenProducto;
         this.idcliente = idcliente;
-        this.idvendedor = idcliente;
+        this.idvendedor = idvendedor;
         this.tipoprecio=tipoprecio;
     }
 

@@ -50,6 +50,18 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    @Override
+    public void onBackPressed() {
+        try {
+            DBConnection.getDbConnection().getConnection().close();
+            finish();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        super.onBackPressed();
+    }
+
     public void isconnected(){
         ConnectivityManager connectivity=(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info_wifi= connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);

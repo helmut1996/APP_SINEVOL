@@ -90,33 +90,18 @@ import java.util.List;
 
         listaProducto=new ArrayList<>();
         init();
-        initVlaues(search2.getText().toString().toUpperCase());
 
 
-        search2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+            btnBuscar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                  String CapturaBuscador=  search2.getText().toString();
+               filter2(CapturaBuscador);
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                btnBuscar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        recyclerlistproducto.setAdapter(adaptadorProducto);
-                        filter2(s.toString());
-                    }
-                });
-
-            }
-        });
+                }
+            });
 
     }
 
@@ -147,18 +132,17 @@ import java.util.List;
         }
         private void filter2(String text) {
         text = search2.getText().toString().toUpperCase();
-      initVlaues(text);
-        ArrayList<ModelItemsProducto> filterlistP = new ArrayList<>();
-        for (ModelItemsProducto item:listaProducto){
-            if (item.getNombreP().toUpperCase().contains(text)){
-                filterlistP.add(item);
+        if(!text.isEmpty()){
+            initVlaues(text);
+            ArrayList<ModelItemsProducto> filterlistP = new ArrayList<>();
+            for (ModelItemsProducto item:listaProducto){
+                if (item.getNombreP().toUpperCase().contains(text)){
+                    filterlistP.add(item);
+                }
+            }
+                adaptadorProducto.filterListProducto(filterlistP);
             }
         }
-            adaptadorProducto.filterListProducto(filterlistP);
-        }
-
-
-
 
         public List<ModelItemsProducto> llenarProductosBD(String Buscar){
         List<ModelItemsProducto> listProducto = new ArrayList<>();
@@ -202,12 +186,12 @@ import java.util.List;
         btnBuscar=findViewById(R.id.btn_Buscar);
 
 
-    }
+    } 
     public void initVlaues(String Buscar){
        LinearLayoutManager manager= new LinearLayoutManager(this);
        recyclerlistproducto.setLayoutManager(manager);
        listaProducto=llenarProductosBD(Buscar);
        adaptadorProducto= new RecycleviewProductoAdapter((ArrayList<ModelItemsProducto>) listaProducto);
-
+        recyclerlistproducto.setAdapter(adaptadorProducto);
     }
 }

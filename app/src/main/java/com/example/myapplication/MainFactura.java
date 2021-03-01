@@ -66,36 +66,21 @@ public class MainFactura extends AppCompatActivity {
         System.out.println("ID vendedor activity lista cliente===========>" + id);
 
         initview();
-        initValues();
+       // initValues();
 
-
-        search.addTextChangedListener(new TextWatcher() {
+        btn_buscador_cliente.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onClick(View v) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                btn_buscador_cliente.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        recyclerViewCliente.setAdapter(adapterCliente);
-                        filter(s.toString());
-                    }
-                });
+                String CapturandoClientes= search.getText().toString();
+                filter(CapturandoClientes);
             }
         });
 
     }
 
     private void filter(String text) {
+        initValues();
         ArrayList<ClasslistItemC> filteredlist = new ArrayList<>();
         for (ClasslistItemC item : itemCList) {
             if (item.getNombre().toUpperCase().contains(search.getText().toString().toUpperCase())) {
@@ -118,7 +103,7 @@ public class MainFactura extends AppCompatActivity {
         recyclerViewCliente.setHasFixedSize(true);
         itemCList = obtenerclientesBD();
         adapterCliente = new RecycleviewAdapter(itemCList);
-
+        recyclerViewCliente.setAdapter(adapterCliente);
     }
 
 

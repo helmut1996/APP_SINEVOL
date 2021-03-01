@@ -122,6 +122,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
                                         intent.putExtra("idinventario",datos.IdInventario);
 
                                         context.startActivity(intent);
+                                        ((Activity)context).finish();
 
                                     }
                                 })
