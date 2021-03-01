@@ -10,12 +10,14 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,6 +45,7 @@ import java.util.List;
     RecyclerView recyclerlistproducto;
     EditText search2;
     Button btnBuscar;
+    ProgressBar loader;
     RecycleviewProductoAdapter adaptadorProducto;
     List<ModelItemsProducto> listaProducto;
     public static String nombrecliente;
@@ -52,6 +55,9 @@ import java.util.List;
     public static int idvendedor;
     public static int stock;
     public static int IdInventario;
+    boolean isScrolling=false;
+
+    private int CorrenrsItems,TotalItems,ScrollOutItems;
 
 
 
@@ -184,6 +190,7 @@ import java.util.List;
         recyclerlistproducto= findViewById(R.id.list_producto);
         search2 = findViewById(R.id.search2);
         btnBuscar=findViewById(R.id.btn_Buscar);
+        loader=findViewById(R.id.loading_indicator);
 
 
     } 
@@ -193,5 +200,44 @@ import java.util.List;
        listaProducto=llenarProductosBD(Buscar);
        adaptadorProducto= new RecycleviewProductoAdapter((ArrayList<ModelItemsProducto>) listaProducto);
         recyclerlistproducto.setAdapter(adaptadorProducto);
+
+        recyclerlistproducto.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (newState== AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                    isScrolling=true;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                CorrenrsItems=manager.getChildCount();
+                TotalItems= manager.getItemCount();
+                ScrollOutItems=manager.findFirstVisibleItemPosition();
+
+                if (isScrolling && (CorrenrsItems+ScrollOutItems==TotalItems)){
+                    isScrolling=false;
+                    fechtdata();
+                }
+            }
+        });
+
+
     }
-}
+
+        private void fechtdata() {
+            loader.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    adaptadorProducto.notifyDataSetChanged();
+                    loader.setVisibility(View.GONE
+                    );
+                }
+            }, 2000);
+
+        }
+    }
