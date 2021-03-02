@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -55,9 +56,7 @@ import java.util.List;
     public static int idvendedor;
     public static int stock;
     public static int IdInventario;
-    boolean isScrolling=false;
 
-    private int CorrenrsItems,TotalItems,ScrollOutItems;
 
 
 
@@ -160,7 +159,7 @@ import java.util.List;
 
             Statement st = dbConnection.getConnection().createStatement();
             ResultSet rs = st.executeQuery("\n" +
-                        "select top 25 concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,i.Nombre as Producto,um.Nombre as UM,i.idInventario, i.ImagenApk, i.Precio1,ad.info1,ad.info2,ad.info3,ad.info4,ad.info5,i.Stock from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida inner join InventarioInfoAdic ad on i.idInventario= ad.idInventario where i.Estado = 'Activo' and i.Nombre like '%"+Buscar+"%' and Stock >0");
+                        "select concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,i.Nombre as Producto,um.Nombre as UM,i.idInventario, i.ImagenApk, i.Precio1,ad.info1,ad.info2,ad.info3,ad.info4,ad.info5,i.Stock from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida inner join InventarioInfoAdic ad on i.idInventario= ad.idInventario where i.Estado = 'Activo' and i.Nombre like '%"+Buscar+"%' and Stock >0");
 
             while (rs.next()){
 
@@ -184,6 +183,7 @@ import java.util.List;
             e.printStackTrace();
         }
         return listProducto;
+
     }
 
     private void init(){
@@ -193,7 +193,6 @@ import java.util.List;
         btnBuscar=findViewById(R.id.btn_Buscar);
         loader=findViewById(R.id.loading_indicator);
 
-
     } 
     public void initVlaues(String Buscar){
        LinearLayoutManager manager= new LinearLayoutManager(this);
@@ -202,45 +201,8 @@ import java.util.List;
        adaptadorProducto= new RecycleviewProductoAdapter((ArrayList<ModelItemsProducto>) listaProducto);
         recyclerlistproducto.setAdapter(adaptadorProducto);
 
-        recyclerlistproducto.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                if (newState== AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
-                    isScrolling=true;
-                }
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                CorrenrsItems=manager.getChildCount();
-                TotalItems= manager.getItemCount();
-                ScrollOutItems=manager.findFirstVisibleItemPosition();
-
-                if (isScrolling && (CorrenrsItems+ScrollOutItems==TotalItems)){
-                    isScrolling=false;
-                    fechtdata();
-                }
-            }
-        });
 
 
     }
 
-        private void fechtdata() {
-            loader.setVisibility(View.VISIBLE);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    for (int i=0; listaProducto.size()>i;i++){
-                        adaptadorProducto.notifyDataSetChanged();
-                        loader.setVisibility(View.GONE);
-                    }
-
-                }
-            }, 2000);
-
-        }
     }

@@ -115,9 +115,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
                 try {
                     i = new Intent(this,MainActivity.class);
                     startActivity(i);
-                    finish();
                     sesion = DBConnection.getDbConnection();
                     sesion.getConnection().close();
+                    finishAffinity();
                 }catch (SQLException e)
                 {
                     e.printStackTrace();
