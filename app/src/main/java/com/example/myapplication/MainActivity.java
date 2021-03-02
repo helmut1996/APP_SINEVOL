@@ -52,14 +52,13 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        try {
-            DBConnection.getDbConnection().getConnection().close();
-            finish();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
-        super.onBackPressed();
+            super.onBackPressed();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
     }
 
     public void isconnected(){
@@ -77,6 +76,8 @@ public class MainActivity extends AppCompatActivity{
             }
         }
     }
+
+
     public void conectar (View view)
     {
         if (editPint.getText().toString().equals("")) {

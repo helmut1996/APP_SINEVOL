@@ -42,8 +42,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_main_menu);
         getSupportActionBar().setTitle("Menu Principal");
 
-
-
         id=getIntent().getIntExtra("IdVendedor",0);
         Bundle extra=getIntent().getExtras();
         if (extra != null) {
@@ -99,6 +97,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
                 i = new Intent(this,MainFactura.class);
                 i.putExtra("Id",id);
                 startActivity(i);
+                finish();
                 break;
             case R.id.btnrecibo:
                 Intent intent1 = new Intent(getApplicationContext(), MainRecibo.class);
@@ -127,7 +126,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-   public void isconnected(){
+    public void isconnected(){
      ConnectivityManager connectivity=(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
        NetworkInfo info_wifi= connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
        NetworkInfo info_datos= connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);

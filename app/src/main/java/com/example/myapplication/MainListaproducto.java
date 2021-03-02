@@ -130,6 +130,7 @@ import java.util.List;
                     intent2.putExtra("IdCliente",idcliente);
                     intent2.putExtra("IdVendedor",idvendedor);
                     startActivity(intent2);
+                    finish();
                     break;
 
             }
@@ -233,9 +234,11 @@ import java.util.List;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    adaptadorProducto.notifyDataSetChanged();
-                    loader.setVisibility(View.GONE
-                    );
+                    for (int i=0; listaProducto.size()>i;i++){
+                        adaptadorProducto.notifyDataSetChanged();
+                        loader.setVisibility(View.GONE);
+                    }
+
                 }
             }, 2000);
 
