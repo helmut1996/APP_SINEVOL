@@ -159,6 +159,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
 
 
                         context.startActivity(intent);
+                        ((Activity)context).finish();
 
                     }
 
