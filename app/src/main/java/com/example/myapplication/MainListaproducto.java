@@ -107,12 +107,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
             btnBuscar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if(search2.getText().toString().isEmpty()){
+                        Toast.makeText(getApplicationContext(),"Debes ingresar un nombre",Toast.LENGTH_SHORT).show();
+                    }else{
                      CapturaBuscador=  search2.getText().toString();
-                     clear();
-                    numItems=0;
-                     filter2(CapturaBuscador);
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(search2.getWindowToken(), 0);
+                        clear();
+                        numItems=0;
+                        filter2(CapturaBuscador);
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(search2.getWindowToken(), 0);
+
+                    }
 
                 }
             });
@@ -157,7 +162,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
                 }
             }
                 adaptadorProducto.filterListProducto(filterlistP);
-            }
+            }else{
+                    Toast.makeText(getApplicationContext(),"Producto no encontrado",Toast.LENGTH_LONG).show();
+                }
         }
 
         public List<ModelItemsProducto> llenarProductosBD(String Buscar){

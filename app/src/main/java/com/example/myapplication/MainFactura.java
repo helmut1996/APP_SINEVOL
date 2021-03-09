@@ -49,7 +49,7 @@ public class MainFactura extends AppCompatActivity {
     Button btn_buscador_cliente;
     List<ClasslistItemC> itemCList;
     public static int id;
-
+    String CapturandoClientes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +74,16 @@ public class MainFactura extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String CapturandoClientes= search.getText().toString();
-                filter(CapturandoClientes);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
+                    if (search.getText().toString().isEmpty()){
+                        Toast.makeText(getApplicationContext(),"Ingrese un cliente",Toast.LENGTH_SHORT).show();
+                    } else {
+                         CapturandoClientes= search.getText().toString();
+
+                        filter(CapturandoClientes);
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
+                    }
+
             }
         });
 
