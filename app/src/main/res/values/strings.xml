@@ -1,72 +1,26 @@
 <resources>
     <string name="app_name">Sinevol</string>
     <string name="unidad_medida">Unidad de medida</string>
-    <string name="info_1">informacion 1</string>
-    <string name="info_2">informacion 2</string>
     <string name="unidad_medida2">1*/2*30*24</string>
     <string name="info_dato1">1/400</string>
     <string name="precio">tipo de precio</string>
-    <string name="listaCliente">Nombre Cliente</string>
-    <string name="text_bienvenida">Bienvenido vendedor</string>
     <string name="nombre_vendedor">Manuel lopez</string>
     <string name="login">inicio sesion</string>
     <string name="pin">PIN</string>
     <string name="sbtn_entrar">Entrar</string>
-    <string name="list_clientes">Lista de clientes</string>
     <string name="Sinevol">Sistema Sinevol</string>
-    <string name="sbtn_factura">factura</string>
-    <string name="recibo">recibo</string>
     <string name="cuentas">cuentas</string>
-    <string name="nombre_producto">lapiz</string>
     <string name="text_precio">precio</string>
     <string name="text_cantidad">cantidad</string>
-    <string name="add_producto">"Productos Agregados "</string>
-    <string name="listaProducto">LISTA DE PRODUCTOS</string>
     <string name="text_buscar">Buscar</string>
-    <string name="info_3">Informacion 3</string>
-    <string name="info_4">Informacion 4</string>
-    <string name="info_5">Informacion 5</string>
     <string name="tinte">tinte azul cabello</string>
-    <string name="factura">Factura</string>
     <string name="codigo">Codigo</string>
     <string name="cliente">Cliente</string>
     <string name="tipo_fact">Tipo Fact</string>
     <string name="tipo_venta">tipo de ventas</string>
     <string name="zona">Zona</string>
     <string name="L_zona">Managua</string>
-    <string name="Direccion">Waspan Sur</string>
     <string name="credito_D">Credito Disponible</string>
-    <string name="credito">credito</string>
-    <string name="opciones">Opciones</string>
-    <string name="producto">Producto</string>
-    <string name="total">Total</string>
-    <string name="select">Seleccionar</string>
-
-    <string-array name="Clientes">
-        <item>Helmut Colindres</item>
-        <item>Josue Brenes</item>
-        <item>Maria Calero</item>
-        <item>Maribel Brenes</item>
-        <item>Katherine Robleto</item>
-        <item>Federico Castillo</item>
-    </string-array>
-
-    <string-array name="Productos">
-        <item>Lapices de ceja</item>
-        <item>tintes de color azul</item>
-        <item>Labial de color rojo </item>
-        <item>tinte de color cafe</item>
-        <item>tinte de color blanco</item>
-        <item>lapiz labial morado</item>
-    </string-array>
-
-    <string-array name="precios">
-        <item>precio1:200 C$</item>
-        <item>Precio2:500 C$</item>
-        <item>Precio3: 0 C$</item>
-        <item>Precio4: 0 C$</item>
-        <item>Precio5: 0 C$</item>
-    </string-array>
 
     <string-array name="tipo_moneda">
         <item>Cordoba</item>
@@ -98,42 +52,10 @@
         <item>factura5268</item>
         <item>factura 546</item>
     </string-array>
-    <string name="print_display">Modo de demostración</string>
-    <string name="print_text">Imprimir el texto</string>
-    <string name="print_english">打印英文</string>
-    <string name="print_char">打印字符</string>
-    <string name="print_picture">打印图片</string>
-    <string name="print_qrcode">打印二维码</string>
-    <string name="print_barcode">打印条码</string>
-    <string name="print_self_check">打印机自检</string>
-    <string name="print_init">打印机初始化</string>
-    <string name="print_query_length">打印长度查询</string>
-    <string name="print_three_lines">走纸3行</string>
-    <string name="print_black_block">打印黑块</string>
-    <string name="print_baidu_bill">打印百度小票</string>
-    <string name="print_meituan_bill">打印美团小票</string>
-    <string name="print_elemo_bill">打印饿了么小票</string>
-    <string name="print_koubei_bill">打印口碑外卖小票</string>
-    <string name="print_table">打印表格</string>
-    <string name="print_multi_content_test">长打印测试</string>
-    <string name="print_comprehensive_test">综合测试</string>
-    <string name="print_sunmi_mode">SUNMI 模式</string>
-    <string name="print_Multithread_test">并发多线程混打测试</string>
-    <string name="loop_print_test">循环打印测试</string>
-    <string name="print_driver_error_test">驱动算法容错测试</string>
-    <string name="print_wave_test">打印波形测试</string>
-    <string name="motor_idling">电机空转10000步</string>
-    <string name="print_commond_input">16进制指令输入</string>
-    <string name="printer_run_paper_lines">打印机走纸</string>
-    <string name="reset_motor_high_temp_status">电机高温保护标志手动复位</string>
     <string name="out_of_paper">Papel Fuera de Impresora</string>
     <string name="exists_paper">打印机纸已准备就绪</string>
     <string name="printer_is_working">Recibo impreso</string>
     <string name="printer_high_temp_alarm">当前打印机温度过高，请稍后打印~</string>
     <string name="motor_high_temp_alarm">当前马达温度过高，请稍后打印~</string>
     <string name="printer_current_task_print_complete">打印任务已经打印完成</string>
-    <string name="printer_exception">打印机异常</string>
-    <string name="unknown_error">未知状态</string>
-    <string name="switch_mode">切换模式</string>
-    <string name="exit">退出</string>
 </resources>

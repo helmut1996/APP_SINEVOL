@@ -1,11 +1,13 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -74,6 +76,8 @@ public class MainFactura extends AppCompatActivity {
 
                 String CapturandoClientes= search.getText().toString();
                 filter(CapturandoClientes);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
             }
         });
 
@@ -90,6 +94,7 @@ public class MainFactura extends AppCompatActivity {
         adapterCliente.filterList(filteredlist);
 
     }
+
 
     public void initview() {
         recyclerViewCliente = findViewById(R.id.listaClientes);

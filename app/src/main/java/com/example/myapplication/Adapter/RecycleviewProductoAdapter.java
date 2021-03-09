@@ -20,10 +20,11 @@ import com.example.myapplication.MainMenu;
 import com.example.myapplication.MainProductosCliente;
 import com.example.myapplication.R;
 import com.example.myapplication.modelos.ModelItemsProducto;
+import com.softrunapps.paginatedrecyclerview.PaginatedAdapter;
 
 import java.util.ArrayList;
 
-public class RecycleviewProductoAdapter extends RecyclerView.Adapter<RecycleviewProductoAdapter.ViewHolderProducto> {
+public class RecycleviewProductoAdapter extends PaginatedAdapter<ModelItemsProducto,RecycleviewProductoAdapter.ViewHolderProducto> {
 
     ArrayList<ModelItemsProducto>listaProducto;
 
@@ -54,6 +55,8 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
         holder.tvimagen.setText(listaProducto.get(position).getImg());
         holder.tvcantidad.setText(String.valueOf(listaProducto.get(position).getStock()));
         holder.tvidproducto.setText(String.valueOf(listaProducto.get(position).getIdproducto()));
+
+
 
     }
 
@@ -122,7 +125,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
                                         intent.putExtra("idinventario",datos.IdInventario);
 
                                         context.startActivity(intent);
-                                        ((Activity)context).finish();
+                                        //((Activity)context).finish();
 
                                     }
                                 })
@@ -159,7 +162,7 @@ public class RecycleviewProductoAdapter extends RecyclerView.Adapter<Recycleview
 
 
                         context.startActivity(intent);
-                        ((Activity)context).finish();
+                       // ((Activity)context).finish();
 
                     }
 

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,6 +36,7 @@ import com.example.myapplication.Adapter.RecycleviewAdapter;
 import com.example.myapplication.Adapter.RecycleviewProductoAdapter;
 import com.example.myapplication.ConexionBD.DBConnection;
 import com.example.myapplication.modelos.ModelItemsProducto;
+import com.softrunapps.paginatedrecyclerview.PaginatedAdapter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,15 +44,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
     public class MainListaproducto extends AppCompatActivity {
-
-
 
     EditText search2;
     Button btnBuscar;
     ProgressBar loader;
     RecycleviewProductoAdapter adaptadorProducto;
-    List<ModelItemsProducto> listaProducto;
+   public static List<ModelItemsProducto> listaProducto;
     public static String nombrecliente;
     public static String codigocliente;
     public static String zonacliente;
@@ -57,14 +64,13 @@ import java.util.List;
     public static int idvendedor;
     public static int stock;
     public static int IdInventario;
-    //boolean isScrollView=false;
-    //int CurrentItems,TotalItems,scrollOutItems;
-        RecyclerView recyclerlistproducto;
-
+    public String CapturaBuscador="";
+    public  RecyclerView recyclerlistproducto;
+    public static int numItems=0;
+    boolean isScrollView=false;
 
         @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);
         /// permisoos de conexion para uso de sql server ////
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -98,14 +104,15 @@ import java.util.List;
         listaProducto=new ArrayList<>();
         init();
 
-
-
             btnBuscar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                  String CapturaBuscador=  search2.getText().toString();
-               filter2(CapturaBuscador);
+                     CapturaBuscador=  search2.getText().toString();
+                     clear();
+                    numItems=0;
+                     filter2(CapturaBuscador);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(search2.getWindowToken(), 0);
 
                 }
             });
@@ -142,6 +149,7 @@ import java.util.List;
         text = search2.getText().toString().toUpperCase();
         if(!text.isEmpty()){
             initVlaues(text);
+
             ArrayList<ModelItemsProducto> filterlistP = new ArrayList<>();
             for (ModelItemsProducto item:listaProducto){
                 if (item.getNombreP().toUpperCase().contains(text)){
@@ -153,19 +161,22 @@ import java.util.List;
         }
 
         public List<ModelItemsProducto> llenarProductosBD(String Buscar){
-        List<ModelItemsProducto> listProducto = new ArrayList<>();
+
         try {
 
             DBConnection dbConnection = new DBConnection();
             dbConnection.conectar();
 
-            Statement st = dbConnection.getConnection().createStatement();
+            Statement st = dbConnection.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = st.executeQuery("\n" +
-                        "select top 10 concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,i.Nombre as Producto,um.Nombre as UM,i.idInventario, i.ImagenApk, i.Precio1,ad.info1,ad.info2,ad.info3,ad.info4,ad.info5,i.Stock from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida inner join InventarioInfoAdic ad on i.idInventario= ad.idInventario where i.Estado = 'Activo' and i.Nombre like '%"+Buscar+"%' and Stock >0");
+                        "select  concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,i.Nombre as Producto,um.Nombre as UM,i.idInventario, i.ImagenApk, i.Precio1,ad.info1,ad.info2,ad.info3,ad.info4,ad.info5,i.Stock from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida inner join InventarioInfoAdic ad on i.idInventario= ad.idInventario where i.Estado = 'Activo' and i.Nombre like '%"+Buscar+"%' and Stock >0 ORDER BY idInventario  OFFSET ("+numItems+"+10) ROWS FETCH NEXT 10 ROWS ONLY");
+
+            st.setFetchSize(10);
+            st.setMaxRows(10);
 
             while (rs.next()){
 
-                listProducto.add(new ModelItemsProducto(rs.getString("Nombre"),
+                listaProducto.add(new ModelItemsProducto(rs.getString("Nombre"),
                         rs.getString("UM"),
                         rs.getDouble("Precio1"),
                         rs.getString("Producto"),
@@ -184,7 +195,7 @@ import java.util.List;
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-        return listProducto;
+        return listaProducto;
 
     }
 
@@ -203,49 +214,63 @@ import java.util.List;
        adaptadorProducto= new RecycleviewProductoAdapter((ArrayList<ModelItemsProducto>) listaProducto);
         recyclerlistproducto.setAdapter(adaptadorProducto);
 
-        /*
         recyclerlistproducto.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
                     isScrollView=true;
                 }
-
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                CurrentItems=manager.getChildCount();
-                TotalItems= manager.getItemCount();
-                scrollOutItems=manager.findFirstVisibleItemPosition();
+                int CurrentImten=manager.getChildCount();
+                int totalItems=manager.getItemCount();
+                int ScrollOut=manager.findFirstVisibleItemPosition();
 
-                if (isScrollView && (CurrentItems+scrollOutItems== TotalItems) ){
-                    isScrollView=false;
-                    fetchData();
+                if(isScrollView && (CurrentImten + ScrollOut == totalItems))
+                {
+                    isScrollView = false;
+                    getData();
                 }
             }
-        });
-         */
-    }
-        /*
 
-        private void fetchData() {
-            loader.setVisibility(View.VISIBLE);
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    for (int i=0;i<5;i++){
-                        List<ModelItemsProducto>itemLists=new ArrayList<>();
-                        itemLists.add( new ModelItemsProducto( "IEM","PRUEBA",55.5,"PRUEBA1","PRUEBA2","PRUEBA3","PRUENA4","PRUEBA5","PRUEBA6","PRUENA7",5,4));
+            private void getData() {
+                loader.setVisibility(View.VISIBLE);
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
-
-                        adaptadorProducto.notify();
+                        isLastVisible();
+                        adaptadorProducto.notifyDataSetChanged();
                         loader.setVisibility(View.GONE);
                     }
-                }
-            }, 5000);
-        } */
+                }, 5000);
+            }
+        });
+
+    }
+
+    boolean isLastVisible()
+    {
+
+        LinearLayoutManager layoutManager =((LinearLayoutManager) recyclerlistproducto.getLayoutManager());
+        int pos = layoutManager.findLastCompletelyVisibleItemPosition();
+        numItems =  adaptadorProducto.getItemCount();
+        filter2(CapturaBuscador);
+       // Toast.makeText(getApplicationContext(),"catidad  de productos "+numItems+" ",Toast.LENGTH_LONG).show();
+        return (pos >= numItems - 1);
+    }
+
+        public void clear() {
+            if (listaProducto.size()>0){
+                listaProducto.clear();
+                adaptadorProducto.notifyDataSetChanged();
+            }
+
+        }
 
     }
