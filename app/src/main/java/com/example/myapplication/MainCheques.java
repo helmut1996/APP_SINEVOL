@@ -11,7 +11,9 @@ import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
 import android.text.Layout;
@@ -305,7 +307,6 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
                     busqueda();
                     Talonario();
                     NReferencia();
-                    IdCheque();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -342,6 +343,9 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
         });
 
 
+        /// mandando a llamar la clase  cuadro  dialogo de  carga
+        ClassDialogLoading loading=new ClassDialogLoading(MainCheques.this);
+
         imprimirC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -364,9 +368,19 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
                     if (getPrinterStatus() == PRINTER_NORMAL) {
                         try {
                             AgregarChequesSQLSEVER();
+                            IdCheque();
                             printText();
-                            LimpiarCampos();
+                            loading.iniciarCarga();
+                            Handler handler= new Handler(Looper.getMainLooper());
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    loading.cerrarCarga();
+                                    LimpiarCampos();
+                                }
+                            }, 8000);
                             Toast.makeText(getApplicationContext(),"Cheque Guardado",Toast.LENGTH_LONG).show();
+
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
@@ -428,42 +442,45 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
             public void run() {
 
                 try {
-                    mIPosPrinterService.printSpecifiedTypeText("RECIBO "+ NumeracionInicialC+"\n", "ST", 48, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("NRefCK:"+IdCheque+" \n", "ST", 32, callback);
-                    mIPosPrinterService.printBlankLines(1, 8, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Fecha:"+fecha.getText().toString()+" \n", "ST", 32, callback);
-                    mIPosPrinterService.printBlankLines(1, 8, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Vendedor:"+vendedor.getText().toString()+"\n", "ST", 32, callback);
-                    mIPosPrinterService.printBlankLines(1, 8, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Cliente: "+BuscadorClienteC.getText().toString()+" \n", "ST", 32, callback);
-                    mIPosPrinterService.printBlankLines(1, 8, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Zona: "+zona.getText().toString()+" \n", "ST", 32, callback);
-                    mIPosPrinterService.printBlankLines(1, 8, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("_____________________________________________\n", "ST", 16, callback);
-                    mIPosPrinterService.printBlankLines(1, 16, callback);
-                    mIPosPrinterService.printBlankLines(1, 16, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("No.Cheque:"+NCheque.getText().toString()+"\n", "ST", 32, callback);
-                    mIPosPrinterService.PrintSpecFormatText("Beneficiario"+"\n", "ST", 32, 1, callback);
-                    mIPosPrinterService.PrintSpecFormatText(Beneficiario.getText().toString()+"\n", "ST", 32, 1, callback);
-                    mIPosPrinterService.printBlankLines(1, 16, callback);
-                    mIPosPrinterService.PrintSpecFormatText("Banco "+Bancos.getSelectedItem().toString()+"\n", "ST", 32, 1, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Monto Cheque: C$"+MCheque.getText().toString()+"\n", "ST", 32, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
-                    mIPosPrinterService.setPrinterPrintAlignment(0,callback);
-                    mIPosPrinterService.printBlankLines(1, 16, callback);
-                    mIPosPrinterService.printBlankLines(1, 16, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Nota", "ST", 24, callback);
+                    for (int p=0; p<2;p++){
+                        mIPosPrinterService.printSpecifiedTypeText("RECIBO "+ NumeracionInicialC+"\n", "ST", 48, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("NRefCK:"+IdCheque+" \n", "ST", 32, callback);
+                        mIPosPrinterService.printBlankLines(1, 8, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Fecha:"+fecha.getText().toString()+" \n", "ST", 32, callback);
+                        mIPosPrinterService.printBlankLines(1, 8, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Vendedor:"+vendedor.getText().toString()+"\n", "ST", 32, callback);
+                        mIPosPrinterService.printBlankLines(1, 8, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Cliente: "+BuscadorClienteC.getText().toString()+" \n", "ST", 32, callback);
+                        mIPosPrinterService.printBlankLines(1, 8, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Zona: "+zona.getText().toString()+" \n", "ST", 32, callback);
+                        mIPosPrinterService.printBlankLines(1, 8, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("_____________________________________________\n", "ST", 16, callback);
+                        mIPosPrinterService.printBlankLines(1, 16, callback);
+                        mIPosPrinterService.printBlankLines(1, 16, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("No.Cheque:"+NCheque.getText().toString()+"\n", "ST", 32, callback);
+                        mIPosPrinterService.PrintSpecFormatText("Beneficiario"+"\n", "ST", 32, 1, callback);
+                        mIPosPrinterService.PrintSpecFormatText(Beneficiario.getText().toString()+"\n", "ST", 32, 1, callback);
+                        mIPosPrinterService.printBlankLines(1, 16, callback);
+                        mIPosPrinterService.PrintSpecFormatText("Banco "+Bancos.getSelectedItem().toString()+"\n", "ST", 32, 1, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Monto Cheque: C$"+MCheque.getText().toString()+"\n", "ST", 32, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
+                        mIPosPrinterService.setPrinterPrintAlignment(0,callback);
+                        mIPosPrinterService.printBlankLines(1, 16, callback);
+                        mIPosPrinterService.printBlankLines(1, 16, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Nota", "ST", 24, callback);
                         mIPosPrinterService.printSpecifiedTypeText(ObservacionesC.getText().toString(), "ST", 24, callback);
 
-                    mIPosPrinterService.printSpecifiedTypeText("____________________________\n\n", "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Recibe Conforme" + " " + "\n\n\n_______________________\n\n\n", "ST", 24, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("Entragado Conforme" + " " + "\n\n\n______________________", "ST", 24, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("____________________________\n\n", "ST", 24, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Recibe Conforme" + " " + "\n\n\n_______________________\n\n\n", "ST", 24, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Entragado Conforme" + " " + "\n\n\n______________________", "ST", 24, callback);
 
-                    mIPosPrinterService.printerPerformPrint(32, callback);
-                    mIPosPrinterService.setPrinterPrintAlignment(0, callback);
-                    mIPosPrinterService.printBlankLines(1, 16, callback);
-                    mIPosPrinterService.printSpecifiedTypeText("**********END***********\n\n", "ST", 32, callback);
-                    mIPosPrinterService.printerPerformPrint(160,  callback);
+                        mIPosPrinterService.printerPerformPrint(32, callback);
+                        mIPosPrinterService.setPrinterPrintAlignment(0, callback);
+                        mIPosPrinterService.printBlankLines(1, 16, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("**********END***********\n\n", "ST", 32, callback);
+                        mIPosPrinterService.printerPerformPrint(160,  callback);
+                    }
+
                 }catch (RemoteException e){
                     e.printStackTrace();
                 }
@@ -485,6 +502,7 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
         MCheque.setText("");
         Beneficiario.setText("");
         ObservacionesC.setText("");
+        NRC.setText("NReferencia:");
     }
 
     public ArrayAdapter Clientes() {
@@ -566,7 +584,7 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
         try {
             Statement st2 = dbConnection.getConnection().createStatement();
             ResultSet rs2 = st2.executeQuery("\n" +
-                    "select top 1 idCheque,Estado from Cheque where Estado = 'Pendiente'  order by idCheque");
+                    "select top 1 idCheque from Cheque  order by idCheque desc");
             while (rs2.next()) {
                  IdCheque = rs2.getInt("idCheque");
 
