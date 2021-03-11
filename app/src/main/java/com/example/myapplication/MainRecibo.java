@@ -705,8 +705,6 @@ public class MainRecibo extends AppCompatActivity {
 
         Estado();
         GuardarReciboSQLite();
-        Snackbar snackbar = Snackbar.make(cuerpo, "Guardando recibo!!", Snackbar.LENGTH_LONG);
-        snackbar.show();
     }
 
 
@@ -796,7 +794,7 @@ public class MainRecibo extends AppCompatActivity {
         db.close();
     }
 
-    public void Estado(){
+    public void  Estado(){
 
         DBConnection dbConnection = new DBConnection();
         dbConnection.conectar();
@@ -845,16 +843,33 @@ public void NReferencia(){
             NumeracionInicial = rs.getInt("NumeracionInicial");
             numeracion = NumeracionInicial;
             System.out.println("==============> Ultimo Registro NumeroInicial :" + numeracion);
-            NRecibo.setText("No.Recibo:"+numeracion);
-
         }
+
+        if (numeracion==0){
+            AlertDialog.Builder alerta = new AlertDialog.Builder(MainRecibo.this);
+            alerta.setMessage("ADVERTENCIA ")
+                    .setCancelable(false)
+                    .setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                        }
+                    });
+
+            AlertDialog alertDialog= alerta.create();
+            alertDialog.setMessage("Ya no tienes talonario Asignado debes solicitar para generar recibo ");
+            alertDialog.show();
+
+        }else {
+            NRecibo.setText("No.Recibo:"+numeracion);
+        }
+
     } catch (SQLException e) {
         e.printStackTrace();
     }
 
 
 }
-
 
     public void calcularsaldo() {
         DBConnection dbConnection=new DBConnection();
@@ -888,26 +903,37 @@ public void NReferencia(){
         observacion.setText("");
         saldo.setText("");
         NRecibo.setText("No.Recibo:");
+        BuscadorFactura.setAdapter(null);
     }
 
 
     public void GuardarReciboSQLite() {
+        String CapturaFactura= BuscadorFactura.getSelectedItem().toString();
         /*mandando a llamar conexion a SQLite */
         conexionSQLiteHelper conn = new conexionSQLiteHelper(this, "bd_productos", null, 1);
         /*abrir la conexion a SQLite*/
         SQLiteDatabase db = conn.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(utilidadesFact.CAMPO_NOMBRE_CLIEBTE, buscadorCliente.getText().toString());
-        values.put(utilidadesFact.CAMPO_FECHA, fecha.getText().toString());
-        values.put(utilidadesFact.CAMPO_FACTURA, BuscadorFactura.getSelectedItem().toString());
-        values.put(utilidadesFact.CAMPO_ABONO, abono.getText().toString());
-        values.put(utilidadesFact.CAMPO_DESCUENTO, descuento.getText().toString());
-        values.put(utilidadesFact.CAMPO_SALDO_RES, saldo.getText().toString());
-        values.put(utilidadesFact.CAMPO_NUMERO_RESF, IdPagosCxC2);
-        values.put(utilidadesFact.CAMPO_CUENTASXCOBRAR, idcuentasxcobrar);
-        values.put(utilidadesFact.CAMPO_OBSERVACIONES, observacion.getText().toString());
-        long idResultante = db.insert(utilidadesFact.TABLA_RECIBO, utilidadesFact.CAMPO_NOMBRE_CLIEBTE, values);
-        // Toast.makeText(this, "agregado: " + idResultante, Toast.LENGTH_SHORT).show();
+        Cursor c=db.rawQuery("SELECT factura FROM recibo WHERE factura='"+CapturaFactura+"'", null);
+        if(c.moveToNext()) {
+            Snackbar snackbar = Snackbar.make(cuerpo, "Ya le Aplicaste abono a esta Factura", Snackbar.LENGTH_LONG);
+            snackbar.show();
+        }else {
+            ContentValues values = new ContentValues();
+            values.put(utilidadesFact.CAMPO_NOMBRE_CLIEBTE, buscadorCliente.getText().toString());
+            values.put(utilidadesFact.CAMPO_FECHA, fecha.getText().toString());
+            values.put(utilidadesFact.CAMPO_FACTURA, BuscadorFactura.getSelectedItem().toString());
+            values.put(utilidadesFact.CAMPO_ABONO, abono.getText().toString());
+            values.put(utilidadesFact.CAMPO_DESCUENTO, descuento.getText().toString());
+            values.put(utilidadesFact.CAMPO_SALDO_RES, saldo.getText().toString());
+            values.put(utilidadesFact.CAMPO_NUMERO_RESF, IdPagosCxC2);
+            values.put(utilidadesFact.CAMPO_CUENTASXCOBRAR, idcuentasxcobrar);
+            values.put(utilidadesFact.CAMPO_OBSERVACIONES, observacion.getText().toString());
+            long idResultante = db.insert(utilidadesFact.TABLA_RECIBO, utilidadesFact.CAMPO_NOMBRE_CLIEBTE, values);
+             //Toast.makeText(this, "Cantidad Recibo: " + idResultante, Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(cuerpo, "Recibo Guardado", Snackbar.LENGTH_LONG);
+            snackbar.show();
+        }
+
         db.close();
     }
 
