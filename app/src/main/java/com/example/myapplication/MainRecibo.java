@@ -915,7 +915,7 @@ public void NReferencia(){
         SQLiteDatabase db = conn.getWritableDatabase();
         Cursor c=db.rawQuery("SELECT factura FROM recibo WHERE factura='"+CapturaFactura+"'", null);
         if(c.moveToNext()) {
-            Snackbar snackbar = Snackbar.make(cuerpo, "Ya le Aplicaste abono a esta Factura", Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(cuerpo, "Ya le Aplicaste abono a esta Factura:"+CapturaFactura, Snackbar.LENGTH_LONG);
             snackbar.show();
         }else {
             ContentValues values = new ContentValues();
