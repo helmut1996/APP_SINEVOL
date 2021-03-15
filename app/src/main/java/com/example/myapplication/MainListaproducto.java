@@ -111,7 +111,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
                         Toast.makeText(getApplicationContext(),"Debes ingresar un nombre",Toast.LENGTH_SHORT).show();
                     }else{
                      CapturaBuscador=  search2.getText().toString();
-                        clear();
+                        //clear();
                         numItems=0;
                         filter2(CapturaBuscador);
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -221,6 +221,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
        adaptadorProducto= new RecycleviewProductoAdapter((ArrayList<ModelItemsProducto>) listaProducto);
         recyclerlistproducto.setAdapter(adaptadorProducto);
 
+        /*
         recyclerlistproducto.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -259,10 +260,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
             }
         });
 
+         */
+
     }
 
-    boolean isLastVisible()
-    {
+
+   /*
+    boolean isLastVisible()   {
 
         LinearLayoutManager layoutManager =((LinearLayoutManager) recyclerlistproducto.getLayoutManager());
         int pos = layoutManager.findLastCompletelyVisibleItemPosition();
@@ -279,5 +283,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
             }
 
         }
+
+
+    */
 
     }
