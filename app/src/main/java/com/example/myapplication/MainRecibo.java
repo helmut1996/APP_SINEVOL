@@ -535,6 +535,7 @@ public class MainRecibo extends AppCompatActivity {
 
 
                                             Consultarlista();
+                                            Estado();
                                             AgregarReciboSQLSEVER();
                                             printText();
                                             borrardatosTabla();
@@ -703,7 +704,6 @@ public class MainRecibo extends AppCompatActivity {
 
     void ejecutarGuardado() {
 
-        Estado();
         GuardarReciboSQLite();
     }
 
