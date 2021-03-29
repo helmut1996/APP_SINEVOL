@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity{
 
     public void conectar (View view)
     {
+
         if (editPint.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "debe ingresar su pin ", Toast.LENGTH_LONG).show();
             editPint.requestFocus();
@@ -104,5 +105,6 @@ public class MainActivity extends AppCompatActivity{
                 e.printStackTrace();
             }
         }
+
     }
 }

@@ -68,7 +68,7 @@ public class MainFactura extends AppCompatActivity {
         System.out.println("ID vendedor activity lista cliente===========>" + id);
 
         initview();
-       // initValues();
+
 
         btn_buscador_cliente.setOnClickListener(new View.OnClickListener() {
             @Override

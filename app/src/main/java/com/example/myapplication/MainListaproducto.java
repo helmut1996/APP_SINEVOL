@@ -117,6 +117,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(search2.getWindowToken(), 0);
 
+                        System.out.println("Mostrando lo capturado=====>"+CapturaBuscador);
+
                     }
 
                 }
@@ -176,11 +178,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
             Statement st = dbConnection.getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = st.executeQuery("\n" +
-                        "select  concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,i.Nombre as Producto,um.Nombre as UM,i.idInventario, i.ImagenApk, i.Precio1,ad.info1,ad.info2,ad.info3,ad.info4,ad.info5,i.Stock from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida inner join InventarioInfoAdic ad on i.idInventario= ad.idInventario where i.Estado = 'Activo' and i.Nombre like '%"+Buscar+"%' and Stock >0 ORDER BY idInventario  OFFSET ("+numItems+"+10) ROWS FETCH NEXT 10 ROWS ONLY");
+                        "select  concat(i.Nombre, ' C$ ', i.Precio1,' ',um.Nombre) as Nombre,i.Nombre as Producto,um.Nombre as UM,i.idInventario, i.ImagenApk, i.Precio1,ad.info1,ad.info2,ad.info3,ad.info4,ad.info5,i.Stock from Inventario i inner join Unidad_Medida um on i.idUndMedida=um.idUnidadMedida inner join InventarioInfoAdic ad on i.idInventario= ad.idInventario where i.Estado = 'Activo' and i.Nombre like '%"+Buscar+"%' and Stock >0 ");
 
-            st.setFetchSize(10);
-            st.setMaxRows(10);
 
+            System.out.println("capturando texto Busqueda===>"+Buscar);
             while (rs.next()){
 
                 listaProducto.add(new ModelItemsProducto(rs.getString("Nombre"),
