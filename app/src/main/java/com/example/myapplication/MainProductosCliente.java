@@ -21,6 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -44,11 +46,12 @@ import java.util.ArrayList;
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
     /*variables de los componentes de la vista*/
 private ImageButton IbuttonSiguiente;
-private TextView tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvtipoprecio,tvimagenBD,tvIDproducto,tvUnidadMedida;
+private TextView tv_precio_Especial, tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvtipoprecio,tvimagenBD,tvIDproducto,tvUnidadMedida;
 private Spinner precios,monedas;
 private ImageView img;
 private EditText editcantidad;
 private LinearLayout cuerpoProductCliente;
+private CheckBox PrecioE;
 int TotalP;
 
 /* variables globales */
@@ -98,6 +101,8 @@ int IdInventario;
         tvIDproducto=findViewById(R.id.IDProduto);
         tvtipoprecio=findViewById(R.id.tipoPrecio);
         tvUnidadMedida=findViewById(R.id.tvUnidadMedida);
+        PrecioE=findViewById(R.id.checkPrecioEspecial);
+        tv_precio_Especial=findViewById(R.id.text_PE);
         ////////// Spinmer
 
         precios = findViewById(R.id.spinerPrecios);
@@ -106,6 +111,7 @@ int IdInventario;
         IbuttonSiguiente.setOnClickListener(this);
 
 //////////////////////////////pasando datos por parametros entre activitys/////////////////////////////////
+
 
         String NombrePreducto;
         Bundle extra=getIntent().getExtras();
@@ -205,6 +211,10 @@ int IdInventario;
                             tvtipoprecio.setText("4");
                         }else if (position==4){
                             tvtipoprecio.setText("5");
+                        }else if (position==5){
+                            tvtipoprecio.setText("6");
+                            tv_precio_Especial.setVisibility(View.VISIBLE);
+                            tv_precio_Especial.setText("Precio Especial");
                         }
                     }
 
@@ -214,6 +224,21 @@ int IdInventario;
                     }
                 });
 
+
+
+                PrecioE.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (buttonView.isChecked()){
+                            precios.setAdapter(precioCordoba2());
+                            Toast.makeText(getBaseContext(), "Activado",Toast.LENGTH_LONG).show();
+                        }else{
+                            tv_precio_Especial.setVisibility(View.GONE);
+                            precios.setAdapter(precioCordoba());
+                            Toast.makeText(getBaseContext(), "Desactivado",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
         /*mandando a llamar las imagenes libreria */
                                         cargarImagen();
@@ -324,8 +349,7 @@ int IdInventario;
 
     }
 
-    public ArrayAdapter precioCordoba()
-    {
+    public ArrayAdapter precioCordoba() {
         ArrayAdapter NoCoreAdapter=null;
        DBConnection dbConnection = new DBConnection();
        dbConnection.conectar();
@@ -341,6 +365,36 @@ int IdInventario;
                 data.add(rs.getString("Precio3"));
                 data.add(rs.getString("Precio4"));
                 data.add(rs.getString("Precio5"));
+            }
+            System.out.println("Nombre:"+producto);
+
+            System.out.println("Capturando nombre Producto====>"+producto);
+            NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
+            stm.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return NoCoreAdapter;
+
+    }
+
+    public ArrayAdapter precioCordoba2() {
+        ArrayAdapter NoCoreAdapter=null;
+        DBConnection dbConnection = new DBConnection();
+        dbConnection.conectar();
+        String query = "select Precio1, Precio2,Precio3,Precio4,Precio5,PrecioE from Inventario where Nombre= '" +producto+" ' ";
+        try {
+            Statement stm = dbConnection.getConnection().createStatement();
+            ResultSet rs = stm.executeQuery(query);
+
+            ArrayList<String> data = new ArrayList<>();
+            while (rs.next()) {
+                data.add(rs.getString("Precio1"));
+                data.add(rs.getString("Precio2"));
+                data.add(rs.getString("Precio3"));
+                data.add(rs.getString("Precio4"));
+                data.add(rs.getString("Precio5"));
+                data.add(rs.getString("PrecioE"));
             }
             System.out.println("Nombre:"+producto);
 

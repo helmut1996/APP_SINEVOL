@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -41,10 +43,11 @@ import java.util.Date;
 public class
 MainFacturaList extends AppCompatActivity {
 
-    TextView textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible, textV_total,textIdcliente,textIdvendedor,tvtotalproducto;
+    TextView text_estado_prefact, textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible, textV_total,textIdcliente,textIdvendedor,tvtotalproducto;
     Spinner T_factura,T_ventas;
     ListView lista_factura;
     LinearLayout cuerpo;
+    CheckBox EstadoPrefactura;
     ArrayList<String>listainformacion;
     ArrayList<ProductosAdd>listaproducto;
     ///////////////////////////////////////
@@ -85,10 +88,22 @@ public static int IDVendedor;
         textIdcliente= findViewById(R.id.textV_idcliente);
         textIdvendedor= findViewById(R.id.textV_idvendedor);
         cuerpo=findViewById(R.id.cuerpo);
-
+        text_estado_prefact=findViewById(R.id.text_estadoPrefactura);
+        EstadoPrefactura=findViewById(R.id.prefact_precio_Esp);
         T_ventas = findViewById(R.id.spinner_tventas);
         T_factura = findViewById(R.id.spinner_facura);
         lista_factura=findViewById(R.id.lista_Factura);
+
+        EstadoPrefactura.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (buttonView.isChecked()){
+                    text_estado_prefact.setText("1");
+                }else{
+                    text_estado_prefact.setText("0");
+                }
+            }
+        });
         /////////Spinner del tipo de ventas
         ArrayAdapter<CharSequence> adapter  = ArrayAdapter.createFromResource(this, R.array.tipo_ventas, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -313,7 +328,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
 
         try {
             dbConnection.getConnection().setAutoCommit(false);
-            PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertPrefacturas ?,?,?,?,?,?,?");
+            PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertPrefacturas ?,?,?,?,?,?,?,?");
             pst.setInt(1, Integer.parseInt(textIdcliente.getText().toString()));
             pst.setInt(2, Integer.parseInt(textIdvendedor.getText().toString()));
             pst.setString(3, T_factura.getSelectedItem().toString()
@@ -322,6 +337,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
             pst.setDouble(5, Double.parseDouble(String.valueOf(TotalFact)));
             pst.setDouble(6,TotalComision);
             pst.setString(7,textV_Cliente.getText().toString());
+            pst.setInt(8,Integer.parseInt(text_estado_prefact.getText().toString()));
             pst.executeUpdate();
 
             Statement st= dbConnection.getConnection().createStatement();

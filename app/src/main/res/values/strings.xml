@@ -58,4 +58,5 @@
     <string name="printer_high_temp_alarm">当前打印机温度过高，请稍后打印~</string>
     <string name="motor_high_temp_alarm">当前马达温度过高，请稍后打印~</string>
     <string name="printer_current_task_print_complete">打印任务已经打印完成</string>
+    <string name="text_precioE">Precio Especial</string>
 </resources>

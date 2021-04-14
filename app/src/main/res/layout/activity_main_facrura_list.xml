@@ -14,6 +14,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prefctura Precio Especial"
+            android:layout_gravity="end"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/prefact_precio_Esp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="estado"
+            android:id="@+id/text_estadoPrefactura"
+            android:layout_gravity="end"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
