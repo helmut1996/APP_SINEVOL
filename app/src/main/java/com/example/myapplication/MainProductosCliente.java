@@ -46,13 +46,14 @@ import java.util.ArrayList;
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
     /*variables de los componentes de la vista*/
 private ImageButton IbuttonSiguiente;
-private TextView tv_precio_Especial, tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvtipoprecio,tvimagenBD,tvIDproducto,tvUnidadMedida;
+private TextView tvmostrarP, tv_precio_Especial, tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvtipoprecio,tvimagenBD,tvIDproducto,tvUnidadMedida;
 private Spinner precios,monedas;
 private ImageView img;
 private EditText editcantidad;
 private LinearLayout cuerpoProductCliente;
 private CheckBox PrecioE;
-int TotalP;
+double conversion;
+double tasaCambio;
 
 /* variables globales */
 String NombreCliente;
@@ -89,6 +90,7 @@ int IdInventario;
         ////////////imagen producto
         img=findViewById(R.id.imgProducto);
         /////////// campos de texto
+        tvmostrarP=findViewById(R.id.tvmostraP);
         tvnombreproducto=findViewById(R.id.tvnombreP);
         textcontar=findViewById(R.id.text_contar);
         textinfo1=findViewById(R.id.text_info1);
@@ -201,16 +203,59 @@ int IdInventario;
                 precios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        double datos= Double.parseDouble(precios.getSelectedItem().toString());
                         if (position==0){
                             tvtipoprecio.setText("1");
+
+                            if (monedas.getSelectedItem().toString().equals("Dolar")){
+                                conversion=datos*tasaCambio;
+                                System.out.println("precioCapturado:-->"+conversion);
+                                tvmostrarP.setText(String.valueOf(conversion));
+                            }else{
+                                tvmostrarP.setText("");
+                            }
+
                         }else if(position==1){
                             tvtipoprecio.setText("2");
+
+                            if (monedas.getSelectedItem().toString().equals("Dolar")){
+                                conversion=datos*tasaCambio;
+                                System.out.println("precioCapturado:-->"+conversion);
+                                tvmostrarP.setText(String.valueOf(conversion));
+                            }else{
+                                tvmostrarP.setText("");
+                            }
+
                         }else if (position==2){
                             tvtipoprecio.setText("3");
+                            if (monedas.getSelectedItem().toString().equals("Dolar")){
+                                conversion=datos*tasaCambio;
+                                System.out.println("precioCapturado:-->"+conversion);
+                                tvmostrarP.setText(String.valueOf(conversion));
+                            }else{
+                                tvmostrarP.setText("");
+                            }
+
                         }else if (position==3){
                             tvtipoprecio.setText("4");
+                            if (monedas.getSelectedItem().toString().equals("Dolar")){
+                                conversion=datos*tasaCambio;
+                                System.out.println("precioCapturado:-->"+conversion);
+                                tvmostrarP.setText(String.valueOf(conversion));
+                            }else{
+                                tvmostrarP.setText("");
+                            }
+
                         }else if (position==4){
                             tvtipoprecio.setText("5");
+                            if (monedas.getSelectedItem().toString().equals("Dolar")){
+                                conversion=datos*tasaCambio;
+                                System.out.println("precioCapturado:-->"+conversion);
+                                tvmostrarP.setText(String.valueOf(conversion));
+                            }else{
+                                tvmostrarP.setText("");
+                            }
+
                         }else if (position==5){
                             tvtipoprecio.setText("6");
                             tv_precio_Especial.setVisibility(View.VISIBLE);
@@ -242,6 +287,7 @@ int IdInventario;
 
         /*mandando a llamar las imagenes libreria */
                                         cargarImagen();
+                                        TasaDolar();
      }
 
     @Override
@@ -474,7 +520,12 @@ int IdInventario;
             values.put(utilidades.CAMPO_ID,tvIDproducto.getText().toString());
             values.put(utilidades.CAMPO_NOMBRE,tvnombreproducto.getText().toString());
             values.put(utilidades.CAMPO_CANTIDAD,editcantidad.getText().toString());
-            values.put(utilidades.CAMPO_PRECIO,precios.getSelectedItem().toString());
+
+            if (monedas.getSelectedItem().toString().equals("Dolar")){
+                values.put(utilidades.CAMPO_PRECIO,tvmostrarP.getText().toString());
+            }else{
+                values.put(utilidades.CAMPO_PRECIO,precios.getSelectedItem().toString());
+            }
             values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
             values.put(utilidades.CAMPO_TIPOPRECIO,tvtipoprecio.getText().toString());
             idResultante= (int) db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
@@ -483,4 +534,23 @@ int IdInventario;
         }
         c.close();
     }
+
+    public void TasaDolar(){
+        DBConnection dbConnection=new DBConnection();
+        dbConnection.conectar();
+        try {
+            Statement st2 = dbConnection.getConnection().createStatement();
+            ResultSet rs2 = st2.executeQuery("\n" +
+                    "select top 1 Cambio from Cambio_Dolar order by idDolar desc");
+            while (rs2.next()) {
+                tasaCambio = rs2.getDouble("Cambio");
+
+                System.out.println("==============> Ultimo tasa de cambio en dolares:" + tasaCambio);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
