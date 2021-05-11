@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class DBConnection
 {
-    private static String ip = "165.98.69.170";
+    private static String ip = "192.168.0.100";
     private static String port = "1440";
     private static String Classes = "net.sourceforge.jtds.jdbc.Driver";
     private static String database = "BDPRUEBA";
