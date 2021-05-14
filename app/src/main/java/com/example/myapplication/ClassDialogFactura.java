@@ -20,16 +20,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.myapplication.ConexionBD.DBConnection;
 import com.example.myapplication.SQLite.conexionSQLiteHelper;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ClassDialogFactura extends DialogFragment {
     TextView producto,cantidad,precio_C,precio_D,tvimagenSQLite;
   //  ImageButton btn_delete, btn_Actualizar;
     ImageView imgProductoDetalle;
     EditText editcantidad2;
+    int Strock;
     MainFacturaList variable = new MainFacturaList();
     @NonNull
     @Override
@@ -39,6 +44,7 @@ public class ClassDialogFactura extends DialogFragment {
         View view = inflater.inflate(R.layout.detalle_factura,null);
 
         builder.setView(view)
+
                 .setTitle("Detalle Producto")
                 .setIcon(R.drawable.ic_baseline_content_paste)
                 .setPositiveButton("Actualizar",  new DialogInterface.OnClickListener() {
@@ -52,6 +58,7 @@ public class ClassDialogFactura extends DialogFragment {
                         refresh.putExtra("IdVendedor",variable.IDVendedor);
                         startActivity(refresh);
                         ActualizarDatosSQLite();
+
 
                     }
                 })
@@ -72,6 +79,7 @@ public class ClassDialogFactura extends DialogFragment {
                 }
 
                 );
+
 
         producto=view.findViewById(R.id.id_producto);
         producto.setText(variable.nombre);
@@ -99,6 +107,8 @@ public class ClassDialogFactura extends DialogFragment {
         tvimagenSQLite.setText(variable.nombreImagen);
 
         editcantidad2=view.findViewById(R.id.editTextCantidad2);
+
+        IdInventario();
         return builder.create();
 
     }
@@ -113,7 +123,9 @@ public class ClassDialogFactura extends DialogFragment {
                 } else if(Integer.parseInt(editcantidad2.getText().toString())==0){
 
                     Toast.makeText(getContext(),"No se Actualizo en cantidad 0",Toast.LENGTH_LONG).show();
-        }else {
+        }else if (Integer.parseInt(editcantidad2.getText().toString()) > Strock){
+                    Toast.makeText(getContext(),"Sobre pasa la cntidad de Existencia",Toast.LENGTH_LONG).show();
+                } else {
             db.execSQL("update producto set cantidad ="+cantidad.getText().toString()+" where id = "+precio_D.getText().toString()+" ");
             db.close();
 
@@ -129,5 +141,30 @@ public class ClassDialogFactura extends DialogFragment {
         db.close();
         Toast.makeText(getContext(),"Registro Eliminado!!!",Toast.LENGTH_SHORT).show();
     }
+
+
+    public void IdInventario(){
+
+        DBConnection dbConnection=new DBConnection();
+        dbConnection.conectar();
+        try {
+            Statement st = dbConnection.getConnection().createStatement();
+            ResultSet rs = st.executeQuery("\n" +
+                    "select Stock from Inventario where idInventario='"+precio_D.getText().toString()+"'");
+            while (rs.next()) {
+                Strock = rs.getInt("Stock");
+
+                System.out.println("==============>Existencia del producto:" + Strock);
+            }
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 }
