@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,11 +39,10 @@ import java.util.ArrayList;
 public class
 MainFacturaList extends AppCompatActivity {
 
-    TextView text_estado_prefact, textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible, textV_total,textIdcliente,textIdvendedor,tvtotalproducto;
+    TextView EstadoPrefactura,text_estado_prefact, textV_Codigo,textV_Cliente,textV_zona,textV_credito_disponible, textV_total,textIdcliente,textIdvendedor,tvtotalproducto;
     Spinner T_factura,T_ventas;
     ListView lista_factura;
     LinearLayout cuerpo;
-    CheckBox EstadoPrefactura;
     ArrayList<String>listainformacion;
     ArrayList<ProductosAdd>listaproducto;
     ///////////////////////////////////////
@@ -89,16 +89,6 @@ public static int IDVendedor;
         T_factura = findViewById(R.id.spinner_facura);
         lista_factura=findViewById(R.id.lista_Factura);
 
-        EstadoPrefactura.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (buttonView.isChecked()){
-                    text_estado_prefact.setText("1");
-                }else{
-                    text_estado_prefact.setText("0");
-                }
-            }
-        });
         /////////Spinner del tipo de ventas
         ArrayAdapter<CharSequence> adapter  = ArrayAdapter.createFromResource(this, R.array.tipo_ventas, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -186,7 +176,6 @@ getMenuInflater().inflate(R.menu.menu,menu);
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         Cursor verificar_prefactura=db.rawQuery("select count(*) as cantidad from producto;", null);
-
                                         if (verificar_prefactura.moveToFirst()) {
                                             if (verificar_prefactura.getInt(verificar_prefactura.getColumnIndex("cantidad")) == 0) {
                                                 Snackbar snackbar = Snackbar.make(cuerpo, "No puedes Guardar Prefactura Vacia", Snackbar.LENGTH_LONG);
@@ -267,18 +256,45 @@ getMenuInflater().inflate(R.menu.menu,menu);
     public void ConsultarlistaProducto() {
         SQLiteDatabase db=conn.getReadableDatabase();
         ProductosAdd productosAdd = null;
-        listaproducto=new ArrayList<ProductosAdd>();
-        //query SQLite
-        Cursor cursor=db.rawQuery("select * from "+ utilidades.TABLA_PRODUCTO,null);
-        while (cursor.moveToNext()){
-            productosAdd=new ProductosAdd();
-            productosAdd.setId_producto(cursor.getInt(0));
-            productosAdd.setNombreproduc(cursor.getString(1));
-            productosAdd.setCantidad(cursor.getInt(2));
-            productosAdd.setPrecios(cursor.getDouble(3));
-            productosAdd.setImagenProducto(cursor.getString(4));
-            listaproducto.add(productosAdd);
+        Cursor cursor1=db.rawQuery("select * from producto where tipoprecio=6",null);
+        if (cursor1.moveToFirst()){
+            if (cursor1.getInt(cursor1.getColumnIndex("tipoprecio")) == 6){
+
+                EstadoPrefactura.setVisibility(View.VISIBLE);
+                EstadoPrefactura.setText("Prefactura Precio Especial");
+                text_estado_prefact.setText("1");
+                listaproducto=new ArrayList<ProductosAdd>();
+                //query SQLite
+
+                Cursor cursor=db.rawQuery("select * from "+ utilidades.TABLA_PRODUCTO,null);
+                while (cursor.moveToNext()){
+                    productosAdd=new ProductosAdd();
+                    productosAdd.setId_producto(cursor.getInt(0));
+                    productosAdd.setNombreproduc(cursor.getString(1));
+                    productosAdd.setCantidad(cursor.getInt(2));
+                    productosAdd.setPrecios(cursor.getDouble(3));
+                    productosAdd.setImagenProducto(cursor.getString(4));
+                    listaproducto.add(productosAdd);
+                }
+            }
+        }else{
+
+            EstadoPrefactura.setVisibility(View.GONE);
+            text_estado_prefact.setText("0");
+            listaproducto=new ArrayList<ProductosAdd>();
+            //query SQLite
+            Cursor cursor=db.rawQuery("select * from "+ utilidades.TABLA_PRODUCTO,null);
+            while (cursor.moveToNext()){
+                productosAdd=new ProductosAdd();
+                productosAdd.setId_producto(cursor.getInt(0));
+                productosAdd.setNombreproduc(cursor.getString(1));
+                productosAdd.setCantidad(cursor.getInt(2));
+                productosAdd.setPrecios(cursor.getDouble(3));
+                productosAdd.setImagenProducto(cursor.getString(4));
+                listaproducto.add(productosAdd);
+            }
         }
+
         obtenerLista();
     }
 

@@ -528,7 +528,7 @@ int IdInventario;
             values.put(utilidades.CAMPO_TIPOPRECIO,tvtipoprecio.getText().toString());
             idResultante= (int) db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
 
-            Toast.makeText(this,"CANTIDAD INGRESADA: " + idResultante,Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"CANTIDAD INGRESADA: " + idResultante,Toast.LENGTH_SHORT).show();
         }
         c.close();
     }

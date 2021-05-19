@@ -14,13 +14,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <CheckBox
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prefctura Precio Especial"
-            android:layout_gravity="end"
+            android:visibility="gone"
+            android:layout_gravity="center"
             android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
             android:id="@+id/prefact_precio_Esp"/>
         <TextView
             android:layout_width="wrap_content"
