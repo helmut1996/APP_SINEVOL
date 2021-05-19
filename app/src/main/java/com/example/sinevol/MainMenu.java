@@ -2,6 +2,7 @@ package com.example.sinevol;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -19,7 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class MainMenu extends AppCompatActivity implements View.OnClickListener{
+public class MainMenu extends Activity implements View.OnClickListener{
     Button btn_factura,btn_recibo,btn_cuentas,btn_cerrar;
     DBConnection sesion;
     int id;
@@ -31,7 +32,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        getSupportActionBar().setTitle("Menu Principal");
 
         id=getIntent().getIntExtra("IdVendedor",0);
         Bundle extra=getIntent().getExtras();

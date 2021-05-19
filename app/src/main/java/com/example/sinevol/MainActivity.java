@@ -3,6 +3,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,7 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends Activity {
     EditText editPint;
     Button btn_entar;
 
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity{
                 if (rs.next()) {
                     NombreVendedor= rs.getString(2);
                     int id=rs.getInt(1);
-                    Intent i = new Intent(this,MainMenu.class);
+                    Intent i = new Intent(this,MainFullScreen.class);
                     i.putExtra("IdVendedor",id);
                     i.putExtra("NombreVendedor",NombreVendedor);
                     startActivity(i);

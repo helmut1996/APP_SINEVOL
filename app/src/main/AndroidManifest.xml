@@ -14,25 +14,26 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name="com.example.sinevol.MainCheques"></activity>
-        <activity android:name="com.example.sinevol.MainError_Internet" />
+        <activity android:name=".MainFullScreen"></activity>
+        <activity android:name=".MainCheques" />
+        <activity android:name=".MainError_Internet" />
         <activity
-            android:name="com.example.sinevol.MainListaproducto"
-            android:parentActivityName="com.example.sinevol.MainProductosCliente" />
+            android:name=".MainListaproducto"
+            android:parentActivityName=".MainProductosCliente" />
         <activity
-            android:name="com.example.sinevol.MainFacturaList"
-            android:parentActivityName="com.example.sinevol.MainProductosCliente" />
-        <activity android:name="com.example.sinevol.MainProductosCliente" />
+            android:name=".MainFacturaList"
+            android:parentActivityName=".MainProductosCliente" />
+        <activity android:name=".MainProductosCliente" />
         <activity
-            android:name="com.example.sinevol.MainRecibo"
-            android:parentActivityName="com.example.sinevol.MainFactura" />
+            android:name=".MainRecibo"
+            android:parentActivityName=".MainFactura" />
         <activity
-            android:name="com.example.sinevol.Maincuentas"
-            android:parentActivityName="com.example.sinevol.MainFactura" />
-        <activity android:name="com.example.sinevol.MainFactura" />
-        <activity android:name="com.example.sinevol.MainMenu" />
+            android:name=".Maincuentas"
+            android:parentActivityName=".MainFactura" />
+        <activity android:name=".MainFactura" />
+        <activity android:name=".MainMenu" />
         <activity
-            android:name="com.example.sinevol.MainActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
