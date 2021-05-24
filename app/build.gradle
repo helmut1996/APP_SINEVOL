@@ -54,6 +54,9 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
+   //implementacion impresora sunmi v2 opcion 2
+    implementation 'com.github.AhmedElsayed94:SunmiPrinterSdk:Tag'
+
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
 }
