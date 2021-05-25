@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:hint="@string/text_buscar"
-            android:id="@+id/search"/>
+            android:id="@+id/search"
+            android:inputType="text"/>
 
         <Button
             android:id="@+id/btnBuscadorCliente"

@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:hint="@string/text_buscar"
+            android:inputType="text"
             android:id="@+id/search2"/>
         <Button
             android:layout_width="match_parent"
