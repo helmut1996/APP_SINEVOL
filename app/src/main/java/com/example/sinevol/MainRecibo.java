@@ -4,23 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.os.Message;
-import android.os.RemoteException;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,9 +30,7 @@ import com.example.sinevol.SQLite.conexionSQLiteHelper;
 import com.example.sinevol.SQLite.entidades.FacturasAdd;
 import com.example.sinevol.SQLite.ulilidades.utilidadesFact;
 import com.example.sinevol.Utils.Coversion_Numero_Letra;
-import com.example.sinevol.Utils.HandlerUtils;
 import com.google.android.material.snackbar.Snackbar;
-import com.iposprinter.iposprinterservice.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,7 +40,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 
 public class MainRecibo extends AppCompatActivity {
     LinearLayout cuerpo;
