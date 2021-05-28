@@ -1,7 +1,6 @@
 package com.example.sinevol;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -48,10 +47,7 @@ String nombreVendedor;
 int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
 
 
-
-    ///////////////////////Impresora//////////////////////////////////
-
-
+///////////////////////Impresora//////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -335,7 +331,6 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
     }
 
