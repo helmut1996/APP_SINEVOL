@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -25,7 +27,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sinevol.ConexionBD.DBConnection;
+import com.example.sinevol.Utils.BluetoothUtil;
+import com.example.sinevol.Utils.BytesUtil;
+import com.example.sinevol.Utils.ESCUtil;
+import com.example.sinevol.Utils.SunmiPrintHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,7 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
-
+import java.io.UnsupportedEncodingException;
 public class MainCheques extends AppCompatActivity  {
 TextView zona,vendedor,fecha,NombreCliente,idBanco,IdCliente,NRC;
 EditText NCheque,MCheque,Beneficiario,ObservacionesC;
@@ -46,7 +55,7 @@ ImageButton imprimirC;
 String nombreVendedor;
 int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
 
-
+    byte[] rv = null;
 ///////////////////////Impresora//////////////////////////////////
 
     @Override
@@ -158,10 +167,16 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
                 }else if (Integer.parseInt(MCheque.getText().toString())==0){
                     MCheque.setError("El monto no puede ser 0");
                 } else {
+
+                    Toast.makeText(getApplicationContext(),"Precionado",Toast.LENGTH_LONG).show();
+                   rv= BytesUtil.getBaiduTestBytes();
                     //if (getPrinterStatus() == PRINTER_NORMAL) {
-                        try {
+                    /*
+                    try {
                             AgregarChequesSQLSEVER();
                             IdCheque();
+                            BytesUtil.getBaiduTestBytes();
+                           // impresora();
                           //  printText();
                             loading.iniciarCarga();
                             Handler handler= new Handler(Looper.getMainLooper());
@@ -180,9 +195,16 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
 
 
 
+                     */
+
                    // }
 
 
+                }
+                if(BluetoothUtil.isBlueToothPrinter){
+                    BluetoothUtil.sendData(rv);
+                }else{
+                    SunmiPrintHelper.getInstance().sendRawData(rv);
                 }
 
             }
@@ -190,7 +212,51 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
         });
     }
 
-
+    /// prueba
+    public void impresora(){
+        byte[] rv = BytesUtil.customData();
+        Bitmap head = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
+        //打印光栅位图(print raster bitmap ——normal)
+        rv = BytesUtil.byteMerger(rv, ESCUtil.printBitmap(head, 0));
+        //打印光栅位图  倍宽  (print raster bitmap ——double width)
+        rv = BytesUtil.byteMerger(rv, ESCUtil.printBitmap(head, 1));
+        //打印光栅位图  倍高    (print raster bitmap ——double height)
+        rv = BytesUtil.byteMerger(rv,ESCUtil.printBitmap(head, 2));
+        //打印光栅位图  倍宽倍高   (print raster bitmap ——double width and height)
+        rv = BytesUtil.byteMerger(rv,ESCUtil.printBitmap(head, 3));
+        //选择位图指令  8点单密度 （print Bitmap mode)
+        rv = BytesUtil.byteMerger(rv,ESCUtil.selectBitmap(head, 0));
+        //选择位图指令  8点双密度
+        rv = BytesUtil.byteMerger(rv,ESCUtil.selectBitmap(head, 1));
+        //选择位图指令  24点单密度
+        rv = BytesUtil.byteMerger(rv,ESCUtil.selectBitmap(head, 32));
+        //选择位图指令  24点双密度
+        rv = BytesUtil.byteMerger(rv,ESCUtil.selectBitmap(head, 33));
+        //之后将输出可显示的ascii码及制表符
+        rv = BytesUtil.byteMerger(rv,BytesUtil.wordData());
+        byte[] ascii = new byte[96];
+        for(int i = 0; i < 95; i++){
+            ascii[i] = (byte) (0x20+i);
+        }
+        ascii[95] = 0x0A;
+        rv = BytesUtil.byteMerger(rv, ascii);
+        char[] tabs = new char[116];
+        for(int i = 0; i < 116; i++){
+            tabs[i] = (char) (0x2500 + i);
+        }
+        String test = new String(tabs);
+        try {
+            rv = BytesUtil.byteMerger(rv, test.getBytes("gb18030"));
+            rv = BytesUtil.byteMerger(rv, new byte[]{0x0A});
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        if(BluetoothUtil.isBlueToothPrinter){
+            BluetoothUtil.sendData(rv);
+        }else{
+            SunmiPrintHelper.getInstance().sendRawData(rv);
+        }
+    }
 
    /* public void printText() {
         ThreadPoolManager.getInstance().executeTask(new Runnable() {

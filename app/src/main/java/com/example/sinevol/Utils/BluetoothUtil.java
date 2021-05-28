@@ -6,7 +6,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.sunmi.printerhelper.R;
+import com.example.sinevol.R;
 
 import java.io.IOException;
 import java.io.OutputStream;

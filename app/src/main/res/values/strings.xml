@@ -59,4 +59,23 @@
     <string name="motor_high_temp_alarm">当前马达温度过高，请稍后打印~</string>
     <string name="printer_current_task_print_complete">打印任务已经打印完成</string>
     <string name="text_precioE">Precio Especial</string>
+
+
+<!---mesajes de errores de la otra impresora-->
+    <!--instruction-->
+    <string name="toast_1">Transaction print,use the AIDL mode!</string>
+    <string name="toast_2">The service has been disconnected!</string>
+    <string name="toast_3">Bluetooth device is unavailable</string>
+    <string name="toast_4">Bluetooth device not detected. Please open Bluetooth!</string>
+    <string name="toast_5">Not Found InnterPrinter!</string>
+    <string name="toast_6">Bluetooth connect failed!</string>
+    <string name="toast_7"> Only a single Qr code is printed for the AIDL mode</string>
+    <string name="toast_8">Now QrCode size must be less than 7!</string>
+    <string name="toast_9">BarCode type or conent error!</string>
+    <string name="toast_10">Please set the printer as black label mode!</string>
+    <string name="toast_11">Settings->System->Advanced->InnerPrinter-> set black mark
+        function</string>
+    <string name="toast_12">Please set the printer to label mode!</string>
+
+
 </resources>

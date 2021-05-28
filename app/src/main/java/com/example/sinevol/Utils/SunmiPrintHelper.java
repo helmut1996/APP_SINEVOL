@@ -14,7 +14,7 @@ import com.sunmi.peripheral.printer.InnerPrinterManager;
 import com.sunmi.peripheral.printer.InnerResultCallback;
 import com.sunmi.peripheral.printer.SunmiPrinterService;
 import com.sunmi.peripheral.printer.WoyouConsts;
-import com.sunmi.printerhelper.R;
+import com.example.sinevol.R;
 
 /**
  * <pre>
@@ -326,9 +326,9 @@ public class SunmiPrintHelper {
                         WoyouConsts.ENABLE:WoyouConsts.DISABLE);
             } catch (RemoteException e) {
                 if (isBold) {
-                    sunmiPrinterService.sendRAWData(com.sunmi.printerhelper.utils.ESCUtil.boldOn(), null);
+                    sunmiPrinterService.sendRAWData(com.example.sinevol.Utils.ESCUtil.boldOn(), null);
                 } else {
-                    sunmiPrinterService.sendRAWData(com.sunmi.printerhelper.utils.ESCUtil.boldOff(), null);
+                    sunmiPrinterService.sendRAWData(com.example.sinevol.Utils.ESCUtil.boldOff(), null);
                 }
             }
             try {
@@ -336,9 +336,9 @@ public class SunmiPrintHelper {
                         WoyouConsts.ENABLE:WoyouConsts.DISABLE);
             } catch (RemoteException e) {
                 if (isUnderLine) {
-                    sunmiPrinterService.sendRAWData(com.sunmi.printerhelper.utils.ESCUtil.underlineWithOneDotWidthOn(), null);
+                    sunmiPrinterService.sendRAWData(com.example.sinevol.Utils.ESCUtil.underlineWithOneDotWidthOn(), null);
                 } else {
-                    sunmiPrinterService.sendRAWData(com.sunmi.printerhelper.utils.ESCUtil.underlineOff(), null);
+                    sunmiPrinterService.sendRAWData(com.example.sinevol.Utils.ESCUtil.underlineOff(), null);
                 }
             }
             sunmiPrinterService.printTextWithFont(content, null, size, null);
@@ -601,7 +601,7 @@ public class SunmiPrintHelper {
             sunmiPrinterService.printerInit(null);
             sunmiPrinterService.setAlignment(1, null);
             sunmiPrinterService.printText("测试样张\n", null);
-            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sunmi);
+            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.arrow);
             sunmiPrinterService.printBitmap(bitmap, null);
             sunmiPrinterService.lineWrap(1, null);
             sunmiPrinterService.setAlignment(0, null);
@@ -621,7 +621,7 @@ public class SunmiPrintHelper {
             try {
                 sunmiPrinterService.setPrinterStyle(WoyouConsts.ENABLE_BOLD, WoyouConsts.ENABLE);
             } catch (RemoteException e) {
-                sunmiPrinterService.sendRAWData(com.sunmi.printerhelper.utils.ESCUtil.boldOn(), null);
+                sunmiPrinterService.sendRAWData(com.example.sinevol.Utils.ESCUtil.boldOn(), null);
             }
             String txts[] = new String[]{"商品", "价格"};
             int width[] = new int[]{1, 1};
@@ -630,7 +630,7 @@ public class SunmiPrintHelper {
             try {
                 sunmiPrinterService.setPrinterStyle(WoyouConsts.ENABLE_BOLD, WoyouConsts.DISABLE);
             } catch (RemoteException e) {
-                sunmiPrinterService.sendRAWData(com.sunmi.printerhelper.utils.ESCUtil.boldOff(), null);
+                sunmiPrinterService.sendRAWData(com.example.sinevol.Utils.ESCUtil.boldOff(), null);
             }
             if(paper == 1){
                 sunmiPrinterService.printText("--------------------------------\n", null);
