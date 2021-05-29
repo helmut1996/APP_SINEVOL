@@ -36,7 +36,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
     //integrando librerias de la impresora
-    implementation files('libs\\core-3.3.0.jar')
+    //implementation files('libs\\core-3.3.0.jar')
     //integrando librerias de la impresora
     testImplementation 'junit:junit:4.+'
     implementation "androidx.cardview:cardview:1.0.0"
