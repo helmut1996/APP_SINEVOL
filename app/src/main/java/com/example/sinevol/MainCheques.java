@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ahmedelsayed.sunmiprinterutill.PrintMe;
 import com.example.sinevol.ConexionBD.DBConnection;
 
 import java.sql.PreparedStatement;
@@ -35,6 +36,7 @@ ImageButton imprimirC;
 
 String nombreVendedor;
 int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
+
 
 
 
@@ -132,12 +134,13 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
 
         /// mandando a llamar la clase  cuadro  dialogo de  carga
         ClassDialogLoading loading=new ClassDialogLoading(MainCheques.this);
-
+        PrintMe print =  new PrintMe(this);
         imprimirC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //funciom de la impresora
                 byte[] rv = null;
+                print.sendTextToPrinter("Helmut \n El mamut",18,true,false,2);
                 ///Toast.makeText(getApplicationContext(),"Precionado",Toast.LENGTH_LONG).show();
 
 

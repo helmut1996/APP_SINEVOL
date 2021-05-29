@@ -54,7 +54,7 @@ dependencies {
 
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     //integrando librerias de la impresora
-
+    implementation 'com.github.AhmedElsayed94:SunmiPrinterSdk:1.0.0'
 
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
