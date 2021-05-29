@@ -123,7 +123,7 @@ public class SunmiPrintHelper {
      */
     public void sendRawData(byte[] data) {
         if(sunmiPrinterService == null){
-            //TODO Service disconnection processing
+            System.out.println("sunmiPrinterService Nulo");
             return;
         }
         try {

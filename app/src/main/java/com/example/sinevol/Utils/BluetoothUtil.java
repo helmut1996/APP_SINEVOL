@@ -107,7 +107,7 @@ public class BluetoothUtil {
                 e.printStackTrace();
             }
         }else{
-            //TODO handle disconnect event
+            System.out.println("Socket Nulo");
         }
     }
 }

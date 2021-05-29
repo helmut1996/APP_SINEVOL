@@ -45,6 +45,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import java.io.UnsupportedEncodingException;
+import androidx.annotation.Nullable;
+
 public class MainCheques extends AppCompatActivity  {
 TextView zona,vendedor,fecha,NombreCliente,idBanco,IdCliente,NRC;
 EditText NCheque,MCheque,Beneficiario,ObservacionesC;
@@ -55,15 +57,17 @@ ImageButton imprimirC;
 String nombreVendedor;
 int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
 
-    byte[] rv = null;
+
+
 ///////////////////////Impresora//////////////////////////////////
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_cheques);
 
         getSupportActionBar().setTitle("Cheques");
+
 
         //vinculando el diseño
         NRC=findViewById(R.id.tvc_NReferencia);
@@ -151,7 +155,21 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
         imprimirC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //funciom de la impresora
+                byte[] rv = null;
+                ///Toast.makeText(getApplicationContext(),"Precionado",Toast.LENGTH_LONG).show();
 
+                rv= BytesUtil.getBaiduTestBytes();
+
+                if(BluetoothUtil.isBlueToothPrinter){
+                    BluetoothUtil.sendData(rv);
+
+                }else{
+                    SunmiPrintHelper.getInstance().sendRawData(rv);
+
+                }
+
+                /*
                 if (BuscadorClienteC.getText().toString().isEmpty()) {
                     BuscadorClienteC.setError("Debe seleccionar un cliente");
                 }else if (Bancos.getSelectedItemPosition()==0){
@@ -168,8 +186,11 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
                     MCheque.setError("El monto no puede ser 0");
                 } else {
 
-                    Toast.makeText(getApplicationContext(),"Precionado",Toast.LENGTH_LONG).show();
-                   rv= BytesUtil.getBaiduTestBytes();
+
+
+
+                 */
+
                     //if (getPrinterStatus() == PRINTER_NORMAL) {
                     /*
                     try {
@@ -200,12 +221,7 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
                    // }
 
 
-                }
-                if(BluetoothUtil.isBlueToothPrinter){
-                    BluetoothUtil.sendData(rv);
-                }else{
-                    SunmiPrintHelper.getInstance().sendRawData(rv);
-                }
+               // }
 
             }
 

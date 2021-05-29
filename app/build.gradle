@@ -51,9 +51,9 @@ dependencies {
     //integrando librerias de la impresora
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    //integrando librerias de la impresora
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    //integrando librerias de la impresora
    implementation 'com.sunmi:sunmiui:1.1.27'
     implementation 'com.sunmi:printerlibrary:1.0.13'
 
