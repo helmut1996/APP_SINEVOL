@@ -33,7 +33,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SunmiPrintHelper.getInstance().initSunmiPrinterService(this);
+
+
         setContentView(R.layout.activity_main);
 
         editPint = (EditText) findViewById(R.id.edit_Pin);
