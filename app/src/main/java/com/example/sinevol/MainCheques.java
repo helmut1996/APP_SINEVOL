@@ -131,7 +131,7 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
         });
 
 
-        //comentario
+        PrintMe print =  new PrintMe(MainCheques.this);
 
         /// mandando a llamar la clase  cuadro  dialogo de  carga
         ClassDialogLoading loading=new ClassDialogLoading(MainCheques.this);
@@ -163,8 +163,8 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
                             AgregarChequesSQLSEVER();
                             IdCheque();
 
-                        PrintMe print =  new PrintMe(MainCheques.this);
                             printText(print);
+                        //print.sendTextToPrinter("RECIBO "+ NumeracionInicialC+"\n", 25, true,false,1);
                             loading.iniciarCarga();
                             Handler handler= new Handler(Looper.getMainLooper());
                             handler.postDelayed(new Runnable() {
@@ -194,29 +194,30 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
    //     ThreadPoolManager.getInstance().executeTask(new Runnable() {
 
 
-        print.sendTextToPrinter("RECIBO "+ NumeracionInicialC+"\n", 25, true,false,1);
-        print.sendTextToPrinter("NRefCK:"+IdCheque+" \n", 25, true,false,1);
-        print.sendTextToPrinter("                      \n", 25, true,true,1);
-        print.sendTextToPrinter("Fecha:"+fecha.getText().toString()+" \n", 25, true,false,1);
-       /*
+        print.sendTextToPrinter("RECIBO "+ NumeracionInicialC+"\n", 25, true,false,0);
+
+       print.sendTextToPrinter("NRefCK:"+IdCheque+" \n", 25, true,false,0);
+        print.sendTextToPrinter("                      \n", 25, true,true,0);
+        print.sendTextToPrinter("Fecha:"+fecha.getText().toString()+" \n", 25, true,false,0);
         print.sendTextToPrinter("                      \n", 25, true,true,1);
         print.sendTextToPrinter("Vendedor:"+vendedor.getText().toString()+"\n", 25, true,false,2);
-        print.sendTextToPrinter("Cliente:"+ BuscadorClienteC.getText().toString()+"\n",18,true,false,2);
-        print.sendTextToPrinter("Zona:"+zona.getText().toString()+"\n",18,true,false,2);
-        print.sendTextToPrinter("_____________________________________________\n",20,true,false,2);
-        print.sendTextToPrinter("No.Cheque:"+NCheque.getText().toString()+"/n",25,true,false,2);
-        print.sendTextToPrinter("Beneficiario"+"\n",25,true,false,2);
-        print.sendTextToPrinter(Beneficiario.getText().toString()+"\n",25,true,false,2);
+        print.sendTextToPrinter("Cliente:"+ BuscadorClienteC.getText().toString()+"\n",25,true,false,2);
+        print.sendTextToPrinter("Zona:"+zona.getText().toString()+"\n",25,true,false,2);
+        print.sendTextToPrinter("_______________________________\n",20,true,false,0);
+        print.sendTextToPrinter("No.Cheque:"+NCheque.getText().toString()+"\n",25,true,false,2);
+        print.sendTextToPrinter("Beneficiario: "+Beneficiario.getText().toString()+ "\n",25,true,false,2);
+
         print.sendTextToPrinter("Banco "+Bancos.getSelectedItem().toString()+"\n",25,true,false,2);
         print.sendTextToPrinter("                      \n", 25, true,true,1);
         print.sendTextToPrinter("Monto Cheque: C$"+MCheque.getText().toString()+"\n", 25, true,true,1);
-        print.sendTextToPrinter("********************************", 25, true,true,1);
         print.sendTextToPrinter("                      \n", 25, true,true,1);
         print.sendTextToPrinter("Recibe Conforme" + " " + "\n\n\n_______________________\n\n\n", 25, true,true,1);
-        print.sendTextToPrinter("Entragado Conforme" + " " + "\n\n\n______________________", 25, true,true,1);
+        print.sendTextToPrinter("Entregado Conforme" + " " + "\n\n\n______________________", 25, true,true,3);
 
 
-        */
+
+
+
      /*
 
 
