@@ -1,21 +1,8 @@
 package com.example.sinevol;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.ServiceConnection;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Looper;
-import android.os.Message;
-import android.os.RemoteException;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,14 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sinevol.ConexionBD.DBConnection;
-import com.example.sinevol.Utils.BluetoothUtil;
-import com.example.sinevol.Utils.BytesUtil;
-import com.example.sinevol.Utils.ESCUtil;
-import com.example.sinevol.Utils.SunmiPrintHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,8 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
-import java.io.UnsupportedEncodingException;
+
 import androidx.annotation.Nullable;
 
 public class MainCheques extends AppCompatActivity  {

@@ -1,5 +1,4 @@
 package com.example.sinevol;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -17,7 +16,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.sinevol.ConexionBD.DBConnection;
-import com.example.sinevol.Utils.SunmiPrintHelper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
