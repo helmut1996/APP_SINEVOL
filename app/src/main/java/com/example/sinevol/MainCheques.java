@@ -3,6 +3,8 @@ package com.example.sinevol;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,7 +38,6 @@ ImageButton imprimirC;
 
 String nombreVendedor;
 int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
-
 
 
 
@@ -134,23 +135,13 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
 
         /// mandando a llamar la clase  cuadro  dialogo de  carga
         ClassDialogLoading loading=new ClassDialogLoading(MainCheques.this);
-        PrintMe print =  new PrintMe(this);
+
         imprimirC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //funciom de la impresora
-                byte[] rv = null;
-                print.sendTextToPrinter("Helmut \n El mamut",18,true,false,2);
-                print.sendTextToPrinter("RECIBO "+ NumeracionInicialC+"\n", 25, true,false,1);
-                print.sendTextToPrinter("NRefCK:"+IdCheque+" \n", 25, true,false,1);
-                print.sendTextToPrinter("                      \n", 25, true,true,1);
-                print.sendTextToPrinter("Fecha:"+fecha.getText().toString()+" \n", 25, true,false,1);
-                print.sendTextToPrinter("                      \n", 25, true,true,1);
-                print.sendTextToPrinter("Vendedor:"+vendedor.getText().toString()+"\n", 25, true,false,2);
-                ///Toast.makeText(getApplicationContext(),"Precionado",Toast.LENGTH_LONG).show();
 
 
-                /*
+
                 if (BuscadorClienteC.getText().toString().isEmpty()) {
                     BuscadorClienteC.setError("Debe seleccionar un cliente");
                 }else if (Bancos.getSelectedItemPosition()==0){
@@ -168,18 +159,12 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
                 } else {
 
 
-
-
-                 */
-
-                    //if (getPrinterStatus() == PRINTER_NORMAL) {
-                    /*
                     try {
                             AgregarChequesSQLSEVER();
                             IdCheque();
-                            BytesUtil.getBaiduTestBytes();
-                           // impresora();
-                          //  printText();
+
+                        PrintMe print =  new PrintMe(MainCheques.this);
+                            printText(print);
                             loading.iniciarCarga();
                             Handler handler= new Handler(Looper.getMainLooper());
                             handler.postDelayed(new Runnable() {
@@ -196,22 +181,45 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
                         }
 
 
-
-                     */
-
-                   // }
+                    }
 
 
-               // }
+               }
 
-            }
-
-        });
+            });
     }
 
 
-   /* public void printText() {
-        ThreadPoolManager.getInstance().executeTask(new Runnable() {
+    public void printText(PrintMe print) {
+   //     ThreadPoolManager.getInstance().executeTask(new Runnable() {
+
+
+        print.sendTextToPrinter("RECIBO "+ NumeracionInicialC+"\n", 25, true,false,1);
+        print.sendTextToPrinter("NRefCK:"+IdCheque+" \n", 25, true,false,1);
+        print.sendTextToPrinter("                      \n", 25, true,true,1);
+        print.sendTextToPrinter("Fecha:"+fecha.getText().toString()+" \n", 25, true,false,1);
+       /*
+        print.sendTextToPrinter("                      \n", 25, true,true,1);
+        print.sendTextToPrinter("Vendedor:"+vendedor.getText().toString()+"\n", 25, true,false,2);
+        print.sendTextToPrinter("Cliente:"+ BuscadorClienteC.getText().toString()+"\n",18,true,false,2);
+        print.sendTextToPrinter("Zona:"+zona.getText().toString()+"\n",18,true,false,2);
+        print.sendTextToPrinter("_____________________________________________\n",20,true,false,2);
+        print.sendTextToPrinter("No.Cheque:"+NCheque.getText().toString()+"/n",25,true,false,2);
+        print.sendTextToPrinter("Beneficiario"+"\n",25,true,false,2);
+        print.sendTextToPrinter(Beneficiario.getText().toString()+"\n",25,true,false,2);
+        print.sendTextToPrinter("Banco "+Bancos.getSelectedItem().toString()+"\n",25,true,false,2);
+        print.sendTextToPrinter("                      \n", 25, true,true,1);
+        print.sendTextToPrinter("Monto Cheque: C$"+MCheque.getText().toString()+"\n", 25, true,true,1);
+        print.sendTextToPrinter("********************************", 25, true,true,1);
+        print.sendTextToPrinter("                      \n", 25, true,true,1);
+        print.sendTextToPrinter("Recibe Conforme" + " " + "\n\n\n_______________________\n\n\n", 25, true,true,1);
+        print.sendTextToPrinter("Entragado Conforme" + " " + "\n\n\n______________________", 25, true,true,1);
+
+
+        */
+     /*
+
+
             @Override
             public void run() {
 
@@ -260,10 +268,12 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
                 }
             }
         });
+
+      */
     }
 
 
-   */
+
     /**
      * Funciones de la imprsora
      */
