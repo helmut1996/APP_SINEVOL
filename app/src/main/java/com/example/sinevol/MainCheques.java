@@ -141,6 +141,12 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
                 //funciom de la impresora
                 byte[] rv = null;
                 print.sendTextToPrinter("Helmut \n El mamut",18,true,false,2);
+                print.sendTextToPrinter("RECIBO "+ NumeracionInicialC+"\n", 25, true,false,1);
+                print.sendTextToPrinter("NRefCK:"+IdCheque+" \n", 25, true,false,1);
+                print.sendTextToPrinter("                      \n", 25, true,true,1);
+                print.sendTextToPrinter("Fecha:"+fecha.getText().toString()+" \n", 25, true,false,1);
+                print.sendTextToPrinter("                      \n", 25, true,true,1);
+                print.sendTextToPrinter("Vendedor:"+vendedor.getText().toString()+"\n", 25, true,false,1);
                 ///Toast.makeText(getApplicationContext(),"Precionado",Toast.LENGTH_LONG).show();
 
 
