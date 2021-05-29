@@ -191,89 +191,34 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
 
 
     public void printText(PrintMe print) {
-   //     ThreadPoolManager.getInstance().executeTask(new Runnable() {
+
+        for (int p=0; p<2;p++) {
+            print.sendTextToPrinter("RECIBO " + NumeracionInicialC + "\n", 30, true, false, 0);
+
+            print.sendTextToPrinter("NRefCK:" + IdCheque + " \n", 25, true, false, 0);
+            print.sendTextToPrinter("                      \n", 25, true, true, 0);
+            print.sendTextToPrinter("Fecha:" + fecha.getText().toString() + " \n", 25, true, false, 0);
+            print.sendTextToPrinter("                      \n", 25, true, false, 0);
+            print.sendTextToPrinter("Vendedor:" + vendedor.getText().toString() + "\n", 25, true, false, 0);
+            print.sendTextToPrinter("Cliente:" + BuscadorClienteC.getText().toString() + "\n", 25, true, false, 0);
+            print.sendTextToPrinter("Zona:" + zona.getText().toString() + "\n\n", 25, true, false, 0);
+            print.sendTextToPrinter("_______________________________\n", 20, true, false, 0);
+            print.sendTextToPrinter("No.Cheque:" + NCheque.getText().toString() + "\n", 25, true, false, 1);
+            print.sendTextToPrinter("Beneficiario: " + Beneficiario.getText().toString() + "\n", 25, true, false, 1);
+
+            print.sendTextToPrinter("Banco " + Bancos.getSelectedItem().toString() + "\n", 25, true, false, 2);
+            print.sendTextToPrinter("*****************************\n", 25, true, false, 1);
+            print.sendTextToPrinter("Monto Cheque: C$" + MCheque.getText().toString() + "\n", 30, true, false, 1);
+            print.sendTextToPrinter("                      \n", 25, true, true, 1);
+            print.sendTextToPrinter("Recibe Conforme" + " " + "\n\n\n_______________________\n\n\n", 25, true, false, 1);
+            print.sendTextToPrinter("Entregado Conforme" + " " + "\n\n\n______________________", 25, true, false, 3);
+            print.sendTextToPrinter("**********END*************", 25, true, false, 3);
+
+        }
 
 
-        print.sendTextToPrinter("RECIBO "+ NumeracionInicialC+"\n", 25, true,false,0);
 
-       print.sendTextToPrinter("NRefCK:"+IdCheque+" \n", 25, true,false,0);
-        print.sendTextToPrinter("                      \n", 25, true,true,0);
-        print.sendTextToPrinter("Fecha:"+fecha.getText().toString()+" \n", 25, true,false,0);
-        print.sendTextToPrinter("                      \n", 25, true,true,1);
-        print.sendTextToPrinter("Vendedor:"+vendedor.getText().toString()+"\n", 25, true,false,2);
-        print.sendTextToPrinter("Cliente:"+ BuscadorClienteC.getText().toString()+"\n",25,true,false,2);
-        print.sendTextToPrinter("Zona:"+zona.getText().toString()+"\n",25,true,false,2);
-        print.sendTextToPrinter("_______________________________\n",20,true,false,0);
-        print.sendTextToPrinter("No.Cheque:"+NCheque.getText().toString()+"\n",25,true,false,2);
-        print.sendTextToPrinter("Beneficiario: "+Beneficiario.getText().toString()+ "\n",25,true,false,2);
-
-        print.sendTextToPrinter("Banco "+Bancos.getSelectedItem().toString()+"\n",25,true,false,2);
-        print.sendTextToPrinter("                      \n", 25, true,true,1);
-        print.sendTextToPrinter("Monto Cheque: C$"+MCheque.getText().toString()+"\n", 25, true,true,1);
-        print.sendTextToPrinter("                      \n", 25, true,true,1);
-        print.sendTextToPrinter("Recibe Conforme" + " " + "\n\n\n_______________________\n\n\n", 25, true,true,1);
-        print.sendTextToPrinter("Entregado Conforme" + " " + "\n\n\n______________________", 25, true,true,3);
-
-
-
-
-
-     /*
-
-
-            @Override
-            public void run() {
-
-                try {
-                    for (int p=0; p<2;p++){
-                        mIPosPrinterService.printSpecifiedTypeText("RECIBO "+ NumeracionInicialC+"\n", "ST", 48, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("NRefCK:"+IdCheque+" \n", "ST", 32, callback);
-                        mIPosPrinterService.printBlankLines(1, 8, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("Fecha:"+fecha.getText().toString()+" \n", "ST", 32, callback);
-                        mIPosPrinterService.printBlankLines(1, 8, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("Vendedor:"+vendedor.getText().toString()+"\n", "ST", 32, callback);
-                        mIPosPrinterService.printBlankLines(1, 8, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("Cliente: "+BuscadorClienteC.getText().toString()+" \n", "ST", 32, callback);
-                        mIPosPrinterService.printBlankLines(1, 8, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("Zona: "+zona.getText().toString()+" \n", "ST", 32, callback);
-                        mIPosPrinterService.printBlankLines(1, 8, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("_____________________________________________\n", "ST", 16, callback);
-                        mIPosPrinterService.printBlankLines(1, 16, callback);
-                        mIPosPrinterService.printBlankLines(1, 16, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("No.Cheque:"+NCheque.getText().toString()+"\n", "ST", 32, callback);
-                        mIPosPrinterService.PrintSpecFormatText("Beneficiario"+"\n", "ST", 32, 1, callback);
-                        mIPosPrinterService.PrintSpecFormatText(Beneficiario.getText().toString()+"\n", "ST", 32, 1, callback);
-                        mIPosPrinterService.printBlankLines(1, 16, callback);
-                        mIPosPrinterService.PrintSpecFormatText("Banco "+Bancos.getSelectedItem().toString()+"\n", "ST", 32, 1, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("Monto Cheque: C$"+MCheque.getText().toString()+"\n", "ST", 32, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
-                        mIPosPrinterService.setPrinterPrintAlignment(0,callback);
-                        mIPosPrinterService.printBlankLines(1, 16, callback);
-                        mIPosPrinterService.printBlankLines(1, 16, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("Nota", "ST", 24, callback);
-                        mIPosPrinterService.printSpecifiedTypeText(ObservacionesC.getText().toString(), "ST", 24, callback);
-
-                        mIPosPrinterService.printSpecifiedTypeText("____________________________\n\n", "ST", 24, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("Recibe Conforme" + " " + "\n\n\n_______________________\n\n\n", "ST", 24, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("Entragado Conforme" + " " + "\n\n\n______________________", "ST", 24, callback);
-
-                        mIPosPrinterService.printerPerformPrint(32, callback);
-                        mIPosPrinterService.setPrinterPrintAlignment(0, callback);
-                        mIPosPrinterService.printBlankLines(1, 16, callback);
-                        mIPosPrinterService.printSpecifiedTypeText("**********END***********\n\n", "ST", 32, callback);
-                        mIPosPrinterService.printerPerformPrint(160,  callback);
-                    }
-
-                }catch (RemoteException e){
-                    e.printStackTrace();
-                }
-            }
-        });
-
-      */
     }
-
-
 
     /**
      * Funciones de la imprsora
