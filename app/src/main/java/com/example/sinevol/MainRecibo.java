@@ -25,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ahmedelsayed.sunmiprinterutill.PrintMe;
 import com.example.sinevol.ConexionBD.DBConnection;
 import com.example.sinevol.SQLite.conexionSQLiteHelper;
 import com.example.sinevol.SQLite.entidades.FacturasAdd;
@@ -207,6 +208,7 @@ public class MainRecibo extends AppCompatActivity {
             }
         });
 
+        PrintMe print =  new PrintMe(MainRecibo.this);
 
         Guardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,16 +310,15 @@ public class MainRecibo extends AppCompatActivity {
                                 else{
 
                                     try {
-                                        //if (getPrinterStatus() == PRINTER_NORMAL) {
 
 
                                             Consultarlista();
                                             Estado();
                                             AgregarReciboSQLSEVER();
-                                           // printText();
+                                            //printText();
                                             borrardatosTabla();
                                             limpiarcampos();
-                                    //    }
+                                    
 
                                     } catch (SQLException e) {
                                         e.printStackTrace();
