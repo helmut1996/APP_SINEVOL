@@ -164,7 +164,6 @@ int idVendedor,IdTalonario,NumeracionInicialC,numeracionC,IdCheque ;
                             IdCheque();
 
                             printText(print);
-                        //print.sendTextToPrinter("RECIBO "+ NumeracionInicialC+"\n", 25, true,false,1);
                             loading.iniciarCarga();
                             Handler handler= new Handler(Looper.getMainLooper());
                             handler.postDelayed(new Runnable() {

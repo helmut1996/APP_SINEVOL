@@ -208,6 +208,7 @@ public class MainRecibo extends AppCompatActivity {
             }
         });
 
+        //IMPRESORA SUNMIV2 PRO
         PrintMe print =  new PrintMe(MainRecibo.this);
 
         Guardar.setOnClickListener(new View.OnClickListener() {
@@ -280,7 +281,6 @@ public class MainRecibo extends AppCompatActivity {
 
         });
 
-
         imprimir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -315,7 +315,7 @@ public class MainRecibo extends AppCompatActivity {
                                             Consultarlista();
                                             Estado();
                                             AgregarReciboSQLSEVER();
-                                            //printText();
+                                            printText(print);
                                             borrardatosTabla();
                                             limpiarcampos();
                                     
@@ -639,6 +639,85 @@ public void NReferencia(){
         }
 
     }
+
+
+    public void printText(PrintMe print) {
+        listainformacion = new ArrayList<String>();
+
+        print.sendTextToPrinter("RECIBO No."+numeracion+ "\n", 40, true, false, 1);
+        print.sendTextToPrinter("NREF:" +IdPagosCxC+ "\t\t"+fecha.getText().toString()+ "\n", 30, true, false, 1);
+        print.sendTextToPrinter(vendedor.getText().toString()+ " \n", 25, true, false, 0);
+        print.sendTextToPrinter("********************************"+ " \n", 25, true, false, 0);
+        print.sendTextToPrinter("Recibo de:" + " " + tvIdclienyte.getText().toString()+ " \n", 30, true, false, 0);
+        print.sendTextToPrinter("suma de:" + " " + letra+ " \n", 25, true, false, 0);
+        print.sendTextToPrinter("Total Abonado: C$" + String.format("%,.2f",totalabono)+ " \n", 25, true, false, 0);
+        /*
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
+            @Override
+            public void run() {
+
+                listainformacion = new ArrayList<String>();
+
+                try {
+                    for (int p=0; p<2;p++){
+
+                        mIPosPrinterService.printSpecifiedTypeText("RECIBO No."+numeracion+" ", "ST", 48, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("NREF:" +IdPagosCxC+ "\t\t"+fecha.getText().toString(), "ST", 32, callback);
+                        mIPosPrinterService.printSpecifiedTypeText(vendedor.getText().toString(), "ST", 32, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("********************************", "ST", 24, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Recibo de:" + " " + tvIdclienyte.getText().toString(), "ST", 32, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("suma de:" + " " + letra, "ST", 24, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Total Abonado: C$" + String.format("%,.2f",totalabono) + " \n\n\n", "ST", 32, callback);
+                        mIPosPrinterService.printBlankLines(1, 8, callback);
+
+                        mIPosPrinterService.setPrinterPrintAlignment(0, callback);
+                        mIPosPrinterService.setPrinterPrintFontSize(24, callback);
+                        String[] text = new String[3];
+                        int[] width = new int[]{6, 10, 10};
+                        int[] align = new int[]{0, 2, 2}; // Izquierda, derecha
+
+                        text[0] = "N.Fact";
+                        text[1] = "Abono";
+                        text[2] = "Saldo";
+                        mIPosPrinterService.printColumnsText(text, width, align, 1, callback);
+
+                        for (int i = 0; i < listarecibo.size(); i++) {
+                            text[0] = listarecibo.get(i).getFactura();
+                            text[1] = String.format("%,.2f", listarecibo.get(i).getAbono());
+                            text[2] = String.format("%,.2f",listarecibo.get(i).getSaldoRes());
+                            mIPosPrinterService.printColumnsText(text, width, align, 0, callback);
+
+                        }
+
+                        mIPosPrinterService.printBlankLines(1, 16, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Saldo Total: C$ "+ String.format("%,.2f",totalSaldo) + "\n\n\n\n", "ST", 32, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Observaciones", "ST", 24, callback);
+                        for (int j = 0; j < listarecibo.size(); j++) {
+                            mIPosPrinterService.printSpecifiedTypeText(listarecibo.get(j).getObservaciones(), "ST", 24, callback);
+                        }
+                        mIPosPrinterService.printSpecifiedTypeText("____________________________\n\n", "ST", 24, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Recibe Conforme" + " " + "\n\n\n_______________________\n\n\n", "ST", 24, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("Entragado Conforme" + " " + "\n\n\n______________________", "ST", 24, callback);
+
+                        mIPosPrinterService.printerPerformPrint(32, callback);
+                        mIPosPrinterService.setPrinterPrintAlignment(0, callback);
+                        mIPosPrinterService.printBlankLines(1, 16, callback);
+                        mIPosPrinterService.printSpecifiedTypeText("**********END***********", "ST", 32, callback);
+                        mIPosPrinterService.printerPerformPrint(160, callback);
+                    }
+
+
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+         */
+    }
+
+
+
 
     public void borrardatosTabla() {
       conexionSQLiteHelper conn = new conexionSQLiteHelper(this, "bd_productos", null, 1);
