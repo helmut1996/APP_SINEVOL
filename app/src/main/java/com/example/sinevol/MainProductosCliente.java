@@ -52,6 +52,7 @@ private LinearLayout cuerpoProductCliente;
 private CheckBox PrecioE;
 double conversion;
 double tasaCambio;
+    String imagen="http://ferreteriaelcarpintero.com/images/productos/";
 
 /* variables globales */
 String NombreCliente;
@@ -357,11 +358,19 @@ int IdInventario;
 
     public void cargarImagen(){
 
+        /*
         File file= new File("///storage/emulated/0/MARNOR/"+tvimagenBD.getText()+".jpg");
         Picasso.get().load(file)
                 .placeholder(R.drawable.bucandoimg)
                 .error(R.drawable.error)
                 .into(img);
+
+         */
+
+        Picasso.get().load(imagen+tvimagenBD.getText()+".jpg")
+                .error(R.drawable.error)
+                .into(img);
+
     }
 
     public ArrayAdapter precioDolar()
