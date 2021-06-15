@@ -13,13 +13,6 @@
         android:orientation="vertical"
         android:id="@+id/linearLayoutClienteProducto">
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:text="Precio Especial"
-            android:id="@+id/checkPrecioEspecial"
-            android:layout_marginHorizontal="10dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,6 +63,13 @@
             android:text="12/50"
             android:textColor="#090808"
             android:textSize="20sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cliente especial"
+                android:id="@+id/ClienteEspecialProducto"
+                android:visibility="gone"
+                android:gravity="center"/>
 
         <TextView
             android:id="@+id/tvmostraP"

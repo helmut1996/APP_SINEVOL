@@ -44,12 +44,11 @@ import java.util.ArrayList;
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
     /*variables de los componentes de la vista*/
 private ImageButton IbuttonSiguiente;
-private TextView tvmostrarP, tv_precio_Especial, tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvtipoprecio,tvimagenBD,tvIDproducto,tvUnidadMedida;
+private TextView textClienteEspecial, tvmostrarP, tv_precio_Especial, tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvtipoprecio,tvimagenBD,tvIDproducto,tvUnidadMedida;
 private Spinner precios,monedas;
 private ImageView img;
 private EditText editcantidad;
 private LinearLayout cuerpoProductCliente;
-private CheckBox PrecioE;
 double conversion;
 double tasaCambio;
     String imagen="http://ferreteriaelcarpintero.com/images/productos/";
@@ -61,6 +60,7 @@ String ZonaCliente;
 String IdCliente;
 int IdVendedor;
 int IdInventario;
+String ClienteEspecialProductoC;
 
     private String producto;
     double precioEscogido;
@@ -71,7 +71,6 @@ int IdInventario;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_productos_cliente);
 
-     //   getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Productos");
 
 
@@ -102,8 +101,9 @@ int IdInventario;
         tvIDproducto=findViewById(R.id.IDProduto);
         tvtipoprecio=findViewById(R.id.tipoPrecio);
         tvUnidadMedida=findViewById(R.id.tvUnidadMedida);
-        PrecioE=findViewById(R.id.checkPrecioEspecial);
+
         tv_precio_Especial=findViewById(R.id.text_PE);
+        textClienteEspecial=findViewById(R.id.ClienteEspecialProducto);
         ////////// Spinmer
 
         precios = findViewById(R.id.spinerPrecios);
@@ -132,6 +132,9 @@ int IdInventario;
 
             IdVendedor = extra.getInt("Idvendedor");
             System.out.println("ID Vendedor Activity ProductosClientea----->"+IdVendedor);
+
+            ClienteEspecialProductoC= extra.getString("ClienteEspecial");
+            System.out.println("Capturando Cliente Especial MainProducto: "+ClienteEspecialProductoC);
 
             ZonaCliente = extra.getString("ZonaCliente");
             System.out.println("Zona Cliente Activity ProductosClientea----->"+ZonaCliente);
@@ -165,12 +168,22 @@ int IdInventario;
            }
 
 
+
             textcontar.setText(extra.getString("stock"));
             tvimagenBD.setText(extra.getString("imagenproducto"));
             tvIDproducto.setText(extra.getString("idproducto"));
+
+            //capturando el tipo de cliente especial
+            MainListaproducto  datos = new MainListaproducto();
+            textClienteEspecial.setText(datos.ClienteE);
+
 //////////////////////////////pasando datos por parametros entre activitys/////////////////////////////////
 
         }
+
+
+
+
 
         /*Spinner del tipo de moneda*/
         ArrayAdapter<CharSequence> adapter  = ArrayAdapter.createFromResource(this, R.array.tipo_moneda, android.R.layout.simple_spinner_item);
@@ -182,12 +195,13 @@ int IdInventario;
         monedas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(monedas.getSelectedItem().toString().equals("Cordoba"))
+                if(monedas.getSelectedItem().toString().equals("Cordoba") && textClienteEspecial.getText().toString().equals("1"))
                 {
 
+                    precios.setAdapter(precioCordoba2());
+                }else if (monedas.getSelectedItem().toString().equals("Cordoba")&& textClienteEspecial.getText().toString().equals("0")){
                     precios.setAdapter(precioCordoba());
-                }
-                else
+               } else
                 {
                     precios.setAdapter(precioDolar());
                 }
@@ -199,6 +213,8 @@ int IdInventario;
             }
         });
 
+
+
                 precios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -206,6 +222,8 @@ int IdInventario;
                         if (position==0){
                             tvtipoprecio.setText("1");
 
+                            tv_precio_Especial.setVisibility(View.VISIBLE);
+                            tv_precio_Especial.setText("Precio1");
                             if (monedas.getSelectedItem().toString().equals("Dolar")){
                                 conversion=datos*tasaCambio;
                                 System.out.println("precioCapturado:-->"+conversion);
@@ -216,6 +234,8 @@ int IdInventario;
 
                         }else if(position==1){
                             tvtipoprecio.setText("2");
+                            tv_precio_Especial.setVisibility(View.VISIBLE);
+                            tv_precio_Especial.setText("Precio2");
 
                             if (monedas.getSelectedItem().toString().equals("Dolar")){
                                 conversion=datos*tasaCambio;
@@ -227,6 +247,8 @@ int IdInventario;
 
                         }else if (position==2){
                             tvtipoprecio.setText("3");
+                            tv_precio_Especial.setVisibility(View.VISIBLE);
+                            tv_precio_Especial.setText("Precio3");
                             if (monedas.getSelectedItem().toString().equals("Dolar")){
                                 conversion=datos*tasaCambio;
                                 System.out.println("precioCapturado:-->"+conversion);
@@ -237,6 +259,9 @@ int IdInventario;
 
                         }else if (position==3){
                             tvtipoprecio.setText("4");
+
+                            tv_precio_Especial.setVisibility(View.VISIBLE);
+                            tv_precio_Especial.setText("Precio4");
                             if (monedas.getSelectedItem().toString().equals("Dolar")){
                                 conversion=datos*tasaCambio;
                                 System.out.println("precioCapturado:-->"+conversion);
@@ -247,6 +272,9 @@ int IdInventario;
 
                         }else if (position==4){
                             tvtipoprecio.setText("5");
+
+                            tv_precio_Especial.setVisibility(View.VISIBLE);
+                            tv_precio_Especial.setText("Precio5");
                             if (monedas.getSelectedItem().toString().equals("Dolar")){
                                 conversion=datos*tasaCambio;
                                 System.out.println("precioCapturado:-->"+conversion);
@@ -265,22 +293,6 @@ int IdInventario;
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
 
-                    }
-                });
-
-
-
-                PrecioE.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (buttonView.isChecked()){
-                            precios.setAdapter(precioCordoba2());
-                            Toast.makeText(getBaseContext(), "Activado",Toast.LENGTH_LONG).show();
-                        }else{
-                            tv_precio_Especial.setVisibility(View.GONE);
-                            precios.setAdapter(precioCordoba());
-                            Toast.makeText(getBaseContext(), "Desactivado",Toast.LENGTH_LONG).show();
-                        }
                     }
                 });
 

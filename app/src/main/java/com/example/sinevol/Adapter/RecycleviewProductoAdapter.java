@@ -113,7 +113,7 @@ public class RecycleviewProductoAdapter extends PaginatedAdapter<ModelItemsProdu
                                         intent.putExtra("UnidadMed",tvunidadM.getText());
                                         intent.putExtra("info1",tvinfo1.getText());
                                         intent.putExtra("info2",tvinfo2.getText());
-                                        intent.putExtra("info3",tvinfo3.getText());
+                                         intent.putExtra("info3",tvinfo3.getText());
                                         intent.putExtra("info4",tvinfo4.getText());
                                         intent.putExtra("info5",tvinfo5.getText());
                                         intent.putExtra("imagenproducto",tvimagen.getText());

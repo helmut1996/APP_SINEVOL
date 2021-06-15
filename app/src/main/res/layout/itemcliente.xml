@@ -46,6 +46,20 @@
             android:gravity="center|left"
             android:text="TextView" />
         <TextView
+            android:id="@+id/cliente_especial"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="80"
+            android:gravity="center|left"
+            android:text="TextView" />
+        <TextView
+            android:id="@+id/mostrar_ruslt_ClienteE"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="80"
+            android:gravity="center|left"
+            android:text="TextView" />
+        <TextView
             android:id="@+id/id_cliente"
             android:layout_width="match_parent"
             android:layout_height="0dp"

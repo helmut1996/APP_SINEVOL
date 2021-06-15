@@ -117,12 +117,13 @@ public class MainFactura extends AppCompatActivity {
 
                     Statement st = dbConnection.getConnection().createStatement();
 
-                    ResultSet rs = st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo,idCliente from Clientes where Estado = 'Activo' order by Nombre asc");
+                    ResultSet rs = st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo,idCliente,ClienteEspecial from Clientes where Estado = 'Activo' order by Nombre asc");
                     while (rs.next()) {
                         listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),
                                 rs.getString("Direccion"),
                                 rs.getInt("Codigo"),
-                                rs.getInt("idCliente")));
+                                rs.getInt("idCliente"),
+                                rs.getInt("ClienteEspecial")));
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -133,12 +134,13 @@ public class MainFactura extends AppCompatActivity {
             } else {
                 Statement st = dbConnection.getConnection().createStatement();
 
-                ResultSet rs = st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo,idCliente from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc");
+                ResultSet rs = st.executeQuery("select CONCAT (Codigo, '-',Nombre) as Nombre,Direccion,Codigo,idCliente,ClienteEspecial from Clientes where idVendedor='" + id + "' AND Estado = 'Activo' order by Nombre asc");
                 while (rs.next()) {
                     listCliiente.add(new ClasslistItemC(rs.getString("Nombre"),
                             rs.getString("Direccion"),
                             rs.getInt("Codigo"),
-                            rs.getInt("idCliente")));
+                            rs.getInt("idCliente"),
+                            rs.getInt("ClienteEspecial")));
 
                 }
 

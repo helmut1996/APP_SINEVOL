@@ -43,6 +43,7 @@ import java.util.List;
     public static String zonacliente;
     public static String idcliente;
     public static int idvendedor;
+    public static String ClienteE;
     public static int stock;
     public static int IdInventario;
     public String CapturaBuscador="";
@@ -80,6 +81,8 @@ import java.util.List;
             idvendedor= extra.getInt("Idvendedor");
             System.out.println("----> ID Vendedor lista Producto: "+idvendedor);
 
+            ClienteE=extra.getString("ClienteEspecial");
+            System.out.println("-----> pasando cliente especial: "+ClienteE);
         }
 
         listaProducto=new ArrayList<>();

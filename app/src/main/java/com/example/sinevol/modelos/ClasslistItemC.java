@@ -5,15 +5,18 @@ public class ClasslistItemC {
     String nombre,zona;
      int codigo;
      int idCliente;
+     int clienteEspecial;
     public ClasslistItemC() {
     }
 
 
-    public ClasslistItemC(String nombre, String zona, int codigo, int idCliente) {
+
+    public ClasslistItemC(String nombre, String zona, int codigo, int idCliente, int clienteEspecial) {
         this.nombre = nombre;
         this.zona = zona;
         this.codigo = codigo;
         this.idCliente=idCliente;
+        this.clienteEspecial=clienteEspecial;
     }
 
     public String getNombre() {
@@ -46,5 +49,13 @@ public class ClasslistItemC {
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public int getClienteEspecial() {
+        return clienteEspecial;
+    }
+
+    public void setClienteEspecial(int clienteEspecial) {
+        this.clienteEspecial = clienteEspecial;
     }
 }

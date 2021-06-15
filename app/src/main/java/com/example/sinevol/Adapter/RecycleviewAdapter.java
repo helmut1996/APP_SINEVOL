@@ -48,6 +48,16 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
         holder.nombre.setText(itemC.getNombre());
         holder.zona.setText(itemC.getZona());
         holder.idcliente.setText(String.valueOf(itemC.getIdCliente()));
+        holder.clienteE.setText(String.valueOf(itemC.getClienteEspecial()));
+
+
+        if (holder.clienteE.getText().toString().equals("0")){
+            holder.clienteE.setVisibility(View.GONE);
+            holder.ResultClienteE.setText(" ");
+        }else {
+            holder.clienteE.setVisibility(View.GONE );
+            holder.ResultClienteE.setText("Cliente Precio Especial");
+        }
 
     }
 
@@ -64,15 +74,18 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
 
 
     public class RecyclerHolder extends RecyclerView.ViewHolder{
-        TextView codigo,nombre,zona,idcliente;
+        TextView codigo,nombre,zona,idcliente,clienteE,ResultClienteE;
         public RecyclerHolder(@NonNull View itemView ){
 
             super(itemView);
             Context context = itemView.getContext();
+            ResultClienteE=itemView.findViewById(R.id.mostrar_ruslt_ClienteE);
             codigo=itemView.findViewById(R.id.CodigoCliente);
             nombre=itemView.findViewById(R.id.nombreCliente);
             zona=itemView.findViewById(R.id.cliente_zona);
             idcliente=itemView.findViewById(R.id.id_cliente);
+            clienteE=itemView.findViewById(R.id.cliente_especial);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -84,6 +97,7 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
                     intent.putExtra("Codigocliente",codigo.getText());
                     intent.putExtra("Zonacliente",zona.getText());
                     intent.putExtra("Idcliente",idcliente.getText());
+                    intent.putExtra("ClienteEspecial",clienteE.getText());
                     context.startActivity(intent);
                     //((Activity)context).finish();
                    
