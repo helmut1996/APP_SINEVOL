@@ -28,7 +28,7 @@
                    android:id="@+id/fondo"
                    android:layout_width="match_parent"
                    android:layout_height="230dp"
-                   android:background="@drawable/logo2"
+                   android:background="@drawable/utiles"
                    android:gravity="center"
                    android:orientation="vertical">
 
@@ -40,7 +40,9 @@
                        android:layout_marginTop="80dp"
                        android:gravity="center"
                        android:text="Vendedor"
-                       android:textColor="@color/white"
+                       android:textStyle="bold"
+                       android:textAllCaps="true"
+                       android:textColor="#01A595"
                        android:textSize="18sp" />
 
                </LinearLayout>

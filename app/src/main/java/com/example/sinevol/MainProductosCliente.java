@@ -52,7 +52,7 @@ private LinearLayout cuerpoProductCliente;
 private CheckBox PrecioE;
 double conversion;
 double tasaCambio;
-    String imagen="http://ferreteriaelcarpintero.com/images/productos/";
+    String imagen="http://ferreteriaelcarpintero.com/imgesc/";
 
 /* variables globales */
 String NombreCliente;
