@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.sinevollibreria.ConexionBD.DBConnection;
-import com.example.sinevol.R;
+import com.example.sinevollibreria.R;
 import com.example.sinevollibreria.SQLite.conexionSQLiteHelper;
 import com.squareup.picasso.Picasso;
 

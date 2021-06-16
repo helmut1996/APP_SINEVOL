@@ -1,4 +1,4 @@
-package com.example.sinevol;
+package com.example.sinevollibreria;
 
 import org.junit.Test;
 

@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.sinevol.R;
+import com.example.sinevollibreria.R;
 
 public class MainError_Internet extends AppCompatActivity {
 

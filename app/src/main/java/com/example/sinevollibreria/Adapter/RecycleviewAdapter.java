@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sinevollibreria.MainFactura;
 import com.example.sinevollibreria.MainListaproducto;
-import com.example.sinevol.R;
+import com.example.sinevollibreria.R;
 import com.example.sinevollibreria.modelos.ClasslistItemC;
 
 import java.util.ArrayList;

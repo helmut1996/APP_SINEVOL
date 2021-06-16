@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.sinevol.R;
+import com.example.sinevollibreria.R;
 
 import java.util.Timer;
 import java.util.TimerTask;

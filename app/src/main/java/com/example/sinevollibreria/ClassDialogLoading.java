@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
 
-import com.example.sinevol.R;
+import com.example.sinevollibreria.R;
 
 public class ClassDialogLoading extends MainCheques {
     private Activity activity;

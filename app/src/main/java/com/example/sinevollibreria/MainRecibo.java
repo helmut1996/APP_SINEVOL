@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 import com.ahmedelsayed.sunmiprinterutill.PrintMe;
 import com.example.sinevollibreria.ConexionBD.DBConnection;
-import com.example.sinevol.R;
+import com.example.sinevollibreria.R;
 import com.example.sinevollibreria.SQLite.conexionSQLiteHelper;
 import com.example.sinevollibreria.SQLite.entidades.FacturasAdd;
 import com.example.sinevollibreria.SQLite.ulilidades.utilidadesFact;

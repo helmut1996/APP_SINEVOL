@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sinevollibreria.ConexionBD.DBConnection;
-import com.example.sinevol.R;
+import com.example.sinevollibreria.R;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

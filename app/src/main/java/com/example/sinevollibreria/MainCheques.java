@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.ahmedelsayed.sunmiprinterutill.PrintMe;
 import com.example.sinevollibreria.ConexionBD.DBConnection;
-import com.example.sinevol.R;
+import com.example.sinevollibreria.R;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

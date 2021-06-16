@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.example.sinevollibreria.Adapter.RecycleviewProductoAdapter;
 import com.example.sinevollibreria.ConexionBD.DBConnection;
-import com.example.sinevol.R;
+import com.example.sinevollibreria.R;
 import com.example.sinevollibreria.modelos.ModelItemsProducto;
 
 import java.sql.ResultSet;

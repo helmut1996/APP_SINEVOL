@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.sinevollibreria.Adapter.RecyclerviewAdapterCuentas;
 import com.example.sinevollibreria.ConexionBD.DBConnection;
-import com.example.sinevol.R;
+import com.example.sinevollibreria.R;
 import com.example.sinevollibreria.modelos.ModelItemCuentas;
 
 import java.sql.ResultSet;
