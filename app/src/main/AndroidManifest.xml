@@ -15,26 +15,26 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".MainFullScreen"></activity>
-        <activity android:name=".MainCheques" />
-        <activity android:name=".MainError_Internet" />
+        <activity android:name="com.example.sinevollibreria.MainFullScreen"></activity>
+        <activity android:name="com.example.sinevollibreria.MainCheques" />
+        <activity android:name="com.example.sinevollibreria.MainError_Internet" />
         <activity
-            android:name=".MainListaproducto"
-            android:parentActivityName=".MainProductosCliente" />
+            android:name="com.example.sinevollibreria.MainListaproducto"
+            android:parentActivityName="com.example.sinevollibreria.MainProductosCliente" />
         <activity
-            android:name=".MainFacturaList"
-            android:parentActivityName=".MainProductosCliente" />
-        <activity android:name=".MainProductosCliente" />
+            android:name="com.example.sinevollibreria.MainFacturaList"
+            android:parentActivityName="com.example.sinevollibreria.MainProductosCliente" />
+        <activity android:name="com.example.sinevollibreria.MainProductosCliente" />
         <activity
-            android:name=".MainRecibo"
-            android:parentActivityName=".MainFactura" />
+            android:name="com.example.sinevollibreria.MainRecibo"
+            android:parentActivityName="com.example.sinevollibreria.MainFactura" />
         <activity
-            android:name=".Maincuentas"
-            android:parentActivityName=".MainFactura" />
-        <activity android:name=".MainFactura" />
-        <activity android:name=".MainMenu" />
+            android:name="com.example.sinevollibreria.Maincuentas"
+            android:parentActivityName="com.example.sinevollibreria.MainFactura" />
+        <activity android:name="com.example.sinevollibreria.MainFactura" />
+        <activity android:name="com.example.sinevollibreria.MainMenu" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.sinevollibreria.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
