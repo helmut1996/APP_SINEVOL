@@ -59,7 +59,7 @@ public class MainRecibo extends AppCompatActivity {
     int idcuentasxcobrar;
 
     conexionSQLiteHelper conn;
-    public static int IdTalonario, NumeracionInicial, numeracion, IdPagosCxC, IdPagosCxC2;
+    public static int IdTalonario, NumeracionInicial, numeracion, IdPagosCxC, IdPagosCxC2,NTalonario;
     public static String Estado;
 
     ArrayList<String> listainformacion;
@@ -127,6 +127,7 @@ public class MainRecibo extends AppCompatActivity {
                 BuscadorFactura.setAdapter(Facturas());
 
                 buscadorCliente.setAdapter(Clientes());
+                NumeroTalonario();
                 Talonario();
                 NReferencia();
 
@@ -504,10 +505,50 @@ public class MainRecibo extends AppCompatActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+
+
+    }
+
+    public void NumeroTalonario(){
+        DBConnection dbConnection=new DBConnection();
+        dbConnection.conectar();
+        try {
+            Statement st2 = dbConnection.getConnection().createStatement();
+            ResultSet rs2 = st2.executeQuery("\n" +
+                    "select count(Estado) as Ntalonario from Talonarios where idVendedor= ' " +id+"' and Estado = 'Pendiente' ");
+            while (rs2.next()) {
+                NTalonario = rs2.getInt("NTalonario");
+
+                System.out.println("==============> Numeros de Talonarios:" + NTalonario);
+            }
+
+            if (NTalonario==0){
+
+                AlertDialog.Builder alerta = new AlertDialog.Builder(MainRecibo.this);
+                alerta.setMessage("ADVERTENCIA ")
+                        .setCancelable(false)
+                        .setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+
+                AlertDialog alertDialog= alerta.create();
+                alertDialog.setMessage("Ya no tienes talonario Asignado debes solicitar para generar recibo ");
+                alertDialog.show();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
-public void NReferencia(){
+    public void NReferencia(){
 
     DBConnection dbConnection=new DBConnection();
     dbConnection.conectar();
@@ -520,25 +561,9 @@ public void NReferencia(){
             System.out.println("==============> Ultimo Registro NumeroInicial :" + numeracion);
         }
 
-        if (numeracion==0){
-            AlertDialog.Builder alerta = new AlertDialog.Builder(MainRecibo.this);
-            alerta.setMessage("ADVERTENCIA ")
-                    .setCancelable(false)
-                    .setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                        }
-                    });
 
-            AlertDialog alertDialog= alerta.create();
-            alertDialog.setMessage("Ya no tienes talonario Asignado debes solicitar para generar recibo ");
-            alertDialog.show();
 
-        }else {
-            NRecibo.setText("No.Recibo:"+numeracion);
-        }
-
+        NRecibo.setText("No.Recibo:"+numeracion);
     } catch (SQLException e) {
         e.printStackTrace();
     }
@@ -643,7 +668,6 @@ public void NReferencia(){
 
     public void printText(PrintMe print) {
         listainformacion = new ArrayList<String>();
-
         for (int p=0; p<2;p++){
             print.sendTextToPrinter("RECIBO No."+numeracion+ "\n", 40, true, false, 1);
             print.sendTextToPrinter("NREF:" +IdPagosCxC+ "\t\t"+fecha.getText().toString()+ "\n", 30, true, false, 1);
