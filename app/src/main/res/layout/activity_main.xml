@@ -33,7 +33,7 @@
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Bienvenido Sinevol App"
+            android:text="Bienvenido Sinevol Libreria"
             android:textColor="@color/black" />
     </LinearLayout>
 
@@ -57,13 +57,13 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="casual"
-            android:text="Sinevol App"
+            android:text="Sinevol  libreria"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@+id/imageView3"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.513"
             app:layout_constraintStart_toStartOf="@+id/imageView3"
             app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 

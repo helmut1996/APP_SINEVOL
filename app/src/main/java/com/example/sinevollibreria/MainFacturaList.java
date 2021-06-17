@@ -337,7 +337,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
 
         try {
             dbConnection.getConnection().setAutoCommit(false);
-            PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertPrefacturas ?,?,?,?,?,?,?,?");
+            PreparedStatement pst= dbConnection.getConnection().prepareStatement("exec sp_insertPrefacturas ?,?,?,?,?,?,?");
             pst.setInt(1, Integer.parseInt(textIdcliente.getText().toString()));
             pst.setInt(2, Integer.parseInt(textIdvendedor.getText().toString()));
             pst.setString(3, T_factura.getSelectedItem().toString()
@@ -346,7 +346,6 @@ getMenuInflater().inflate(R.menu.menu,menu);
             pst.setDouble(5, Double.parseDouble(String.valueOf(TotalFact)));
             pst.setDouble(6,TotalComision);
             pst.setString(7,textV_Cliente.getText().toString());
-            pst.setInt(8,Integer.parseInt(text_estado_prefact.getText().toString()));
             pst.executeUpdate();
 
             Statement st= dbConnection.getConnection().createStatement();
