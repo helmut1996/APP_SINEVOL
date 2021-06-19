@@ -4,7 +4,7 @@
     android:id="@+id/scrollView2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sinevollibreria.MainMenu">
+    tools:context="com.example.sinevolcarpintero.MainMenu">
 
 
    <ScrollView
@@ -28,7 +28,7 @@
                    android:id="@+id/fondo"
                    android:layout_width="match_parent"
                    android:layout_height="230dp"
-                   android:background="@drawable/utiles"
+                   android:background="@drawable/fondo"
                    android:gravity="center"
                    android:orientation="vertical">
 

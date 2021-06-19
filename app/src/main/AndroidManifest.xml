@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.sinevollibreria">
+    package="com.example.sinevolcarpintero">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,26 +15,26 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name="com.example.sinevollibreria.MainFullScreen"></activity>
-        <activity android:name="com.example.sinevollibreria.MainCheques" />
-        <activity android:name="com.example.sinevollibreria.MainError_Internet" />
+        <activity android:name="com.example.sinevolcarpintero.MainFullScreen"></activity>
+        <activity android:name="com.example.sinevolcarpintero.MainCheques" />
+        <activity android:name="com.example.sinevolcarpintero.MainError_Internet" />
         <activity
-            android:name="com.example.sinevollibreria.MainListaproducto"
-            android:parentActivityName="com.example.sinevollibreria.MainProductosCliente" />
+            android:name="com.example.sinevolcarpintero.MainListaproducto"
+            android:parentActivityName="com.example.sinevolcarpintero.MainProductosCliente" />
         <activity
-            android:name="com.example.sinevollibreria.MainFacturaList"
-            android:parentActivityName="com.example.sinevollibreria.MainProductosCliente" />
-        <activity android:name="com.example.sinevollibreria.MainProductosCliente" />
+            android:name="com.example.sinevolcarpintero.MainFacturaList"
+            android:parentActivityName="com.example.sinevolcarpintero.MainProductosCliente" />
+        <activity android:name="com.example.sinevolcarpintero.MainProductosCliente" />
         <activity
-            android:name="com.example.sinevollibreria.MainRecibo"
-            android:parentActivityName="com.example.sinevollibreria.MainFactura" />
+            android:name="com.example.sinevolcarpintero.MainRecibo"
+            android:parentActivityName="com.example.sinevolcarpintero.MainFactura" />
         <activity
-            android:name="com.example.sinevollibreria.Maincuentas"
-            android:parentActivityName="com.example.sinevollibreria.MainFactura" />
-        <activity android:name="com.example.sinevollibreria.MainFactura" />
-        <activity android:name="com.example.sinevollibreria.MainMenu" />
+            android:name="com.example.sinevolcarpintero.Maincuentas"
+            android:parentActivityName="com.example.sinevolcarpintero.MainFactura" />
+        <activity android:name="com.example.sinevolcarpintero.MainFactura" />
+        <activity android:name="com.example.sinevolcarpintero.MainMenu" />
         <activity
-            android:name="com.example.sinevollibreria.MainActivity"
+            android:name="com.example.sinevolcarpintero.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

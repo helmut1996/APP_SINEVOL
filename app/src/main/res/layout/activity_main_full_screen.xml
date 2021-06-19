@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sinevollibreria.MainActivity"
-    android:background="@drawable/fondocuaderno">
-
+    tools:context="com.example.sinevolcarpintero.MainActivity"
+    android:background="@drawable/fondocarpintero">
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"

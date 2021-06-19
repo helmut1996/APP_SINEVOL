@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sinevollibreria.MainActivity"
+    tools:context="com.example.sinevolcarpintero.MainActivity"
     android:orientation="vertical">
 
 
@@ -33,7 +33,7 @@
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Bienvenido Sinevol Libreria"
+            android:text="Bienvenido Sinevol Carpintero"
             android:textColor="@color/black" />
     </LinearLayout>
 
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="casual"
-            android:text="Sinevol  libreria"
+            android:text="Sinevol  Carpintero"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@+id/imageView3"
