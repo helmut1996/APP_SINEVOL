@@ -1,5 +1,6 @@
 package com.example.sinevol.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -99,9 +100,7 @@ public class RecycleviewAdapter extends RecyclerView.Adapter<RecycleviewAdapter.
                     intent.putExtra("Idcliente",idcliente.getText());
                     intent.putExtra("ClienteEspecial",clienteE.getText());
                     context.startActivity(intent);
-                    //((Activity)context).finish();
-                   
-
+                    ((Activity)context).finish();
 
                 }
             });

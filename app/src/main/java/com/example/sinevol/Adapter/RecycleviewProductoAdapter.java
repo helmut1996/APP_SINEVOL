@@ -1,5 +1,6 @@
 package com.example.sinevol.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -159,7 +160,7 @@ public class RecycleviewProductoAdapter extends PaginatedAdapter<ModelItemsProdu
 
 
                         context.startActivity(intent);
-                       // ((Activity)context).finish();
+                        ((Activity)context).finish();
 
                     }
 
