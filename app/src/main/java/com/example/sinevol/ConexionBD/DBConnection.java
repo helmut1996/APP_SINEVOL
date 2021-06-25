@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 public class DBConnection
 {
-    private static String ip = "161.0.62.5";
+    private static String ip = "192.168.0.100";
     private static String port = "1440";
     private static String Classes = "net.sourceforge.jtds.jdbc.Driver";
-    private static String database = "BDMARNOR";
+    private static String database = "BDPRUEBA2";
     private static String username = "sa";
     private static String password = "System32";
     private Connection connection = null;
@@ -19,6 +19,7 @@ public class DBConnection
     public DBConnection(){}
 
     public void conectar()
+            
     {
         try
         {
