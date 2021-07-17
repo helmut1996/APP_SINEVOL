@@ -19,7 +19,8 @@
             android:layout_gravity="end"
             android:text="Precio Especial"
             android:id="@+id/checkPrecioEspecial"
-            android:layout_marginHorizontal="10dp"/>
+            android:layout_marginHorizontal="10dp"
+            android:visibility="gone"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +61,6 @@
             android:text="@string/unidad_medida"
             android:textColor="#090808"
             android:textSize="16sp" />
-
         <TextView
             android:id="@+id/tvUnidadMedida"
             android:layout_width="match_parent"

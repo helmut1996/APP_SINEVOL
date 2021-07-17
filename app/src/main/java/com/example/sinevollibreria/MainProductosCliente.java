@@ -50,8 +50,10 @@ private ImageView img;
 private EditText editcantidad;
 private LinearLayout cuerpoProductCliente;
 private CheckBox PrecioE;
+private double Porc;
 double conversion;
 double tasaCambio;
+
     String imagen="http://ferreteriaelcarpintero.com/imgesc/";
 
 /* variables globales */
@@ -287,6 +289,7 @@ int IdInventario;
         /*mandando a llamar las imagenes libreria */
                                         cargarImagen();
                                         TasaDolar();
+                                        PorcentajeComision();
      }
 
     @Override
@@ -535,6 +538,7 @@ int IdInventario;
             }
             values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
             values.put(utilidades.CAMPO_TIPOPRECIO,tvtipoprecio.getText().toString());
+            values.put(utilidades.CAMPO_PORCENTAJE,Porc);
             idResultante= (int) db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
 
             Toast.makeText(this,"CANTIDAD INGRESADA: " + idResultante,Toast.LENGTH_SHORT).show();
@@ -553,6 +557,25 @@ int IdInventario;
                 tasaCambio = rs2.getDouble("Cambio");
 
                 System.out.println("==============> Ultimo tasa de cambio en dolares:" + tasaCambio);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void PorcentajeComision(){
+        int result= Integer.parseInt(tvIDproducto.getText().toString());
+        DBConnection dbConnection=new DBConnection();
+        dbConnection.conectar();
+        try {
+            Statement st2 = dbConnection.getConnection().createStatement();
+            ResultSet rs2 = st2.executeQuery("\n" +
+                    "select PorcComision from Inventario where idInventario='"+result+"'");
+            while (rs2.next()) {
+                Porc = rs2.getDouble("PorcComision");
+
+                System.out.println("==============> Capturando Porcentaje:" + Porc);
             }
 
         } catch (SQLException e) {
