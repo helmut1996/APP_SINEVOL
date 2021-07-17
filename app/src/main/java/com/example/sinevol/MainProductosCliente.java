@@ -44,13 +44,17 @@ import java.util.ArrayList;
 public class MainProductosCliente extends AppCompatActivity implements View.OnClickListener {
     /*variables de los componentes de la vista*/
 private ImageButton IbuttonSiguiente;
-private TextView textClienteEspecial, tvmostrarP, tv_precio_Especial, tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvtipoprecio,tvimagenBD,tvIDproducto,tvUnidadMedida;
+private TextView  text_Porcentaje, textClienteEspecial, tvmostrarP, tv_precio_Especial, tvnombreproducto,textcontar,textinfo1,textinfo2,textinfo3,textinfo4,textinfo5,tvunidadmedida,tvtipoprecio,tvimagenBD,tvIDproducto,tvUnidadMedida;
 private Spinner precios,monedas;
 private ImageView img;
 private EditText editcantidad;
 private LinearLayout cuerpoProductCliente;
 double conversion;
 double tasaCambio;
+double Porc;
+
+int p;
+
     String imagen="http://ferreteriaelcarpintero.com/images/productos/";
 
 /* variables globales */
@@ -88,6 +92,7 @@ String ClienteEspecialProductoC;
         ////////////imagen producto
         img=findViewById(R.id.imgProducto);
         /////////// campos de texto
+        text_Porcentaje=findViewById(R.id.textPorcentaje);
         tvmostrarP=findViewById(R.id.tvmostraP);
         tvnombreproducto=findViewById(R.id.tvnombreP);
         textcontar=findViewById(R.id.text_contar);
@@ -173,6 +178,7 @@ String ClienteEspecialProductoC;
             tvimagenBD.setText(extra.getString("imagenproducto"));
             tvIDproducto.setText(extra.getString("idproducto"));
 
+            tvIDproducto.setVisibility(View.VISIBLE);
             //capturando el tipo de cliente especial
             MainListaproducto  datos = new MainListaproducto();
             textClienteEspecial.setText(datos.ClienteE);
@@ -297,8 +303,12 @@ String ClienteEspecialProductoC;
                 });
 
         /*mandando a llamar las imagenes libreria */
+        PorcentajeComision();
                                         cargarImagen();
                                         TasaDolar();
+
+                                       // text_Porcentaje.setText(Porc);
+
      }
 
     @Override
@@ -540,6 +550,7 @@ String ClienteEspecialProductoC;
             values.put(utilidades.CAMPO_NOMBRE,tvnombreproducto.getText().toString());
             values.put(utilidades.CAMPO_CANTIDAD,editcantidad.getText().toString());
 
+
             if (monedas.getSelectedItem().toString().equals("Dolar")){
                 values.put(utilidades.CAMPO_PRECIO,tvmostrarP.getText().toString());
             }else{
@@ -547,6 +558,7 @@ String ClienteEspecialProductoC;
             }
             values.put(utilidades.CAMPO_IMAGEN,tvimagenBD.getText().toString());
             values.put(utilidades.CAMPO_TIPOPRECIO,tvtipoprecio.getText().toString());
+            values.put(utilidades.CAMPO_PORCENTAJE,Porc);
             idResultante= (int) db.insert(utilidades.TABLA_PRODUCTO,utilidades.CAMPO_ID,values);
 
             Toast.makeText(this,"CANTIDAD INGRESADA: " + idResultante,Toast.LENGTH_SHORT).show();
@@ -571,5 +583,29 @@ String ClienteEspecialProductoC;
             e.printStackTrace();
         }
     }
+
+    public void PorcentajeComision(){
+
+        int result= Integer.parseInt(tvIDproducto.getText().toString());
+        DBConnection dbConnection=new DBConnection();
+        dbConnection.conectar();
+        try {
+            Statement st2 = dbConnection.getConnection().createStatement();
+            ResultSet rs2 = st2.executeQuery("\n" +
+                    "select PorcComision from Inventario where idInventario= '"+result+"'");
+            while (rs2.next()) {
+                Porc = rs2.getDouble("PorcComision");
+
+                System.out.println("==============> Capturando Prueba:" + Porc);
+
+                System.out.println("RESULTADO=====>"+result);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }

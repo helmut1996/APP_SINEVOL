@@ -53,6 +53,12 @@
             android:text="@string/unidad_medida"
             android:textColor="#090808"
             android:textSize="16sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="porcentaje"
+            android:gravity="center"
+            android:id="@+id/textPorcentaje"/>
 
         <TextView
             android:id="@+id/tvUnidadMedida"

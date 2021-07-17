@@ -302,7 +302,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
         listainformacion=new ArrayList<String>();
         for (int i=0; i<listaproducto.size();i++){
 
-            listainformacion.add(listaproducto.get(i).getNombreproduc()+"\n \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t "+listaproducto.get(i).getCantidad()+"\n C$"+listaproducto.get(i).getPrecios());
+            listainformacion.add(listaproducto.get(i).getNombreproduc()+"\n \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t "+listaproducto.get(i).getCantidad()+"\n C$"+listaproducto.get(i).getPrecios()+"\n porc"+listaproducto.get(i).getPorcentaje());
             System.out.println("MOSTRANDO LA CANTIDAD GUARDADA "+listaproducto.get(i).getCantidad());
 
         }
@@ -366,7 +366,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
                 pst2.setDouble(3, listaproducto.get(i).getPrecios());//precio cordobas
                 pst2.setDouble(4,0.0);//precio Dolar
                 pst2.setFloat(5,listaproducto.get(i).getCantidad());// cantidad
-                pst2.setDouble(6,3.00);//PorcComision
+                pst2.setFloat(6,listaproducto.get(i).getPorcentaje());//PorcComision
                 pst2.setString(7, listaproducto.get(i).getTipoprecio());//tipoPrecio
                 pst2.executeUpdate();
             }
