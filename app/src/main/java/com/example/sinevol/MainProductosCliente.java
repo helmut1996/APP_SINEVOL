@@ -177,8 +177,6 @@ String ClienteEspecialProductoC;
             textcontar.setText(extra.getString("stock"));
             tvimagenBD.setText(extra.getString("imagenproducto"));
             tvIDproducto.setText(extra.getString("idproducto"));
-
-            tvIDproducto.setVisibility(View.VISIBLE);
             //capturando el tipo de cliente especial
             MainListaproducto  datos = new MainListaproducto();
             textClienteEspecial.setText(datos.ClienteE);

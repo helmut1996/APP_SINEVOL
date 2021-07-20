@@ -58,7 +58,8 @@
             android:layout_height="wrap_content"
             android:text="porcentaje"
             android:gravity="center"
-            android:id="@+id/textPorcentaje"/>
+            android:id="@+id/textPorcentaje"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tvUnidadMedida"
