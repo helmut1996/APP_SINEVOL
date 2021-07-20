@@ -274,6 +274,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
                     productosAdd.setCantidad(cursor.getInt(2));
                     productosAdd.setPrecios(cursor.getDouble(3));
                     productosAdd.setImagenProducto(cursor.getString(4));
+                    productosAdd.setTipoprecio(cursor.getString(5));
                     productosAdd.setPorcentaje(cursor.getFloat(6));
                     listaproducto.add(productosAdd);
                 }
@@ -292,6 +293,7 @@ getMenuInflater().inflate(R.menu.menu,menu);
                 productosAdd.setCantidad(cursor.getInt(2));
                 productosAdd.setPrecios(cursor.getDouble(3));
                 productosAdd.setImagenProducto(cursor.getString(4));
+                productosAdd.setTipoprecio(cursor.getString(5));
                 productosAdd.setPorcentaje(cursor.getFloat(6));
                 listaproducto.add(productosAdd);
             }
